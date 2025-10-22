@@ -20,6 +20,18 @@ Treat code, conversation, configuration, and documentation as **co-equal substra
 
 ---
 
+## Governing Docs (Hierarchy)
+
+1. AGENTS.md — operational protocol (Run/Drift, memory, reconciliation).
+2. CHARTER.md — canonical engineering rules (configuration, CLI thinness, schema I/O, budgeted LLMs, retrieval interface, logging, testing, storage).
+3. VISION.md — project intent and long-term aims.
+4. Module contracts — `.purpose.md` / `.intent.md`.
+
+**Precedence:** Charter > Agents. If a generated change would violate the Charter, stop, switch to Drift, and propose a compliant alternative.
+
+
+---
+
 ## 1 Dual-Channel Protocol
 
 | Channel      | Purpose                                                | Constraints             |
@@ -79,6 +91,7 @@ Cadence tags may be used for clarity:
 * Flag IO, dependencies, or risks that mismatch documented assumptions.
 * Prompt user if `.purpose.md` is missing — stub and label with `@ai-generated: true`.
 * Trigger validation against schema and field guards (e.g. `@ai-risk-*`, `@ai-role`).
+* `.purpose.md`, `.intent.md`, `.trace.txt`, and other developmental and structural files are found in the `codex_++` directory one level up from project root.
 
 > **StressTest Insight**: Add support for `@ai-used-by:` and `@ai-downstream:` tags to surface integration paths Codex cannot infer from imports alone.
 
@@ -94,7 +107,7 @@ During `Run`, capture:
 
 When substantial reasoning, tradeoffs, or justifications arise - capture the natural-language upshot. Write as `.intent.md`, using ISO timestamp and module path, e.g.:
 
-`/intents/2025-07-02__core.analysis.token_stats.intent.md`
+`codex_++/intents/2025-07-02__core.analysis.token_stats.intent.md`
 
 Consolidate during Drift into `.purpose.md`.
 
@@ -104,6 +117,7 @@ Consolidate during Drift into `.purpose.md`.
 
 | ID   | Rule                                                                                                       |
 | ---- | ---------------------------------------------------------------------------------------------------------- |
+| G-00 | Changes must comply with CHARTER.md. CI enforces Charter checks                                            |
 | G-01 | No commits to `main` without valid `.purpose.md` present or stubbed                                        |
 | G-02 | If AST IO != `.purpose.md`, raise and draft reconciliation                                                 |
 | G-03 | If `@ai-risk-*` is high or unknown, require human checkoff                                                 |
@@ -115,6 +129,8 @@ Consolidate during Drift into `.purpose.md`.
 | G-09 | Changes lacking `@ai-intent` block CI until resolved                                                       |
 | G-10 | `.purpose.md` must include output schema, coordination notes, and integration anchors if applicable        |
 | G-11 | Use `@ai-pipeline-order: inverse` if prompt flow reverses default assumptions (e.g. topic-before-chunking) |
+| G-12 | All modules must declare io.exports if they expose public functions/classes.                               |
+| G-13 | PR must include either: updated .purpose.md or new .intent.md referencing the change.                      |
 
 ---
 
