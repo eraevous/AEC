@@ -28,12 +28,14 @@
 ### 🎯 Intent & Responsibility
 
 - Validate/standardize column names and category levels.
-    
+
 - Optionally bucket low-frequency categories into "Other" (configurable `min_count` or `top_k`).
-    
+
 - Compute node and link tables across the ordered stages.
-    
+
 - Render Plotly figure (preferred) with tooltips (counts, rates); optionally export static PNG/SVG.
+
+- Tint nodes and ribbons using the readmission palette so flow color mirrors 30-day readmission propensity.
     
 
 ### 📥 Inputs & 📤 Outputs
@@ -46,7 +48,7 @@
 |📥 In|palette|dict|Optional mapping `{category: color}`|
 |📤 Out|figure|plotly.graph_objs.Figure|Sankey figure object|
 |📤 Out|exports|Dict[str,str]|Saved files: `{"html": path?, "png": path?}`|
-|📤 Out|data|Dict[str,pandas.DataFrame]|Node and link tables used to render|
+|📤 Out|data|Dict[str,pandas.DataFrame]|Node and link tables used to render (`nodes` adds `readmit_rate`, `links` adds `readmit_flag`)|
 
 ### 🔗 Dependencies
 
