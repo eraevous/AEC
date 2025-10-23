@@ -14,6 +14,7 @@ from viz.readmit import (
     build_bars_and_hists,
     build_box_and_violin,
     build_corrgram,
+    build_diagnosis_distribution_panels,
     build_parallel_coordinates,
     build_sankey,
     build_small_multiples,
@@ -93,6 +94,8 @@ def build_readmission_report(
 
     # Bars & Histograms -----------------------------------------------------
     bars_cfg = config.get("bars_hists", {})
+    if not isinstance(bars_cfg, Mapping):
+        bars_cfg = {}
     if _maybe_enabled(config, "bars_hists") and (
         bars_cfg.get("categoricals") or bars_cfg.get("numerics")
     ):
@@ -108,6 +111,45 @@ def build_readmission_report(
         summary.to_csv(summary_path, index=False)
         manifest["bars_hists"] = {"figure": paths, "summary": str(summary_path)}
         plt.close(fig)
+
+    diag_panels_cfg = config.get("diagnosis_distribution_panels")
+    if diag_panels_cfg is None and isinstance(bars_cfg, Mapping):
+        diag_panels_cfg = bars_cfg.get("diagnosis_panels")
+    if _maybe_enabled(config, "bars_hists") and diag_panels_cfg is not None:
+        if isinstance(diag_panels_cfg, bool):
+            diag_panels_cfg = {} if diag_panels_cfg else None
+        if diag_panels_cfg is not None:
+            readmit_key = diag_panels_cfg.get(
+                "readmit_col", bars_cfg.get("readmit_col", "Has_Readmission_30_Days")
+            )
+            diagnosis_key = diag_panels_cfg.get(
+                "diagnosis_col", config.get("diagnosis_col", "Primary_Diagnosis")
+            )
+            figures_diag, summary_diag = build_diagnosis_distribution_panels(
+                df,
+                measure=diag_panels_cfg.get("measure", "Age"),
+                top_k_diag=diag_panels_cfg.get("top_k_diag", config.get("top_k_diag", 6)),
+                readmit_col=readmit_key,
+                diagnosis_col=diagnosis_key,
+                gender_col=diag_panels_cfg.get("gender_col", "Gender"),
+                bandwidth=diag_panels_cfg.get("bandwidth", 1.0),
+            )
+            if figures_diag:
+                figure_paths: Dict[str, Dict[str, str]] = {}
+                for key, figure in figures_diag.items():
+                    paths = theme.save_figure(
+                        figure,
+                        f"diagnosis_distribution_{key}",
+                        dirs["figures"],
+                    )
+                    figure_paths[key] = paths
+                    plt.close(figure)
+                summary_path = dirs["tables"] / "diagnosis_distribution_summary.csv"
+                summary_diag.to_csv(summary_path, index=False)
+                manifest["diagnosis_distribution_panels"] = {
+                    "figures": figure_paths,
+                    "summary": str(summary_path),
+                }
 
     # Boxplots --------------------------------------------------------------
     box_cfg = config.get("boxplots", {})
