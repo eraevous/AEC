@@ -21,6 +21,12 @@ from viz.readmit import (
 from viz.shared import theme
 
 
+def _slugify(label: str) -> str:
+    cleaned = "".join(ch.lower() if ch.isalnum() else "_" for ch in label)
+    cleaned = "_".join(part for part in cleaned.split("_") if part)
+    return cleaned or "plot"
+
+
 def _output_dirs(base: Path) -> Dict[str, Path]:
     figures = theme.ensure_output_dir(base / "figures")
     tables = theme.ensure_output_dir(base / "tables")
@@ -119,20 +125,40 @@ def build_readmission_report(
 
     # Parallel coordinates --------------------------------------------------
     pc_cfg = config.get("parallel_coords", {})
-    if _maybe_enabled(config, "parallel_coords") and pc_cfg.get("cols"):
-        fig = build_parallel_coordinates(
+    if _maybe_enabled(config, "parallel_coords") and (
+        pc_cfg.get("cols") or pc_cfg.get("groups")
+    ):
+        figures = build_parallel_coordinates(
             df,
-            cols=pc_cfg.get("cols", []),
+            cols=pc_cfg.get("cols"),
+            groups=pc_cfg.get("groups"),
             diagnosis_col=pc_cfg.get("diagnosis_col", "Primary_Diagnosis"),
             readmit_col=pc_cfg.get("readmit_col", "Has_Readmission_30_Days"),
             top_k_diag=pc_cfg.get("top_k_diag", 6),
             scaling=pc_cfg.get("scaling", "raw"),
         )
-        html_path = (
-            dirs["html"] / f"parallel_coords_{pc_cfg.get('scaling', 'raw')}.html"
-        )
-        pio.write_html(fig, file=html_path, auto_open=False, include_plotlyjs="cdn")
-        manifest["parallel_coords"] = {"html": str(html_path)}
+        scaling_label = pc_cfg.get("scaling", "raw")
+        use_groups = bool(pc_cfg.get("groups"))
+        multi_output = use_groups or len(figures) > 1
+        html_records: Dict[str, str] = {}
+        for label, figure in figures.items():
+            manifest_key = label if multi_output else pc_cfg.get("label", "all")
+            if not manifest_key:
+                manifest_key = "all"
+            if not multi_output and label == "default":
+                filename = f"parallel_coords_{scaling_label}.html"
+            else:
+                slug = _slugify(manifest_key)
+                filename = f"parallel_coords_{slug}_{scaling_label}.html"
+            html_path = dirs["html"] / filename
+            pio.write_html(
+                figure, file=html_path, auto_open=False, include_plotlyjs="cdn"
+            )
+            html_records[manifest_key] = str(html_path)
+        if multi_output:
+            manifest["parallel_coords"] = {"html": html_records}
+        else:
+            manifest["parallel_coords"] = {"html": next(iter(html_records.values()))}
 
     # Small multiples -------------------------------------------------------
     sm_cfg = config.get("small_multiples", {})
