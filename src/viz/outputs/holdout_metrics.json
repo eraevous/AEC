@@ -1,0 +1,9 @@
+{
+  "RandomForest": {
+    "accuracy": 0.8787878787878788,
+    "precision_macro": 0.8125,
+    "recall_macro": 0.7170014347202296,
+    "f1_macro": 0.7504201680672269,
+    "roc_auc": 0.8870157819225251
+  }
+}
