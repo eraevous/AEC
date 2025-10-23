@@ -46,6 +46,7 @@ config = {
         "Num_Prior_Admissions_Last_6_Months",
         "Num_Comorbidities",
     ],
+    "diagnosis_panels": {"measure": "Age"},
     "top_k": 10,  # for Sankey category compression
     "top_k_diag": 6,  # for parallel coords & small multiples
     "bin_specs": {  # coarse, fast defaults
