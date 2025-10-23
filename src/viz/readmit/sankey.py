@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -13,7 +13,9 @@ from viz.shared import theme
 
 REQUIRED_COLUMNS = [
     "Prior_Admission",
+    "Distance_to_Closest_Hospital",
     "Primary_Diagnosis",
+    "Length_of_Stay",
     "Discharge_Status",
     "Has_Readmission_30_Days",
 ]
@@ -38,6 +40,28 @@ def _normalize_readmit(series: pd.Series) -> pd.Series:
     if clean.dropna().isin({0, 1, False, True}).all():
         return clean.astype(int).map({0: "Readmit: No", 1: "Readmit: Yes"})
     return clean.astype(str)
+
+
+def _categorize_distance(series: pd.Series) -> pd.Series:
+    numeric = pd.to_numeric(series, errors="coerce")
+
+    def categorize(value: Optional[float]) -> str:
+        if pd.isna(value):
+            return "Distance: Unknown"
+        return "Distance: >5 miles" if value > 5 else "Distance: <=5 miles"
+
+    return numeric.apply(categorize)
+
+
+def _categorize_length_of_stay(series: pd.Series) -> pd.Series:
+    numeric = pd.to_numeric(series, errors="coerce")
+
+    def categorize(value: Optional[float]) -> str:
+        if pd.isna(value):
+            return "LOS: Unknown"
+        return "LOS: >5 days" if value > 5 else "LOS: <=5 days"
+
+    return numeric.apply(categorize)
 
 
 def _hex_to_rgb(value: str) -> Tuple[int, int, int]:
@@ -94,17 +118,28 @@ def build_sankey(
 
     palette = palette or {}
     prior = _normalize_prior(df["Prior_Admission"])
+    distance = _categorize_distance(df["Distance_to_Closest_Hospital"])
     diagnosis = _compress_categories(df["Primary_Diagnosis"].fillna("Unknown"), top_k, min_count)
+    los = _categorize_length_of_stay(df["Length_of_Stay"])
     discharge = _compress_categories(df["Discharge_Status"].fillna("Unknown"), top_k, min_count)
     readmit = _normalize_readmit(df[readmit_col])
 
-    stages = ["Prior Admission", "Primary Diagnosis", "Discharge Status", "Readmission"]
+    stages = [
+        "Prior Admissions",
+        "Distance > 5 miles",
+        "Primary Diagnosis",
+        "Length of Stay > 5 days",
+        "Discharge Status",
+        "Readmission",
+    ]
     labels_frame = pd.DataFrame(
         {
             stages[0]: prior,
-            stages[1]: diagnosis.apply(lambda v: f"Diag: {v}"),
-            stages[2]: discharge.apply(lambda v: f"Discharge: {v}"),
-            stages[3]: readmit,
+            stages[1]: distance,
+            stages[2]: diagnosis.apply(lambda v: f"Diag: {v}"),
+            stages[3]: los,
+            stages[4]: discharge.apply(lambda v: f"Discharge: {v}"),
+            stages[5]: readmit,
         }
     )
     grouped = labels_frame.value_counts().reset_index(name="count")
