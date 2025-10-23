@@ -136,11 +136,19 @@ def build_readmission_report(
 
     # Small multiples -------------------------------------------------------
     sm_cfg = config.get("small_multiples", {})
+    if not isinstance(sm_cfg, Mapping):
+        sm_cfg = {}
     if _maybe_enabled(config, "small_multiples"):
+        bin_specs = sm_cfg.get("bin_specs")
+        if bin_specs is None:
+            global_specs = config.get("bin_specs")
+            if isinstance(global_specs, Mapping):
+                bin_specs = global_specs
+
         figures, tables = build_small_multiples(
             df,
             top_k_diag=sm_cfg.get("top_k_diag", 9),
-            bin_specs=sm_cfg.get("bin_specs"),
+            bin_specs=bin_specs,
             readmit_col=sm_cfg.get("readmit_col", "Has_Readmission_30_Days"),
         )
         if figures:
