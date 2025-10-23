@@ -18,6 +18,27 @@ config = {
     "palette": {0: "#264653", 1: "#e76f51"},  # readmit palette used in A
     "diagnosis_col": "Primary_Diagnosis",
     "readmit_col": "Has_Readmission_30_Days",
+    "parallel_coords": {
+        "groups": {
+            "risk_factors": [
+                "Has_Hypertension",
+                "Has_Diabetes",
+                "Has_COPD",
+                "Has_CHF",
+                "Num_Prior_Admissions_Last_6_Months",
+            ],
+            "demographics": [
+                "Age",
+                "Gender",
+                "Distance_to_Closest_Hospital",
+                "Primary_Diagnosis",
+            ],
+        },
+        "diagnosis_col": "Primary_Diagnosis",
+        "readmit_col": "Has_Readmission_30_Days",
+        "top_k_diag": 6,
+        "scaling": "raw",
+    },
     "categoricals": ["Gender", "Discharge_Status"],
     "numerics": [
         "Length_of_Stay",

@@ -26,8 +26,10 @@
 ### 🎯 Intent & Responsibility
 
 - Provide a single entrypoint to build all requested plots.
-    
+
 - Emit a JSON manifest mapping plot keys → file paths and brief notes.
+
+- Handle modules emitting multiple artifacts per plot (e.g., grouped parallel coordinates HTML pages).
     
 
 ### 📥 Inputs & 📤 Outputs
@@ -36,7 +38,7 @@
 |---|---|---|---|
 |📥 In|df|pandas.DataFrame|Cleaned dataset from user transforms|
 |📥 In|config|Dict[str,Any]|Plot toggles, top-K, bin_specs, palette, output dir|
-|📤 Out|manifest|Dict[str,Any]|Keys per module → export paths + computed tables/metrics references|
+|📤 Out|manifest|Dict[str,Any]|Keys per module → export paths + computed tables/metrics references (values may be nested dicts for multi-artifact modules)|
 
 ### 🤝 Integration & Coordination
 
