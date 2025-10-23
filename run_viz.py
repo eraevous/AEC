@@ -20,18 +20,11 @@ config = {
     "readmit_col": "Has_Readmission_30_Days",
     "parallel_coords": {
         "groups": {
-            "risk_factors": [
-                "Has_Hypertension",
-                "Has_Diabetes",
-                "Has_COPD",
-                "Has_CHF",
-                "Num_Prior_Admissions_Last_6_Months",
-            ],
-            "demographics": [
+            "Health History": [
                 "Age",
-                "Gender",
+                "Num_Comorbidities",
                 "Distance_to_Closest_Hospital",
-                "Primary_Diagnosis",
+                "Num_Prior_Admissions_Last_6_Months",
             ],
         },
         "diagnosis_col": "Primary_Diagnosis",
@@ -39,12 +32,19 @@ config = {
         "top_k_diag": 6,
         "scaling": "raw",
     },
-    "categoricals": ["Gender", "Discharge_Status"],
+    "categoricals": [
+        "Gender",
+        "Discharge_Status",
+        "Num_Comorbidities",
+        "Num_Prior_Admissions_Last_6_Months",
+        "Primary_Diagnosis",
+        "binned LOS",
+        "Dist Binned",
+    ],
     "numerics": [
+        "Age",
         "Length_of_Stay",
         "Distance_to_Closest_Hospital",
-        "Num_Prior_Admissions_Last_6_Months",
-        "Num_Comorbidities",
     ],
     "diagnosis_panels": {"measure": "Age"},
     "top_k": 10,  # for Sankey category compression

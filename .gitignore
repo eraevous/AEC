@@ -82,6 +82,15 @@ target/
 profile_default/
 ipython_config.py
 
+# Privacy and data files
+*.json
+*.csv
+*.png
+*.[Pp][Nn][Gg]
+*.[Jj][Ss][Oo][Nn]
+*.[Cc][Ss][Vv]
+
+
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:
@@ -208,6 +217,13 @@ __marimo__/
 
 artifacts/
 data/
+src/viz/outputs/
+/src/viz/outputs/
+
 
 .DS_Store
 uv.lock
+src/viz/outputs/holdout_metrics.json
+src/viz/outputs/cv_results.json
+src/viz/outputs/predictions_RandomForest.csv
+src/viz/outputs/rf_feature_importance.png
