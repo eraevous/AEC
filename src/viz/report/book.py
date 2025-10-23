@@ -37,7 +37,9 @@ def _maybe_enabled(config: Mapping[str, Any], key: str, default: bool = True) ->
     return default
 
 
-def build_readmission_report(df: pd.DataFrame, config: Dict[str, Any]) -> Dict[str, Any]:
+def build_readmission_report(
+    df: pd.DataFrame, config: Dict[str, Any]
+) -> Dict[str, Any]:
     """Build the configured visualization suite and return a manifest."""
 
     base_dir = Path(config.get("output_dir", "artifacts"))
@@ -85,7 +87,9 @@ def build_readmission_report(df: pd.DataFrame, config: Dict[str, Any]) -> Dict[s
 
     # Bars & Histograms -----------------------------------------------------
     bars_cfg = config.get("bars_hists", {})
-    if _maybe_enabled(config, "bars_hists") and (bars_cfg.get("categoricals") or bars_cfg.get("numerics")):
+    if _maybe_enabled(config, "bars_hists") and (
+        bars_cfg.get("categoricals") or bars_cfg.get("numerics")
+    ):
         fig, summary = build_bars_and_hists(
             df,
             categoricals=bars_cfg.get("categoricals", []),
@@ -124,7 +128,9 @@ def build_readmission_report(df: pd.DataFrame, config: Dict[str, Any]) -> Dict[s
             top_k_diag=pc_cfg.get("top_k_diag", 6),
             scaling=pc_cfg.get("scaling", "raw"),
         )
-        html_path = dirs["html"] / f"parallel_coords_{pc_cfg.get('scaling', 'raw')}.html"
+        html_path = (
+            dirs["html"] / f"parallel_coords_{pc_cfg.get('scaling', 'raw')}.html"
+        )
         pio.write_html(fig, file=html_path, auto_open=False, include_plotlyjs="cdn")
         manifest["parallel_coords"] = {"html": str(html_path)}
 
@@ -160,3 +166,10 @@ def build_readmission_report(df: pd.DataFrame, config: Dict[str, Any]) -> Dict[s
 
 
 __all__ = ["build_readmission_report"]
+
+
+def build_book(df: pd.DataFrame, config: Dict[str, Any]) -> Dict[str, Any]:
+    """Compatability wrapper for build_readmission_report."""
+
+    report_manifest = build_readmission_report(df, config)
+    return report_manifest
