@@ -12,8 +12,9 @@ from dataclasses import dataclass, field
 from .records import Record, Store, split_ref
 
 # severity order: a conclusion keeps the most severe status it reaches
-SEVERITY = ["exploratory", "rebaseline", "weakened", "needs_review", "stale", "unjustified"]
-PROPAGATES = {"unjustified", "stale"}  # only broken or unauthorized support makes dependents need review
+SEVERITY = ["exploratory", "rebaseline", "weakened", "contested", "needs_review", "stale", "unjustified"]
+# broken, unauthorized or contested support makes dependents need review
+PROPAGATES = {"unjustified", "stale", "contested"}
 
 
 @dataclass
@@ -92,10 +93,19 @@ def impact(store: Store, changes: list[dict]) -> ImpactReport:
             for dep, how in _dependents(store, target_ref):
                 if how == "support" and dep.type == "claim" and _live_supports(store, dep, dead):
                     status = "weakened"
+                elif dep.type == "decision":
+                    status = "needs_review"  # decisions belong to a human authority: flag, never invalidate
                 else:
                     status = "unjustified"
-                if _raise(impacts, dep.ref, status, [target_ref, dep.ref]) and status in PROPAGATES:
+                if _raise(impacts, dep.ref, status, [target_ref, dep.ref]) and status in PROPAGATES | {"needs_review"}:
                     queue.append(dep.ref)
+        elif kind == "add":
+            # new evidence: a contradiction starts a reassessment; new support changes nothing
+            for e in target.relations:
+                to = e.get("to")
+                if e.get("rel") == "contradicts" and to in store.by_ref:
+                    if _raise(impacts, to, "contested", [target_ref, to]):
+                        queue.append(to)
         elif kind == "revise":
             new = ch.get("new")
             if new and new not in store.by_ref:

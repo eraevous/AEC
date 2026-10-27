@@ -98,6 +98,30 @@ class TestSemantics(unittest.TestCase):
         s = statuses(impact(store_from(lines), [{"change": "revise", "target": "A@1", "authorized_by": "AU"}]))
         self.assertEqual(s["C@1"], "rebaseline")
 
+    def test_direct_retraction_never_invalidates_a_decision(self):
+        # Kate, PR #8 review: decisions are flagged for review, never declared unjustified by the tool.
+        lines = self.BASE + [{"id": "D", "version": 1, "type": "decision", "subject": "s",
+                              "relations": [{"rel": "depends_on", "to": "A@1"}]}]
+        s = statuses(impact(store_from(lines), [{"change": "retract", "target": "A@1"}]))
+        self.assertEqual(s["D@1"], "needs_review")
+        self.assertEqual(s["C@1"], "unjustified")  # claims still are
+
+    def test_new_contradicting_evidence_contests_the_claim(self):
+        # Kate, PR #8 review: counter-evidence must start a reassessment without a manufactured retraction.
+        lines = self.BASE + [
+            {"id": "X", "version": 1, "type": "evidence", "relations": [{"rel": "contradicts", "to": "K@1"}]},
+            {"id": "D", "version": 1, "type": "decision", "subject": "s", "relations": [{"rel": "selects", "to": "K@1"}]},
+        ]
+        rep = impact(store_from(lines), [{"change": "add", "target": "X@1"}])
+        s = statuses(rep)
+        self.assertEqual(s["K@1"], "contested")
+        self.assertEqual(s["D@1"], "needs_review")
+        self.assertEqual(len(s), 2)  # supporting evidence E1, E2 untouched
+
+    def test_new_supporting_evidence_flags_nothing(self):  # decoy
+        lines = self.BASE + [{"id": "E3", "version": 1, "type": "evidence", "relations": [{"rel": "supports", "to": "K@1"}]}]
+        self.assertEqual(statuses(impact(store_from(lines), [{"change": "add", "target": "E3@1"}])), {})
+
     def test_check_rules(self):
         bad = [
             {"id": "AU", "version": 1, "type": "authority", "governs": ["s"]},
