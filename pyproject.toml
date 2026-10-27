@@ -7,3 +7,4 @@ dependencies = []   # standard library only
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["aec*"]   # the legacy src/core (2025 extractor, pandas/typer) is not shipped

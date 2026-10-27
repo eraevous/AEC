@@ -10,8 +10,9 @@ from pathlib import Path
 
 TYPES = {"purpose", "requirement", "criterion", "assumption", "source", "claim", "evidence",
          "evaluation", "decision", "authority", "revision"}
-RELATIONS = {"serves", "implements", "depends_on", "supports", "contradicts", "tests", "produced",
-             "selects", "supersedes"}
+RELATIONS = {"serves", "implements", "implemented_by", "depends_on", "supports", "contradicts", "tests",
+             "produced", "selects", "supersedes"}
+CODE = "code:"  # unversioned reference to a code symbol; the edge snapshot supplies its current state
 TIERS = {"candidate", "reviewed", "observed", "prospective"}
 
 
@@ -38,7 +39,7 @@ class Record:
 
     @property
     def ref(self) -> str:
-        return ref(self.id, self.version)
+        return self.id if self.id.startswith(CODE) else ref(self.id, self.version)
 
     def get(self, key, default=None):
         return self.data.get(key, default)
@@ -91,9 +92,21 @@ class Finding:
     msg: str
 
 
-def check(store: Store) -> list[Finding]:
-    """Deterministic cross-record checks. They say nothing about whether evidence is *good*."""
+def defined_symbols(edges: dict) -> set[str]:
+    """Every symbol an edge snapshot defines (definitions plus the modules that contain them)."""
+    out = set()
+    for e in edges["edges"]:
+        if e["kind"] == "defines":
+            out.add(e["dst"])
+            out.add(e["src"])
+    return out
+
+
+def check(store: Store, edges: dict | None = None) -> list[Finding]:
+    """Deterministic cross-record checks. They say nothing about whether evidence is *good*.
+    With an edge snapshot, `code:` references must name a symbol the snapshot defines."""
     out: list[Finding] = []
+    symbols = defined_symbols(edges) if edges else None
     seen = set()
     for r in store.records:
         if r.ref in seen:
@@ -105,6 +118,11 @@ def check(store: Store) -> list[Finding]:
             if e.get("rel") not in RELATIONS:
                 out.append(Finding("error", "relation", r.ref, f"unknown relation {e.get('rel')!r}"))
             to = e.get("to", "")
+            if to.startswith(CODE):
+                if symbols is not None and to[len(CODE):] not in symbols:
+                    out.append(Finding("error", "code-reference", r.ref,
+                                       f"{e.get('rel')} -> {to}: no such symbol in the edge snapshot (renamed or deleted?)"))
+                continue
             try:
                 split_ref(to)
             except ValueError as ex:

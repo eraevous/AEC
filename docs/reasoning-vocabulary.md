@@ -22,6 +22,8 @@ This is deliberately not a graph platform. Records are plain JSON lines, version
 | `authority` | who or what governs a subject | `governs` (list of subjects) |
 | `revision` | an authorized change to an earlier commitment | `authorized_by`, `reason` |
 
+**Code references** (v0.2): a relation target `code:<dotted.symbol>` points at code. It is unversioned; the edge snapshot (`aec edges`) supplies its current state, `aec check --edges` reports dangling ones, and `aec code-impact` turns code changes into change events.
+
 Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what it is about, for authority checks) and `relations`. A reference is `id@version`. Pinning the version is what lets a later change be detected.
 
 **Epistemic status** (`epistemic`) separates purpose *discovery* from purpose *preservation*. A `provisional` purpose, criterion or requirement may be reframed during exploration without that being drift. The history is still kept. A `committed` one changes only through an authorized `revision`.
@@ -34,6 +36,7 @@ Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what
 |---|---|---|
 | `serves` | requirement → purpose | meeting the requirement is intended to advance the purpose. It does not mean the purpose is achieved |
 | `implements` | any → requirement | the artifact is meant to meet the requirement. It does not mean it does |
+| `implemented_by` | requirement → `code:<symbol>` | the requirement's *satisfaction* is claimed through this code. If the code changes, satisfaction must be re-examined, not the obligation itself (added in v0.2) |
 | `depends_on` | claim, decision, requirement, evaluation → anything | the conclusion relies on this. If it changes, the conclusion must be re-examined |
 | `supports` | evidence → claim | counts toward the claim. It does not establish it |
 | `contradicts` | evidence → claim | counts against the claim |

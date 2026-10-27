@@ -46,7 +46,7 @@ def _dependents(store: Store, target_ref: str) -> list[tuple[Record, str]]:
         for e in r.relations:
             if e.get("to") != target_ref:
                 continue
-            if e.get("rel") in ("depends_on", "selects"):
+            if e.get("rel") in ("depends_on", "selects", "implemented_by"):
                 out.append((r, "necessary"))
     if target is not None:
         # evidence supporting a claim: the claim depends on that evidence (as one support among several)

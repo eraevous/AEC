@@ -1,0 +1,50 @@
+schema_version: "1.0"
+
+extension:
+  id: aec
+  name: "AEC: purpose, authority & change impact"
+  version: "0.2.0"
+  description: "Keeps why a feature exists attached to what gets built: checks that specs cite a purpose, cross-checks purpose/authority/evidence records, and reports which conclusions a code change leaves unjustified. Reports findings only; never edits Spec Kit artifacts."
+  category: "governance"
+  effect: "read-only"
+  author: "Zachary Rhodes (eraevous)"
+  repository: https://github.com/eraevous/AEC
+  license: MIT
+
+requires:
+  speckit_version: ">=1.2.0"
+
+provides:
+  commands:
+    - name: speckit.aec.purpose-link
+      file: commands/speckit.aec.purpose-link.md
+      description: "Report whether the active spec cites the AEC purpose/requirement it serves (id@version) and whether those resolve"
+    - name: speckit.aec.check
+      file: commands/speckit.aec.check.md
+      description: "Run aec check on .aec/records.jsonl against a fresh edge snapshot (references, authority, evidence tiers, dangling code refs)"
+    - name: speckit.aec.impact
+      file: commands/speckit.aec.impact.md
+      description: "Snapshot code edges, diff against the last snapshot, and report which records/claims/decisions the change affects"
+
+hooks:
+  after_specify:
+    command: speckit.aec.purpose-link
+    optional: true
+    prompt: "Check that this spec cites the AEC purpose it serves?"
+    description: "AEC: purpose link check after specification"
+  after_tasks:
+    command: speckit.aec.check
+    optional: true
+    prompt: "Run AEC record checks before implementation?"
+    description: "AEC: cross-record check after task generation"
+  after_implement:
+    command: speckit.aec.impact
+    optional: true
+    prompt: "Report which conclusions this implementation affects?"
+    description: "AEC: structural diff and change impact after implementation"
+
+tags:
+  - "governance"
+  - "traceability"
+  - "change-impact"
+  - "drift"

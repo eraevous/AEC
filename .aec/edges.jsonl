@@ -1,0 +1,864 @@
+{"aec_edges": 1, "files": 26, "files_sha": "255644d11e4f813d", "root": ".", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "tool_version": "0.2.0"}
+{"body_sha": "d9010b3be5e1", "dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "defines", "line": 22, "resolved": true, "src": "src.aec.__main__"}
+{"body_sha": "bfa95e54ce28", "dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "defines", "line": 27, "resolved": true, "src": "src.aec.__main__"}
+{"body_sha": "8275008a5d7f", "dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "defines", "line": 35, "resolved": true, "src": "src.aec.__main__"}
+{"body_sha": "3e5d0bcd49ec", "dst": "src.aec.code_impact.code_impact", "file": "src/aec/code_impact.py", "kind": "defines", "line": 31, "resolved": true, "src": "src.aec.code_impact"}
+{"body_sha": "a3ce6bd30531", "dst": "src.aec.code_impact.events_from_diff", "file": "src/aec/code_impact.py", "kind": "defines", "line": 19, "resolved": true, "src": "src.aec.code_impact"}
+{"body_sha": "d80ff4fa08be", "dst": "src.aec.code_impact.referenced_symbols", "file": "src/aec/code_impact.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.code_impact"}
+{"body_sha": "150af02f508b", "dst": "src.aec.edges.BUILTINS", "file": "src/aec/edges.py", "kind": "defines", "line": 27, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "8aedfec6b6c4", "dst": "src.aec.edges.DEFAULT_IGNORE", "file": "src/aec/edges.py", "kind": "defines", "line": 28, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "8470bed05cb3", "dst": "src.aec.edges.KINDS", "file": "src/aec/edges.py", "kind": "defines", "line": 26, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "ce8490083317", "dst": "src.aec.edges.TOOL_VERSION", "file": "src/aec/edges.py", "kind": "defines", "line": 25, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "4285bab2a4e7", "dst": "src.aec.edges._Extractor", "file": "src/aec/edges.py", "kind": "defines", "line": 81, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "615347834be0", "dst": "src.aec.edges._Module", "file": "src/aec/edges.py", "kind": "defines", "line": 69, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "73c1d9bb8e25", "dst": "src.aec.edges._dotted", "file": "src/aec/edges.py", "kind": "defines", "line": 47, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "be28eecf117c", "dst": "src.aec.edges._expr_label", "file": "src/aec/edges.py", "kind": "defines", "line": 56, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "3c30350e407d", "dst": "src.aec.edges._module_name", "file": "src/aec/edges.py", "kind": "defines", "line": 36, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "7db66fefef2c", "dst": "src.aec.edges._sha", "file": "src/aec/edges.py", "kind": "defines", "line": 43, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "77eedba98860", "dst": "src.aec.edges.diff", "file": "src/aec/edges.py", "kind": "defines", "line": 378, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "74671156ef2f", "dst": "src.aec.edges.dumps", "file": "src/aec/edges.py", "kind": "defines", "line": 363, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "8e101d6eb4c5", "dst": "src.aec.edges.legacy_csv", "file": "src/aec/edges.py", "kind": "defines", "line": 393, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "56cbc92768ad", "dst": "src.aec.edges.load", "file": "src/aec/edges.py", "kind": "defines", "line": 374, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "a3227a75fdf4", "dst": "src.aec.edges.loads", "file": "src/aec/edges.py", "kind": "defines", "line": 369, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "1a412d5fcf26", "dst": "src.aec.edges.render_diff", "file": "src/aec/edges.py", "kind": "defines", "line": 398, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "a97a00201b8d", "dst": "src.aec.edges.snapshot", "file": "src/aec/edges.py", "kind": "defines", "line": 346, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "cc2b4789cfb8", "dst": "src.aec.edges.sort_key", "file": "src/aec/edges.py", "kind": "defines", "line": 32, "resolved": true, "src": "src.aec.edges"}
+{"body_sha": "309935116033", "dst": "src.aec.edges._Extractor.__init__", "file": "src/aec/edges.py", "kind": "defines", "line": 82, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "5a290e56154c", "dst": "src.aec.edges._Extractor._abs_module", "file": "src/aec/edges.py", "kind": "defines", "line": 149, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "d883c55c3f0b", "dst": "src.aec.edges._Extractor._import_bindings", "file": "src/aec/edges.py", "kind": "defines", "line": 157, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "e79404e0e3d4", "dst": "src.aec.edges._Extractor._lookup_class_attr", "file": "src/aec/edges.py", "kind": "defines", "line": 214, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "0a4852939b71", "dst": "src.aec.edges._Extractor._scan_expr", "file": "src/aec/edges.py", "kind": "defines", "line": 309, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "a8fce71c7dec", "dst": "src.aec.edges._Extractor._scan_scope", "file": "src/aec/edges.py", "kind": "defines", "line": 271, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "c63b5ceabaa2", "dst": "src.aec.edges._Extractor.build_module_bindings", "file": "src/aec/edges.py", "kind": "defines", "line": 181, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "a71433dd762b", "dst": "src.aec.edges._Extractor.collect_all_defs", "file": "src/aec/edges.py", "kind": "defines", "line": 228, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "80fad2363e16", "dst": "src.aec.edges._Extractor.collect_bases", "file": "src/aec/edges.py", "kind": "defines", "line": 251, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "d59e030fa886", "dst": "src.aec.edges._Extractor.edge", "file": "src/aec/edges.py", "kind": "defines", "line": 142, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "d9bdcd7eddef", "dst": "src.aec.edges._Extractor.files", "file": "src/aec/edges.py", "kind": "defines", "line": 94, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "90a0dde43736", "dst": "src.aec.edges._Extractor.index", "file": "src/aec/edges.py", "kind": "defines", "line": 126, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "055cdd398fd0", "dst": "src.aec.edges._Extractor.load", "file": "src/aec/edges.py", "kind": "defines", "line": 111, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "9c280de7a4e9", "dst": "src.aec.edges._Extractor.parse", "file": "src/aec/edges.py", "kind": "defines", "line": 104, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "b5fc30eb729f", "dst": "src.aec.edges._Extractor.resolve", "file": "src/aec/edges.py", "kind": "defines", "line": 192, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "ca889e23a121", "dst": "src.aec.edges._Extractor.run", "file": "src/aec/edges.py", "kind": "defines", "line": 338, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "defb4fd30ef5", "dst": "src.aec.edges._Extractor.scan_bodies", "file": "src/aec/edges.py", "kind": "defines", "line": 264, "resolved": true, "src": "src.aec.edges._Extractor"}
+{"body_sha": "07faf1a4b6db", "dst": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk", "file": "src/aec/edges.py", "kind": "defines", "line": 229, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs"}
+{"body_sha": "54762df06f0a", "dst": "src.aec.edges._Module.__init__", "file": "src/aec/edges.py", "kind": "defines", "line": 73, "resolved": true, "src": "src.aec.edges._Module"}
+{"body_sha": "866d2b0d004f", "dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "defines", "line": 20, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "26a1fa0018c1", "dst": "src.aec.impact.ImpactReport", "file": "src/aec/impact.py", "kind": "defines", "line": 27, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "3ff659a7c1ad", "dst": "src.aec.impact.PROPAGATES", "file": "src/aec/impact.py", "kind": "defines", "line": 16, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "c8aeda37822a", "dst": "src.aec.impact.SEVERITY", "file": "src/aec/impact.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "3d3c58e3d301", "dst": "src.aec.impact._dependents", "file": "src/aec/impact.py", "kind": "defines", "line": 40, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "a6c80fe2c630", "dst": "src.aec.impact._live_supports", "file": "src/aec/impact.py", "kind": "defines", "line": 63, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "9c1a735f7c72", "dst": "src.aec.impact._raise", "file": "src/aec/impact.py", "kind": "defines", "line": 67, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "286608df3855", "dst": "src.aec.impact.impact", "file": "src/aec/impact.py", "kind": "defines", "line": 75, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "79c72d77e91b", "dst": "src.aec.impact.render", "file": "src/aec/impact.py", "kind": "defines", "line": 145, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "6c29987861a0", "dst": "src.aec.impact.ImpactReport.by_status", "file": "src/aec/impact.py", "kind": "defines", "line": 33, "resolved": true, "src": "src.aec.impact.ImpactReport"}
+{"body_sha": "1a7c4f6bf4d2", "dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "fff00eb23b1e", "dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "defines", "line": 88, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "6eb7260c1e6a", "dst": "src.aec.records.RELATIONS", "file": "src/aec/records.py", "kind": "defines", "line": 13, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "f08ea964b8d9", "dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "defines", "line": 31, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "3d0e08151fb0", "dst": "src.aec.records.Store", "file": "src/aec/records.py", "kind": "defines", "line": 48, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "794882402acf", "dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "defines", "line": 16, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "be1cc61ebe3e", "dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "defines", "line": 11, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "63bfb61ac8d0", "dst": "src.aec.records.check", "file": "src/aec/records.py", "kind": "defines", "line": 105, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "bd28db3e01bf", "dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "defines", "line": 95, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "fb9e909df5e8", "dst": "src.aec.records.ref", "file": "src/aec/records.py", "kind": "defines", "line": 19, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "cb635a09f6a5", "dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "defines", "line": 23, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "1c2d97e3c362", "dst": "src.aec.records.Record.get", "file": "src/aec/records.py", "kind": "defines", "line": 44, "resolved": true, "src": "src.aec.records.Record"}
+{"body_sha": "3f1cb27e27fb", "dst": "src.aec.records.Record.ref", "file": "src/aec/records.py", "kind": "defines", "line": 41, "resolved": true, "src": "src.aec.records.Record"}
+{"body_sha": "fca1968b4438", "dst": "src.aec.records.Store.__init__", "file": "src/aec/records.py", "kind": "defines", "line": 51, "resolved": true, "src": "src.aec.records.Store"}
+{"body_sha": "c79378b99990", "dst": "src.aec.records.Store.governs", "file": "src/aec/records.py", "kind": "defines", "line": 80, "resolved": true, "src": "src.aec.records.Store"}
+{"body_sha": "56f2d340f30d", "dst": "src.aec.records.Store.in_edges", "file": "src/aec/records.py", "kind": "defines", "line": 77, "resolved": true, "src": "src.aec.records.Store"}
+{"body_sha": "b5cc35f73a7c", "dst": "src.aec.records.Store.load", "file": "src/aec/records.py", "kind": "defines", "line": 61, "resolved": true, "src": "src.aec.records.Store"}
+{"body_sha": "d37c5d2bdf69", "dst": "src.aec.records.Store.out_edges", "file": "src/aec/records.py", "kind": "defines", "line": 74, "resolved": true, "src": "src.aec.records.Store"}
+{"body_sha": "a10561554085", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 61, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "fba486bdfa2d", "dst": "src.core.tools.ast_dependency_extractor.analyze", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 167, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "7232e6135d67", "dst": "src.core.tools.ast_dependency_extractor.app", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 58, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "77365d03806c", "dst": "src.core.tools.ast_dependency_extractor.build_adjacency_matrix", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 132, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "72d35f2fd911", "dst": "src.core.tools.ast_dependency_extractor.collect_py_files", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 146, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "85828aed49ce", "dst": "src.core.tools.ast_dependency_extractor.load_graph_config", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 159, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "dc2cb9c132d5", "dst": "src.core.tools.ast_dependency_extractor.should_ignore_dir", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 141, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"body_sha": "7b0ba3e3cf51", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 62, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "17e1c7a2cc67", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 105, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "c735fb165d85", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._resolve_name", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 115, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "4527b87d407f", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 83, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "004622f5c59d", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.get_function_defs", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 128, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "61b1a9556460", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.get_function_edges", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 125, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "036c9360c034", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.process_file", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 68, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor"}
+{"body_sha": "39c7fecb8d21", "dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v1/pkg/base.py", "kind": "defines", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.base"}
+{"body_sha": "e86e8e86fdff", "dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base.run", "file": "tests/fixtures/edges_pkg_v1/pkg/base.py", "kind": "defines", "line": 2, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.base.Base"}
+{"body_sha": "5d19f8e045e0", "dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base.step", "file": "tests/fixtures/edges_pkg_v1/pkg/base.py", "kind": "defines", "line": 5, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.base.Base"}
+{"body_sha": "19367c0eb54f", "dst": "tests.fixtures.edges_pkg_v1.pkg.core.CONSTANT", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "defines", "line": 29, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"body_sha": "4b471b450826", "dst": "tests.fixtures.edges_pkg_v1.pkg.core.Worker", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "defines", "line": 8, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"body_sha": "4abe4c1dd09e", "dst": "tests.fixtures.edges_pkg_v1.pkg.core.fetch", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "defines", "line": 13, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"body_sha": "3cecd8d363b5", "dst": "tests.fixtures.edges_pkg_v1.pkg.core.load", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "defines", "line": 17, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"body_sha": "da668029cac4", "dst": "tests.fixtures.edges_pkg_v1.pkg.core.main", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "defines", "line": 23, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"body_sha": "a5b758ed293a", "dst": "tests.fixtures.edges_pkg_v1.pkg.core.Worker.step", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.Worker"}
+{"body_sha": "8317f5fb0d17", "dst": "tests.fixtures.edges_pkg_v1.pkg.extras.helper", "file": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "kind": "defines", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.extras"}
+{"body_sha": "5d057e91fdb0", "dst": "tests.fixtures.edges_pkg_v1.pkg.util.helper", "file": "tests/fixtures/edges_pkg_v1/pkg/util.py", "kind": "defines", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.util"}
+{"body_sha": "39c7fecb8d21", "dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v2/pkg/base.py", "kind": "defines", "line": 2, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.base"}
+{"body_sha": "e86e8e86fdff", "dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base.run", "file": "tests/fixtures/edges_pkg_v2/pkg/base.py", "kind": "defines", "line": 4, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.base.Base"}
+{"body_sha": "5d19f8e045e0", "dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base.step", "file": "tests/fixtures/edges_pkg_v2/pkg/base.py", "kind": "defines", "line": 7, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.base.Base"}
+{"body_sha": "19367c0eb54f", "dst": "tests.fixtures.edges_pkg_v2.pkg.core.CONSTANT", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "defines", "line": 26, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"body_sha": "3f3e3efb146b", "dst": "tests.fixtures.edges_pkg_v2.pkg.core.Worker", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "defines", "line": 8, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"body_sha": "3cecd8d363b5", "dst": "tests.fixtures.edges_pkg_v2.pkg.core.load", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "defines", "line": 14, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"body_sha": "da668029cac4", "dst": "tests.fixtures.edges_pkg_v2.pkg.core.main", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "defines", "line": 20, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"body_sha": "8d069e4e71dd", "dst": "tests.fixtures.edges_pkg_v2.pkg.core.Worker.step", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.Worker"}
+{"body_sha": "8317f5fb0d17", "dst": "tests.fixtures.edges_pkg_v2.pkg.extras.helper", "file": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "kind": "defines", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.extras"}
+{"body_sha": "22f2572cb577", "dst": "tests.fixtures.edges_pkg_v2.pkg.util.helper", "file": "tests/fixtures/edges_pkg_v2/pkg/util.py", "kind": "defines", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.util"}
+{"body_sha": "dbd36421f3f1", "dst": "tests.test_aec.PILOT", "file": "tests/test_aec.py", "kind": "defines", "line": 19, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "3f0f179dfb51", "dst": "tests.test_aec.ROOT", "file": "tests/test_aec.py", "kind": "defines", "line": 14, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "fd0b2f343cb4", "dst": "tests.test_aec.TestPilot", "file": "tests/test_aec.py", "kind": "defines", "line": 36, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "f11495a4b9bf", "dst": "tests.test_aec.TestSemantics", "file": "tests/test_aec.py", "kind": "defines", "line": 74, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "cda3c6d1135f", "dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "defines", "line": 22, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "aae3b0538c35", "dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "defines", "line": 26, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "b352eeee15f7", "dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "defines", "line": 30, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "19cfded47541", "dst": "tests.test_aec.TestPilot.setUp", "file": "tests/test_aec.py", "kind": "defines", "line": 37, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "030c54039664", "dst": "tests.test_aec.TestPilot.test_authorized_amendment_is_rebaseline_not_drift", "file": "tests/test_aec.py", "kind": "defines", "line": 59, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "c7a78533db3f", "dst": "tests.test_aec.TestPilot.test_census_overclaim_only_weakens_the_hypothesis", "file": "tests/test_aec.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "256f4cf00d31", "dst": "tests.test_aec.TestPilot.test_decoy_change_flags_nothing", "file": "tests/test_aec.py", "kind": "defines", "line": 69, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "8a9c417f797d", "dst": "tests.test_aec.TestPilot.test_duty_timing_breaks_recovery_claim_not_the_receiver_hypothesis", "file": "tests/test_aec.py", "kind": "defines", "line": 43, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "52bccd8bc3c5", "dst": "tests.test_aec.TestPilot.test_pilot_records_check_clean", "file": "tests/test_aec.py", "kind": "defines", "line": 40, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "07ab51298dd9", "dst": "tests.test_aec.TestPilot.test_provisional_criterion_change_is_exploratory", "file": "tests/test_aec.py", "kind": "defines", "line": 64, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "d10afeffceac", "dst": "tests.test_aec.TestPilot.test_unauthorized_amendment_is_stale_and_reported", "file": "tests/test_aec.py", "kind": "defines", "line": 54, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"body_sha": "529e5f08f337", "dst": "tests.test_aec.TestSemantics.test_authority_must_govern_the_subject", "file": "tests/test_aec.py", "kind": "defines", "line": 94, "resolved": true, "src": "tests.test_aec.TestSemantics"}
+{"body_sha": "ade275df42f5", "dst": "tests.test_aec.TestSemantics.test_check_rules", "file": "tests/test_aec.py", "kind": "defines", "line": 101, "resolved": true, "src": "tests.test_aec.TestSemantics"}
+{"body_sha": "18e46f9faeab", "dst": "tests.test_aec.TestSemantics.test_last_support_removed_is_unjustified", "file": "tests/test_aec.py", "kind": "defines", "line": 89, "resolved": true, "src": "tests.test_aec.TestSemantics"}
+{"body_sha": "a5e555bed782", "dst": "tests.test_aec.TestSemantics.test_transitive_necessary_dependency", "file": "tests/test_aec.py", "kind": "defines", "line": 85, "resolved": true, "src": "tests.test_aec.TestSemantics"}
+{"body_sha": "6eea5e6c99a9", "dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "defines", "line": 10, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "3f0f179dfb51", "dst": "tests.test_code_impact.ROOT", "file": "tests/test_code_impact.py", "kind": "defines", "line": 8, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "2fadc3689f74", "dst": "tests.test_code_impact.TestCodeImpact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 16, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "0fcc65674795", "dst": "tests.test_code_impact.TestDanglingCodeRefs", "file": "tests/test_code_impact.py", "kind": "defines", "line": 41, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "24402408d94b", "dst": "tests.test_code_impact.TestCodeImpact.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 18, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "2f3d15129142", "dst": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision", "file": "tests/test_code_impact.py", "kind": "defines", "line": 24, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "f10732ce5121", "dst": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_leaves_requirement_unjustified", "file": "tests/test_code_impact.py", "kind": "defines", "line": 30, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "46c17003dead", "dst": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 36, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "8f9a003c3cc4", "dst": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged", "file": "tests/test_code_impact.py", "kind": "defines", "line": 33, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "6690cf87087f", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors", "file": "tests/test_code_impact.py", "kind": "defines", "line": 53, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"body_sha": "cb0f92708c5d", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid", "file": "tests/test_code_impact.py", "kind": "defines", "line": 42, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"body_sha": "6eea5e6c99a9", "dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "3f0f179dfb51", "dst": "tests.test_edges.ROOT", "file": "tests/test_edges.py", "kind": "defines", "line": 7, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "5c1905e70573", "dst": "tests.test_edges.TestDeterminism", "file": "tests/test_edges.py", "kind": "defines", "line": 49, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "c0583fb03d5e", "dst": "tests.test_edges.TestDiff", "file": "tests/test_edges.py", "kind": "defines", "line": 63, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "e2f267f08f09", "dst": "tests.test_edges.TestExtraction", "file": "tests/test_edges.py", "kind": "defines", "line": 18, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "9c9a99d532b2", "dst": "tests.test_edges.TestLegacyCsv", "file": "tests/test_edges.py", "kind": "defines", "line": 80, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "d820a75710ff", "dst": "tests.test_edges.idents", "file": "tests/test_edges.py", "kind": "defines", "line": 14, "resolved": true, "src": "tests.test_edges"}
+{"body_sha": "ac2fcef3ad71", "dst": "tests.test_edges.TestDeterminism.test_byte_identical_runs", "file": "tests/test_edges.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_edges.TestDeterminism"}
+{"body_sha": "d6de54de2935", "dst": "tests.test_edges.TestDeterminism.test_roundtrip", "file": "tests/test_edges.py", "kind": "defines", "line": 58, "resolved": true, "src": "tests.test_edges.TestDeterminism"}
+{"body_sha": "3501e29d6fca", "dst": "tests.test_edges.TestDiff.test_comment_and_whitespace_change_is_not_a_diff", "file": "tests/test_edges.py", "kind": "defines", "line": 74, "resolved": true, "src": "tests.test_edges.TestDiff"}
+{"body_sha": "56c27bb9116d", "dst": "tests.test_edges.TestDiff.test_diff_is_exactly_the_labelled_changes", "file": "tests/test_edges.py", "kind": "defines", "line": 64, "resolved": true, "src": "tests.test_edges.TestDiff"}
+{"body_sha": "44c6e1c34e0b", "dst": "tests.test_edges.TestExtraction.setUpClass", "file": "tests/test_edges.py", "kind": "defines", "line": 20, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"body_sha": "6e13483a5ced", "dst": "tests.test_edges.TestExtraction.test_dynamic_call_is_unresolved_not_guessed", "file": "tests/test_edges.py", "kind": "defines", "line": 39, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"body_sha": "716f15c58224", "dst": "tests.test_edges.TestExtraction.test_every_edge_has_location_and_resolution", "file": "tests/test_edges.py", "kind": "defines", "line": 29, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"body_sha": "dca59392f1dc", "dst": "tests.test_edges.TestExtraction.test_explicit_import_after_star_wins", "file": "tests/test_edges.py", "kind": "defines", "line": 35, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"body_sha": "6de16f3b35ec", "dst": "tests.test_edges.TestExtraction.test_labelled_kinds_match_exactly", "file": "tests/test_edges.py", "kind": "defines", "line": 24, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"body_sha": "a07a38cb1b2a", "dst": "tests.test_edges.TestExtraction.test_syntax_error_file_is_skipped_others_still_processed", "file": "tests/test_edges.py", "kind": "defines", "line": 44, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"body_sha": "4e8ae0141809", "dst": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header", "file": "tests/test_edges.py", "kind": "defines", "line": 81, "resolved": true, "src": "tests.test_edges.TestLegacyCsv"}
+{"body_sha": "107f1f14bb43", "dst": "tests.test_extension.EXT", "file": "tests/test_extension.py", "kind": "defines", "line": 12, "resolved": true, "src": "tests.test_extension"}
+{"body_sha": "3f0f179dfb51", "dst": "tests.test_extension.ROOT", "file": "tests/test_extension.py", "kind": "defines", "line": 11, "resolved": true, "src": "tests.test_extension"}
+{"body_sha": "432e36f290c5", "dst": "tests.test_extension.TestInstallRemove", "file": "tests/test_extension.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_extension"}
+{"body_sha": "7adb88591987", "dst": "tests.test_extension.TestManifest", "file": "tests/test_extension.py", "kind": "defines", "line": 24, "resolved": true, "src": "tests.test_extension"}
+{"body_sha": "7057311d3349", "dst": "tests.test_extension.parse_manifest", "file": "tests/test_extension.py", "kind": "defines", "line": 15, "resolved": true, "src": "tests.test_extension"}
+{"body_sha": "abb04eb12fcd", "dst": "tests.test_extension.TestInstallRemove.run_", "file": "tests/test_extension.py", "kind": "defines", "line": 51, "resolved": true, "src": "tests.test_extension.TestInstallRemove"}
+{"body_sha": "8a78f009a18e", "dst": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up", "file": "tests/test_extension.py", "kind": "defines", "line": 55, "resolved": true, "src": "tests.test_extension.TestInstallRemove"}
+{"body_sha": "bc48c7a06cec", "dst": "tests.test_extension.TestManifest.setUp", "file": "tests/test_extension.py", "kind": "defines", "line": 25, "resolved": true, "src": "tests.test_extension.TestManifest"}
+{"body_sha": "ceaea0b5c202", "dst": "tests.test_extension.TestManifest.test_commands_declare_read_only", "file": "tests/test_extension.py", "kind": "defines", "line": 43, "resolved": true, "src": "tests.test_extension.TestManifest"}
+{"body_sha": "189a075b74e5", "dst": "tests.test_extension.TestManifest.test_every_command_file_exists", "file": "tests/test_extension.py", "kind": "defines", "line": 34, "resolved": true, "src": "tests.test_extension.TestManifest"}
+{"body_sha": "6e19bb2522aa", "dst": "tests.test_extension.TestManifest.test_every_hook_command_is_provided_and_optional", "file": "tests/test_extension.py", "kind": "defines", "line": 38, "resolved": true, "src": "tests.test_extension.TestManifest"}
+{"body_sha": "311917c1d780", "dst": "tests.test_extension.TestManifest.test_schema_basics", "file": "tests/test_extension.py", "kind": "defines", "line": 29, "resolved": true, "src": "tests.test_extension.TestManifest"}
+{"body_sha": "3f0f179dfb51", "dst": "tests.test_install.ROOT", "file": "tests/test_install.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.test_install"}
+{"body_sha": "0ca264e50c8e", "dst": "tests.test_install.TestInstall", "file": "tests/test_install.py", "kind": "defines", "line": 13, "resolved": true, "src": "tests.test_install"}
+{"body_sha": "f3da41c6df7e", "dst": "tests.test_install.TestInstall.test_pip_install_and_run", "file": "tests/test_install.py", "kind": "defines", "line": 14, "resolved": true, "src": "tests.test_install.TestInstall"}
+{"body_sha": "9937a90bee8c", "dst": "tests.test_stdlib_only.SRC", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 7, "resolved": true, "src": "tests.test_stdlib_only"}
+{"body_sha": "dc7f62f7f97e", "dst": "tests.test_stdlib_only.TestStdlibOnly", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 10, "resolved": true, "src": "tests.test_stdlib_only"}
+{"body_sha": "591a83845b43", "dst": "tests.test_stdlib_only.TestStdlibOnly.test_imports", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 11, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly"}
+{"body_sha": "ecd7b7626361", "dst": "tests.test_stdlib_only.TestStdlibOnly.test_violation_is_detected", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 25, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly"}
+{"dst": "__future__.annotations", "file": "src/aec/__main__.py", "kind": "imports", "line": 9, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "argparse", "file": "src/aec/__main__.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "imports", "line": 14, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "json", "file": "src/aec/__main__.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "imports", "line": 15, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.edges", "file": "src/aec/__main__.py", "kind": "imports", "line": 17, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.impact.impact", "file": "src/aec/__main__.py", "kind": "imports", "line": 18, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.impact.render", "file": "src/aec/__main__.py", "kind": "imports", "line": 18, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.records.Store", "file": "src/aec/__main__.py", "kind": "imports", "line": 19, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.records.check", "file": "src/aec/__main__.py", "kind": "imports", "line": 19, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "sys", "file": "src/aec/__main__.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.code_impact.code_impact", "file": "src/aec/__main__.py", "kind": "imports", "line": 94, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "__future__.annotations", "file": "src/aec/code_impact.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "src.aec.edges", "file": "src/aec/code_impact.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "src.aec.impact.ImpactReport", "file": "src/aec/code_impact.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "src.aec.impact.impact", "file": "src/aec/code_impact.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "src.aec.records.Record", "file": "src/aec/code_impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "src.aec.records.Store", "file": "src/aec/code_impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.code_impact"}
+{"dst": "__future__.annotations", "file": "src/aec/edges.py", "kind": "imports", "line": 15, "resolved": true, "src": "src.aec.edges"}
+{"dst": "ast", "file": "src/aec/edges.py", "kind": "imports", "line": 17, "resolved": true, "src": "src.aec.edges"}
+{"dst": "builtins", "file": "src/aec/edges.py", "kind": "imports", "line": 18, "resolved": true, "src": "src.aec.edges"}
+{"dst": "hashlib", "file": "src/aec/edges.py", "kind": "imports", "line": 19, "resolved": true, "src": "src.aec.edges"}
+{"dst": "json", "file": "src/aec/edges.py", "kind": "imports", "line": 20, "resolved": true, "src": "src.aec.edges"}
+{"dst": "pathlib.Path", "file": "src/aec/edges.py", "kind": "imports", "line": 23, "resolved": true, "src": "src.aec.edges"}
+{"dst": "tokenize", "file": "src/aec/edges.py", "kind": "imports", "line": 21, "resolved": true, "src": "src.aec.edges"}
+{"dst": "warnings", "file": "src/aec/edges.py", "kind": "imports", "line": 22, "resolved": true, "src": "src.aec.edges"}
+{"dst": "__future__.annotations", "file": "src/aec/impact.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.impact"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/impact.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.impact"}
+{"dst": "dataclasses.field", "file": "src/aec/impact.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.impact"}
+{"dst": "src.aec.records.Record", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
+{"dst": "src.aec.records.Store", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
+{"dst": "src.aec.records.split_ref", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
+{"dst": "__future__.annotations", "file": "src/aec/records.py", "kind": "imports", "line": 5, "resolved": true, "src": "src.aec.records"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/records.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.records"}
+{"dst": "dataclasses.field", "file": "src/aec/records.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.records"}
+{"dst": "json", "file": "src/aec/records.py", "kind": "imports", "line": 7, "resolved": true, "src": "src.aec.records"}
+{"dst": "pathlib.Path", "file": "src/aec/records.py", "kind": "imports", "line": 9, "resolved": true, "src": "src.aec.records"}
+{"dst": "ast", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 48, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "json", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 49, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "os", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 50, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "pandas", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 55, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "pathlib.Path", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 52, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "tokenize", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 51, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "typer", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 56, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "typing.Dict", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 53, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "typing.List", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 53, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "typing.Tuple", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 53, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "json", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"dst": "os", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "imports", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"dst": "pkg.extras.*", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"dst": "pkg.util.helper", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core"}
+{"dst": "pkg.base.Base", "file": "tests/fixtures/edges_pkg_v1/pkg/util.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.util.helper"}
+{"dst": "json", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"dst": "os", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "imports", "line": 1, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"dst": "pkg.extras.*", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"dst": "pkg.util.helper", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core"}
+{"dst": "pkg.base.Base", "file": "tests/fixtures/edges_pkg_v2/pkg/util.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.util.helper"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "imports", "line": 16, "resolved": true, "src": "tests.test_aec"}
+{"dst": "aec.records.Store", "file": "tests/test_aec.py", "kind": "imports", "line": 17, "resolved": true, "src": "tests.test_aec"}
+{"dst": "aec.records.check", "file": "tests/test_aec.py", "kind": "imports", "line": 17, "resolved": true, "src": "tests.test_aec"}
+{"dst": "json", "file": "tests/test_aec.py", "kind": "imports", "line": 8, "resolved": true, "src": "tests.test_aec"}
+{"dst": "pathlib.Path", "file": "tests/test_aec.py", "kind": "imports", "line": 12, "resolved": true, "src": "tests.test_aec"}
+{"dst": "sys", "file": "tests/test_aec.py", "kind": "imports", "line": 9, "resolved": true, "src": "tests.test_aec"}
+{"dst": "tempfile", "file": "tests/test_aec.py", "kind": "imports", "line": 10, "resolved": true, "src": "tests.test_aec"}
+{"dst": "unittest", "file": "tests/test_aec.py", "kind": "imports", "line": 11, "resolved": true, "src": "tests.test_aec"}
+{"dst": "aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "aec.edges", "file": "tests/test_code_impact.py", "kind": "imports", "line": 11, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "aec.records.Store", "file": "tests/test_code_impact.py", "kind": "imports", "line": 13, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "aec.records.check", "file": "tests/test_code_impact.py", "kind": "imports", "line": 13, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "json", "file": "tests/test_code_impact.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "imports", "line": 6, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "sys", "file": "tests/test_code_impact.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "tempfile", "file": "tests/test_code_impact.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "unittest", "file": "tests/test_code_impact.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "aec.edges", "file": "tests/test_edges.py", "kind": "imports", "line": 11, "resolved": true, "src": "tests.test_edges"}
+{"dst": "json", "file": "tests/test_edges.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_edges"}
+{"dst": "pathlib.Path", "file": "tests/test_edges.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_edges"}
+{"dst": "sys", "file": "tests/test_edges.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_edges"}
+{"dst": "unittest", "file": "tests/test_edges.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_edges"}
+{"dst": "json", "file": "tests/test_extension.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_extension"}
+{"dst": "os", "file": "tests/test_extension.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_extension"}
+{"dst": "pathlib.Path", "file": "tests/test_extension.py", "kind": "imports", "line": 9, "resolved": true, "src": "tests.test_extension"}
+{"dst": "re", "file": "tests/test_extension.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_extension"}
+{"dst": "shutil", "file": "tests/test_extension.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_extension"}
+{"dst": "subprocess", "file": "tests/test_extension.py", "kind": "imports", "line": 6, "resolved": true, "src": "tests.test_extension"}
+{"dst": "tempfile", "file": "tests/test_extension.py", "kind": "imports", "line": 7, "resolved": true, "src": "tests.test_extension"}
+{"dst": "unittest", "file": "tests/test_extension.py", "kind": "imports", "line": 8, "resolved": true, "src": "tests.test_extension"}
+{"dst": "os", "file": "tests/test_install.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_install"}
+{"dst": "pathlib.Path", "file": "tests/test_install.py", "kind": "imports", "line": 7, "resolved": true, "src": "tests.test_install"}
+{"dst": "subprocess", "file": "tests/test_install.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_install"}
+{"dst": "sys", "file": "tests/test_install.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_install"}
+{"dst": "tempfile", "file": "tests/test_install.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_install"}
+{"dst": "unittest", "file": "tests/test_install.py", "kind": "imports", "line": 6, "resolved": true, "src": "tests.test_install"}
+{"dst": "ast", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_stdlib_only"}
+{"dst": "pathlib.Path", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_stdlib_only"}
+{"dst": "sys", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_stdlib_only"}
+{"dst": "unittest", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_stdlib_only"}
+{"dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "inherits", "line": 8, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.Worker"}
+{"dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "inherits", "line": 8, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.Worker"}
+{"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 36, "resolved": true, "src": "tests.test_aec.TestPilot"}
+{"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 74, "resolved": true, "src": "tests.test_aec.TestSemantics"}
+{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 16, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 41, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 49, "resolved": true, "src": "tests.test_edges.TestDeterminism"}
+{"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 63, "resolved": true, "src": "tests.test_edges.TestDiff"}
+{"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 18, "resolved": true, "src": "tests.test_edges.TestExtraction"}
+{"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 80, "resolved": true, "src": "tests.test_edges.TestLegacyCsv"}
+{"dst": "unittest.TestCase", "file": "tests/test_extension.py", "kind": "inherits", "line": 50, "resolved": true, "src": "tests.test_extension.TestInstallRemove"}
+{"dst": "unittest.TestCase", "file": "tests/test_extension.py", "kind": "inherits", "line": 24, "resolved": true, "src": "tests.test_extension.TestManifest"}
+{"dst": "unittest.TestCase", "file": "tests/test_install.py", "kind": "inherits", "line": 13, "resolved": true, "src": "tests.test_install.TestInstall"}
+{"dst": "unittest.TestCase", "file": "tests/test_stdlib_only.py", "kind": "inherits", "line": 10, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly"}
+{"dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "calls", "line": 104, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "sys.exit", "file": "src/aec/__main__.py", "kind": "calls", "line": 104, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "?Path(...).read_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 23, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "?Path(...).read_text(...).splitlines", "file": "src/aec/__main__.py", "kind": "calls", "line": 23, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "?l.strip", "file": "src/aec/__main__.py", "kind": "calls", "line": 24, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "?l.strip(...).startswith", "file": "src/aec/__main__.py", "kind": "calls", "line": 24, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "json.loads", "file": "src/aec/__main__.py", "kind": "calls", "line": 23, "resolved": true, "src": "src.aec.__main__._changes"}
+{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "calls", "line": 23, "resolved": true, "src": "src.aec.__main__._changes"}
+{"dst": "?rep.impacts.values", "file": "src/aec/__main__.py", "kind": "calls", "line": 29, "resolved": false, "src": "src.aec.__main__._print_impact"}
+{"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "calls", "line": 29, "resolved": true, "src": "src.aec.__main__._print_impact"}
+{"dst": "json.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 29, "resolved": true, "src": "src.aec.__main__._print_impact"}
+{"dst": "src.aec.impact.render", "file": "src/aec/__main__.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.__main__._print_impact"}
+{"dst": "?Path(...).parent.mkdir", "file": "src/aec/__main__.py", "kind": "calls", "line": 70, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?Path(...).write_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 71, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ap.add_subparsers", "file": "src/aec/__main__.py", "kind": "calls", "line": 37, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ap.parse_args", "file": "src/aec/__main__.py", "kind": "calls", "line": 56, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?c.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 45, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ci.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 52, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?e.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 39, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?f.level.upper", "file": "src/aec/__main__.py", "kind": "calls", "line": 86, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?i.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 48, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?root.is_dir", "file": "src/aec/__main__.py", "kind": "calls", "line": 64, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?sub.add_parser", "file": "src/aec/__main__.py", "kind": "calls", "line": 38, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "argparse.ArgumentParser", "file": "src/aec/__main__.py", "kind": "calls", "line": 36, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "json.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 61, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "calls", "line": 63, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "calls", "line": 91, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 91, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.code_impact.code_impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 95, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.diff", "file": "src/aec/__main__.py", "kind": "calls", "line": 60, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 68, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.legacy_csv", "file": "src/aec/__main__.py", "kind": "calls", "line": 78, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.load", "file": "src/aec/__main__.py", "kind": "calls", "line": 60, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.render_diff", "file": "src/aec/__main__.py", "kind": "calls", "line": 61, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.snapshot", "file": "src/aec/__main__.py", "kind": "calls", "line": 67, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.impact.impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 91, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.records.Store.load", "file": "src/aec/__main__.py", "kind": "calls", "line": 81, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.records.check", "file": "src/aec/__main__.py", "kind": "calls", "line": 84, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "sys.stdout.write", "file": "src/aec/__main__.py", "kind": "calls", "line": 76, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.code_impact.events_from_diff", "file": "src/aec/code_impact.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "src.aec.code_impact.referenced_symbols", "file": "src/aec/code_impact.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "src.aec.edges.diff", "file": "src/aec/code_impact.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "src.aec.impact.impact", "file": "src/aec/code_impact.py", "kind": "calls", "line": 35, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "src.aec.records.Record", "file": "src/aec/code_impact.py", "kind": "calls", "line": 33, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "src.aec.records.Store", "file": "src/aec/code_impact.py", "kind": "calls", "line": 35, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "?events.append", "file": "src/aec/code_impact.py", "kind": "calls", "line": 24, "resolved": false, "src": "src.aec.code_impact.events_from_diff"}
+{"dst": "?e.get", "file": "src/aec/code_impact.py", "kind": "calls", "line": 16, "resolved": false, "src": "src.aec.code_impact.referenced_symbols"}
+{"dst": "?str(...).startswith", "file": "src/aec/code_impact.py", "kind": "calls", "line": 16, "resolved": false, "src": "src.aec.code_impact.referenced_symbols"}
+{"dst": "?constant.join", "file": "src/aec/edges.py", "kind": "calls", "line": 155, "resolved": false, "src": "src.aec.edges._Extractor._abs_module"}
+{"dst": "?mod.name.split", "file": "src/aec/edges.py", "kind": "calls", "line": 152, "resolved": false, "src": "src.aec.edges._Extractor._abs_module"}
+{"dst": "?a.name.split", "file": "src/aec/edges.py", "kind": "calls", "line": 164, "resolved": false, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "?n.startswith", "file": "src/aec/edges.py", "kind": "calls", "line": 174, "resolved": false, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "?self.modules.get", "file": "src/aec/edges.py", "kind": "calls", "line": 171, "resolved": false, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "?target.top_defs.items", "file": "src/aec/edges.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "src.aec.edges._Extractor._abs_module", "file": "src/aec/edges.py", "kind": "calls", "line": 167, "resolved": true, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "src.aec.edges._Extractor.edge", "file": "src/aec/edges.py", "kind": "calls", "line": 160, "resolved": true, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "?seen.add", "file": "src/aec/edges.py", "kind": "calls", "line": 218, "resolved": false, "src": "src.aec.edges._Extractor._lookup_class_attr"}
+{"dst": "?self.class_bases.get", "file": "src/aec/edges.py", "kind": "calls", "line": 221, "resolved": false, "src": "src.aec.edges._Extractor._lookup_class_attr"}
+{"dst": "src.aec.edges._Extractor._lookup_class_attr", "file": "src/aec/edges.py", "kind": "calls", "line": 222, "resolved": true, "src": "src.aec.edges._Extractor._lookup_class_attr"}
+{"dst": "?call_funcs.add", "file": "src/aec/edges.py", "kind": "calls", "line": 313, "resolved": false, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "?inner.add", "file": "src/aec/edges.py", "kind": "calls", "line": 325, "resolved": false, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "ast.walk", "file": "src/aec/edges.py", "kind": "calls", "line": 311, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "src.aec.edges._Extractor.edge", "file": "src/aec/edges.py", "kind": "calls", "line": 318, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "src.aec.edges._Extractor.resolve", "file": "src/aec/edges.py", "kind": "calls", "line": 316, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "src.aec.edges._dotted", "file": "src/aec/edges.py", "kind": "calls", "line": 314, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "src.aec.edges._expr_label", "file": "src/aec/edges.py", "kind": "calls", "line": 320, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "?locals_.add", "file": "src/aec/edges.py", "kind": "calls", "line": 293, "resolved": false, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "?nested.append", "file": "src/aec/edges.py", "kind": "calls", "line": 278, "resolved": false, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "?stmts.append", "file": "src/aec/edges.py", "kind": "calls", "line": 286, "resolved": false, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "?stmts.extend", "file": "src/aec/edges.py", "kind": "calls", "line": 280, "resolved": false, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.walk", "file": "src/aec/edges.py", "kind": "calls", "line": 289, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "src.aec.edges._Extractor._import_bindings", "file": "src/aec/edges.py", "kind": "calls", "line": 291, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "src.aec.edges._Extractor._scan_expr", "file": "src/aec/edges.py", "kind": "calls", "line": 295, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "src.aec.edges._Extractor._scan_scope", "file": "src/aec/edges.py", "kind": "calls", "line": 301, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "?self.modules.values", "file": "src/aec/edges.py", "kind": "calls", "line": 182, "resolved": false, "src": "src.aec.edges._Extractor.build_module_bindings"}
+{"dst": "src.aec.edges._Extractor._import_bindings", "file": "src/aec/edges.py", "kind": "calls", "line": 186, "resolved": true, "src": "src.aec.edges._Extractor.build_module_bindings"}
+{"dst": "?walk", "file": "src/aec/edges.py", "kind": "calls", "line": 249, "resolved": false, "src": "src.aec.edges._Extractor.collect_all_defs"}
+{"dst": "?mod.class_bases.append", "file": "src/aec/edges.py", "kind": "calls", "line": 239, "resolved": false, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "?self._all_def_names.add", "file": "src/aec/edges.py", "kind": "calls", "line": 235, "resolved": false, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "?self._class_syms.add", "file": "src/aec/edges.py", "kind": "calls", "line": 238, "resolved": false, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "?self.edge", "file": "src/aec/edges.py", "kind": "calls", "line": 236, "resolved": false, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "?walk", "file": "src/aec/edges.py", "kind": "calls", "line": 240, "resolved": false, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "src.aec.edges._sha", "file": "src/aec/edges.py", "kind": "calls", "line": 234, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "?self.class_bases.setdefault", "file": "src/aec/edges.py", "kind": "calls", "line": 260, "resolved": false, "src": "src.aec.edges._Extractor.collect_bases"}
+{"dst": "?self.class_bases.setdefault(...).append", "file": "src/aec/edges.py", "kind": "calls", "line": 260, "resolved": false, "src": "src.aec.edges._Extractor.collect_bases"}
+{"dst": "?self.modules.values", "file": "src/aec/edges.py", "kind": "calls", "line": 252, "resolved": false, "src": "src.aec.edges._Extractor.collect_bases"}
+{"dst": "src.aec.edges._Extractor.edge", "file": "src/aec/edges.py", "kind": "calls", "line": 261, "resolved": true, "src": "src.aec.edges._Extractor.collect_bases"}
+{"dst": "src.aec.edges._Extractor.resolve", "file": "src/aec/edges.py", "kind": "calls", "line": 258, "resolved": true, "src": "src.aec.edges._Extractor.collect_bases"}
+{"dst": "src.aec.edges._dotted", "file": "src/aec/edges.py", "kind": "calls", "line": 255, "resolved": true, "src": "src.aec.edges._Extractor.collect_bases"}
+{"dst": "?self.edges.get", "file": "src/aec/edges.py", "kind": "calls", "line": 145, "resolved": false, "src": "src.aec.edges._Extractor.edge"}
+{"dst": "?out.append", "file": "src/aec/edges.py", "kind": "calls", "line": 100, "resolved": false, "src": "src.aec.edges._Extractor.files"}
+{"dst": "?p.relative_to", "file": "src/aec/edges.py", "kind": "calls", "line": 97, "resolved": false, "src": "src.aec.edges._Extractor.files"}
+{"dst": "?part.endswith", "file": "src/aec/edges.py", "kind": "calls", "line": 98, "resolved": false, "src": "src.aec.edges._Extractor.files"}
+{"dst": "?self.root.rglob", "file": "src/aec/edges.py", "kind": "calls", "line": 96, "resolved": false, "src": "src.aec.edges._Extractor.files"}
+{"dst": "?m.order.append", "file": "src/aec/edges.py", "kind": "calls", "line": 129, "resolved": false, "src": "src.aec.edges._Extractor.index"}
+{"dst": "src.aec.edges._Extractor.collect_all_defs", "file": "src/aec/edges.py", "kind": "calls", "line": 139, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "src/aec/edges.py", "kind": "calls", "line": 115, "resolved": false, "src": "src.aec.edges._Extractor.load"}
+{"dst": "?joinedstr.splitlines", "file": "src/aec/edges.py", "kind": "calls", "line": 119, "resolved": false, "src": "src.aec.edges._Extractor.load"}
+{"dst": "?p.read_bytes", "file": "src/aec/edges.py", "kind": "calls", "line": 114, "resolved": false, "src": "src.aec.edges._Extractor.load"}
+{"dst": "?rel.as_posix", "file": "src/aec/edges.py", "kind": "calls", "line": 115, "resolved": false, "src": "src.aec.edges._Extractor.load"}
+{"dst": "?self.file_hashes.append", "file": "src/aec/edges.py", "kind": "calls", "line": 115, "resolved": false, "src": "src.aec.edges._Extractor.load"}
+{"dst": "?self.skipped.append", "file": "src/aec/edges.py", "kind": "calls", "line": 119, "resolved": false, "src": "src.aec.edges._Extractor.load"}
+{"dst": "hashlib.sha256", "file": "src/aec/edges.py", "kind": "calls", "line": 115, "resolved": true, "src": "src.aec.edges._Extractor.load"}
+{"dst": "src.aec.edges._Extractor.files", "file": "src/aec/edges.py", "kind": "calls", "line": 113, "resolved": true, "src": "src.aec.edges._Extractor.load"}
+{"dst": "src.aec.edges._Extractor.index", "file": "src/aec/edges.py", "kind": "calls", "line": 123, "resolved": true, "src": "src.aec.edges._Extractor.load"}
+{"dst": "src.aec.edges._Extractor.parse", "file": "src/aec/edges.py", "kind": "calls", "line": 117, "resolved": true, "src": "src.aec.edges._Extractor.load"}
+{"dst": "src.aec.edges._Module", "file": "src/aec/edges.py", "kind": "calls", "line": 121, "resolved": true, "src": "src.aec.edges._Extractor.load"}
+{"dst": "src.aec.edges._module_name", "file": "src/aec/edges.py", "kind": "calls", "line": 121, "resolved": true, "src": "src.aec.edges._Extractor.load"}
+{"dst": "?f.read", "file": "src/aec/edges.py", "kind": "calls", "line": 106, "resolved": false, "src": "src.aec.edges._Extractor.parse"}
+{"dst": "ast.parse", "file": "src/aec/edges.py", "kind": "calls", "line": 109, "resolved": true, "src": "src.aec.edges._Extractor.parse"}
+{"dst": "tokenize.open", "file": "src/aec/edges.py", "kind": "calls", "line": 105, "resolved": true, "src": "src.aec.edges._Extractor.parse"}
+{"dst": "warnings.catch_warnings", "file": "src/aec/edges.py", "kind": "calls", "line": 107, "resolved": true, "src": "src.aec.edges._Extractor.parse"}
+{"dst": "warnings.simplefilter", "file": "src/aec/edges.py", "kind": "calls", "line": 108, "resolved": true, "src": "src.aec.edges._Extractor.parse"}
+{"dst": "?dotted.partition", "file": "src/aec/edges.py", "kind": "calls", "line": 194, "resolved": false, "src": "src.aec.edges._Extractor.resolve"}
+{"dst": "?rest.split", "file": "src/aec/edges.py", "kind": "calls", "line": 196, "resolved": false, "src": "src.aec.edges._Extractor.resolve"}
+{"dst": "src.aec.edges._Extractor._lookup_class_attr", "file": "src/aec/edges.py", "kind": "calls", "line": 197, "resolved": true, "src": "src.aec.edges._Extractor.resolve"}
+{"dst": "src.aec.edges._Extractor.build_module_bindings", "file": "src/aec/edges.py", "kind": "calls", "line": 340, "resolved": true, "src": "src.aec.edges._Extractor.run"}
+{"dst": "src.aec.edges._Extractor.collect_bases", "file": "src/aec/edges.py", "kind": "calls", "line": 341, "resolved": true, "src": "src.aec.edges._Extractor.run"}
+{"dst": "src.aec.edges._Extractor.load", "file": "src/aec/edges.py", "kind": "calls", "line": 339, "resolved": true, "src": "src.aec.edges._Extractor.run"}
+{"dst": "src.aec.edges._Extractor.scan_bodies", "file": "src/aec/edges.py", "kind": "calls", "line": 342, "resolved": true, "src": "src.aec.edges._Extractor.run"}
+{"dst": "?self.modules.values", "file": "src/aec/edges.py", "kind": "calls", "line": 266, "resolved": false, "src": "src.aec.edges._Extractor.scan_bodies"}
+{"dst": "pathlib.Path", "file": "src/aec/edges.py", "kind": "calls", "line": 267, "resolved": true, "src": "src.aec.edges._Extractor.scan_bodies"}
+{"dst": "src.aec.edges._Extractor._scan_scope", "file": "src/aec/edges.py", "kind": "calls", "line": 268, "resolved": true, "src": "src.aec.edges._Extractor.scan_bodies"}
+{"dst": "src.aec.edges._Extractor.parse", "file": "src/aec/edges.py", "kind": "calls", "line": 267, "resolved": true, "src": "src.aec.edges._Extractor.scan_bodies"}
+{"dst": "src.aec.edges._dotted", "file": "src/aec/edges.py", "kind": "calls", "line": 51, "resolved": true, "src": "src.aec.edges._dotted"}
+{"dst": "?type(...).__name__.lower", "file": "src/aec/edges.py", "kind": "calls", "line": 66, "resolved": false, "src": "src.aec.edges._expr_label"}
+{"dst": "src.aec.edges._dotted", "file": "src/aec/edges.py", "kind": "calls", "line": 57, "resolved": true, "src": "src.aec.edges._expr_label"}
+{"dst": "src.aec.edges._expr_label", "file": "src/aec/edges.py", "kind": "calls", "line": 61, "resolved": true, "src": "src.aec.edges._expr_label"}
+{"dst": "?constant.join", "file": "src/aec/edges.py", "kind": "calls", "line": 40, "resolved": false, "src": "src.aec.edges._module_name"}
+{"dst": "?rel.with_suffix", "file": "src/aec/edges.py", "kind": "calls", "line": 37, "resolved": false, "src": "src.aec.edges._module_name"}
+{"dst": "?ast.dump(...).encode", "file": "src/aec/edges.py", "kind": "calls", "line": 44, "resolved": false, "src": "src.aec.edges._sha"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "src/aec/edges.py", "kind": "calls", "line": 44, "resolved": false, "src": "src.aec.edges._sha"}
+{"dst": "ast.dump", "file": "src/aec/edges.py", "kind": "calls", "line": 44, "resolved": true, "src": "src.aec.edges._sha"}
+{"dst": "hashlib.sha256", "file": "src/aec/edges.py", "kind": "calls", "line": 44, "resolved": true, "src": "src.aec.edges._sha"}
+{"dst": "?e.get", "file": "src/aec/edges.py", "kind": "calls", "line": 382, "resolved": false, "src": "src.aec.edges.diff"}
+{"dst": "?ident", "file": "src/aec/edges.py", "kind": "calls", "line": 380, "resolved": false, "src": "src.aec.edges.diff"}
+{"dst": "?n.keys", "file": "src/aec/edges.py", "kind": "calls", "line": 385, "resolved": false, "src": "src.aec.edges.diff"}
+{"dst": "?nd.keys", "file": "src/aec/edges.py", "kind": "calls", "line": 387, "resolved": false, "src": "src.aec.edges.diff"}
+{"dst": "?o.keys", "file": "src/aec/edges.py", "kind": "calls", "line": 385, "resolved": false, "src": "src.aec.edges.diff"}
+{"dst": "?od.keys", "file": "src/aec/edges.py", "kind": "calls", "line": 387, "resolved": false, "src": "src.aec.edges.diff"}
+{"dst": "?constant.join", "file": "src/aec/edges.py", "kind": "calls", "line": 366, "resolved": false, "src": "src.aec.edges.dumps"}
+{"dst": "json.dumps", "file": "src/aec/edges.py", "kind": "calls", "line": 364, "resolved": true, "src": "src.aec.edges.dumps"}
+{"dst": "?constant.join", "file": "src/aec/edges.py", "kind": "calls", "line": 395, "resolved": false, "src": "src.aec.edges.legacy_csv"}
+{"dst": "?Path(...).read_text", "file": "src/aec/edges.py", "kind": "calls", "line": 375, "resolved": false, "src": "src.aec.edges.load"}
+{"dst": "pathlib.Path", "file": "src/aec/edges.py", "kind": "calls", "line": 375, "resolved": true, "src": "src.aec.edges.load"}
+{"dst": "src.aec.edges.loads", "file": "src/aec/edges.py", "kind": "calls", "line": 375, "resolved": true, "src": "src.aec.edges.load"}
+{"dst": "?l.strip", "file": "src/aec/edges.py", "kind": "calls", "line": 370, "resolved": false, "src": "src.aec.edges.loads"}
+{"dst": "?text.splitlines", "file": "src/aec/edges.py", "kind": "calls", "line": 370, "resolved": false, "src": "src.aec.edges.loads"}
+{"dst": "json.loads", "file": "src/aec/edges.py", "kind": "calls", "line": 370, "resolved": true, "src": "src.aec.edges.loads"}
+{"dst": "?constant.join", "file": "src/aec/edges.py", "kind": "calls", "line": 406, "resolved": false, "src": "src.aec.edges.render_diff"}
+{"dst": "?out.append", "file": "src/aec/edges.py", "kind": "calls", "line": 401, "resolved": false, "src": "src.aec.edges.render_diff"}
+{"dst": "?_Extractor(...).run", "file": "src/aec/edges.py", "kind": "calls", "line": 348, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?constant.join", "file": "src/aec/edges.py", "kind": "calls", "line": 358, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?constant.join(...).encode", "file": "src/aec/edges.py", "kind": "calls", "line": 358, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?dst.startswith", "file": "src/aec/edges.py", "kind": "calls", "line": 351, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?edges.append", "file": "src/aec/edges.py", "kind": "calls", "line": 354, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?edges.sort", "file": "src/aec/edges.py", "kind": "calls", "line": 356, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?ex.defs.get", "file": "src/aec/edges.py", "kind": "calls", "line": 353, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?ex.edges.items", "file": "src/aec/edges.py", "kind": "calls", "line": 350, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "src/aec/edges.py", "kind": "calls", "line": 358, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "?root.as_posix", "file": "src/aec/edges.py", "kind": "calls", "line": 357, "resolved": false, "src": "src.aec.edges.snapshot"}
+{"dst": "hashlib.sha256", "file": "src/aec/edges.py", "kind": "calls", "line": 358, "resolved": true, "src": "src.aec.edges.snapshot"}
+{"dst": "pathlib.Path", "file": "src/aec/edges.py", "kind": "calls", "line": 347, "resolved": true, "src": "src.aec.edges.snapshot"}
+{"dst": "src.aec.edges._Extractor", "file": "src/aec/edges.py", "kind": "calls", "line": 348, "resolved": true, "src": "src.aec.edges.snapshot"}
+{"dst": "src.aec.edges.KINDS.index", "file": "src/aec/edges.py", "kind": "calls", "line": 33, "resolved": true, "src": "src.aec.edges.sort_key"}
+{"dst": "dataclasses.field", "file": "src/aec/impact.py", "kind": "calls", "line": 23, "resolved": true, "src": "src.aec.impact.Impact"}
+{"dst": "?out[...].append", "file": "src/aec/impact.py", "kind": "calls", "line": 36, "resolved": false, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "?self.impacts.values", "file": "src/aec/impact.py", "kind": "calls", "line": 35, "resolved": false, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "?e.get", "file": "src/aec/impact.py", "kind": "calls", "line": 47, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?out.append", "file": "src/aec/impact.py", "kind": "calls", "line": 50, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 44, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?store.latest.get", "file": "src/aec/impact.py", "kind": "calls", "line": 60, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?store.in_edges", "file": "src/aec/impact.py", "kind": "calls", "line": 64, "resolved": false, "src": "src.aec.impact._live_supports"}
+{"dst": "?impacts.get", "file": "src/aec/impact.py", "kind": "calls", "line": 68, "resolved": false, "src": "src.aec.impact._raise"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "calls", "line": 70, "resolved": true, "src": "src.aec.impact._raise"}
+{"dst": "src.aec.impact.SEVERITY.index", "file": "src/aec/impact.py", "kind": "calls", "line": 69, "resolved": true, "src": "src.aec.impact._raise"}
+{"dst": "?ch.get", "file": "src/aec/impact.py", "kind": "calls", "line": 88, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?dead.add", "file": "src/aec/impact.py", "kind": "calls", "line": 91, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?findings.append", "file": "src/aec/impact.py", "kind": "calls", "line": 84, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?queue.append", "file": "src/aec/impact.py", "kind": "calls", "line": 98, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?queue.pop", "file": "src/aec/impact.py", "kind": "calls", "line": 125, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?store.governs", "file": "src/aec/impact.py", "kind": "calls", "line": 88, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?store.latest.values", "file": "src/aec/impact.py", "kind": "calls", "line": 140, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?target.get", "file": "src/aec/impact.py", "kind": "calls", "line": 87, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact.ImpactReport", "file": "src/aec/impact.py", "kind": "calls", "line": 142, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact._dependents", "file": "src/aec/impact.py", "kind": "calls", "line": 92, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact._live_supports", "file": "src/aec/impact.py", "kind": "calls", "line": 93, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact._raise", "file": "src/aec/impact.py", "kind": "calls", "line": 97, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "?ch.get", "file": "src/aec/impact.py", "kind": "calls", "line": 148, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?constant.join", "file": "src/aec/impact.py", "kind": "calls", "line": 155, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?lines.append", "file": "src/aec/impact.py", "kind": "calls", "line": 148, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?rep.by_status", "file": "src/aec/impact.py", "kind": "calls", "line": 151, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?rep.by_status(...).items", "file": "src/aec/impact.py", "kind": "calls", "line": 151, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 153, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "dataclasses.field", "file": "src/aec/records.py", "kind": "calls", "line": 37, "resolved": true, "src": "src.aec.records.Record"}
+{"dst": "?self.data.get", "file": "src/aec/records.py", "kind": "calls", "line": 45, "resolved": false, "src": "src.aec.records.Record.get"}
+{"dst": "?self.id.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 42, "resolved": false, "src": "src.aec.records.Record.ref"}
+{"dst": "src.aec.records.ref", "file": "src/aec/records.py", "kind": "calls", "line": 42, "resolved": true, "src": "src.aec.records.Record.ref"}
+{"dst": "?a.get", "file": "src/aec/records.py", "kind": "calls", "line": 84, "resolved": false, "src": "src.aec.records.Store.governs"}
+{"dst": "?self.latest.get", "file": "src/aec/records.py", "kind": "calls", "line": 83, "resolved": false, "src": "src.aec.records.Store.governs"}
+{"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 78, "resolved": false, "src": "src.aec.records.Store.in_edges"}
+{"dst": "?Path(...).read_text", "file": "src/aec/records.py", "kind": "calls", "line": 63, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?Path(...).read_text(...).splitlines", "file": "src/aec/records.py", "kind": "calls", "line": 63, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?cls", "file": "src/aec/records.py", "kind": "calls", "line": 72, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?d.get", "file": "src/aec/records.py", "kind": "calls", "line": 69, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?d.items", "file": "src/aec/records.py", "kind": "calls", "line": 71, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?line.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 65, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?line.strip", "file": "src/aec/records.py", "kind": "calls", "line": 64, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "?recs.append", "file": "src/aec/records.py", "kind": "calls", "line": 69, "resolved": false, "src": "src.aec.records.Store.load"}
+{"dst": "json.loads", "file": "src/aec/records.py", "kind": "calls", "line": 67, "resolved": true, "src": "src.aec.records.Store.load"}
+{"dst": "pathlib.Path", "file": "src/aec/records.py", "kind": "calls", "line": 63, "resolved": true, "src": "src.aec.records.Store.load"}
+{"dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "calls", "line": 69, "resolved": true, "src": "src.aec.records.Store.load"}
+{"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 75, "resolved": false, "src": "src.aec.records.Store.out_edges"}
+{"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 118, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?out.append", "file": "src/aec/records.py", "kind": "calls", "line": 113, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?r.get", "file": "src/aec/records.py", "kind": "calls", "line": 134, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?seen.add", "file": "src/aec/records.py", "kind": "calls", "line": 114, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.governs", "file": "src/aec/records.py", "kind": "calls", "line": 134, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.in_edges", "file": "src/aec/records.py", "kind": "calls", "line": 143, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?to.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 121, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "calls", "line": 113, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "calls", "line": 109, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "calls", "line": 127, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "?out.add", "file": "src/aec/records.py", "kind": "calls", "line": 100, "resolved": false, "src": "src.aec.records.defined_symbols"}
+{"dst": "?r.rpartition", "file": "src/aec/records.py", "kind": "calls", "line": 24, "resolved": false, "src": "src.aec.records.split_ref"}
+{"dst": "?v.isdigit", "file": "src/aec/records.py", "kind": "calls", "line": 25, "resolved": false, "src": "src.aec.records.split_ref"}
+{"dst": "pathlib.Path", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 179, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "src.core.tools.ast_dependency_extractor.app", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 211, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "src.core.tools.ast_dependency_extractor.app.command", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 166, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "typer.Option", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 168, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "typer.Typer", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 58, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
+{"dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 109, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name"}
+{"dst": "?name.replace", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 122, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._resolve_name"}
+{"dst": "?name.split", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 119, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._resolve_name"}
+{"dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 116, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._resolve_name"}
+{"dst": "?self.edges.append", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 103, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "ast.walk", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 85, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._resolve_name", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 101, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "?f.read", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 73, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.process_file"}
+{"dst": "ast.parse", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 78, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.process_file"}
+{"dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 79, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.process_file"}
+{"dst": "tokenize.open", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 72, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.process_file"}
+{"dst": "typer.echo", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 75, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.process_file"}
+{"dst": "?config_data.get", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 184, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?config_data.get(...).split", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 185, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?df.to_csv", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 204, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?extractor.get_function_edges", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 196, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?extractor.process_file", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 194, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?files.items", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 189, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?str(...).replace", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 192, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "?str(...).replace(...).replace", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 192, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "pandas.DataFrame", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 201, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "pathlib.Path", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 184, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 187, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "src.core.tools.ast_dependency_extractor.build_adjacency_matrix", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 199, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "src.core.tools.ast_dependency_extractor.collect_py_files", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 188, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "src.core.tools.ast_dependency_extractor.load_graph_config", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 183, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "typer.echo", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 205, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.analyze"}
+{"dst": "pandas.DataFrame", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 134, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.build_adjacency_matrix"}
+{"dst": "?Path(...).relative_to", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 149, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.collect_py_files"}
+{"dst": "?f.endswith", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 153, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.collect_py_files"}
+{"dst": "os.walk", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 148, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.collect_py_files"}
+{"dst": "pathlib.Path", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 149, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.collect_py_files"}
+{"dst": "src.core.tools.ast_dependency_extractor.should_ignore_dir", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 151, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.collect_py_files"}
+{"dst": "?path.exists", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 160, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.load_graph_config"}
+{"dst": "json.load", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 162, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.load_graph_config"}
+{"dst": "?rel_dir.as_posix", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 143, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.should_ignore_dir"}
+{"dst": "?rel_dir.as_posix(...).startswith", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 143, "resolved": false, "src": "src.core.tools.ast_dependency_extractor.should_ignore_dir"}
+{"dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base.step", "file": "tests/fixtures/edges_pkg_v1/pkg/base.py", "kind": "calls", "line": 3, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.base.Base.run"}
+{"dst": "pkg.util.helper", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "calls", "line": 10, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.Worker.step"}
+{"dst": "tests.fixtures.edges_pkg_v1.pkg.core.load", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "calls", "line": 14, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.fetch"}
+{"dst": "?getattr(...)", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "calls", "line": 19, "resolved": false, "src": "tests.fixtures.edges_pkg_v1.pkg.core.load"}
+{"dst": "json.loads", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "calls", "line": 18, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.load"}
+{"dst": "?w.run", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "calls", "line": 25, "resolved": false, "src": "tests.fixtures.edges_pkg_v1.pkg.core.main"}
+{"dst": "tests.fixtures.edges_pkg_v1.pkg.core.Worker", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "calls", "line": 24, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.main"}
+{"dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base.step", "file": "tests/fixtures/edges_pkg_v2/pkg/base.py", "kind": "calls", "line": 5, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.base.Base.run"}
+{"dst": "pkg.util.helper", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "calls", "line": 11, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.Worker.step"}
+{"dst": "tests.fixtures.edges_pkg_v2.pkg.core.load", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "calls", "line": 10, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.Worker.step"}
+{"dst": "?getattr(...)", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "calls", "line": 16, "resolved": false, "src": "tests.fixtures.edges_pkg_v2.pkg.core.load"}
+{"dst": "json.loads", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.load"}
+{"dst": "?w.run", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "calls", "line": 22, "resolved": false, "src": "tests.fixtures.edges_pkg_v2.pkg.core.main"}
+{"dst": "tests.fixtures.edges_pkg_v2.pkg.core.Worker", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "calls", "line": 21, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.main"}
+{"dst": "?Path(...).resolve", "file": "tests/test_aec.py", "kind": "calls", "line": 14, "resolved": false, "src": "tests.test_aec"}
+{"dst": "pathlib.Path", "file": "tests/test_aec.py", "kind": "calls", "line": 14, "resolved": true, "src": "tests.test_aec"}
+{"dst": "sys.path.insert", "file": "tests/test_aec.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.test_aec"}
+{"dst": "unittest.main", "file": "tests/test_aec.py", "kind": "calls", "line": 117, "resolved": true, "src": "tests.test_aec"}
+{"dst": "aec.records.Store.load", "file": "tests/test_aec.py", "kind": "calls", "line": 38, "resolved": true, "src": "tests.test_aec.TestPilot.setUp"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 61, "resolved": false, "src": "tests.test_aec.TestPilot.test_authorized_amendment_is_rebaseline_not_drift"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 60, "resolved": true, "src": "tests.test_aec.TestPilot.test_authorized_amendment_is_rebaseline_not_drift"}
+{"dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "calls", "line": 60, "resolved": true, "src": "tests.test_aec.TestPilot.test_authorized_amendment_is_rebaseline_not_drift"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 61, "resolved": true, "src": "tests.test_aec.TestPilot.test_authorized_amendment_is_rebaseline_not_drift"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 52, "resolved": false, "src": "tests.test_aec.TestPilot.test_census_overclaim_only_weakens_the_hypothesis"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 51, "resolved": true, "src": "tests.test_aec.TestPilot.test_census_overclaim_only_weakens_the_hypothesis"}
+{"dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "calls", "line": 51, "resolved": true, "src": "tests.test_aec.TestPilot.test_census_overclaim_only_weakens_the_hypothesis"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 51, "resolved": true, "src": "tests.test_aec.TestPilot.test_census_overclaim_only_weakens_the_hypothesis"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 71, "resolved": false, "src": "tests.test_aec.TestPilot.test_decoy_change_flags_nothing"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 70, "resolved": true, "src": "tests.test_aec.TestPilot.test_decoy_change_flags_nothing"}
+{"dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "calls", "line": 70, "resolved": true, "src": "tests.test_aec.TestPilot.test_decoy_change_flags_nothing"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 45, "resolved": false, "src": "tests.test_aec.TestPilot.test_duty_timing_breaks_recovery_claim_not_the_receiver_hypothesis"}
+{"dst": "?self.assertNotIn", "file": "tests/test_aec.py", "kind": "calls", "line": 48, "resolved": false, "src": "tests.test_aec.TestPilot.test_duty_timing_breaks_recovery_claim_not_the_receiver_hypothesis"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 44, "resolved": true, "src": "tests.test_aec.TestPilot.test_duty_timing_breaks_recovery_claim_not_the_receiver_hypothesis"}
+{"dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "calls", "line": 44, "resolved": true, "src": "tests.test_aec.TestPilot.test_duty_timing_breaks_recovery_claim_not_the_receiver_hypothesis"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 44, "resolved": true, "src": "tests.test_aec.TestPilot.test_duty_timing_breaks_recovery_claim_not_the_receiver_hypothesis"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 41, "resolved": false, "src": "tests.test_aec.TestPilot.test_pilot_records_check_clean"}
+{"dst": "aec.records.check", "file": "tests/test_aec.py", "kind": "calls", "line": 41, "resolved": true, "src": "tests.test_aec.TestPilot.test_pilot_records_check_clean"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_aec.TestPilot.test_provisional_criterion_change_is_exploratory"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 65, "resolved": true, "src": "tests.test_aec.TestPilot.test_provisional_criterion_change_is_exploratory"}
+{"dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "calls", "line": 65, "resolved": true, "src": "tests.test_aec.TestPilot.test_provisional_criterion_change_is_exploratory"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_aec.TestPilot.test_provisional_criterion_change_is_exploratory"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 56, "resolved": false, "src": "tests.test_aec.TestPilot.test_unauthorized_amendment_is_stale_and_reported"}
+{"dst": "?self.assertTrue", "file": "tests/test_aec.py", "kind": "calls", "line": 57, "resolved": false, "src": "tests.test_aec.TestPilot.test_unauthorized_amendment_is_stale_and_reported"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 55, "resolved": true, "src": "tests.test_aec.TestPilot.test_unauthorized_amendment_is_stale_and_reported"}
+{"dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "calls", "line": 55, "resolved": true, "src": "tests.test_aec.TestPilot.test_unauthorized_amendment_is_stale_and_reported"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 56, "resolved": true, "src": "tests.test_aec.TestPilot.test_unauthorized_amendment_is_stale_and_reported"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 97, "resolved": false, "src": "tests.test_aec.TestSemantics.test_authority_must_govern_the_subject"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 96, "resolved": true, "src": "tests.test_aec.TestSemantics.test_authority_must_govern_the_subject"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 96, "resolved": true, "src": "tests.test_aec.TestSemantics.test_authority_must_govern_the_subject"}
+{"dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "calls", "line": 96, "resolved": true, "src": "tests.test_aec.TestSemantics.test_authority_must_govern_the_subject"}
+{"dst": "?self.assertIn", "file": "tests/test_aec.py", "kind": "calls", "line": 110, "resolved": false, "src": "tests.test_aec.TestSemantics.test_check_rules"}
+{"dst": "aec.records.check", "file": "tests/test_aec.py", "kind": "calls", "line": 109, "resolved": true, "src": "tests.test_aec.TestSemantics.test_check_rules"}
+{"dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "calls", "line": 109, "resolved": true, "src": "tests.test_aec.TestSemantics.test_check_rules"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 92, "resolved": false, "src": "tests.test_aec.TestSemantics.test_last_support_removed_is_unjustified"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 91, "resolved": true, "src": "tests.test_aec.TestSemantics.test_last_support_removed_is_unjustified"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 91, "resolved": true, "src": "tests.test_aec.TestSemantics.test_last_support_removed_is_unjustified"}
+{"dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "calls", "line": 90, "resolved": true, "src": "tests.test_aec.TestSemantics.test_last_support_removed_is_unjustified"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 87, "resolved": false, "src": "tests.test_aec.TestSemantics.test_transitive_necessary_dependency"}
+{"dst": "aec.impact.impact", "file": "tests/test_aec.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_aec.TestSemantics.test_transitive_necessary_dependency"}
+{"dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_aec.TestSemantics.test_transitive_necessary_dependency"}
+{"dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_aec.TestSemantics.test_transitive_necessary_dependency"}
+{"dst": "?binop.read_text", "file": "tests/test_aec.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_aec.changes"}
+{"dst": "?binop.read_text(...).splitlines", "file": "tests/test_aec.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_aec.changes"}
+{"dst": "?l.startswith", "file": "tests/test_aec.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_aec.changes"}
+{"dst": "?l.strip", "file": "tests/test_aec.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_aec.changes"}
+{"dst": "json.loads", "file": "tests/test_aec.py", "kind": "calls", "line": 23, "resolved": true, "src": "tests.test_aec.changes"}
+{"dst": "?rep.impacts.items", "file": "tests/test_aec.py", "kind": "calls", "line": 27, "resolved": false, "src": "tests.test_aec.statuses"}
+{"dst": "?constant.join", "file": "tests/test_aec.py", "kind": "calls", "line": 32, "resolved": false, "src": "tests.test_aec.store_from"}
+{"dst": "?f.write_text", "file": "tests/test_aec.py", "kind": "calls", "line": 32, "resolved": false, "src": "tests.test_aec.store_from"}
+{"dst": "aec.records.Store.load", "file": "tests/test_aec.py", "kind": "calls", "line": 33, "resolved": true, "src": "tests.test_aec.store_from"}
+{"dst": "json.dumps", "file": "tests/test_aec.py", "kind": "calls", "line": 32, "resolved": true, "src": "tests.test_aec.store_from"}
+{"dst": "pathlib.Path", "file": "tests/test_aec.py", "kind": "calls", "line": 31, "resolved": true, "src": "tests.test_aec.store_from"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_aec.py", "kind": "calls", "line": 31, "resolved": true, "src": "tests.test_aec.store_from"}
+{"dst": "?Path(...).resolve", "file": "tests/test_code_impact.py", "kind": "calls", "line": 8, "resolved": false, "src": "tests.test_code_impact"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 8, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "sys.path.insert", "file": "tests/test_code_impact.py", "kind": "calls", "line": 9, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "unittest.main", "file": "tests/test_code_impact.py", "kind": "calls", "line": 61, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "?cls.rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 22, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
+{"dst": "aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 21, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 20, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
+{"dst": "aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 19, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 25, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision"}
+{"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 28, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 31, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_leaves_requirement_unjustified"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 38, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
+{"dst": "aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 37, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 34, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 55, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 55, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 54, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 54, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 44, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 44, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 50, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 51, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 44, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 43, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 43, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?Path(...).resolve", "file": "tests/test_edges.py", "kind": "calls", "line": 7, "resolved": false, "src": "tests.test_edges"}
+{"dst": "pathlib.Path", "file": "tests/test_edges.py", "kind": "calls", "line": 7, "resolved": true, "src": "tests.test_edges"}
+{"dst": "sys.path.insert", "file": "tests/test_edges.py", "kind": "calls", "line": 8, "resolved": true, "src": "tests.test_edges"}
+{"dst": "unittest.main", "file": "tests/test_edges.py", "kind": "calls", "line": 88, "resolved": true, "src": "tests.test_edges"}
+{"dst": "?a.splitlines", "file": "tests/test_edges.py", "kind": "calls", "line": 54, "resolved": false, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "?json.loads(...).get", "file": "tests/test_edges.py", "kind": "calls", "line": 55, "resolved": false, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "?self.assertEqual", "file": "tests/test_edges.py", "kind": "calls", "line": 53, "resolved": false, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "?self.assertTrue", "file": "tests/test_edges.py", "kind": "calls", "line": 55, "resolved": false, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "aec.edges.dumps", "file": "tests/test_edges.py", "kind": "calls", "line": 51, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_edges.py", "kind": "calls", "line": 51, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "aec.edges.sort_key", "file": "tests/test_edges.py", "kind": "calls", "line": 56, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "json.loads", "file": "tests/test_edges.py", "kind": "calls", "line": 55, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "?self.assertEqual", "file": "tests/test_edges.py", "kind": "calls", "line": 60, "resolved": false, "src": "tests.test_edges.TestDeterminism.test_roundtrip"}
+{"dst": "aec.edges.dumps", "file": "tests/test_edges.py", "kind": "calls", "line": 60, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_roundtrip"}
+{"dst": "aec.edges.loads", "file": "tests/test_edges.py", "kind": "calls", "line": 60, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_roundtrip"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_edges.py", "kind": "calls", "line": 59, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_roundtrip"}
+{"dst": "?s.startswith", "file": "tests/test_edges.py", "kind": "calls", "line": 77, "resolved": false, "src": "tests.test_edges.TestDiff.test_comment_and_whitespace_change_is_not_a_diff"}
+{"dst": "?self.assertFalse", "file": "tests/test_edges.py", "kind": "calls", "line": 77, "resolved": false, "src": "tests.test_edges.TestDiff.test_comment_and_whitespace_change_is_not_a_diff"}
+{"dst": "aec.edges.diff", "file": "tests/test_edges.py", "kind": "calls", "line": 75, "resolved": true, "src": "tests.test_edges.TestDiff.test_comment_and_whitespace_change_is_not_a_diff"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_edges.py", "kind": "calls", "line": 75, "resolved": true, "src": "tests.test_edges.TestDiff.test_comment_and_whitespace_change_is_not_a_diff"}
+{"dst": "?self.assertEqual", "file": "tests/test_edges.py", "kind": "calls", "line": 68, "resolved": false, "src": "tests.test_edges.TestDiff.test_diff_is_exactly_the_labelled_changes"}
+{"dst": "aec.edges.diff", "file": "tests/test_edges.py", "kind": "calls", "line": 65, "resolved": true, "src": "tests.test_edges.TestDiff.test_diff_is_exactly_the_labelled_changes"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_edges.py", "kind": "calls", "line": 65, "resolved": true, "src": "tests.test_edges.TestDiff.test_diff_is_exactly_the_labelled_changes"}
+{"dst": "?binop.read_text", "file": "tests/test_edges.py", "kind": "calls", "line": 22, "resolved": false, "src": "tests.test_edges.TestExtraction.setUpClass"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_edges.py", "kind": "calls", "line": 21, "resolved": true, "src": "tests.test_edges.TestExtraction.setUpClass"}
+{"dst": "json.loads", "file": "tests/test_edges.py", "kind": "calls", "line": 22, "resolved": true, "src": "tests.test_edges.TestExtraction.setUpClass"}
+{"dst": "?self.assertFalse", "file": "tests/test_edges.py", "kind": "calls", "line": 42, "resolved": false, "src": "tests.test_edges.TestExtraction.test_dynamic_call_is_unresolved_not_guessed"}
+{"dst": "?self.assertIn", "file": "tests/test_edges.py", "kind": "calls", "line": 41, "resolved": false, "src": "tests.test_edges.TestExtraction.test_dynamic_call_is_unresolved_not_guessed"}
+{"dst": "tests.test_edges.idents", "file": "tests/test_edges.py", "kind": "calls", "line": 40, "resolved": true, "src": "tests.test_edges.TestExtraction.test_dynamic_call_is_unresolved_not_guessed"}
+{"dst": "?e[...].startswith", "file": "tests/test_edges.py", "kind": "calls", "line": 33, "resolved": false, "src": "tests.test_edges.TestExtraction.test_every_edge_has_location_and_resolution"}
+{"dst": "?self.assertEqual", "file": "tests/test_edges.py", "kind": "calls", "line": 33, "resolved": false, "src": "tests.test_edges.TestExtraction.test_every_edge_has_location_and_resolution"}
+{"dst": "?self.assertIn", "file": "tests/test_edges.py", "kind": "calls", "line": 31, "resolved": false, "src": "tests.test_edges.TestExtraction.test_every_edge_has_location_and_resolution"}
+{"dst": "?self.assertIsInstance", "file": "tests/test_edges.py", "kind": "calls", "line": 32, "resolved": false, "src": "tests.test_edges.TestExtraction.test_every_edge_has_location_and_resolution"}
+{"dst": "?self.assertIn", "file": "tests/test_edges.py", "kind": "calls", "line": 36, "resolved": false, "src": "tests.test_edges.TestExtraction.test_explicit_import_after_star_wins"}
+{"dst": "?self.assertNotIn", "file": "tests/test_edges.py", "kind": "calls", "line": 37, "resolved": false, "src": "tests.test_edges.TestExtraction.test_explicit_import_after_star_wins"}
+{"dst": "tests.test_edges.idents", "file": "tests/test_edges.py", "kind": "calls", "line": 36, "resolved": true, "src": "tests.test_edges.TestExtraction.test_explicit_import_after_star_wins"}
+{"dst": "?self.assertEqual", "file": "tests/test_edges.py", "kind": "calls", "line": 27, "resolved": false, "src": "tests.test_edges.TestExtraction.test_labelled_kinds_match_exactly"}
+{"dst": "?self.subTest", "file": "tests/test_edges.py", "kind": "calls", "line": 26, "resolved": false, "src": "tests.test_edges.TestExtraction.test_labelled_kinds_match_exactly"}
+{"dst": "tests.test_edges.idents", "file": "tests/test_edges.py", "kind": "calls", "line": 27, "resolved": true, "src": "tests.test_edges.TestExtraction.test_labelled_kinds_match_exactly"}
+{"dst": "?self.assertEqual", "file": "tests/test_edges.py", "kind": "calls", "line": 45, "resolved": false, "src": "tests.test_edges.TestExtraction.test_syntax_error_file_is_skipped_others_still_processed"}
+{"dst": "?self.assertIn", "file": "tests/test_edges.py", "kind": "calls", "line": 46, "resolved": false, "src": "tests.test_edges.TestExtraction.test_syntax_error_file_is_skipped_others_still_processed"}
+{"dst": "tests.test_edges.idents", "file": "tests/test_edges.py", "kind": "calls", "line": 46, "resolved": true, "src": "tests.test_edges.TestExtraction.test_syntax_error_file_is_skipped_others_still_processed"}
+{"dst": "?csv.startswith", "file": "tests/test_edges.py", "kind": "calls", "line": 83, "resolved": false, "src": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header"}
+{"dst": "?self.assertIn", "file": "tests/test_edges.py", "kind": "calls", "line": 84, "resolved": false, "src": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header"}
+{"dst": "?self.assertTrue", "file": "tests/test_edges.py", "kind": "calls", "line": 83, "resolved": false, "src": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header"}
+{"dst": "aec.edges.legacy_csv", "file": "tests/test_edges.py", "kind": "calls", "line": 82, "resolved": true, "src": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header"}
+{"dst": "aec.edges.snapshot", "file": "tests/test_edges.py", "kind": "calls", "line": 82, "resolved": true, "src": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header"}
+{"dst": "?Path(...).resolve", "file": "tests/test_extension.py", "kind": "calls", "line": 11, "resolved": false, "src": "tests.test_extension"}
+{"dst": "pathlib.Path", "file": "tests/test_extension.py", "kind": "calls", "line": 11, "resolved": true, "src": "tests.test_extension"}
+{"dst": "shutil.which", "file": "tests/test_extension.py", "kind": "calls", "line": 49, "resolved": true, "src": "tests.test_extension"}
+{"dst": "unittest.main", "file": "tests/test_extension.py", "kind": "calls", "line": 79, "resolved": true, "src": "tests.test_extension"}
+{"dst": "unittest.skipUnless", "file": "tests/test_extension.py", "kind": "calls", "line": 49, "resolved": true, "src": "tests.test_extension"}
+{"dst": "subprocess.run", "file": "tests/test_extension.py", "kind": "calls", "line": 52, "resolved": true, "src": "tests.test_extension.TestInstallRemove.run_"}
+{"dst": "?binop.exists", "file": "tests/test_extension.py", "kind": "calls", "line": 72, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?binop.read_text", "file": "tests/test_extension.py", "kind": "calls", "line": 64, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?binop.rglob", "file": "tests/test_extension.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?p.is_file", "file": "tests/test_extension.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?p.read_bytes", "file": "tests/test_extension.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?p.relative_to", "file": "tests/test_extension.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?self.assertEqual", "file": "tests/test_extension.py", "kind": "calls", "line": 58, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?self.assertIn", "file": "tests/test_extension.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?self.assertNotIn", "file": "tests/test_extension.py", "kind": "calls", "line": 73, "resolved": false, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "pathlib.Path", "file": "tests/test_extension.py", "kind": "calls", "line": 56, "resolved": true, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_extension.py", "kind": "calls", "line": 56, "resolved": true, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "tests.test_extension.TestInstallRemove.run_", "file": "tests/test_extension.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "?binop.read_text", "file": "tests/test_extension.py", "kind": "calls", "line": 26, "resolved": false, "src": "tests.test_extension.TestManifest.setUp"}
+{"dst": "tests.test_extension.parse_manifest", "file": "tests/test_extension.py", "kind": "calls", "line": 27, "resolved": true, "src": "tests.test_extension.TestManifest.setUp"}
+{"dst": "?binop.read_text", "file": "tests/test_extension.py", "kind": "calls", "line": 45, "resolved": false, "src": "tests.test_extension.TestManifest.test_commands_declare_read_only"}
+{"dst": "?self.assertIn", "file": "tests/test_extension.py", "kind": "calls", "line": 46, "resolved": false, "src": "tests.test_extension.TestManifest.test_commands_declare_read_only"}
+{"dst": "?binop.is_file", "file": "tests/test_extension.py", "kind": "calls", "line": 36, "resolved": false, "src": "tests.test_extension.TestManifest.test_every_command_file_exists"}
+{"dst": "?self.assertTrue", "file": "tests/test_extension.py", "kind": "calls", "line": 36, "resolved": false, "src": "tests.test_extension.TestManifest.test_every_command_file_exists"}
+{"dst": "?self.assertEqual", "file": "tests/test_extension.py", "kind": "calls", "line": 39, "resolved": false, "src": "tests.test_extension.TestManifest.test_every_hook_command_is_provided_and_optional"}
+{"dst": "?self.assertTrue", "file": "tests/test_extension.py", "kind": "calls", "line": 40, "resolved": false, "src": "tests.test_extension.TestManifest.test_every_hook_command_is_provided_and_optional"}
+{"dst": "?self.hooks.values", "file": "tests/test_extension.py", "kind": "calls", "line": 40, "resolved": false, "src": "tests.test_extension.TestManifest.test_every_hook_command_is_provided_and_optional"}
+{"dst": "?self.assertIn", "file": "tests/test_extension.py", "kind": "calls", "line": 30, "resolved": false, "src": "tests.test_extension.TestManifest.test_schema_basics"}
+{"dst": "?self.assertRegex", "file": "tests/test_extension.py", "kind": "calls", "line": 31, "resolved": false, "src": "tests.test_extension.TestManifest.test_schema_basics"}
+{"dst": "re.findall", "file": "tests/test_extension.py", "kind": "calls", "line": 17, "resolved": true, "src": "tests.test_extension.parse_manifest"}
+{"dst": "?Path(...).resolve", "file": "tests/test_install.py", "kind": "calls", "line": 9, "resolved": false, "src": "tests.test_install"}
+{"dst": "os.environ.get", "file": "tests/test_install.py", "kind": "calls", "line": 12, "resolved": true, "src": "tests.test_install"}
+{"dst": "pathlib.Path", "file": "tests/test_install.py", "kind": "calls", "line": 9, "resolved": true, "src": "tests.test_install"}
+{"dst": "unittest.main", "file": "tests/test_install.py", "kind": "calls", "line": 29, "resolved": true, "src": "tests.test_install"}
+{"dst": "unittest.skipIf", "file": "tests/test_install.py", "kind": "calls", "line": 12, "resolved": true, "src": "tests.test_install"}
+{"dst": "?r.stdout.splitlines", "file": "tests/test_install.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "?self.assertEqual", "file": "tests/test_install.py", "kind": "calls", "line": 19, "resolved": false, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "?self.assertIn", "file": "tests/test_install.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "?self.assertNotEqual", "file": "tests/test_install.py", "kind": "calls", "line": 25, "resolved": false, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "pathlib.Path", "file": "tests/test_install.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "subprocess.run", "file": "tests/test_install.py", "kind": "calls", "line": 16, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_install.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "?Path(...).resolve", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 7, "resolved": false, "src": "tests.test_stdlib_only"}
+{"dst": "pathlib.Path", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 7, "resolved": true, "src": "tests.test_stdlib_only"}
+{"dst": "unittest.main", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 32, "resolved": true, "src": "tests.test_stdlib_only"}
+{"dst": "?a.name.split", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 17, "resolved": false, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "?boolop.split", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 19, "resolved": false, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "?py.read_text", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 15, "resolved": false, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "?self.assertEqual", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 23, "resolved": false, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "ast.parse", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "ast.walk", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "tests.test_stdlib_only.SRC.glob", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 14, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "?self.assertIn", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 28, "resolved": false, "src": "tests.test_stdlib_only.TestStdlibOnly.test_violation_is_detected"}
+{"dst": "ast.parse", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 26, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_violation_is_detected"}
+{"dst": "ast.walk", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 27, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_violation_is_detected"}
+{"dst": "sys.stderr", "file": "src/aec/__main__.py", "kind": "references", "line": 65, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "references", "line": 33, "resolved": true, "src": "src.aec.code_impact.code_impact"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "references", "line": 24, "resolved": true, "src": "src.aec.code_impact.events_from_diff"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "references", "line": 16, "resolved": true, "src": "src.aec.code_impact.referenced_symbols"}
+{"dst": "builtins", "file": "src/aec/edges.py", "kind": "references", "line": 27, "resolved": true, "src": "src.aec.edges"}
+{"dst": "src.aec.edges._Module", "file": "src/aec/edges.py", "kind": "references", "line": 84, "resolved": true, "src": "src.aec.edges._Extractor.__init__"}
+{"dst": "ast.Import", "file": "src/aec/edges.py", "kind": "references", "line": 158, "resolved": true, "src": "src.aec.edges._Extractor._import_bindings"}
+{"dst": "ast.Attribute", "file": "src/aec/edges.py", "kind": "references", "line": 324, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "ast.Call", "file": "src/aec/edges.py", "kind": "references", "line": 312, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "ast.Load", "file": "src/aec/edges.py", "kind": "references", "line": 329, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "ast.Name", "file": "src/aec/edges.py", "kind": "references", "line": 327, "resolved": true, "src": "src.aec.edges._Extractor._scan_expr"}
+{"dst": "ast.AsyncFunctionDef", "file": "src/aec/edges.py", "kind": "references", "line": 277, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.ClassDef", "file": "src/aec/edges.py", "kind": "references", "line": 277, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.FunctionDef", "file": "src/aec/edges.py", "kind": "references", "line": 277, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.Import", "file": "src/aec/edges.py", "kind": "references", "line": 290, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.ImportFrom", "file": "src/aec/edges.py", "kind": "references", "line": 290, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.Name", "file": "src/aec/edges.py", "kind": "references", "line": 292, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.Store", "file": "src/aec/edges.py", "kind": "references", "line": 292, "resolved": true, "src": "src.aec.edges._Extractor._scan_scope"}
+{"dst": "ast.AnnAssign", "file": "src/aec/edges.py", "kind": "references", "line": 241, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "ast.Assign", "file": "src/aec/edges.py", "kind": "references", "line": 241, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "ast.AsyncFunctionDef", "file": "src/aec/edges.py", "kind": "references", "line": 231, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "ast.ClassDef", "file": "src/aec/edges.py", "kind": "references", "line": 231, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "ast.FunctionDef", "file": "src/aec/edges.py", "kind": "references", "line": 231, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "ast.Name", "file": "src/aec/edges.py", "kind": "references", "line": 244, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk"}
+{"dst": "ast.AnnAssign", "file": "src/aec/edges.py", "kind": "references", "line": 133, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.Assign", "file": "src/aec/edges.py", "kind": "references", "line": 133, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.AsyncFunctionDef", "file": "src/aec/edges.py", "kind": "references", "line": 130, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.ClassDef", "file": "src/aec/edges.py", "kind": "references", "line": 130, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.FunctionDef", "file": "src/aec/edges.py", "kind": "references", "line": 130, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.Import", "file": "src/aec/edges.py", "kind": "references", "line": 128, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.ImportFrom", "file": "src/aec/edges.py", "kind": "references", "line": 128, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "ast.Name", "file": "src/aec/edges.py", "kind": "references", "line": 136, "resolved": true, "src": "src.aec.edges._Extractor.index"}
+{"dst": "src.aec.edges.BUILTINS", "file": "src/aec/edges.py", "kind": "references", "line": 208, "resolved": true, "src": "src.aec.edges._Extractor.resolve"}
+{"dst": "ast.Attribute", "file": "src/aec/edges.py", "kind": "references", "line": 50, "resolved": true, "src": "src.aec.edges._dotted"}
+{"dst": "ast.Name", "file": "src/aec/edges.py", "kind": "references", "line": 48, "resolved": true, "src": "src.aec.edges._dotted"}
+{"dst": "ast.Attribute", "file": "src/aec/edges.py", "kind": "references", "line": 62, "resolved": true, "src": "src.aec.edges._expr_label"}
+{"dst": "ast.Call", "file": "src/aec/edges.py", "kind": "references", "line": 60, "resolved": true, "src": "src.aec.edges._expr_label"}
+{"dst": "ast.Subscript", "file": "src/aec/edges.py", "kind": "references", "line": 64, "resolved": true, "src": "src.aec.edges._expr_label"}
+{"dst": "src.aec.edges.sort_key", "file": "src/aec/edges.py", "kind": "references", "line": 385, "resolved": true, "src": "src.aec.edges.diff"}
+{"dst": "src.aec.edges.DEFAULT_IGNORE", "file": "src/aec/edges.py", "kind": "references", "line": 348, "resolved": true, "src": "src.aec.edges.snapshot"}
+{"dst": "src.aec.edges.TOOL_VERSION", "file": "src/aec/edges.py", "kind": "references", "line": 357, "resolved": true, "src": "src.aec.edges.snapshot"}
+{"dst": "src.aec.edges.sort_key", "file": "src/aec/edges.py", "kind": "references", "line": 356, "resolved": true, "src": "src.aec.edges.snapshot"}
+{"dst": "src.aec.edges.KINDS", "file": "src/aec/edges.py", "kind": "references", "line": 33, "resolved": true, "src": "src.aec.edges.sort_key"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/impact.py", "kind": "references", "line": 19, "resolved": true, "src": "src.aec.impact"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 29, "resolved": true, "src": "src.aec.impact.ImpactReport"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 34, "resolved": true, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "src.aec.impact.SEVERITY", "file": "src/aec/impact.py", "kind": "references", "line": 34, "resolved": true, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "src.aec.records.Record", "file": "src/aec/impact.py", "kind": "references", "line": 43, "resolved": true, "src": "src.aec.impact._dependents"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 76, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact.PROPAGATES", "file": "src/aec/impact.py", "kind": "references", "line": 97, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/records.py", "kind": "references", "line": 30, "resolved": true, "src": "src.aec.records"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 42, "resolved": true, "src": "src.aec.records.Record.ref"}
+{"dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "references", "line": 53, "resolved": true, "src": "src.aec.records.Store.__init__"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 121, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "references", "line": 108, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.RELATIONS", "file": "src/aec/records.py", "kind": "references", "line": 118, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "references", "line": 140, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "references", "line": 115, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "typing.Dict", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 63, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__"}
+{"dst": "typing.List", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 65, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__"}
+{"dst": "typing.Tuple", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 63, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__"}
+{"dst": "ast.Attribute", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 108, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name"}
+{"dst": "ast.Call", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 111, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name"}
+{"dst": "ast.Name", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 106, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._get_name"}
+{"dst": "ast.Call", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 100, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "ast.FunctionDef", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 96, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "ast.Import", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 86, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "ast.ImportFrom", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 89, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor._walk_tree"}
+{"dst": "os", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "references", "line": 19, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.load"}
+{"dst": "tests.fixtures.edges_pkg_v1.pkg.core.CONSTANT", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "references", "line": 26, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.main"}
+{"dst": "pkg.base.Base", "file": "tests/fixtures/edges_pkg_v1/pkg/util.py", "kind": "references", "line": 3, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.util.helper"}
+{"dst": "os", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "references", "line": 16, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.load"}
+{"dst": "tests.fixtures.edges_pkg_v2.pkg.core.CONSTANT", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "references", "line": 23, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.main"}
+{"dst": "pkg.base.Base", "file": "tests/fixtures/edges_pkg_v2/pkg/util.py", "kind": "references", "line": 3, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.util.helper"}
+{"dst": "tests.test_aec.ROOT", "file": "tests/test_aec.py", "kind": "references", "line": 15, "resolved": true, "src": "tests.test_aec"}
+{"dst": "tests.test_aec.PILOT", "file": "tests/test_aec.py", "kind": "references", "line": 38, "resolved": true, "src": "tests.test_aec.TestPilot.setUp"}
+{"dst": "tests.test_aec.PILOT", "file": "tests/test_aec.py", "kind": "references", "line": 23, "resolved": true, "src": "tests.test_aec.changes"}
+{"dst": "tests.test_code_impact.ROOT", "file": "tests/test_code_impact.py", "kind": "references", "line": 9, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 19, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
+{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "tests.test_edges.ROOT", "file": "tests/test_edges.py", "kind": "references", "line": 8, "resolved": true, "src": "tests.test_edges"}
+{"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 51, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
+{"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 59, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_roundtrip"}
+{"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 75, "resolved": true, "src": "tests.test_edges.TestDiff.test_comment_and_whitespace_change_is_not_a_diff"}
+{"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 65, "resolved": true, "src": "tests.test_edges.TestDiff.test_diff_is_exactly_the_labelled_changes"}
+{"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 21, "resolved": true, "src": "tests.test_edges.TestExtraction.setUpClass"}
+{"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 82, "resolved": true, "src": "tests.test_edges.TestLegacyCsv.test_legacy_csv_has_source_call_header"}
+{"dst": "tests.test_extension.ROOT", "file": "tests/test_extension.py", "kind": "references", "line": 12, "resolved": true, "src": "tests.test_extension"}
+{"dst": "os.environ", "file": "tests/test_extension.py", "kind": "references", "line": 53, "resolved": true, "src": "tests.test_extension.TestInstallRemove.run_"}
+{"dst": "tests.test_extension.EXT", "file": "tests/test_extension.py", "kind": "references", "line": 60, "resolved": true, "src": "tests.test_extension.TestInstallRemove.test_install_registers_hooks_and_remove_cleans_up"}
+{"dst": "tests.test_extension.EXT", "file": "tests/test_extension.py", "kind": "references", "line": 26, "resolved": true, "src": "tests.test_extension.TestManifest.setUp"}
+{"dst": "tests.test_extension.EXT", "file": "tests/test_extension.py", "kind": "references", "line": 45, "resolved": true, "src": "tests.test_extension.TestManifest.test_commands_declare_read_only"}
+{"dst": "tests.test_extension.EXT", "file": "tests/test_extension.py", "kind": "references", "line": 36, "resolved": true, "src": "tests.test_extension.TestManifest.test_every_command_file_exists"}
+{"dst": "re.M", "file": "tests/test_extension.py", "kind": "references", "line": 17, "resolved": true, "src": "tests.test_extension.parse_manifest"}
+{"dst": "os.name", "file": "tests/test_install.py", "kind": "references", "line": 17, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "sys.executable", "file": "tests/test_install.py", "kind": "references", "line": 16, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "tests.test_install.ROOT", "file": "tests/test_install.py", "kind": "references", "line": 18, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
+{"dst": "ast.Import", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 16, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "ast.ImportFrom", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 18, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "sys.stdlib_module_names", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 12, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
+{"dst": "ast.Import", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 27, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_violation_is_detected"}
+{"dst": "sys.stdlib_module_names", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 28, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_violation_is_detected"}

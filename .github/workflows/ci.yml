@@ -7,5 +7,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
+      - name: Spec Kit CLI (pinned) for extension install tests
+        run: pip install uv && uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v1.2.3 && echo "$HOME/.local/bin" >> $GITHUB_PATH
       - run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+      - name: Edge snapshot of this repo (bedrock)
+        run: PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl
+      - name: Records check against the snapshot (fails on dangling code references)
+        run: PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
       - run: PYTHONPATH=src python3 -m aec check examples/mtg-pilot/records.jsonl

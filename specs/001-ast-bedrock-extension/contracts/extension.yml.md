@@ -15,3 +15,5 @@ hooks:
   after_implement: {command: speckit.aec.impact,       optional: true}
 ```
 Invariant: no command writes `spec.md`, `plan.md`, `tasks.md` or the constitution. Each one prints a findings report.
+
+The implemented manifest also sets `category: governance` and `effect: read-only`, following the convention of Spec Kit's core extensions (for example `assess`), so catalogs and `specify extension info` can describe AEC accurately (T033).
