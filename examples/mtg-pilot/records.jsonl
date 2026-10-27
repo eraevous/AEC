@@ -1,0 +1,24 @@
+// MtG pilot (eraevous/MtG, 2026-10-26), encoded as AEC reasoning records. Real events, simplified.
+{"id":"AU-zach","version":1,"type":"authority","text":"Zach: design intent for the MtG project and his decks","governs":["mtg-purpose","vraska-deck"]}
+{"id":"AU-oracle","version":1,"type":"authority","text":"Scryfall Oracle text plus the Comprehensive Rules","governs":["card-mechanics"]}
+{"id":"P-00","version":1,"type":"purpose","subject":"mtg-purpose","epistemic":"committed","owner":"AU-zach","text":"Help Zach conceive, discover, construct, understand, evaluate and improve decks"}
+{"id":"P-01","version":1,"type":"requirement","subject":"mtg-purpose","epistemic":"committed","text":"One authoritative card semantics: grammar/compiler output is the representation downstream tools consume","relations":[{"rel":"serves","to":"P-00@1"}]}
+{"id":"P-01","version":2,"type":"requirement","subject":"mtg-purpose","epistemic":"committed","text":"No silent competing semantics: verified contracts are reusable; unverified grammar/KB output stays a candidate","relations":[{"rel":"serves","to":"P-00@1"},{"rel":"supersedes","to":"P-01@1"}]}
+{"id":"CL-boundary-rule","version":1,"type":"claim","tier":"candidate","text":"drift_check rule: only grammar/ and kb/ may read oracle_text","relations":[{"rel":"depends_on","to":"P-01@1"}]}
+{"id":"D-0002","version":1,"type":"decision","subject":"mtg-purpose","status":"proposed","decided_by":null,"text":"Adopt P-00..P-05 as the project contracts","relations":[{"rel":"depends_on","to":"P-01@1"},{"rel":"depends_on","to":"P-00@1"}]}
+{"id":"SRC-duty-oracle","version":1,"type":"source","subject":"card-mechanics","text":"Duty Beyond Death Oracle text: 'As an additional cost to cast this spell, sacrifice a creature...'"}
+{"id":"A-duty-sculpture","version":1,"type":"assumption","subject":"card-mechanics","text":"Duty Beyond Death's sacrifice can be paid by the Sculpture that casting it creates","relations":[{"rel":"depends_on","to":"SRC-duty-oracle@1"}]}
+{"id":"CL-duty-rebuild","version":1,"type":"claim","tier":"candidate","text":"Duty Beyond Death gives Vraska post-wipe recovery","relations":[{"rel":"depends_on","to":"A-duty-sculpture@1"}]}
+{"id":"EVAL-access","version":1,"type":"evaluation","conditions":"mtg_eval compare, 3000 goldfish games, no opponents","text":"Access-to-role comparison for revision 1"}
+{"id":"EV-access-gain","version":1,"type":"evidence","tier":"candidate","method":"draw-access simulation","text":"Protection seen by T7 +12 points, recursion +14","relations":[{"rel":"supports","to":"CL-recovery-improved@1"}]}
+{"id":"CL-recovery-improved","version":1,"type":"claim","tier":"candidate","text":"Revision 1 improves Vraska's recovery from wipes","relations":[{"rel":"depends_on","to":"CL-duty-rebuild@1"}]}
+{"id":"EVAL-sweep","version":1,"type":"evaluation","conditions":"regex classifier over candidate KB contracts (deliberately incomplete)","text":"Hook-class census of owned WUR cards","relations":[{"rel":"produced","to":"EV-census@1"}]}
+{"id":"EV-census","version":1,"type":"evidence","tier":"candidate","method":"regex census","limits":"classifier output, not a complete reading","text":"Classifier found 1 artifact-enters receiver in Vraska","relations":[{"rel":"supports","to":"CL-binding-receivers@1"}]}
+{"id":"EVAL-game","version":1,"type":"evaluation","conditions":"one multiplayer game, Draft 1, Oct 2026","text":"Zach's observed Vraska game","relations":[{"rel":"produced","to":"EV-zach-account@1"}]}
+{"id":"EV-zach-account","version":1,"type":"evidence","tier":"observed","method":"player account","text":"'not enough artifact ETB to build anything that compounds'","relations":[{"rel":"supports","to":"CL-binding-receivers@1"}]}
+{"id":"CL-binding-receivers","version":1,"type":"claim","tier":"candidate","text":"Vraska's binding constraint is too few artifact-enters receivers"}
+{"id":"CR-vraska-r1","version":1,"type":"criterion","subject":"vraska-deck","epistemic":"provisional","text":"r1 succeeds if an artifact-enters route fires on 2+ consecutive turns in 2 of 3 games"}
+{"id":"CR-vraska-r1","version":2,"type":"criterion","subject":"vraska-deck","epistemic":"provisional","text":"r1: more turns where new artifacts yield resources or damage, without delaying Vraska or the first attacking board","relations":[{"rel":"supersedes","to":"CR-vraska-r1@1"}]}
+{"id":"D-0003","version":1,"type":"decision","subject":"vraska-deck","status":"proposed","decided_by":null,"text":"Vraska revision 1: six free-pool swaps","relations":[{"rel":"selects","to":"CL-binding-receivers@1"},{"rel":"selects","to":"CL-recovery-improved@1"},{"rel":"depends_on","to":"CR-vraska-r1@1"}]}
+{"id":"SRC-inventory","version":1,"type":"source","subject":"inventory","text":"Inventory export 2026-10-24d"}
+{"id":"SRC-inventory","version":2,"type":"source","subject":"inventory","text":"Inventory export 2026-10-25 (README and filter changes only)"}

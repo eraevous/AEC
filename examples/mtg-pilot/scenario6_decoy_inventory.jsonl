@@ -1,0 +1,2 @@
+// Decoy: a new inventory export that nothing in this record set depends on.
+{"change":"revise","target":"SRC-inventory@1","new":"SRC-inventory@2","by":"claude-build","authorized_by":null,"reason":"routine export"}

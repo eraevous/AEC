@@ -1,0 +1,2 @@
+// Kate: the census is a classifier output, not a fact. Retract it as evidence of the deck's true count.
+{"change":"retract","target":"EV-census@1","by":"kate","reason":"incomplete classifier; supports 'classifier found 1', not 'deck has 1'"}
