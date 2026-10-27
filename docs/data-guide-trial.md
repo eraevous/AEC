@@ -35,6 +35,34 @@ In a copy of Data-Guide: `specify init --here --integration claude` then `specif
 ## Records smoke test
 A provisional `DG-P0` purpose and two requirements were linked to code with `implemented_by`. One link was deliberately misspelled (`…BivariateProfilr`). `aec check --edges` reported it as a dangling code reference and passed the correct one.
 
+## Adoption path (feature 002, 2026-10-27)
+On a fresh copy of Data-Guide (main as of 2026-10-27):
+
+```bash
+python3 -m aec init . --owner Zach      # created .aec/records.jsonl, edges.jsonl, README, 2 snippets
+python3 -m aec import-purpose .         # 26 purpose files -> 52 records appended; 1 template skipped
+python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl   # 0 errors, 0 warnings
+```
+
+Both commands together took **0.6 s** (SC-001: under 10 s). 34 findings, all reports, nothing corrected:
+
+| finding | count | what it means here |
+|---|---|---|
+| `missing-source` | 11 | the purpose file names a source file that no longer exists: `pipeline.py`, `main_pipeline.py`, `profiler.py`, `profiler_cli.py`, `run_profiler.py`, `config.py`, `typer_cli.py`, `md_to_html.py`, `inline_html.py`, `pipeline_transformed.py` |
+| `not-code` | 10 | the file describes notebooks or docs (5 notebooks, README/pyproject/requirements, two docs) |
+| `declared-not-observed` | 7 | `@ai-used-by` names a caller that doesn't call the module. All 7 name the deleted pipeline modules |
+| `observed-not-declared` | 4 | real callers the purpose file doesn't mention |
+| `no-headers`, `non-code-consumer` | 2 | `Design_Document.md` has no `@ai-*` headers; `developer` is a person, not a module |
+
+Hand-checked (SC-003), against the source:
+- `data_profiler` declares callers `pipeline`, `pipeline_transformed`, `main_pipeline`, `run_profiler`: none of those files exist. Its real callers, `src/profilers/univariate.py` (`from data_profiler import DataProfiler`), `src/profilers/bivariate.py` and `src/data_pipeline/bivariate_profiler.py` (both `from data_profiler import TypeResolver, slugify`), are undeclared.
+- `bivariate_profiler` is imported back by `data_profiler.profile_bivariate` (a function-local import): an import cycle the purpose file doesn't mention.
+- `data_transform` declares `main_pipeline` and `pipeline`, both gone.
+
+**One extractor fix came out of this.** Data-Guide imports `src/data_profiler.py` as `data_profiler` (it runs with `src/` on the path). Before 0.3.0 those imports resolved to a nonexistent top-level module, so all three real callers above were invisible. The snapshot now maps such bare imports to the module that exists, only when unambiguous and never for stdlib names, and lists the `source_roots` it used in the header (`["src"]` here).
+
+What this gives the overhaul: the 2025 purpose files describe a pipeline architecture whose entry points are gone, while the profilers that actually exist depend on each other circularly. The imported claims are provisional and candidate-tier, so they're a record of what the repo claimed, to be confirmed, rewritten or retired, not a spec.
+
 ## For the overhaul
-- Start by running `aec edges` and committing `.aec/edges.jsonl`. Delete `ast_deps.csv`, `ast_dependency_cli.py` and `combine_scripts.py`, or keep them only as history.
+- Start with `aec init` and `aec import-purpose`, and commit `.aec/`. The edge snapshot is regenerated, never hand-edited. Delete `ast_deps.csv`, `ast_dependency_cli.py` and `combine_scripts.py`, or keep them only as history.
 - Write the Data-Guide purpose as **provisional** until the overhaul's `/speckit-specify` settles it. Changes to it then show as `exploratory`, not drift.

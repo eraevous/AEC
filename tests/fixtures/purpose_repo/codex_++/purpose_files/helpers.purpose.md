@@ -1,0 +1,3 @@
+- @ai-path: helpers
+- @ai-source-files: [helpers.py]
+- @ai-intent: "Helper functions"

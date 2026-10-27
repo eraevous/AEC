@@ -75,3 +75,44 @@ Re-check: all 33 tasks are satisfied by the code. Converged.
 6. Candidate AEC features found along the way: mechanical FR→task traceability (A1); streaming edge output for very large repos.
 
 **Total authoring time, feature 001:** ~3 hours of agent time across constitution → converge.
+
+
+## Feature 002: AEC adoptable on a real repository (2026-10-27)
+
+Driver: the AEC Claude. Scope from Kate's AEC round 3 (her ranking: A init, B import-purpose, E invariant, C outcome sufficiency, D narrow applicability; F blind cases after freeze; G Spec Kit replay = feature 003), under Zach's go-ahead ("move on to the next chunk", AEC "pretty well buttoned up" before Data-Guide).
+
+Before the feature, two defects from Kate's PR #8 review were fixed on the PR #8 branch, tests first: a directly retracted dependency could mark a **decision** `unjustified`; `contradicts` was inert (new change kind `add` → `contested`).
+
+### Stage log
+| stage | Spec Kit | AEC alongside | minutes (approx.) |
+|---|---|---|---|
+| plan with Kate | n/a (ChatGPT AEC thread, round 3) | her acceptance gate became the spec's success criteria | 10 |
+| specify | spec + checklist, 1 validation fix (FR-011 contradicted shipped behaviour: deleted implementing code is `unjustified`) | spec cites `AEC-R4@1`, `AEC-R2@1`, `AEC-P0@1` | 12 |
+| clarify | skipped: no marker met the "no reasonable default" bar; Kate's round 3 had settled the open choices | n/a | 0 |
+| plan / tasks | 7 design decisions, 16 tasks, tests first | n/a | 10 |
+| analyze | 3 findings (below) | n/a | 4 |
+| implement | 16 tasks; 3 fixes surfaced by the Data-Guide run | AEC-R7, AEC-R8 appended, linked to code; `check --edges` 0 errors | 70 |
+| converge | 5 tasks (T017–T021) | n/a | 15 |
+
+### analyze (self-run, before implementation)
+| ID | severity | finding | remediation |
+|---|---|---|---|
+| A1 | HIGH | FR-011 said code changes yield review statuses only, but feature 001 makes a requirement whose implementing code is deleted `unjustified` | FR-011 now states the exception (explicit necessary link to deleted code) |
+| A2 | MEDIUM | D5 left open whether evidence with no `evidence_kind` counts as conformance; counting it would warn on every legacy record | decided: unknown is not conformance; decoy test added |
+| A3 | LOW | the CI snippet installs from `@main`, while the constitution pins versions | the snippet's first line says to pin a reviewed ref; no release tag exists yet |
+
+### converge (after implementation): what the real repo caught
+Running `init` + `import-purpose` on Data-Guide, not reading the spec, produced three of the five converge tasks:
+- **Source-root imports** (T017). Data-Guide imports `src/data_profiler.py` as `data_profiler`. All three real callers of `data_profiler` were invisible, so SC-003 (hand-verified caller findings) could not have passed. A fixture-only build would have shipped this.
+- **Wrong module for a file** (T018). The first module map took symbols from `defines` edges, so `data_profiler.py` mapped to its class `TypeResolver`. The header now carries a real module→file map.
+- **Function-local imports** (T019) were attributed to the function, not the module, which hid the `data_profiler` ↔ `bivariate_profiler` import cycle.
+
+### Spec Kit vs AEC, this feature
+- Spec Kit's analyze-style pass caught a spec that contradicted shipped behaviour (A1). That is a cross-artifact consistency problem, squarely Spec Kit's job.
+- AEC's distinctive contribution showed up on the *target* repo, not this one: on Data-Guide, `import-purpose` turned 26 old purpose files into 34 concrete declared-vs-actual findings (11 dead source files, 7 declared callers that don't exist, 4 real callers nobody declared). No Spec Kit artifact exists there yet to compare against; that is feature 003.
+- Still unmeasured: whether the outcome-sufficiency check catches anything a careful reviewer would miss. It needs records written *before* code changes, which is exactly the Data-Guide overhaul.
+
+### Lessons
+- Run the tool on the real target during implement, not after. Three of the five converge tasks came from one Data-Guide run.
+- "Report, never correct" made the import safe to run on a messy repo: nothing it found required a decision before the next step.
+- Kate's narrowing of C ("tests can legitimately measure outcomes") changed the check from a rule about tests into a rule about evidence kinds. That is the difference between a check that passes when evidence is sufficient and a permanent warning generator.

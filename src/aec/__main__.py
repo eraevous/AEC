@@ -5,6 +5,8 @@
   python -m aec check RECORDS [--edges SNAPSHOT]              cross-record checks (+ dangling code: refs)
   python -m aec impact RECORDS CHANGES [--json]               which conclusions a change affects
   python -m aec code-impact RECORDS OLD NEW [--json]          code change -> affected conclusions
+  python -m aec init [ROOT] [--owner NAME]                    scaffold .aec/ (never overwrites)
+  python -m aec import-purpose [ROOT] [--dir D] [--dry-run]   Codex++ .purpose.md -> provisional records
 """
 from __future__ import annotations
 
@@ -32,6 +34,15 @@ def _print_impact(store, rep, as_json):
         print(render(store, rep))
 
 
+def _git_user(root) -> str | None:
+    import subprocess
+    try:
+        out = subprocess.run(["git", "-C", str(root), "config", "user.name"], capture_output=True, text=True, timeout=5)
+        return out.stdout.strip() or None
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="aec", description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -53,7 +64,36 @@ def main(argv=None) -> int:
     ci.add_argument("old")
     ci.add_argument("new")
     ci.add_argument("--json", action="store_true")
+    it = sub.add_parser("init")
+    it.add_argument("root", nargs="?", default=".")
+    it.add_argument("--owner", help="name for the authority stub (default: git user.name, else 'owner')")
+    ip = sub.add_parser("import-purpose")
+    ip.add_argument("root", nargs="?", default=".")
+    ip.add_argument("--dir", default="codex_++/purpose_files", help="purpose-file directory, relative to ROOT")
+    ip.add_argument("--records", help="default: ROOT/.aec/records.jsonl")
+    ip.add_argument("--edges", help="default: a fresh snapshot of ROOT")
+    ip.add_argument("--dry-run", action="store_true", help="report only; append nothing")
     a = ap.parse_args(argv)
+
+    if a.cmd == "init":
+        from .init import init
+        rep = init(a.root, owner=a.owner or _git_user(a.root) or "owner")
+        for f in rep["created"]:
+            print(f"created {f}")
+        for f in rep["kept"]:
+            print(f"kept    {f} (exists; not overwritten)")
+        print("\nNext steps:\n" + "\n".join(f"  - {x}" for x in rep["next_steps"].splitlines()))
+        return 0
+    if a.cmd == "import-purpose":
+        from .purpose_import import import_purpose, render as render_import
+        root = Path(a.root)
+        if not (root / a.dir).is_dir():
+            print(f"aec import-purpose: no purpose-file directory {root / a.dir} (use --dir)", file=sys.stderr)
+            return 2
+        rep = import_purpose(root, root / a.dir, Path(a.records) if a.records else root / ".aec" / "records.jsonl",
+                             E.load(a.edges) if a.edges else E.snapshot(root), dry_run=a.dry_run)
+        print(render_import(rep))
+        return 0
 
     if a.cmd == "edges":
         if a.diff:

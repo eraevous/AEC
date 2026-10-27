@@ -84,5 +84,25 @@ class TestLegacyCsv(unittest.TestCase):
         self.assertIn("pkg.core.load,json.loads", csv)
 
 
+class TestSourceRootAliases(unittest.TestCase):  # feature 002: code run with src/ on sys.path
+    def snap(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "src").mkdir()
+        (d / "src" / "prof.py").write_text("def f():\n    return 1\n")
+        (d / "src" / "json.py").write_text("X = 1\n")
+        (d / "src" / "use.py").write_text("from prof import f\nimport json\n\ndef g():\n    return f()\n")
+        return E.snapshot(d)
+
+    def test_bare_import_resolves_to_the_source_root_module(self):
+        s = self.snap()
+        self.assertIn(("src.use", "src.prof.f"), idents(s, "imports"))
+        self.assertIn(("src.use.g", "src.prof.f"), idents(s, "calls"))
+        self.assertEqual(s["header"]["source_roots"], ["src"])
+
+    def test_stdlib_names_are_never_aliased(self):  # decoy
+        self.assertIn(("src.use", "json"), idents(self.snap(), "imports"))
+
+
 if __name__ == "__main__":
     unittest.main()

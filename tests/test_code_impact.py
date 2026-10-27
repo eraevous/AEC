@@ -57,5 +57,39 @@ class TestDanglingCodeRefs(unittest.TestCase):  # T013 / FR-006
         self.assertEqual([x for x in check(Store.load(f)) if x.level == "error"], [])
 
 
+class TestObservedOn(unittest.TestCase):  # feature 002 US4 / FR-010 (T004)
+    """Evidence observed on code: a code change asks for an applicability review, never invalidates."""
+
+    @classmethod
+    def setUpClass(cls):
+        f = Path(tempfile.mkdtemp()) / "r.jsonl"
+        f.write_text("\n".join(json.dumps(x) for x in [
+            {"id": "EV-step", "version": 1, "type": "evidence", "evidence_kind": "behavioral_observation",
+             "relations": [{"rel": "observed_on", "to": "code:pkg.core.Worker.step"}, {"rel": "supports", "to": "CL-a@1"}]},
+            {"id": "EV-fetch", "version": 1, "type": "evidence",
+             "relations": [{"rel": "observed_on", "to": "code:pkg.core.fetch"}, {"rel": "supports", "to": "CL-b@1"}]},
+            {"id": "EV-extras", "version": 1, "type": "evidence",
+             "relations": [{"rel": "observed_on", "to": "code:pkg.extras.helper"}, {"rel": "supports", "to": "CL-c@1"}]},
+            {"id": "CL-a", "version": 1, "type": "claim"},
+            {"id": "CL-b", "version": 1, "type": "claim"},
+            {"id": "CL-c", "version": 1, "type": "claim"},
+        ]))
+        rep, _ = code_impact(Store.load(f), E.snapshot(FIX / "edges_pkg_v1"), E.snapshot(FIX / "edges_pkg_v2"))
+        cls.st = {k: v.status for k, v in rep.impacts.items()}
+
+    def test_changed_code_puts_evidence_and_its_claim_under_review(self):
+        self.assertEqual(self.st["EV-step@1"], "needs_review")
+        self.assertEqual(self.st["CL-a@1"], "needs_review")
+
+    def test_deleted_code_still_only_review(self):
+        self.assertEqual(self.st["EV-fetch@1"], "needs_review")
+        self.assertEqual(self.st["CL-b@1"], "needs_review")
+        self.assertNotIn("unjustified", self.st.values())
+
+    def test_unrelated_code_flags_nothing(self):  # decoy, SC-005
+        self.assertNotIn("EV-extras@1", self.st)
+        self.assertNotIn("CL-c@1", self.st)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,3 @@
+- @ai-path: <module.path>
+- @ai-source-files: [<file1.py>, <file2.py>]       # List of related Python source files
+- @ai-intent: "<one-line intent>"

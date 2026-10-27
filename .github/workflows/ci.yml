@@ -15,3 +15,9 @@ jobs:
       - name: Records check against the snapshot (fails on dangling code references)
         run: PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
       - run: PYTHONPATH=src python3 -m aec check examples/mtg-pilot/records.jsonl
+      - name: Adoption path on the fixture repo (init + import-purpose + check)
+        run: |
+          cp -r tests/fixtures/purpose_repo "$RUNNER_TEMP/repo"
+          PYTHONPATH=src python3 -m aec init "$RUNNER_TEMP/repo" --owner ci
+          PYTHONPATH=src python3 -m aec import-purpose "$RUNNER_TEMP/repo"
+          PYTHONPATH=src python3 -m aec check "$RUNNER_TEMP/repo/.aec/records.jsonl" --edges "$RUNNER_TEMP/repo/.aec/edges.jsonl"

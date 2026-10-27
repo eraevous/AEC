@@ -10,6 +10,9 @@ Adds AEC's checks to the Spec Kit flow (Spec Kit ≥ 1.2.0). All hooks are **opt
 
 ## Install
 
+In a repo that does not use AEC yet, run `python3 -m aec init .` first (it detects Spec Kit and prints the command below).
+
+
 ```bash
 pip install git+https://github.com/eraevous/AEC        # the aec commands (stdlib only)
 specify extension add --dev /path/to/AEC/extension      # from a checkout
