@@ -54,8 +54,10 @@ class TestInstallRemove(unittest.TestCase):  # T018 / FR-008, FR-009
 
     def test_install_registers_hooks_and_remove_cleans_up(self):
         d = Path(tempfile.mkdtemp())
-        r = self.run_("init", "--here", "--force", "--non-interactive", "--integration", "claude", cwd=d)
-        self.assertEqual(r.returncode, 0, r.stderr[-2000:])
+        # Exercise the integration files, without requiring the Claude executable in CI.
+        r = self.run_("init", "--here", "--force", "--non-interactive", "--integration", "claude",
+                      "--ignore-agent-tools", cwd=d)
+        self.assertEqual(r.returncode, 0, (r.stdout + r.stderr)[-3000:])
         before = {p.relative_to(d): p.read_bytes() for p in (d / ".specify" / "templates").rglob("*") if p.is_file()}
         r = self.run_("extension", "add", str(EXT), "--dev", cwd=d)
         if r.returncode != 0:
