@@ -47,11 +47,12 @@ Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what
 A change is an event, not an edit:
 
 ```json
-{"change": "retract" | "revise", "target": "A-census@1", "new": "A-census@2", "by": "kate",
+{"change": "retract" | "revise" | "add", "target": "A-census@1", "new": "A-census@2", "by": "kate",
  "authorized_by": "zach" | null, "revision": "R-0002" | null, "reason": "..."}
 ```
 
 - `retract`: the target is no longer believed (an assumption found false, or evidence found invalid).
+- `add`: a new record arrives, typically evidence. Evidence that `contradicts` a claim starts a reassessment; new supporting evidence changes nothing.
 - `revise`: a new version replaces the old one. It counts as **authorized** only if `authorized_by` names an authority whose `governs` covers the target's `subject`.
 
 ## What `aec impact` reports for each affected conclusion
@@ -59,6 +60,7 @@ A change is an event, not an edit:
 | status | when |
 |---|---|
 | `unjustified` | it relied on the retracted or changed record, and no remaining support of that kind holds it up |
+| `contested` | new evidence contradicts it. Whether the contradiction outweighs the support is a review question |
 | `weakened` | it lost one support but keeps others |
 | `stale` | it pins an old version after an unauthorized change. Investigate before relying on it |
 | `rebaseline` | it pins an old version after an **authorized** revision. Re-examine it against the new version; this is not drift |
@@ -66,6 +68,10 @@ A change is an event, not an edit:
 | `needs_review` | it depends transitively on something that became `unjustified` or `stale` |
 
 Everything else is reported as unaffected. Over-flagging is a failure too.
+
+**These are review dispositions, not truth values** (Kate, PR #8 review). The tool computes dependency propagation; it does not judge justificatory adequacy. `unjustified` means the *recorded* justification no longer holds under the declared dependencies, not that the conclusion is false. `weakened` means some support was lost and the adequacy of what remains is unassessed: one strong observation can outweigh several weak ones, and counting supports cannot tell. A `decision` is never marked `unjustified`, whether the dependency changed directly or transitively; it is flagged `needs_review` for the authority that made it.
+
+**Known limits.** Authorization is *claimed*, not verified: the tool checks that the named authority governs the subject, not that the person actually approved. Evidence has no applicability conditions yet (version, scope, setting), so evidence that stopped applying is invisible until someone retracts it. Retracting a contradicting record does not restore anything.
 
 ## Semantics this encoding enforces
 
