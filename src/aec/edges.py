@@ -18,11 +18,12 @@ import ast
 import builtins
 import hashlib
 import json
+import sys
 import tokenize
 import warnings
 from pathlib import Path
 
-TOOL_VERSION = "0.2.0"
+TOOL_VERSION = "0.3.0"
 KINDS = ("defines", "imports", "inherits", "calls", "references")
 BUILTINS = set(dir(builtins))
 DEFAULT_IGNORE = {".git", ".venv", "venv", "env", "__pycache__", ".tox", "node_modules", "build", "dist",
@@ -157,14 +158,17 @@ class _Extractor:
     def _import_bindings(self, mod: _Module, node, src: str, bind: dict):
         if isinstance(node, ast.Import):
             for a in node.names:
-                self.edge("imports", src, a.name, mod, node)
+                target = self._alias(a.name)
+                self.edge("imports", src, target, mod, node)
                 if a.asname:
-                    bind[a.asname] = a.name
+                    bind[a.asname] = target
                 else:
                     top = a.name.split(".")[0]
-                    bind[top] = top
+                    bind[top] = self._alias(top)
         else:
             base = self._abs_module(mod, node)
+            if not node.level:
+                base = self._alias(base)
             for a in node.names:
                 if a.name == "*":
                     self.edge("imports", src, f"{base}.*", mod, node)
@@ -178,7 +182,31 @@ class _Extractor:
                 self.edge("imports", src, full, mod, node)
                 bind[a.asname or a.name] = full
 
+    def build_source_root_aliases(self):
+        """Code run with a source directory on sys.path imports `src/x.py` as `x`. Map such bare
+        top-level imports to the module that exists (`x` -> `src.x`), only when unambiguous and not a
+        stdlib name. Recorded in the header as `source_roots` so the mapping is visible."""
+        tops = {name.split(".")[0] for name in self.modules}
+        cand: dict[str, set[str]] = {}
+        for name in self.modules:
+            parts = name.split(".")
+            if len(parts) >= 2:
+                cand.setdefault(parts[1], set()).add(parts[0])
+        stdlib = getattr(sys, "stdlib_module_names", frozenset())
+        self.root_alias = {x: f"{next(iter(roots))}.{x}" for x, roots in cand.items()
+                           if len(roots) == 1 and x not in tops and x not in stdlib}
+        self.source_roots_used: set[str] = set()
+
+    def _alias(self, dotted: str) -> str:
+        top, _, rest = dotted.partition(".")
+        target = self.root_alias.get(top)
+        if not target:
+            return dotted
+        self.source_roots_used.add(target.split(".")[0])
+        return f"{target}.{rest}" if rest else target
+
     def build_module_bindings(self):
+        self.build_source_root_aliases()
         for m in self.modules.values():
             bind: dict[str, str] = {}
             for kind, item in m.order:   # statement order: later bindings win, like Python
@@ -356,7 +384,9 @@ def snapshot(root: str | Path, ignore: set[str] | None = None) -> dict:
     edges.sort(key=sort_key)
     header = {"aec_edges": 1, "tool_version": TOOL_VERSION, "root": root.as_posix(), "files": len(ex.file_hashes),
               "files_sha": hashlib.sha256("\n".join(sorted(ex.file_hashes)).encode()).hexdigest()[:16],
-              "skipped": sorted(ex.skipped, key=lambda s: s["file"])}
+              "skipped": sorted(ex.skipped, key=lambda s: s["file"]),
+              "modules": {name: m.rel for name, m in sorted(ex.modules.items())},
+              "source_roots": sorted(ex.source_roots_used)}
     return {"header": header, "edges": edges}
 
 
@@ -381,6 +411,11 @@ def diff(old: dict, new: dict) -> dict:
     n = {ident(e): e for e in new["edges"]}
     od = {e["dst"]: e.get("body_sha") for e in old["edges"] if e["kind"] == "defines"}
     nd = {e["dst"]: e.get("body_sha") for e in new["edges"] if e["kind"] == "defines"}
+    # modules count as definitions too (a module with no functions can still be referenced and deleted);
+    # snapshots from tool_version < 0.3.0 have no module map, so this adds nothing for them
+    for d, snap in ((od, old), (nd, new)):
+        for m in snap["header"].get("modules", {}):
+            d.setdefault(m, None)
     return {
         "added": sorted((n[k] for k in n.keys() - o.keys()), key=sort_key),
         "removed": sorted((o[k] for k in o.keys() - n.keys()), key=sort_key),

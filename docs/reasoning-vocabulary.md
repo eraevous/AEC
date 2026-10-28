@@ -1,4 +1,4 @@
-# AEC reasoning vocabulary v0
+# AEC reasoning vocabulary v0.3
 
 A small vocabulary for the *work and its justification*. The point is the meaning of the relationships, not the boxes: evidence supporting a claim does not establish it; a passing test does not satisfy a requirement; a satisfied requirement does not show the purpose was achieved. Those are the steps an AI tends to collapse into "done".
 
@@ -28,6 +28,8 @@ Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what
 
 **Epistemic status** (`epistemic`) separates purpose *discovery* from purpose *preservation*. A `provisional` purpose, criterion or requirement may be reframed during exploration without that being drift. The history is still kept. A `committed` one changes only through an authorized `revision`.
 
+**Evidence kind and claim category** (v0.3, optional). `evidence_kind` is one of `contract_conformance` (the implementation meets its declared contract: tests pass, the report renders), `behavioral_observation` (what the system was seen to do under stated conditions), `outcome_observation` (whether the intended effect happened). `claim_category` is `requirement_satisfaction` or `purpose_outcome`. They exist so the check can tell "it passes" from "it works": a `purpose_outcome` claim whose supporting evidence is *all* `contract_conformance` gets an `outcome-sufficiency` warning. That is an unsupported inference, not a finding that the outcome failed, and adding one outcome observation clears it. Evidence with no kind is not treated as conformance. **This is a necessary-evidence-type check, not a sufficiency test**: it does not judge whether the outcome observation is relevant, reliable, independent or broad enough for the claim. Missing evidence and inadequate evidence stay distinct; the second is a review question.
+
 **Evidence tiers** (`tier`): `candidate` (unreviewed or machine-produced), `reviewed` (a qualified reviewer checked it), `observed` (an outcome actually seen under recorded conditions), `prospective` (a prediction frozen before the outcome). A tier label never establishes validity by itself.
 
 ## Relations (from → to)
@@ -44,6 +46,16 @@ Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what
 | `produced` | evaluation → evidence | where the evidence came from |
 | `selects` | decision → claim or alternative | what the decision adopted |
 | `supersedes` | revision or record → record@version | the newer commitment replaces the older one. The old one is kept |
+| `observed_on` | evidence → `code:<symbol>` | the observation was made against this code. If the code changes, whether the evidence still *applies* needs review. It does not mean the observation was wrong (v0.3) |
+
+## A code dependency is not a justificatory dependency
+
+This is a governing invariant (Kate, MtG coordination, 2026-10-27). The edge graph says what code calls, imports or refers to what; the records say what conclusions rest on what. They inform each other but their edges mean different things. If module A imports B, changing B may change how A runs, yet a conclusion supported by A is not thereby unjustified. Conversely a conclusion can rest on a changed assumption with no import changing at all. So:
+
+- An edge in `edges.jsonl` never becomes a justification by itself. Only a record's explicit relation to `code:<symbol>` connects code to a conclusion.
+- A code change produces **review statuses only** (`stale`, `needs_review`). One exception: a **claim or evidence** record whose explicit `depends_on` names code that was **deleted** is `unjustified`, because its recorded justification names something that no longer exists. `depends_on` is a strong declaration; it is never inferred from imports.
+- **Obligations are never invalidated by code** (Kate, AEC round 4). If the code implementing a requirement, purpose or criterion is deleted, what breaks is the recorded *satisfaction*, not the obligation: the record gets `needs_review` and a finding says the implementation path is gone. Decisions are only flagged.
+- `observed_on` evidence is never invalidated by a code change: an edit is not proof that observed behaviour changed.
 
 ## Changes
 
@@ -78,9 +90,12 @@ Everything else is reported as unaffected. Over-flagging is a failure too.
 
 ## Semantics this encoding enforces
 
+0. Unknown record types, relations, tiers, evidence kinds and claim categories are errors.
 1. A `decision` with `status: accepted` must have `decided_by` set to an authority that governs its subject.
 2. A claim with `tier: observed` must be supported by evidence that an evaluation `produced`. A claim with `tier: prospective` must reference a frozen source (`frozen_sha256`).
 3. Every `id@version` reference must resolve.
 4. A committed criterion or purpose changed without an authorized revision is flagged. A provisional one is not.
 
-`aec check` covers rules 1–3; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.
+5. A `purpose_outcome` claim supported only by `contract_conformance` evidence is warned about (`outcome-sufficiency`).
+
+`aec check` covers rules 0–3 and 5; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.

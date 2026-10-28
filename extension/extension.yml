@@ -3,7 +3,7 @@ schema_version: "1.0"
 extension:
   id: aec
   name: "AEC: purpose, authority & change impact"
-  version: "0.2.0"
+  version: "0.3.0"
   description: "Keeps why a feature exists attached to what gets built: checks that specs cite a purpose, cross-checks purpose/authority/evidence records, and reports which conclusions a code change leaves unjustified. Reports findings only; never edits Spec Kit artifacts."
   category: "governance"
   effect: "read-only"

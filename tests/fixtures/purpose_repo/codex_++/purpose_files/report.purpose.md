@@ -1,0 +1,5 @@
+- @ai-path: report
+- @ai-source-files: [report.py]
+- @ai-intent: "Render the cleaned output as Markdown"
+- @ai-generated: true
+- @ai-verified: false

@@ -1,0 +1,3 @@
+- @ai-path: notebooks_demo
+- @ai-source-files: [src/notebooks/Demo.ipynb]
+- @ai-intent: "Demonstrate the pipeline"
