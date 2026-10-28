@@ -10,8 +10,12 @@ from pathlib import Path
 
 TYPES = {"purpose", "requirement", "criterion", "assumption", "source", "claim", "evidence",
          "evaluation", "decision", "authority", "revision"}
-RELATIONS = {"serves", "implements", "depends_on", "supports", "contradicts", "tests", "produced",
-             "selects", "supersedes"}
+RELATIONS = {"serves", "implements", "implemented_by", "depends_on", "supports", "contradicts", "tests",
+             "produced", "selects", "supersedes", "observed_on"}
+# feature 002: tell contract conformance from outcome (Kate, AEC round 3). Both fields are optional.
+EVIDENCE_KINDS = {"contract_conformance", "behavioral_observation", "outcome_observation"}
+CLAIM_CATEGORIES = {"requirement_satisfaction", "purpose_outcome"}
+CODE = "code:"  # unversioned reference to a code symbol; the edge snapshot supplies its current state
 TIERS = {"candidate", "reviewed", "observed", "prospective"}
 
 
@@ -38,7 +42,7 @@ class Record:
 
     @property
     def ref(self) -> str:
-        return ref(self.id, self.version)
+        return self.id if self.id.startswith(CODE) else ref(self.id, self.version)
 
     def get(self, key, default=None):
         return self.data.get(key, default)
@@ -91,9 +95,21 @@ class Finding:
     msg: str
 
 
-def check(store: Store) -> list[Finding]:
-    """Deterministic cross-record checks. They say nothing about whether evidence is *good*."""
+def defined_symbols(edges: dict) -> set[str]:
+    """Every symbol an edge snapshot defines (definitions plus the modules that contain them)."""
+    out = set(edges["header"].get("modules", {}))
+    for e in edges["edges"]:
+        if e["kind"] == "defines":
+            out.add(e["dst"])
+            out.add(e["src"])
+    return out
+
+
+def check(store: Store, edges: dict | None = None) -> list[Finding]:
+    """Deterministic cross-record checks. They say nothing about whether evidence is *good*.
+    With an edge snapshot, `code:` references must name a symbol the snapshot defines."""
     out: list[Finding] = []
+    symbols = defined_symbols(edges) if edges else None
     seen = set()
     for r in store.records:
         if r.ref in seen:
@@ -105,6 +121,11 @@ def check(store: Store) -> list[Finding]:
             if e.get("rel") not in RELATIONS:
                 out.append(Finding("error", "relation", r.ref, f"unknown relation {e.get('rel')!r}"))
             to = e.get("to", "")
+            if to.startswith(CODE):
+                if symbols is not None and to[len(CODE):] not in symbols:
+                    out.append(Finding("error", "code-reference", r.ref,
+                                       f"{e.get('rel')} -> {to}: no such symbol in the edge snapshot (renamed or deleted?)"))
+                continue
             try:
                 split_ref(to)
             except ValueError as ex:
@@ -129,6 +150,18 @@ def check(store: Store) -> list[Finding]:
                                        "tier 'observed' but no supporting evidence was produced by an evaluation"))
             if tier == "prospective" and not r.get("frozen_sha256"):
                 out.append(Finding("error", "tier", r.ref, "tier 'prospective' needs frozen_sha256 (freeze before the outcome)"))
+        kind, cat = r.get("evidence_kind"), r.get("claim_category")
+        if kind is not None and kind not in EVIDENCE_KINDS:
+            out.append(Finding("error", "evidence-kind", r.ref, f"unknown evidence_kind {kind!r}"))
+        if cat is not None and cat not in CLAIM_CATEGORIES:
+            out.append(Finding("error", "claim-category", r.ref, f"unknown claim_category {cat!r}"))
+        if r.type == "claim" and cat == "purpose_outcome" and store.latest.get(r.id) is r:
+            sup = [ev for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence"]
+            if sup and all(ev.get("evidence_kind") == "contract_conformance" for ev in sup):
+                out.append(Finding("warning", "outcome-sufficiency", r.ref,
+                                   "purpose-outcome claim is supported only by contract-conformance evidence ("
+                                   + ", ".join(ev.ref for ev in sup) + "): an unsupported inference, not a "
+                                   "finding that the outcome failed. Add an outcome observation or narrow the claim."))
         if r.type == "revision" and not r.get("authorized_by"):
             out.append(Finding("warning", "authority", r.ref, "revision without authorized_by: it is a proposal, not yet a revision"))
     return out

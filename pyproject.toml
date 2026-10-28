@@ -1,9 +1,10 @@
 [project]
 name = "aec"
-version = "0.1.0"
+version = "0.3.0"
 description = "AEC: purpose, authority, evidence and change-impact records for AI-assisted development (Spec Kit extension prototype)"
 requires-python = ">=3.10"
 dependencies = []   # standard library only
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["aec*"]   # the legacy src/core (2025 extractor, pandas/typer) is not shipped

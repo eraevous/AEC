@@ -9,12 +9,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .records import Record, Store, split_ref
+from .records import CODE, Record, Store, split_ref
 
 # severity order: a conclusion keeps the most severe status it reaches
 SEVERITY = ["exploratory", "rebaseline", "weakened", "contested", "needs_review", "stale", "unjustified"]
 # broken, unauthorized or contested support makes dependents need review
 PROPAGATES = {"unjustified", "stale", "contested"}
+OBLIGATIONS = {"requirement", "purpose", "criterion"}  # never invalidated by code changes
 
 
 @dataclass
@@ -47,8 +48,10 @@ def _dependents(store: Store, target_ref: str) -> list[tuple[Record, str]]:
         for e in r.relations:
             if e.get("to") != target_ref:
                 continue
-            if e.get("rel") in ("depends_on", "selects"):
+            if e.get("rel") in ("depends_on", "selects", "implemented_by"):
                 out.append((r, "necessary"))
+            elif e.get("rel") == "observed_on":
+                out.append((r, "applicability"))  # evidence observed on this: re-check it still applies
     if target is not None:
         # evidence supporting a claim: the claim depends on that evidence (as one support among several)
         for e in target.relations:
@@ -93,8 +96,16 @@ def impact(store: Store, changes: list[dict]) -> ImpactReport:
             for dep, how in _dependents(store, target_ref):
                 if how == "support" and dep.type == "claim" and _live_supports(store, dep, dead):
                     status = "weakened"
-                elif dep.type == "decision":
-                    status = "needs_review"  # decisions belong to a human authority: flag, never invalidate
+                elif target.id.startswith(CODE) and dep.type in OBLIGATIONS:
+                    # deleting the implementation breaks the recorded *satisfaction*, not the obligation
+                    # (Kate, AEC round 4): the obligation stands and its satisfaction needs review
+                    status = "needs_review"
+                    findings.append(f"recorded implementation path {dep.ref} -> {target_ref} no longer exists: "
+                                    f"the satisfaction claim is unjustified; the {dep.type} itself stands")
+                elif dep.type == "decision" or how == "applicability":
+                    # decisions belong to a human authority; observations stay valid records of what was seen.
+                    # Either way: flag for review, never invalidate.
+                    status = "needs_review"
                 else:
                     status = "unjustified"
                 if _raise(impacts, dep.ref, status, [target_ref, dep.ref]) and status in PROPAGATES | {"needs_review"}:
@@ -121,8 +132,9 @@ def impact(store: Store, changes: list[dict]) -> ImpactReport:
                         f"unauthorized revision of committed {target.type} {target_ref}: "
                         f"by={ch.get('by')!r}, authorized_by={ch.get('authorized_by')!r} does not govern "
                         f"subject {target.subject!r}. This is a proposal, not a revision.")
-            for dep, _how in _dependents(store, target_ref):
-                if _raise(impacts, dep.ref, status, [target_ref, dep.ref]) and status in PROPAGATES:
+            for dep, how in _dependents(store, target_ref):
+                dep_status = "needs_review" if how == "applicability" else status
+                if _raise(impacts, dep.ref, dep_status, [target_ref, dep.ref]) and dep_status in PROPAGATES | {"needs_review"}:
                     queue.append(dep.ref)
         else:
             findings.append(f"unknown change kind {kind!r}")

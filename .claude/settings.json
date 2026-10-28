@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl 2>/dev/null; PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl >/dev/null || (PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl 1>&2; exit 2)", "timeout": 30 }
+        ]
+      }
+    ]
+  }
+}

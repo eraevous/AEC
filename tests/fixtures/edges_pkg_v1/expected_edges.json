@@ -1,0 +1,26 @@
+{
+ "_doc": "Hand-labelled identities (kind, src, dst) for edges_pkg_v1. Unresolved calls use '?'. Builtins are dropped. pkg/broken.py must be skipped.",
+ "defines": [
+  ["pkg.base", "pkg.base.Base"], ["pkg.base.Base", "pkg.base.Base.run"], ["pkg.base.Base", "pkg.base.Base.step"],
+  ["pkg.core", "pkg.core.Worker"], ["pkg.core.Worker", "pkg.core.Worker.step"], ["pkg.core", "pkg.core.fetch"],
+  ["pkg.core", "pkg.core.load"], ["pkg.core", "pkg.core.main"], ["pkg.core", "pkg.core.CONSTANT"],
+  ["pkg.util", "pkg.util.helper"], ["pkg.extras", "pkg.extras.helper"]
+ ],
+ "imports": [
+  ["pkg.core", "os"], ["pkg.core", "json"], ["pkg.core", "pkg.base.Base"], ["pkg.core", "pkg.extras.*"],
+  ["pkg.core", "pkg.util.helper"], ["pkg.util.helper", "pkg.base.Base"]
+ ],
+ "inherits": [["pkg.core.Worker", "pkg.base.Base"]],
+ "calls": [
+  ["pkg.base.Base.run", "pkg.base.Base.step"],
+  ["pkg.core.Worker.step", "pkg.util.helper"],
+  ["pkg.core.fetch", "pkg.core.load"],
+  ["pkg.core.load", "json.loads"],
+  ["pkg.core.load", "?getattr(...)"],
+  ["pkg.core.main", "pkg.core.Worker"],
+  ["pkg.core.main", "?w.run"]
+ ],
+ "references": [
+  ["pkg.core.main", "pkg.core.CONSTANT"], ["pkg.core.load", "os"], ["pkg.util.helper", "pkg.base.Base"]
+ ]
+}

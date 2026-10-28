@@ -137,5 +137,42 @@ class TestSemantics(unittest.TestCase):
         self.assertIn(("reference", "X@1"), rules)
 
 
+class TestOutcomeSufficiency(unittest.TestCase):  # feature 002 US3 / FR-008, FR-009 (T003)
+    def run_check(self, extra):
+        base = [{"id": "C", "version": 1, "type": "claim", "claim_category": "purpose_outcome",
+                 "text": "Reports let the analyst see the real data"},
+                {"id": "T", "version": 1, "type": "evidence", "evidence_kind": "contract_conformance",
+                 "text": "report tests pass", "relations": [{"rel": "supports", "to": "C@1"}]}]
+        return check(store_from(base + extra))
+
+    def test_outcome_claim_on_conformance_only_warns(self):
+        fs = [f for f in self.run_check([]) if f.rule == "outcome-sufficiency"]
+        self.assertEqual([(f.level, f.ref) for f in fs], [("warning", "C@1")])
+        self.assertIn("unsupported inference", fs[0].msg)
+        self.assertIn("T@1", fs[0].msg)
+
+    def test_outcome_observation_makes_it_pass(self):
+        extra = [{"id": "O", "version": 1, "type": "evidence", "evidence_kind": "outcome_observation",
+                  "relations": [{"rel": "supports", "to": "C@1"}]}]
+        self.assertEqual([f for f in self.run_check(extra) if f.rule == "outcome-sufficiency"], [])
+
+    def test_requirement_satisfaction_on_conformance_is_fine(self):  # decoy
+        lines = [{"id": "C", "version": 1, "type": "claim", "claim_category": "requirement_satisfaction"},
+                 {"id": "T", "version": 1, "type": "evidence", "evidence_kind": "contract_conformance",
+                  "relations": [{"rel": "supports", "to": "C@1"}]}]
+        self.assertEqual([f for f in check(store_from(lines)) if f.level in ("warning", "error")], [])
+
+    def test_unkinded_evidence_is_not_counted_as_conformance(self):  # decoy: unknown is not conformance
+        lines = [{"id": "C", "version": 1, "type": "claim", "claim_category": "purpose_outcome"},
+                 {"id": "T", "version": 1, "type": "evidence", "relations": [{"rel": "supports", "to": "C@1"}]}]
+        self.assertEqual([f for f in check(store_from(lines)) if f.rule == "outcome-sufficiency"], [])
+
+    def test_unknown_kind_or_category_is_an_error(self):
+        lines = [{"id": "C", "version": 1, "type": "claim", "claim_category": "vibes"},
+                 {"id": "T", "version": 1, "type": "evidence", "evidence_kind": "anecdote"}]
+        errs = {(f.rule, f.ref) for f in check(store_from(lines)) if f.level == "error"}
+        self.assertEqual(errs, {("claim-category", "C@1"), ("evidence-kind", "T@1")})
+
+
 if __name__ == "__main__":
     unittest.main()

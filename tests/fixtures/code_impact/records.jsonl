@@ -1,0 +1,7 @@
+// Records linking requirements to code in edges_pkg_v1/v2 (US2 fixtures).
+{"id":"AU","version":1,"type":"authority","governs":["proj"]}
+{"id":"REQ-load","version":1,"type":"requirement","subject":"proj","epistemic":"committed","text":"Workers load data before helping","relations":[{"rel":"implemented_by","to":"code:pkg.core.Worker.step"}]}
+{"id":"CL-load","version":1,"type":"claim","tier":"candidate","text":"Worker.step behaviour satisfies REQ-load","relations":[{"rel":"depends_on","to":"REQ-load@1"},{"rel":"depends_on","to":"code:pkg.core.Worker.step"}]}
+{"id":"REQ-fetch","version":1,"type":"requirement","subject":"proj","epistemic":"committed","text":"An async fetch entry point exists","relations":[{"rel":"depends_on","to":"code:pkg.core.fetch"}]}
+{"id":"D-ship","version":1,"type":"decision","subject":"proj","status":"proposed","text":"Ship v2","relations":[{"rel":"depends_on","to":"CL-load@1"}]}
+{"id":"REQ-extras","version":1,"type":"requirement","subject":"proj","epistemic":"committed","text":"Extras helper stays simple (decoy: unchanged code)","relations":[{"rel":"depends_on","to":"code:pkg.extras.helper"}]}
