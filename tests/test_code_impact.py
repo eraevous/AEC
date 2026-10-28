@@ -27,8 +27,17 @@ class TestCodeImpact(unittest.TestCase):
         self.assertEqual(self.st["D-ship@1"], "needs_review")
         self.assertIn("code:pkg.core.Worker.step", self.rep.impacts["REQ-load@1"].because[0])
 
-    def test_deleted_symbol_leaves_requirement_unjustified(self):  # US2-2
-        self.assertEqual(self.st["REQ-fetch@1"], "unjustified")
+    def test_deleted_symbol_breaks_satisfaction_not_the_requirement(self):  # US2-2, amended by Kate round 4
+        self.assertEqual(self.st["REQ-fetch@1"], "needs_review")
+        self.assertTrue(any("REQ-fetch@1 -> code:pkg.core.fetch no longer exists" in f and "requirement itself stands" in f
+                            for f in self.rep.findings))
+
+    def test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it(self):
+        f = Path(tempfile.mkdtemp()) / "r.jsonl"
+        f.write_text(json.dumps({"id": "CL", "version": 1, "type": "claim",
+                                 "relations": [{"rel": "depends_on", "to": "code:pkg.core.fetch"}]}))
+        rep, _ = code_impact(Store.load(f), self.v1, self.v2)
+        self.assertEqual(rep.impacts["CL@1"].status, "unjustified")
 
     def test_unchanged_linked_code_is_not_flagged(self):  # decoy, SC-004
         self.assertNotIn("REQ-extras@1", self.st)

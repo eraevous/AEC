@@ -9,12 +9,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .records import Record, Store, split_ref
+from .records import CODE, Record, Store, split_ref
 
 # severity order: a conclusion keeps the most severe status it reaches
 SEVERITY = ["exploratory", "rebaseline", "weakened", "contested", "needs_review", "stale", "unjustified"]
 # broken, unauthorized or contested support makes dependents need review
 PROPAGATES = {"unjustified", "stale", "contested"}
+OBLIGATIONS = {"requirement", "purpose", "criterion"}  # never invalidated by code changes
 
 
 @dataclass
@@ -95,6 +96,12 @@ def impact(store: Store, changes: list[dict]) -> ImpactReport:
             for dep, how in _dependents(store, target_ref):
                 if how == "support" and dep.type == "claim" and _live_supports(store, dep, dead):
                     status = "weakened"
+                elif target.id.startswith(CODE) and dep.type in OBLIGATIONS:
+                    # deleting the implementation breaks the recorded *satisfaction*, not the obligation
+                    # (Kate, AEC round 4): the obligation stands and its satisfaction needs review
+                    status = "needs_review"
+                    findings.append(f"recorded implementation path {dep.ref} -> {target_ref} no longer exists: "
+                                    f"the satisfaction claim is unjustified; the {dep.type} itself stands")
                 elif dep.type == "decision" or how == "applicability":
                     # decisions belong to a human authority; observations stay valid records of what was seen.
                     # Either way: flag for review, never invalidate.

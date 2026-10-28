@@ -37,3 +37,4 @@ T001 → T009. T003/T004 → T005/T006. T007 → T008. T009 → T010 → T011. P
 - [X] T019 Caller attribution uses the enclosing module for function-local imports (the `data_profiler` ↔ `bivariate_profiler` cycle)
 - [X] T020 `import-purpose` exits 2 with a message when the purpose-file directory is missing; CLI test
 - [X] T021 Version bump: package and extension 0.3.0
+- [X] T022 Kate round 4: deleting code that implements an obligation breaks its recorded satisfaction, not the obligation (`needs_review` + finding); claims that `depends_on` deleted code stay `unjustified`. Outcome check documented as a necessary-evidence-type check, not sufficiency

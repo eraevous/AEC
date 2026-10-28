@@ -1,4 +1,4 @@
-{"aec_edges": 1, "files": 38, "files_sha": "195cb384d1bd054f", "modules": {"src.aec": "src/aec/__init__.py", "src.aec.__main__": "src/aec/__main__.py", "src.aec.code_impact": "src/aec/code_impact.py", "src.aec.edges": "src/aec/edges.py", "src.aec.impact": "src/aec/impact.py", "src.aec.init": "src/aec/init.py", "src.aec.purpose_import": "src/aec/purpose_import.py", "src.aec.records": "src/aec/records.py", "src.core": "src/core/__init__.py", "src.core.tools.ast_dependency_extractor": "src/core/tools/ast_dependency_extractor.py", "tests.fixtures.edges_pkg_v1.pkg": "tests/fixtures/edges_pkg_v1/pkg/__init__.py", "tests.fixtures.edges_pkg_v1.pkg.base": "tests/fixtures/edges_pkg_v1/pkg/base.py", "tests.fixtures.edges_pkg_v1.pkg.core": "tests/fixtures/edges_pkg_v1/pkg/core.py", "tests.fixtures.edges_pkg_v1.pkg.extras": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "tests.fixtures.edges_pkg_v1.pkg.util": "tests/fixtures/edges_pkg_v1/pkg/util.py", "tests.fixtures.edges_pkg_v2.pkg": "tests/fixtures/edges_pkg_v2/pkg/__init__.py", "tests.fixtures.edges_pkg_v2.pkg.base": "tests/fixtures/edges_pkg_v2/pkg/base.py", "tests.fixtures.edges_pkg_v2.pkg.core": "tests/fixtures/edges_pkg_v2/pkg/core.py", "tests.fixtures.edges_pkg_v2.pkg.extras": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "tests.fixtures.edges_pkg_v2.pkg.util": "tests/fixtures/edges_pkg_v2/pkg/util.py", "tests.fixtures.purpose_repo.pkg": "tests/fixtures/purpose_repo/pkg/__init__.py", "tests.fixtures.purpose_repo.pkg.a": "tests/fixtures/purpose_repo/pkg/a/__init__.py", "tests.fixtures.purpose_repo.pkg.a.helpers": "tests/fixtures/purpose_repo/pkg/a/helpers.py", "tests.fixtures.purpose_repo.pkg.b": "tests/fixtures/purpose_repo/pkg/b/__init__.py", "tests.fixtures.purpose_repo.pkg.b.helpers": "tests/fixtures/purpose_repo/pkg/b/helpers.py", "tests.fixtures.purpose_repo.pkg.cli": "tests/fixtures/purpose_repo/pkg/cli.py", "tests.fixtures.purpose_repo.pkg.core": "tests/fixtures/purpose_repo/pkg/core.py", "tests.fixtures.purpose_repo.pkg.util": "tests/fixtures/purpose_repo/pkg/util.py", "tests.test_aec": "tests/test_aec.py", "tests.test_code_impact": "tests/test_code_impact.py", "tests.test_edges": "tests/test_edges.py", "tests.test_extension": "tests/test_extension.py", "tests.test_import_purpose": "tests/test_import_purpose.py", "tests.test_init": "tests/test_init.py", "tests.test_install": "tests/test_install.py", "tests.test_stdlib_only": "tests/test_stdlib_only.py"}, "root": ".", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "source_roots": ["src"], "tool_version": "0.3.0"}
+{"aec_edges": 1, "files": 38, "files_sha": "a64dc87ae68a7af2", "modules": {"src.aec": "src/aec/__init__.py", "src.aec.__main__": "src/aec/__main__.py", "src.aec.code_impact": "src/aec/code_impact.py", "src.aec.edges": "src/aec/edges.py", "src.aec.impact": "src/aec/impact.py", "src.aec.init": "src/aec/init.py", "src.aec.purpose_import": "src/aec/purpose_import.py", "src.aec.records": "src/aec/records.py", "src.core": "src/core/__init__.py", "src.core.tools.ast_dependency_extractor": "src/core/tools/ast_dependency_extractor.py", "tests.fixtures.edges_pkg_v1.pkg": "tests/fixtures/edges_pkg_v1/pkg/__init__.py", "tests.fixtures.edges_pkg_v1.pkg.base": "tests/fixtures/edges_pkg_v1/pkg/base.py", "tests.fixtures.edges_pkg_v1.pkg.core": "tests/fixtures/edges_pkg_v1/pkg/core.py", "tests.fixtures.edges_pkg_v1.pkg.extras": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "tests.fixtures.edges_pkg_v1.pkg.util": "tests/fixtures/edges_pkg_v1/pkg/util.py", "tests.fixtures.edges_pkg_v2.pkg": "tests/fixtures/edges_pkg_v2/pkg/__init__.py", "tests.fixtures.edges_pkg_v2.pkg.base": "tests/fixtures/edges_pkg_v2/pkg/base.py", "tests.fixtures.edges_pkg_v2.pkg.core": "tests/fixtures/edges_pkg_v2/pkg/core.py", "tests.fixtures.edges_pkg_v2.pkg.extras": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "tests.fixtures.edges_pkg_v2.pkg.util": "tests/fixtures/edges_pkg_v2/pkg/util.py", "tests.fixtures.purpose_repo.pkg": "tests/fixtures/purpose_repo/pkg/__init__.py", "tests.fixtures.purpose_repo.pkg.a": "tests/fixtures/purpose_repo/pkg/a/__init__.py", "tests.fixtures.purpose_repo.pkg.a.helpers": "tests/fixtures/purpose_repo/pkg/a/helpers.py", "tests.fixtures.purpose_repo.pkg.b": "tests/fixtures/purpose_repo/pkg/b/__init__.py", "tests.fixtures.purpose_repo.pkg.b.helpers": "tests/fixtures/purpose_repo/pkg/b/helpers.py", "tests.fixtures.purpose_repo.pkg.cli": "tests/fixtures/purpose_repo/pkg/cli.py", "tests.fixtures.purpose_repo.pkg.core": "tests/fixtures/purpose_repo/pkg/core.py", "tests.fixtures.purpose_repo.pkg.util": "tests/fixtures/purpose_repo/pkg/util.py", "tests.test_aec": "tests/test_aec.py", "tests.test_code_impact": "tests/test_code_impact.py", "tests.test_edges": "tests/test_edges.py", "tests.test_extension": "tests/test_extension.py", "tests.test_import_purpose": "tests/test_import_purpose.py", "tests.test_init": "tests/test_init.py", "tests.test_install": "tests/test_install.py", "tests.test_stdlib_only": "tests/test_stdlib_only.py"}, "root": ".", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "source_roots": ["src"], "tool_version": "0.3.0"}
 {"body_sha": "d9010b3be5e1", "dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "defines", "line": 24, "resolved": true, "src": "src.aec.__main__"}
 {"body_sha": "17a70e853f8a", "dst": "src.aec.__main__._git_user", "file": "src/aec/__main__.py", "kind": "defines", "line": 37, "resolved": true, "src": "src.aec.__main__"}
 {"body_sha": "bfa95e54ce28", "dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "defines", "line": 29, "resolved": true, "src": "src.aec.__main__"}
@@ -45,16 +45,17 @@
 {"body_sha": "defb4fd30ef5", "dst": "src.aec.edges._Extractor.scan_bodies", "file": "src/aec/edges.py", "kind": "defines", "line": 292, "resolved": true, "src": "src.aec.edges._Extractor"}
 {"body_sha": "07faf1a4b6db", "dst": "src.aec.edges._Extractor.collect_all_defs.<locals>.walk", "file": "src/aec/edges.py", "kind": "defines", "line": 257, "resolved": true, "src": "src.aec.edges._Extractor.collect_all_defs"}
 {"body_sha": "54762df06f0a", "dst": "src.aec.edges._Module.__init__", "file": "src/aec/edges.py", "kind": "defines", "line": 74, "resolved": true, "src": "src.aec.edges._Module"}
-{"body_sha": "866d2b0d004f", "dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "defines", "line": 21, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "26a1fa0018c1", "dst": "src.aec.impact.ImpactReport", "file": "src/aec/impact.py", "kind": "defines", "line": 28, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "866d2b0d004f", "dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "defines", "line": 22, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "26a1fa0018c1", "dst": "src.aec.impact.ImpactReport", "file": "src/aec/impact.py", "kind": "defines", "line": 29, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "f2255ae235e0", "dst": "src.aec.impact.OBLIGATIONS", "file": "src/aec/impact.py", "kind": "defines", "line": 18, "resolved": true, "src": "src.aec.impact"}
 {"body_sha": "072c90dbc9bb", "dst": "src.aec.impact.PROPAGATES", "file": "src/aec/impact.py", "kind": "defines", "line": 17, "resolved": true, "src": "src.aec.impact"}
 {"body_sha": "ca1221f20da3", "dst": "src.aec.impact.SEVERITY", "file": "src/aec/impact.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "843b2af327cb", "dst": "src.aec.impact._dependents", "file": "src/aec/impact.py", "kind": "defines", "line": 41, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "a6c80fe2c630", "dst": "src.aec.impact._live_supports", "file": "src/aec/impact.py", "kind": "defines", "line": 66, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "9c1a735f7c72", "dst": "src.aec.impact._raise", "file": "src/aec/impact.py", "kind": "defines", "line": 70, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "5b5c9e056b4b", "dst": "src.aec.impact.impact", "file": "src/aec/impact.py", "kind": "defines", "line": 78, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "79c72d77e91b", "dst": "src.aec.impact.render", "file": "src/aec/impact.py", "kind": "defines", "line": 160, "resolved": true, "src": "src.aec.impact"}
-{"body_sha": "6c29987861a0", "dst": "src.aec.impact.ImpactReport.by_status", "file": "src/aec/impact.py", "kind": "defines", "line": 34, "resolved": true, "src": "src.aec.impact.ImpactReport"}
+{"body_sha": "843b2af327cb", "dst": "src.aec.impact._dependents", "file": "src/aec/impact.py", "kind": "defines", "line": 42, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "a6c80fe2c630", "dst": "src.aec.impact._live_supports", "file": "src/aec/impact.py", "kind": "defines", "line": 67, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "9c1a735f7c72", "dst": "src.aec.impact._raise", "file": "src/aec/impact.py", "kind": "defines", "line": 71, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "81682862a89b", "dst": "src.aec.impact.impact", "file": "src/aec/impact.py", "kind": "defines", "line": 79, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "79c72d77e91b", "dst": "src.aec.impact.render", "file": "src/aec/impact.py", "kind": "defines", "line": 167, "resolved": true, "src": "src.aec.impact"}
+{"body_sha": "6c29987861a0", "dst": "src.aec.impact.ImpactReport.by_status", "file": "src/aec/impact.py", "kind": "defines", "line": 35, "resolved": true, "src": "src.aec.impact.ImpactReport"}
 {"body_sha": "3bf0dd08988e", "dst": "src.aec.init.AEC_SOURCE", "file": "src/aec/init.py", "kind": "defines", "line": 14, "resolved": true, "src": "src.aec.init"}
 {"body_sha": "010ca94ea60f", "dst": "src.aec.init.CI", "file": "src/aec/init.py", "kind": "defines", "line": 47, "resolved": true, "src": "src.aec.init"}
 {"body_sha": "9291fc634877", "dst": "src.aec.init.HOOK", "file": "src/aec/init.py", "kind": "defines", "line": 32, "resolved": true, "src": "src.aec.init"}
@@ -168,20 +169,21 @@
 {"body_sha": "a5e555bed782", "dst": "tests.test_aec.TestSemantics.test_transitive_necessary_dependency", "file": "tests/test_aec.py", "kind": "defines", "line": 85, "resolved": true, "src": "tests.test_aec.TestSemantics"}
 {"body_sha": "6eea5e6c99a9", "dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "defines", "line": 10, "resolved": true, "src": "tests.test_code_impact"}
 {"body_sha": "3f0f179dfb51", "dst": "tests.test_code_impact.ROOT", "file": "tests/test_code_impact.py", "kind": "defines", "line": 8, "resolved": true, "src": "tests.test_code_impact"}
-{"body_sha": "2fadc3689f74", "dst": "tests.test_code_impact.TestCodeImpact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 16, "resolved": true, "src": "tests.test_code_impact"}
-{"body_sha": "0fcc65674795", "dst": "tests.test_code_impact.TestDanglingCodeRefs", "file": "tests/test_code_impact.py", "kind": "defines", "line": 41, "resolved": true, "src": "tests.test_code_impact"}
-{"body_sha": "6fea26f2df59", "dst": "tests.test_code_impact.TestObservedOn", "file": "tests/test_code_impact.py", "kind": "defines", "line": 60, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "2523817148cd", "dst": "tests.test_code_impact.TestCodeImpact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 16, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "0fcc65674795", "dst": "tests.test_code_impact.TestDanglingCodeRefs", "file": "tests/test_code_impact.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "6fea26f2df59", "dst": "tests.test_code_impact.TestObservedOn", "file": "tests/test_code_impact.py", "kind": "defines", "line": 69, "resolved": true, "src": "tests.test_code_impact"}
 {"body_sha": "24402408d94b", "dst": "tests.test_code_impact.TestCodeImpact.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 18, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"body_sha": "2f3d15129142", "dst": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision", "file": "tests/test_code_impact.py", "kind": "defines", "line": 24, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
-{"body_sha": "f10732ce5121", "dst": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_leaves_requirement_unjustified", "file": "tests/test_code_impact.py", "kind": "defines", "line": 30, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
-{"body_sha": "46c17003dead", "dst": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 36, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
-{"body_sha": "8f9a003c3cc4", "dst": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged", "file": "tests/test_code_impact.py", "kind": "defines", "line": 33, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
-{"body_sha": "6690cf87087f", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors", "file": "tests/test_code_impact.py", "kind": "defines", "line": 53, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
-{"body_sha": "cb0f92708c5d", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid", "file": "tests/test_code_impact.py", "kind": "defines", "line": 42, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
-{"body_sha": "df115e3feade", "dst": "tests.test_code_impact.TestObservedOn.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 64, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
-{"body_sha": "450a811477e6", "dst": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 80, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
-{"body_sha": "419731649ae9", "dst": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 84, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
-{"body_sha": "4d6857146b52", "dst": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing", "file": "tests/test_code_impact.py", "kind": "defines", "line": 89, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "07ddba13f32a", "dst": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_breaks_satisfaction_not_the_requirement", "file": "tests/test_code_impact.py", "kind": "defines", "line": 30, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "7a72e95c66bf", "dst": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it", "file": "tests/test_code_impact.py", "kind": "defines", "line": 35, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "46c17003dead", "dst": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 45, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "8f9a003c3cc4", "dst": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged", "file": "tests/test_code_impact.py", "kind": "defines", "line": 42, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
+{"body_sha": "6690cf87087f", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors", "file": "tests/test_code_impact.py", "kind": "defines", "line": 62, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"body_sha": "cb0f92708c5d", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid", "file": "tests/test_code_impact.py", "kind": "defines", "line": 51, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"body_sha": "df115e3feade", "dst": "tests.test_code_impact.TestObservedOn.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 73, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "450a811477e6", "dst": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 89, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "419731649ae9", "dst": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 93, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "4d6857146b52", "dst": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing", "file": "tests/test_code_impact.py", "kind": "defines", "line": 98, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
 {"body_sha": "6eea5e6c99a9", "dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.test_edges"}
 {"body_sha": "3f0f179dfb51", "dst": "tests.test_edges.ROOT", "file": "tests/test_edges.py", "kind": "defines", "line": 7, "resolved": true, "src": "tests.test_edges"}
 {"body_sha": "5c1905e70573", "dst": "tests.test_edges.TestDeterminism", "file": "tests/test_edges.py", "kind": "defines", "line": 49, "resolved": true, "src": "tests.test_edges"}
@@ -289,6 +291,7 @@
 {"dst": "__future__.annotations", "file": "src/aec/impact.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.impact"}
 {"dst": "dataclasses.dataclass", "file": "src/aec/impact.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.impact"}
 {"dst": "dataclasses.field", "file": "src/aec/impact.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.impact"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
 {"dst": "src.aec.records.Record", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
 {"dst": "src.aec.records.Store", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
 {"dst": "src.aec.records.split_ref", "file": "src/aec/impact.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.impact"}
@@ -408,8 +411,8 @@
 {"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 36, "resolved": true, "src": "tests.test_aec.TestPilot"}
 {"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 74, "resolved": true, "src": "tests.test_aec.TestSemantics"}
 {"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 16, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
-{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 41, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
-{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 60, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 50, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 69, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
 {"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 49, "resolved": true, "src": "tests.test_edges.TestDeterminism"}
 {"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 63, "resolved": true, "src": "tests.test_edges.TestDiff"}
 {"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 18, "resolved": true, "src": "tests.test_edges.TestExtraction"}
@@ -612,36 +615,37 @@
 {"dst": "pathlib.Path", "file": "src/aec/edges.py", "kind": "calls", "line": 375, "resolved": true, "src": "src.aec.edges.snapshot"}
 {"dst": "src.aec.edges._Extractor", "file": "src/aec/edges.py", "kind": "calls", "line": 376, "resolved": true, "src": "src.aec.edges.snapshot"}
 {"dst": "src.aec.edges.KINDS.index", "file": "src/aec/edges.py", "kind": "calls", "line": 34, "resolved": true, "src": "src.aec.edges.sort_key"}
-{"dst": "dataclasses.field", "file": "src/aec/impact.py", "kind": "calls", "line": 24, "resolved": true, "src": "src.aec.impact.Impact"}
-{"dst": "?out[...].append", "file": "src/aec/impact.py", "kind": "calls", "line": 37, "resolved": false, "src": "src.aec.impact.ImpactReport.by_status"}
-{"dst": "?self.impacts.values", "file": "src/aec/impact.py", "kind": "calls", "line": 36, "resolved": false, "src": "src.aec.impact.ImpactReport.by_status"}
-{"dst": "?e.get", "file": "src/aec/impact.py", "kind": "calls", "line": 48, "resolved": false, "src": "src.aec.impact._dependents"}
-{"dst": "?out.append", "file": "src/aec/impact.py", "kind": "calls", "line": 51, "resolved": false, "src": "src.aec.impact._dependents"}
-{"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 45, "resolved": false, "src": "src.aec.impact._dependents"}
-{"dst": "?store.latest.get", "file": "src/aec/impact.py", "kind": "calls", "line": 63, "resolved": false, "src": "src.aec.impact._dependents"}
-{"dst": "?store.in_edges", "file": "src/aec/impact.py", "kind": "calls", "line": 67, "resolved": false, "src": "src.aec.impact._live_supports"}
-{"dst": "?impacts.get", "file": "src/aec/impact.py", "kind": "calls", "line": 71, "resolved": false, "src": "src.aec.impact._raise"}
-{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "calls", "line": 73, "resolved": true, "src": "src.aec.impact._raise"}
-{"dst": "src.aec.impact.SEVERITY.index", "file": "src/aec/impact.py", "kind": "calls", "line": 72, "resolved": true, "src": "src.aec.impact._raise"}
-{"dst": "?ch.get", "file": "src/aec/impact.py", "kind": "calls", "line": 91, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?dead.add", "file": "src/aec/impact.py", "kind": "calls", "line": 94, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?e.get", "file": "src/aec/impact.py", "kind": "calls", "line": 109, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?findings.append", "file": "src/aec/impact.py", "kind": "calls", "line": 87, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?queue.append", "file": "src/aec/impact.py", "kind": "calls", "line": 105, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?queue.pop", "file": "src/aec/impact.py", "kind": "calls", "line": 140, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?store.governs", "file": "src/aec/impact.py", "kind": "calls", "line": 91, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?store.latest.values", "file": "src/aec/impact.py", "kind": "calls", "line": 155, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "?target.get", "file": "src/aec/impact.py", "kind": "calls", "line": 90, "resolved": false, "src": "src.aec.impact.impact"}
-{"dst": "src.aec.impact.ImpactReport", "file": "src/aec/impact.py", "kind": "calls", "line": 157, "resolved": true, "src": "src.aec.impact.impact"}
-{"dst": "src.aec.impact._dependents", "file": "src/aec/impact.py", "kind": "calls", "line": 95, "resolved": true, "src": "src.aec.impact.impact"}
-{"dst": "src.aec.impact._live_supports", "file": "src/aec/impact.py", "kind": "calls", "line": 96, "resolved": true, "src": "src.aec.impact.impact"}
-{"dst": "src.aec.impact._raise", "file": "src/aec/impact.py", "kind": "calls", "line": 104, "resolved": true, "src": "src.aec.impact.impact"}
-{"dst": "?ch.get", "file": "src/aec/impact.py", "kind": "calls", "line": 163, "resolved": false, "src": "src.aec.impact.render"}
-{"dst": "?constant.join", "file": "src/aec/impact.py", "kind": "calls", "line": 170, "resolved": false, "src": "src.aec.impact.render"}
-{"dst": "?lines.append", "file": "src/aec/impact.py", "kind": "calls", "line": 163, "resolved": false, "src": "src.aec.impact.render"}
-{"dst": "?rep.by_status", "file": "src/aec/impact.py", "kind": "calls", "line": 166, "resolved": false, "src": "src.aec.impact.render"}
-{"dst": "?rep.by_status(...).items", "file": "src/aec/impact.py", "kind": "calls", "line": 166, "resolved": false, "src": "src.aec.impact.render"}
-{"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 168, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "dataclasses.field", "file": "src/aec/impact.py", "kind": "calls", "line": 25, "resolved": true, "src": "src.aec.impact.Impact"}
+{"dst": "?out[...].append", "file": "src/aec/impact.py", "kind": "calls", "line": 38, "resolved": false, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "?self.impacts.values", "file": "src/aec/impact.py", "kind": "calls", "line": 37, "resolved": false, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "?e.get", "file": "src/aec/impact.py", "kind": "calls", "line": 49, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?out.append", "file": "src/aec/impact.py", "kind": "calls", "line": 52, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 46, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?store.latest.get", "file": "src/aec/impact.py", "kind": "calls", "line": 64, "resolved": false, "src": "src.aec.impact._dependents"}
+{"dst": "?store.in_edges", "file": "src/aec/impact.py", "kind": "calls", "line": 68, "resolved": false, "src": "src.aec.impact._live_supports"}
+{"dst": "?impacts.get", "file": "src/aec/impact.py", "kind": "calls", "line": 72, "resolved": false, "src": "src.aec.impact._raise"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "calls", "line": 74, "resolved": true, "src": "src.aec.impact._raise"}
+{"dst": "src.aec.impact.SEVERITY.index", "file": "src/aec/impact.py", "kind": "calls", "line": 73, "resolved": true, "src": "src.aec.impact._raise"}
+{"dst": "?ch.get", "file": "src/aec/impact.py", "kind": "calls", "line": 92, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?dead.add", "file": "src/aec/impact.py", "kind": "calls", "line": 95, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?e.get", "file": "src/aec/impact.py", "kind": "calls", "line": 116, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?findings.append", "file": "src/aec/impact.py", "kind": "calls", "line": 88, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?queue.append", "file": "src/aec/impact.py", "kind": "calls", "line": 112, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?queue.pop", "file": "src/aec/impact.py", "kind": "calls", "line": 147, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?store.governs", "file": "src/aec/impact.py", "kind": "calls", "line": 92, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?store.latest.values", "file": "src/aec/impact.py", "kind": "calls", "line": 162, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?target.get", "file": "src/aec/impact.py", "kind": "calls", "line": 91, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "?target.id.startswith", "file": "src/aec/impact.py", "kind": "calls", "line": 99, "resolved": false, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact.ImpactReport", "file": "src/aec/impact.py", "kind": "calls", "line": 164, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact._dependents", "file": "src/aec/impact.py", "kind": "calls", "line": 96, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact._live_supports", "file": "src/aec/impact.py", "kind": "calls", "line": 97, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact._raise", "file": "src/aec/impact.py", "kind": "calls", "line": 111, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "?ch.get", "file": "src/aec/impact.py", "kind": "calls", "line": 170, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?constant.join", "file": "src/aec/impact.py", "kind": "calls", "line": 177, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?lines.append", "file": "src/aec/impact.py", "kind": "calls", "line": 170, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?rep.by_status", "file": "src/aec/impact.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?rep.by_status(...).items", "file": "src/aec/impact.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.impact.render"}
+{"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 175, "resolved": false, "src": "src.aec.impact.render"}
 {"dst": "?constant.join", "file": "src/aec/init.py", "kind": "calls", "line": 73, "resolved": false, "src": "src.aec.init._records"}
 {"dst": "json.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 73, "resolved": true, "src": "src.aec.init._records"}
 {"dst": "?binop.is_dir", "file": "src/aec/init.py", "kind": "calls", "line": 97, "resolved": false, "src": "src.aec.init.init"}
@@ -945,48 +949,56 @@
 {"dst": "?Path(...).resolve", "file": "tests/test_code_impact.py", "kind": "calls", "line": 8, "resolved": false, "src": "tests.test_code_impact"}
 {"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 8, "resolved": true, "src": "tests.test_code_impact"}
 {"dst": "sys.path.insert", "file": "tests/test_code_impact.py", "kind": "calls", "line": 9, "resolved": true, "src": "tests.test_code_impact"}
-{"dst": "unittest.main", "file": "tests/test_code_impact.py", "kind": "calls", "line": 95, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "unittest.main", "file": "tests/test_code_impact.py", "kind": "calls", "line": 104, "resolved": true, "src": "tests.test_code_impact"}
 {"dst": "?cls.rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 22, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 21, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 20, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 19, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 25, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision"}
 {"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 28, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 31, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_leaves_requirement_unjustified"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 38, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
-{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 37, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
-{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 34, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged"}
-{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 55, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 55, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 54, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 54, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 44, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 44, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 50, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 51, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 44, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 43, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 43, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "?rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 78, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 65, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 77, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 77, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 77, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 65, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 81, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 85, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
-{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 87, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
-{"dst": "?self.st.values", "file": "tests/test_code_impact.py", "kind": "calls", "line": 87, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
-{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 90, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 31, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_breaks_satisfaction_not_the_requirement"}
+{"dst": "?self.assertTrue", "file": "tests/test_code_impact.py", "kind": "calls", "line": 32, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_breaks_satisfaction_not_the_requirement"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 37, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 40, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 37, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 36, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 39, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 39, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 36, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 47, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
+{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 46, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 43, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 63, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 63, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 53, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 53, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 60, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 53, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 52, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 52, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 75, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 75, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "?rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 87, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 75, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 74, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 74, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 90, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 94, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 96, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
+{"dst": "?self.st.values", "file": "tests/test_code_impact.py", "kind": "calls", "line": 96, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 99, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing"}
 {"dst": "?Path(...).resolve", "file": "tests/test_edges.py", "kind": "calls", "line": 7, "resolved": false, "src": "tests.test_edges"}
 {"dst": "pathlib.Path", "file": "tests/test_edges.py", "kind": "calls", "line": 7, "resolved": true, "src": "tests.test_edges"}
 {"dst": "sys.path.insert", "file": "tests/test_edges.py", "kind": "calls", "line": 8, "resolved": true, "src": "tests.test_edges"}
@@ -1274,13 +1286,15 @@
 {"dst": "src.aec.edges.TOOL_VERSION", "file": "src/aec/edges.py", "kind": "references", "line": 385, "resolved": true, "src": "src.aec.edges.snapshot"}
 {"dst": "src.aec.edges.sort_key", "file": "src/aec/edges.py", "kind": "references", "line": 384, "resolved": true, "src": "src.aec.edges.snapshot"}
 {"dst": "src.aec.edges.KINDS", "file": "src/aec/edges.py", "kind": "references", "line": 34, "resolved": true, "src": "src.aec.edges.sort_key"}
-{"dst": "dataclasses.dataclass", "file": "src/aec/impact.py", "kind": "references", "line": 20, "resolved": true, "src": "src.aec.impact"}
-{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 30, "resolved": true, "src": "src.aec.impact.ImpactReport"}
-{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 35, "resolved": true, "src": "src.aec.impact.ImpactReport.by_status"}
-{"dst": "src.aec.impact.SEVERITY", "file": "src/aec/impact.py", "kind": "references", "line": 35, "resolved": true, "src": "src.aec.impact.ImpactReport.by_status"}
-{"dst": "src.aec.records.Record", "file": "src/aec/impact.py", "kind": "references", "line": 44, "resolved": true, "src": "src.aec.impact._dependents"}
-{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 79, "resolved": true, "src": "src.aec.impact.impact"}
-{"dst": "src.aec.impact.PROPAGATES", "file": "src/aec/impact.py", "kind": "references", "line": 104, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/impact.py", "kind": "references", "line": 21, "resolved": true, "src": "src.aec.impact"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 31, "resolved": true, "src": "src.aec.impact.ImpactReport"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 36, "resolved": true, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "src.aec.impact.SEVERITY", "file": "src/aec/impact.py", "kind": "references", "line": 36, "resolved": true, "src": "src.aec.impact.ImpactReport.by_status"}
+{"dst": "src.aec.records.Record", "file": "src/aec/impact.py", "kind": "references", "line": 45, "resolved": true, "src": "src.aec.impact._dependents"}
+{"dst": "src.aec.impact.Impact", "file": "src/aec/impact.py", "kind": "references", "line": 80, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact.OBLIGATIONS", "file": "src/aec/impact.py", "kind": "references", "line": 99, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.impact.PROPAGATES", "file": "src/aec/impact.py", "kind": "references", "line": 111, "resolved": true, "src": "src.aec.impact.impact"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/impact.py", "kind": "references", "line": 99, "resolved": true, "src": "src.aec.impact.impact"}
 {"dst": "src.aec.init.AEC_SOURCE", "file": "src/aec/init.py", "kind": "references", "line": 57, "resolved": true, "src": "src.aec.init"}
 {"dst": "src.aec.init.CI", "file": "src/aec/init.py", "kind": "references", "line": 95, "resolved": true, "src": "src.aec.init.init"}
 {"dst": "src.aec.init.HOOK", "file": "src/aec/init.py", "kind": "references", "line": 94, "resolved": true, "src": "src.aec.init.init"}
@@ -1319,8 +1333,8 @@
 {"dst": "tests.test_aec.PILOT", "file": "tests/test_aec.py", "kind": "references", "line": 23, "resolved": true, "src": "tests.test_aec.changes"}
 {"dst": "tests.test_code_impact.ROOT", "file": "tests/test_code_impact.py", "kind": "references", "line": 9, "resolved": true, "src": "tests.test_code_impact"}
 {"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 19, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
-{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 48, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 77, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
+{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
 {"dst": "tests.test_edges.ROOT", "file": "tests/test_edges.py", "kind": "references", "line": 8, "resolved": true, "src": "tests.test_edges"}
 {"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 51, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_byte_identical_runs"}
 {"dst": "tests.test_edges.FIX", "file": "tests/test_edges.py", "kind": "references", "line": 59, "resolved": true, "src": "tests.test_edges.TestDeterminism.test_roundtrip"}

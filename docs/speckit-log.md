@@ -116,3 +116,12 @@ Running `init` + `import-purpose` on Data-Guide, not reading the spec, produced 
 - Run the tool on the real target during implement, not after. Three of the five converge tasks came from one Data-Guide run.
 - "Report, never correct" made the import safe to run on a messy repo: nothing it found required a decision before the next step.
 - Kate's narrowing of C ("tests can legitimately measure outcomes") changed the check from a rule about tests into a rule about evidence kinds. That is the difference between a check that passes when evidence is sufficient and a permanent warning generator.
+
+### Kate's round-4 review (after the PR opened)
+Kate read the code at `ee55e234`. **Provisionally accepted**, with one semantic correction. Feature 001 marked a *requirement* `unjustified` when its implementing code was deleted. Deleting the implementation invalidates the recorded claim that the code satisfies the requirement, not the requirement. Fixed structurally (T022): obligations get `needs_review` plus a finding; claims that `depends_on` deleted code remain `unjustified`. She also asked that the outcome check be described as a necessary-evidence-type check, not as proof of sufficiency. Neither the analyze pass nor converge caught this. It took a reviewer reasoning about what the statuses *mean*.
+
+For feature 003 she proposed two replays against the same frozen diff:
+- **A (realistic):** Spec Kit's native artifacts vs Spec Kit plus AEC records.
+- **B (information-matched):** Spec Kit is given the same purpose information in prose. This is the only comparison that can isolate what AEC's representation and propagation add.
+
+The Data-Guide purpose must be frozen before the fixture is introduced.
