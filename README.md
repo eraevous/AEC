@@ -84,3 +84,10 @@ python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
 ## Principles (unchanged)
 
 The repo carries its own purpose, decisions and objections, so agents can act as collaborators that notice drift rather than as autocomplete. If ordinary Spec Kit artifacts perform as well, the right result is to simplify AEC.
+
+## License
+
+Licensed under the [MIT License](LICENSE). Contributions are welcome under the
+[Contributor License Agreement](CLA.md), which keeps them open under the same license
+while letting the maintainer also offer commercial versions. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
