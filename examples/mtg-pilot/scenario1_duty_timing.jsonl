@@ -1,0 +1,2 @@
+// Kate's catch: Duty's sacrifice is paid at casting, before Vraska's token exists.
+{"change":"retract","target":"A-duty-sculpture@1","by":"kate","reason":"additional costs are paid before cast triggers resolve"}

@@ -1,0 +1,2 @@
+// The Vraska success criterion reworded during exploration (provisional): purpose discovery, not drift.
+{"change":"revise","target":"CR-vraska-r1@1","new":"CR-vraska-r1@2","by":"kate","authorized_by":null,"reason":"separate availability, survival and throughput"}
