@@ -27,4 +27,4 @@ Tests first for each check: a violating fixture plus a decoy (Constitution III).
 ## Phase 5: Polish
 - [X] T015 Regenerate `.aec/edges.jsonl`. `aec check --edges` must give 0 errors, and the full test suite must pass.
 - [X] T016 Update the purpose files for `aec.records` and `aec.impact`? **No.** Leave the purpose files as they are: they are claims, and changing them is a separate decision. Note in the intent note anything in them you found false.
-- [ ] T017 Finish the intent note: questions, assumptions, unclear or wrong spec items, rework, and time spent. Open a PR to `main` titled "003: AEC reconciled with itself (WP0)". Link the intent note from the PR body, and list anything you could not do.
+- [X] T017 Finish the intent note: questions, assumptions, unclear or wrong spec items, rework, and time spent. Open a PR to `main` titled "003: AEC reconciled with itself (WP0)". Link the intent note from the PR body, and list anything you could not do.

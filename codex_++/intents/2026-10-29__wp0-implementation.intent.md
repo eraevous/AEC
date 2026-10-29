@@ -196,3 +196,13 @@ Outstanding: external technical review by Claude, purpose review by Kate, and an
 owner confirmation of reconstructed history. A pristine cold-implementer condition
 cannot be claimed after the owner's handoff correction; the usability agent was
 fresh and repository-only. No owner outcome/comparative benefit is established.
+
+## Delivery (T017)
+
+Opened https://github.com/eraevous/AEC/pull/14 to main with the requested title; no merge.
+Summary saved to handoffs/outputs/HO-20261029-001.md as replacement handoff 002 requests.
+Completion recorded at 2026-10-29T13:43:50.559694+00:00.
+Authoring/verification interval: approximately 20 minutes from baseline start 13:24 UTC,
+excluding the earlier unrelated pilot and owner wait time. Initial handoff reading
+and T001 setup preceded that first instrumented timestamp; their exact duration
+is unknown. Owner time is unmeasured. No Spec Kit agent analyze/converge run is claimed.
