@@ -1,0 +1,3 @@
+- @ai-path: pkg.core
+- @ai-source-file: pkg/core.py
+- @ai-intent: Singular source declaration

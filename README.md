@@ -4,6 +4,39 @@ AEC (formerly Codex++) is an experiment in keeping **why** something is being bu
 
 See the white paper, *AEC as an extension to specification-driven development* (Zachary Rhodes, 26 October 2026), for the positioning, evidence and validation plan.
 
+## Authority and operating rules
+
+`.aec/records.jsonl` governs purpose and authority (`AEC-P0@1`, `AU-zach@1`).
+The engineering principles live in `.specify/memory/constitution.md`, applied by
+`CHARTER.md`; `AGENTS.md` governs agent behavior. Spec Kit owns the specification
+workflow. Purpose files in `codex_++/purpose_files/` are semantic contracts whose
+claims are candidates, and `codex_++/intents/` contains provisional reasoning.
+Generated edges are static structural facts, not a competing authority. If a
+purpose file disagrees with a committed record, report the conflict for review;
+the file cannot silently revise the record. Only Zach or an explicitly authorized
+decision-maker for that subject may accept a commitment.
+
+## Current capabilities and direction
+
+| Capability | Status | Evidence or next step |
+| --- | --- | --- |
+| Six CLI subcommands: check, impact, edges, code-impact, init, import-purpose | built | `src/aec/` and the unit tests under `tests/` |
+| Structured purpose import with singular/plural source headers and full source text | built | `src/aec/purpose_import.py`, `tests/test_import_purpose.py` |
+| Source-linked proposed history and confirmation list | built | `tools/reconstruct_decisions.py`, `docs/decisions-to-confirm.md` |
+| Repository path and CLI-name documentation checks | built | `tests/test_docs_truth.py` |
+| Semantic contracts and reconciliation | partial | Imported declarations and caller comparisons; no semantic verdict engine |
+| Evidence-kind adequacy and revision applicability | partial | Narrow outcome-sufficiency and observed_on rules |
+| Commit-addressed snapshots and topology/co-change analytics | planned | WP1A/WP1B |
+| Context delivery, reconciliation packets and automatic drift triggers | planned | WP2A/WP3 |
+| Handoff premise checks and comparative evaluation | planned | WP4/WP5 |
+
+See `docs/architecture.md` for the **proposed** direction and
+`docs/failure-modes.md` for evaluation design. They do not establish that planned
+features are built or that AEC improves owner outcomes. A passing record check
+establishes formal consistency only, not the truth, adequacy or independence of
+evidence. Reconstructed history remains proposed in `docs/decisions-to-confirm.md`.
+Runtime dependencies: none beyond Python 3.10+; the legacy extractor is not shipped.
+
 ## What is here
 
 | Part | Status |
@@ -66,9 +99,9 @@ python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
 ```
 
 - `init` works with or without Spec Kit, and never edits Spec Kit files; with `.specify/` present it prints the extension command.
-- `import-purpose` records what each purpose file **claimed**: a `source` record (path, sha256, the file's own `@ai-generated`/`@ai-verified`) and a provisional, candidate-tier claim with the declared text verbatim, linked to the module only when the named file resolves unambiguously. It never creates an authority. It reports, and never corrects: missing or ambiguous source files, non-code sources, templates (skipped), and **declared vs observed callers** (`@ai-used-by` against what actually imports or calls the module). Re-running it appends nothing unless a file changed, which gives version 2.
+- `import-purpose` records what each purpose file **claimed**: a `source` record (path, sha256, the file's own `@ai-generated`/`@ai-verified`) and a provisional, candidate-tier claim with the declared text verbatim, linked to the module only when the named file resolves unambiguously. Singular and plural source headers are supported; structured IO, risk, dependency, integration and guarantee sections are kept, along with all raw fields/sections and the full untruncated source text. It never creates an authority. It reports, and never corrects: missing or ambiguous source files, non-code sources, templates (skipped), and **declared vs observed callers** (`@ai-used-by` against what actually imports or calls the module). Re-running it appends nothing unless a file changed, which gives version 2.
 - On Data-Guide: 26 purpose files imported in about 0.6 s with init; 11 of the purpose files' source files no longer exist, and the declared callers of `data_profiler` (four pipeline modules) are all gone while three real callers are undeclared. See `docs/data-guide-trial.md`.
-- Code run with `src/` on `sys.path` (`from data_profiler import …` for `src/data_profiler.py`) is now resolved to the real module; the snapshot header lists the `source_roots` it used. Stdlib names are never aliased.
+- Code run with `src/` on `sys.path` (`from data_profiler import …` for Data-Guide:src/data_profiler.py) is now resolved to the real module; the snapshot header lists the `source_roots` it used. Stdlib names are never aliased.
 
 ## Spec Kit extension
 

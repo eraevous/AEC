@@ -57,6 +57,21 @@ This is a governing invariant (Kate, MtG coordination, 2026-10-27). The edge gra
 - **Obligations are never invalidated by code** (Kate, AEC round 4). If the code implementing a requirement, purpose or criterion is deleted, what breaks is the recorded *satisfaction*, not the obligation: the record gets `needs_review` and a finding says the implementation path is gone. Decisions are only flagged.
 - `observed_on` evidence is never invalidated by a code change: an edit is not proof that observed behaviour changed.
 
+### Current implementation limits (WP0 observation)
+
+For code deletion analysis, use `aec code-impact` with old/new snapshots. It creates
+synthetic code records and explicit events for the impact engine. Plain `aec impact`
+does not discover deletions or create those records: an event naming an absent
+`code:` target is reported as unresolved, with no impact inferred.
+
+The deletion branch is broader than the intended exception above: the current
+`_dependents` implementation treats explicit `depends_on`, `selects` and
+`implemented_by` links as necessary for any record type. A non-obligation,
+non-decision record (including an evaluation) can therefore become `unjustified`
+when such a code target is deleted. `observed_on` still requests review. WP0
+records this discrepancy without changing propagation semantics or the vocabulary;
+review is needed before treating the narrower invariant as fully enforced.
+
 ## Changes
 
 A change is an event, not an edit:
