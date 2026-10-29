@@ -125,3 +125,33 @@ For feature 003 she proposed two replays against the same frozen diff:
 - **B (information-matched):** Spec Kit is given the same purpose information in prose. This is the only comparison that can isolate what AEC's representation and propagation add.
 
 The Data-Guide purpose must be frozen before the fixture is introduced.
+
+## Feature 003: self-reconciliation (WP0, 2026-10-29)
+
+Implementer: Codex, from the frozen repository spec after PR #12 merged. The owner
+corrected a wrong initial handoff; the separate pilot artifacts are excluded from
+this feature. This is repository-only implementation, with that context limitation
+recorded in the intent note rather than claimed as a pristine cold run.
+
+- Tests first: singular source headers, source union, structured/raw field retention,
+  long text, documentation paths/CLI names, and proposed append-only reconstruction.
+  Old import expectations remain the compatibility decoy. Reconstruction tests
+  reject acceptance, bad provenance and dangling reversals before writing anything.
+- Disposable AEC import: 5 imports, 1 template skipped, 3 code links and 2 missing
+  sources, full source text preserved. Data-Guide at
+  `173c56108a27bf85b1c928a7a9a43b3a96a6f02b`: 26 imports, 1 template skipped;
+  all 25 imported files with IO headings have structured rows. No target changes.
+- Operating documents now state AEC's actual authority and engineering rules;
+  historical instructions are labelled as history. Candidate decisions are linked
+  to exact repository quotations and source hashes; reconstruction is not consent.
+- Spec Kit analyze/converge were not run as agent workflows for this feature.
+  The pinned v1.2.3 CLI was installed separately for the existing integration test.
+  No new comparative efficacy claim is made. Record checks establish structure,
+  not whether imported contracts or reconstructed judgments are adequate.
+- Authoring cost: baseline began at 13:24 UTC. About 12 minutes of model elapsed
+  work through implementation and initial unit checks; final verification/rework
+  and cold-agent usability results are recorded in the dated WP0 intent note.
+  Owner drafting/review time is not measured. This is calibration, not a controlled
+  comparison. Useful findings: missing singular links, lost structured fields,
+  ingestion truncation and inherited operating-rule drift; no assertion these
+  would be missed by a careful ordinary review.

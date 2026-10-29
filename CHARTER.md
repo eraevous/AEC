@@ -1,83 +1,32 @@
-# 🛠️ Refactor Charter: Principles to Build (and Review) By
+# AEC engineering charter
 
-Below: each principle has (Rule → Why → Enforce). Keep this list short, stable, and testable.
+The governing engineering principles are in `.specify/memory/constitution.md`.
+This charter applies them; it creates no competing purpose or authority.
+`.aec/records.jsonl` governs those questions (`AEC-P0@1`, `AU-zach@1`).
 
-1) Single Source of Truth for Configuration
+1. **Standard library runtime, Python 3.10+.** The shipped package is `src/aec/`;
+   legacy `src/core/` is excluded. Keep the argparse CLI thin; pure workflow
+   functions belong in the AEC modules. No new service without an owner decision.
+2. **Deterministic and inspectable.** Stable ordering, plain JSON lines and explicit
+   provenance. Code topology comes from static code analysis, never model prose.
+   Never manually edit generated edges or equate code and justificatory relations.
+3. **Report only.** Findings are structural review dispositions, not semantic
+   verdicts, invalidation of human decisions, or permission to change commitments.
+   Init writes absent scaffolding; import/reconstruction append their own records
+   on request. They never silently fix contracts or overwrite existing records.
+4. **Append-only records.** Existing lines stay intact. Revisions append versions
+   and explicit relations. Source-linked reconstructed decisions remain proposed;
+   only a governing authority may accept commitments. Recorded authorization is
+   still a claim requiring evidence, not verified consent.
+5. **Tests before checks.** Each new check/classifier gets a violating fixture and
+   a clean decoy. Run the unit suite, regenerate edges and run record checks as
+   documented in `AGENTS.md` and `.github/workflows/ci.yml`.
+6. **Earn additions.** Record authoring/maintenance cost and what Spec Kit actually
+   caught in `docs/speckit-log.md`. No purpose-preservation or comparative-benefit
+   claim follows from a passing structural check. Keep implementation assumptions,
+   ambiguities and rework in `codex_++/intents/`.
 
-- Rule: All paths, credentials, schema locations, and flags come from PathConfig/RemoteConfig (via a cached getter). No ad-hoc os.getenv or Path(__file__).parent in feature code.
-- Why: Prevents “local hacks” that fork behavior.
-Enforce: grep check + unit test that scans modules for banned imports/patterns; pre-commit hook.
-
-2) Thin CLIs, Fat Workflows
-
-- Rule: Typer commands only parse args, resolve config, and call a pure function in core.workflows.*. No logic in CLI.
-- Why: Prevents drift between automation and manual runs; keeps surfaces consistent.
-Enforce: test that CLI modules contain no non-trivial branches (>N LOC / cyclomatic threshold).
-
-3) One Ingestion Path, Layered Stages
-
-- Rule: Upload → Parse → (Summarize/Classify) → Embed → Cluster → Export is the only pipeline. Every stage reads/writes the shared JSON schema (+ .stub.json provenance).
-- Why: Eliminates bespoke “side doors.”
-Enforce: schema validator in tests; fixture that round-trips a sample through all stages.
-
-4) Deterministic IDs + Budgeted LLM Calls
-
-- Rule: All chunks, embeddings, and artifacts use content-hash IDs. All LLM/embedding calls go through a single budgeted client (w/ token counting + hard caps).
-- Why: Reproducibility and cost control.
-Enforce: unit test that rejects non-hash IDs; budget test that fails if calls bypass the tracker.
-
-5) Optional Deps Must Degrade Gracefully
-
-- Rule: UMAP/HDBSCAN/FAISS/tiktoken are optional; guarded imports with explicit fallbacks (semantic→paragraph chunking, etc.).
-- Why: Keeps the pipeline usable across environments.
-Enforce: test matrix with deps absent; assert informative errors/fallback logs.
-
-6) Retrieval Is an Interface, Not an Implementation
-
-- Rule: All search uses the Retriever interface. FAISS is a plugin behind it; no module reaches into FAISS directly.
-- Why: Swap/extend vector stores without churn.
-Enforce: static import check that forbids faiss outside store modules.
-
-7) Observability via a Single Logger
-
-- Rule: Use core.logger.get_logger(__name__) everywhere; no ad-hoc print/logging config.
-- Why: Consistent diagnostics and filterability.
-Enforce: linter rule (deny print in src); unit test to scan modules for logging.getLogger.
-
-8) Docs-as-Contracts (QAT)
-
-- Rule: Every module has a minimal @ai-* docblock + .purpose.md entry listing inputs/outputs/deps/risks. AST tests must match declared imports.
-- Why: Prevents architectural drift; boosts readability for AI tooling.
-Enforce: AST vs purpose-file test; CI fails on mismatches.
-
-9) Tests Prefer Isolation Over Integration
-
-- Rule: Stub cloud/LLM/FAISS/tiktoken in tests; assert flow and schema conformance, not vendor behavior.
-- Why: Fast, deterministic feedback; avoids flaky CI.
-Enforce: fixtures that auto-patch heavy deps; coverage requirement on orchestration paths.
-
-10) Storage Semantics Are Centralized
-
-- Rule: All local/S3 I/O goes through storage helpers that validate schema before write; S3 prefixes come from config only.
-- Why: Stops silent divergence and “just this once” paths.
-Enforce: forbid direct boto3/filesystem calls outside storage modules (static import check).
-
-❌ Anti-Patterns to Ban (AI-Coding Drift Hotspots)
-
-Inline openai.ChatCompletion.create(...) / direct vendor calls (must use shared clients).
-
-“Convenience” environment reads and ad-hoc Path(...) in feature code.
-
-New JSON shapes written from a module without a schema contract update.
-
-Direct FAISS access outside the store; print() for debugging; one-off CSV writers.
-
-✅ Definition of Done (per PR)
-
-- Uses config getters; no direct env/paths.
-- If CLI: zero business logic (parse → delegate).
-- Reads/writes only schema-validated artifacts.
-- LLM/embedding calls go through budgeted client.
-- Logger via core.logger; no print.
-- Purpose/intent updated; AST-import test passes.
-- Tests stub heavy deps; cover control flow.
+Run and Drift are the agent practices described in `AGENTS.md`; automation remains
+planned. Purpose files are candidate semantic contracts, not engineering policy.
+The historical Cognitive-Scaffolding rules are archived in
+`docs/history/codex-plus-plus-AGENTS.md`, not requirements for AEC.

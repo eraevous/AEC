@@ -17,11 +17,10 @@ from pathlib import Path
 
 from .records import CODE, Store
 
-HEADER = re.compile(r"^\s*(?:-\s*)?@([\w-]+):\s*(.*?)\s*$")
+HEADER = re.compile(r"^\s*(?:[-#]\s*)?@([\w-]+):\s*(.*?)\s*$")
 PLACEHOLDER = re.compile(r"<[^<>]+>")
 PEOPLE = {"developer", "developers", "user", "users", "human", "humans", "analyst", "analysts",
           "maintainer", "maintainers", "stakeholder", "stakeholders", "operator", "operators"}
-MAX_TEXT = 4000
 
 
 def _slug(rel: Path) -> str:
@@ -50,13 +49,111 @@ def _bool(v: str | None):
     return {"true": True, "false": False}.get(_strip_comment(v).lower())
 
 
+def _title(text: str) -> str:
+    """Normalise observed heading/column labels, not their declared content."""
+    words = re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+    return re.sub(r"^\d+\s*", "", words).strip()
+
+
+def _section_kind(title: str) -> str | None:
+    if "risk" in title:
+        return "risks"
+    if "input" in title or "output" in title:
+        return "io"
+    if "dependenc" in title:
+        return "dependencies"
+    if "integration" in title or "pipeline" in title:
+        return "integration"
+    if "test guarantee" in title:
+        return "guarantees"
+    if "intent" in title or "responsib" in title:
+        return "responsibilities"
+    return None
+
+
+def _cells(line: str) -> list[str]:
+    # An escaped pipe or a pipe inside code is content, not a column boundary.
+    cells, cell, ticks = [], [], False
+    line = line.strip()
+    if line.startswith("|"):
+        line = line[1:]
+    if line.endswith("|"):
+        line = line[:-1]
+    escaped = False
+    for char in line:
+        if char == "|" and not escaped and not ticks:
+            cells.append("".join(cell).strip())
+            cell = []
+        else:
+            cell.append(char)
+            if char == "`" and not escaped:
+                ticks = not ticks
+        escaped = char == "\\" and not escaped
+    cells.append("".join(cell).strip())
+    return cells
+
+
+def _io_rows(body: str, title: str) -> list[dict]:
+    rows, columns = [], None
+    default = "input" if "input" in title and "output" not in title else (
+        "output" if "output" in title and "input" not in title else "")
+    for line in body.splitlines():
+        if not line.lstrip().startswith("|"):
+            columns = None
+            continue
+        values = _cells(line)
+        if all(re.fullmatch(r":?-+:?", value.replace(" ", "")) for value in values):
+            continue
+        if columns is None:
+            columns = [{"brief description": "description"}.get(_title(v), _title(v)) for v in values]
+            continue
+        if "name" not in columns or len(values) != len(columns):
+            continue
+        row = dict(zip(columns, values))
+        direction = _title(row.get("direction", default))
+        row["direction"] = {"in": "input", "out": "output"}.get(direction, direction)
+        rows.append({**dict.fromkeys(("direction", "name", "type", "description"), ""), **row})
+    return rows
+
+
+def _contracts(text: str) -> dict:
+    lines = text.splitlines(keepends=True)
+    sections = []
+    for i, line in enumerate(lines):
+        match = re.match(r"^\s*(#{1,6})\s+(.+?)\s*#*\s*$", line)
+        if match and not HEADER.match(line):
+            sections.append((i, len(match[1]), _title(match[2])))
+    declared = {"declared_sections": {}, "declared_io": []}
+    for kind in ("risks", "dependencies", "integration", "guarantees"):
+        declared["declared_" + kind] = []
+    for pos, (start, level, title) in enumerate(sections):
+        end = next((j for j, depth, _ in sections[pos + 1:] if depth <= level), len(lines))
+        direct_end = sections[pos + 1][0] if pos + 1 < len(sections) else len(lines)
+        direct = "".join(lines[start + 1:direct_end])
+        declared["declared_sections"].setdefault(title, []).append(direct)
+        kind = _section_kind(title)
+        if kind == "io":
+            declared["declared_io"].extend(_io_rows(direct, title))
+        elif kind in ("risks", "dependencies", "integration", "guarantees"):
+            declared["declared_" + kind].append("".join(lines[start + 1:end]))
+    return declared
+
+
 def parse(text: str) -> dict:
     """Header fields (`@ai-*`) and the verbatim declared text (intent plus the Intent & Responsibility section)."""
     headers: dict[str, str] = {}
+    fields: dict[str, str | list[str]] = {}
     for line in text.splitlines():
         m = HEADER.match(line)
-        if m and m.group(1) not in headers:
-            headers[m.group(1)] = m.group(2)
+        if m:
+            name, value = m.groups()
+            headers.setdefault(name, value)
+            if name not in fields:
+                fields[name] = value
+            elif isinstance(fields[name], list):
+                fields[name].append(value)
+            else:
+                fields[name] = [fields[name], value]
     lines, section, grab = text.splitlines(), [], False
     for line in lines:
         if line.lstrip().startswith("#"):
@@ -72,7 +169,8 @@ def parse(text: str) -> dict:
         declared = "\n".join(x for x in [intent] + section if x)
     else:  # no headers: keep the prose itself, verbatim
         declared = "\n".join(l.rstrip() for l in lines if l.strip() and not l.lstrip().startswith("#"))
-    return {"headers": headers, "intent": intent, "declared_text": declared[:MAX_TEXT]}
+    return {"headers": headers, "intent": intent, "declared_text": declared,
+            "declared_fields": fields, "declared_raw": text, **_contracts(text)}
 
 
 def _module_maps(edges: dict) -> tuple[dict[str, str], dict[str, list[str]]]:
@@ -147,7 +245,7 @@ def import_purpose(root: Path, purpose_dir: Path, records_path: Path, edges: dic
         h = p["headers"]
         note = lambda kind, detail="": rep["findings"].append({"file": rel, "kind": kind, "detail": detail})
 
-        if any(PLACEHOLDER.search(h.get(k, "")) for k in ("ai-path", "ai-source-files", "ai-intent")):
+        if any(PLACEHOLDER.search(h.get(k, "")) for k in ("ai-path", "ai-source-file", "ai-source-files", "ai-intent")):
             rep["skipped"].append({"file": rel, "reason": "template (placeholder values)"})
             continue
         slug = _slug(path.relative_to(purpose_dir))
@@ -161,7 +259,11 @@ def import_purpose(root: Path, purpose_dir: Path, records_path: Path, edges: dic
         if not h:
             note("no-headers")
         code_links, modules = [], []
-        for name in _list(h.get("ai-source-files", "")):
+        source_files = list(dict.fromkeys(_list(h.get("ai-source-file", ""))
+                                          + _list(h.get("ai-source-files", ""))))
+        if "ai-source-file" in h and "ai-source-files" in h:
+            note("duplicate-source-field", "both singular and plural source fields; using their union")
+        for name in source_files:
             mod, finding = _resolve(name, root, by_file, by_base)
             if finding:
                 note(**finding)
@@ -194,7 +296,8 @@ def import_purpose(root: Path, purpose_dir: Path, records_path: Path, edges: dic
                  "tier": "candidate", "epistemic": "provisional", "origin": "imported",
                  "text": f"{rel} declares: {p['intent'] or '(no @ai-intent)'}",
                  "declared_text": p["declared_text"],
-                 "declared_source_files": _list(h.get("ai-source-files", "")),
+                 "declared_source_files": source_files,
+                 **{k: v for k, v in p.items() if k.startswith("declared_")},
                  "declared_used_by": declared_users,
                  "relations": [{"rel": "depends_on", "to": f"{sid}@{version}"}]
                               + [{"rel": "depends_on", "to": c} for c in code_links]}
