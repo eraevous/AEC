@@ -6,7 +6,7 @@
 
 > AEC should help an AI development system understand what it is building, observe what it is becoming, detect when those diverge, and preserve the reasoning needed to make deliberate changes.
 
-This is a candidate north star (Kate's formulation), not an established capability. It extends Zach's earlier work:
+This is the approved north star (Kate's formulation), an intended outcome rather than an established capability. It extends Zach's earlier work:
 - **Dual-Channel Coding** (June 2025): executable code and semantic architecture are kept as coupled representations and reconciled continuously.
 - **Run/Drift** (July 2025): implementation alternates with reflection on whether the project is still becoming what it was meant to be.
 - **The evidence-and-authority model** (October 2026): what justifies a conclusion, and who may revise it.
@@ -121,9 +121,11 @@ A typed `authorized_by` is a *claim* of authorization, not verified consent.
 
 ## Work packages
 
+WP1–WP5 are approved as direction and work-package order. Each still requires its own spec and PR; approval does not mean its planned capabilities are implemented.
+
 | WP | Content | Status |
 |---|---|---|
-| **WP0** | AEC reconciled with itself: importer repairs (singular field, structured fields, no silent truncation, heading variants); `AGENTS.md`, `CHARTER.md` and the constitution reconciled, and the `VISION.md` reference resolved; Oct 26–28 history imported as *candidate*, source-linked records, with a list of what Zach must confirm; evaluation criteria designed now (`docs/failure-modes.md`); a cold-agent usability check | **implemented, pending review**: `specs/003-self-reconciliation/`. Claude reviews the technical side, Kate reviews purpose; candidate history still needs Zach’s confirmation |
+| **WP0** | AEC reconciled with itself: importer repairs (singular field, structured fields, no silent truncation, heading variants); `AGENTS.md`, `CHARTER.md` and the constitution reconciled, and the `VISION.md` reference resolved; Oct 26–28 history imported as *candidate*, source-linked records, with a list of what Zach must confirm; evaluation criteria designed now (`docs/failure-modes.md`); a cold-agent usability check | **implemented; review fixes applied, awaiting Zach’s merge**: `specs/003-self-reconciliation/`. Claude’s technical review and Kate’s purpose review are complete; reconstructed history remains proposed, with confirmation separate from merging WP0 |
 | WP1A | commit-addressed snapshots and structural diffs (merge-base vs head), basic reachability, fan-in and fan-out, a CI report as an artifact (no PR comments yet) | after WP0 |
 | WP2A | minimal `aec context <symbol>` and `--change` | right after WP1A |
 | WP1B | historical analytics: SCC per projection, temporal deltas, churn, co-change, boundary changes | alongside WP2 expansion |

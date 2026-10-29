@@ -1,15 +1,15 @@
 # AEC
 
-AEC (formerly Codex++) is an experiment in keeping **why** something is being built attached to **what** gets built, when AI agents do much of the building. It is meant as an extension to specification-driven development (GitHub Spec Kit), not a replacement for it. Spec Kit owns specs, plans, tasks and its own consistency checks. AEC adds explicit purpose, authority by subject, evidence status, and versioned criteria, and connects them.
+AEC (formerly Codex++) explores continuous architectural reasoning for AI-assisted development: helping an AI development system understand what it is building, observe what it is becoming, detect when those diverge, and preserve the reasoning needed for deliberate change. It connects executable structure, semantic purpose, evidence, authority and agent coordination. The current implementation provides structural analysis and reasoning records, with a Spec Kit integration. Spec Kit is one integration surface, not the boundary of AEC; the capability table below distinguishes what is built, partial and planned.
 
-See the white paper, *AEC as an extension to specification-driven development* (Zachary Rhodes, 26 October 2026), for the positioning, evidence and validation plan.
+The white paper, *AEC as an extension to specification-driven development* (Zachary Rhodes, 26 October 2026), records the earlier positioning, evidence and validation plan. The approved direction is described in `docs/architecture.md`.
 
 ## Authority and operating rules
 
 `.aec/records.jsonl` governs purpose and authority (`AEC-P0@1`, `AU-zach@1`).
 The engineering principles live in `.specify/memory/constitution.md`, applied by
-`CHARTER.md`; `AGENTS.md` governs agent behavior. Spec Kit owns the specification
-workflow. Purpose files in `codex_++/purpose_files/` are semantic contracts whose
+`CHARTER.md`; `AGENTS.md` governs agent behavior. When a project uses Spec Kit,
+Spec Kit owns its specification workflow. Purpose files in `codex_++/purpose_files/` are semantic contracts whose
 claims are candidates, and `codex_++/intents/` contains provisional reasoning.
 Generated edges are static structural facts, not a competing authority. If a
 purpose file disagrees with a committed record, report the conflict for review;
@@ -30,8 +30,9 @@ decision-maker for that subject may accept a commitment.
 | Context delivery, reconciliation packets and automatic drift triggers | planned | WP2A/WP3 |
 | Handoff premise checks and comparative evaluation | planned | WP4/WP5 |
 
-See `docs/architecture.md` for the **proposed** direction and
-`docs/failure-modes.md` for evaluation design. They do not establish that planned
+See `docs/architecture.md` for the direction **approved by Zach on 29 October 2026**,
+and `docs/failure-modes.md` for evaluation design. WP1–WP5 are approved as direction;
+each still needs its own spec and PR. Approval does not establish that planned
 features are built or that AEC improves owner outcomes. A passing record check
 establishes formal consistency only, not the truth, adequacy or independence of
 evidence. Reconstructed history remains proposed in `docs/decisions-to-confirm.md`.

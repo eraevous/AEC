@@ -12,8 +12,9 @@ plan and tasks before implementing. No runtime dependencies beyond Python 3.10+.
   `AU-zach@1` governs AEC design intent and acceptance, by recorded subject.
 - `.specify/memory/constitution.md` governs engineering principles; `CHARTER.md`
   states their practical application. A conflict goes to the constitution.
-- `AGENTS.md` governs agent behavior. Spec Kit owns specs, plans, tasks and its
-  workflow; an AEC report is a review item, never permission to rewrite them.
+- `AGENTS.md` governs agent behavior. When a project uses Spec Kit, Spec Kit owns
+  specs, plans, tasks and its workflow; an AEC report is a review item, never
+  permission to rewrite them.
 - `codex_++/purpose_files/` holds semantic contracts as **candidate claims**.
   They cannot override committed purpose or authority records. Report disagreement
   with records/code and propose reconciliation; do not silently choose a new goal.
@@ -80,9 +81,10 @@ candidate history and doc-truth checks. Partial: semantic reconciliation (declar
 fields and caller comparisons only), evidence adequacy/applicability (narrow
 rules only). Planned: commit-addressed snapshots, topology analytics, context
 briefings, reconciliation packets, automatic drift triggers and handoff premise
-checks. `docs/architecture.md` is proposed direction; `docs/failure-modes.md`
-is evaluation design. Neither claims those planned mechanisms exist or authorizes
-work beyond the current scope.
+checks. `docs/architecture.md` records direction approved by Zach on 29 October
+2026; `docs/failure-modes.md` is evaluation design. WP1–WP5 are approved as direction,
+but each still requires its own spec and PR. Approval does not mean planned
+mechanisms exist or authorize work beyond the current scope.
 
 Legacy code remains out of the distributed package; its fate is an owner decision.
 The inherited protocol is archived in `docs/history/codex-plus-plus-AGENTS.md`.

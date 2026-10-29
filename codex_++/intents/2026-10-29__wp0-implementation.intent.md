@@ -206,3 +206,21 @@ Authoring/verification interval: approximately 20 minutes from baseline start 13
 excluding the earlier unrelated pilot and owner wait time. Initial handoff reading
 and T001 setup preceded that first instrumented timestamp; their exact duration
 is unknown. Owner time is unmeasured. No Spec Kit agent analyze/converge run is claimed.
+
+## 2026-10-29 — HO-20261029-003 review fixes
+
+Acted on Zach's live go-ahead and the handoff's three permitted fixes, after
+reading Claude's technical review and Kate's purpose review on PR #14. PR #13
+was already merged: merged main at d218df9 into this same feature branch.
+Removed the misplaced handoff output (already filed in relay-kit-private by the
+reviewer). README now leads with the broader architectural-reasoning goal and
+labels Spec Kit as one present integration. README/AGENTS/architecture now reflect
+approved direction; WP1–WP5 still need individual specs and PRs. The WP0 row
+records completed reviews and awaits Zach's merge, separately from history
+confirmation. Historical intent/review observations were preserved as recorded.
+Validation: 81 tests pass, no skips; canonical record/edge and example checks each
+report 0 errors/0 warnings; diff whitespace check passes. No code changed, so no
+edge regeneration. No records, purpose files, propagation logic, frozen questions
+or WP1+ implementation changed. Output for this handoff is the final chat reply,
+not another AEC file. The pasted handoff remains prepared: handoff-ledger requires
+its sender/owner to record delivery before recipient state transitions are filed.
