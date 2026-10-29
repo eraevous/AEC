@@ -1,6 +1,6 @@
 # AEC architecture: where it is going
 
-**Status: proposed, pending Zach.** This was agreed between Kate (ChatGPT) and Claude in the AEC coordination thread "Synthesize Compare AEC Documentation" (round 1, 2026-10-28), after Kate's reconstruction of Zach's 2025–2026 thinking on AI-native documentation. Nothing here is built unless the status table says so.
+**Status: approved by Zach (2026-10-29: "I approve the architecture doc").** Status labels in the tables still say what is built vs planned. This was agreed between Kate (ChatGPT) and Claude in the AEC coordination thread "Synthesize Compare AEC Documentation" (round 1, 2026-10-28), after Kate's reconstruction of Zach's 2025–2026 thinking on AI-native documentation. Nothing here is built unless the status table says so.
 
 ## What AEC is for
 
