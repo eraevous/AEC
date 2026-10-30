@@ -32,6 +32,18 @@ Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what
 
 **Evidence tiers** (`tier`): `candidate` (unreviewed or machine-produced), `reviewed` (a qualified reviewer checked it), `observed` (an outcome actually seen under recorded conditions), `prospective` (a prediction frozen before the outcome). A tier label never establishes validity by itself.
 
+## Optional source anchors and rationale (WP-S)
+
+Every record type may retain a `rationale` string in Record.data, separate from its
+existing `text`, and an `anchors` array. Each anchor names a local root (optional,
+repository by default), relative path, raw-byte SHA-256, line/quote locator and an
+optional `for` field (text by default, or rationale). No new justificatory relation
+is inferred. Shape errors are errors; unavailable/missing/mismatch/invalid-locator
+observations are warning findings; verified integrity/locator matches are not
+findings. See README for full data/root/CLI contract. This does not change impact,
+authority, evidence tiers or propagation. Adding anchors means appending a record
+version, never rewriting history. No sources are copied into the repository.
+
 ## Relations (from → to)
 
 | relation | from → to | meaning, and what it does **not** mean |
