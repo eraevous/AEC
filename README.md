@@ -174,13 +174,18 @@ matching is default; `--regex` explicitly enables Python regular expressions.
 Results sort by path then line, with root alias as a tie-breaker; repeated aliases
 can produce separate hits. `--max` defaults to 20, is nonnegative, and reports the
 count of matching lines omitted. Zero prints no hits and counts all omissions.
+Each hit prints a window around its first match. `--max-chars` defaults to 240 and
+must be positive; the bound includes the excerpt and its `…[+N chars]` markers,
+but excludes path/digest/record metadata. Markers count characters omitted on each
+side. Short lines are unchanged. A match wider than the budget is itself clipped;
+very small budgets that cannot fit detailed markers produce only `…`.
 
 `--root` selects a configured alias. The implicit repository root is selected
 explicitly with `--root .`; it is not scanned by default. Unknown aliases are
 usage errors. Search never follows directory symlinks; in-root file symlinks are
 readable, while escaping ones and unreadable paths get visibility notes. No
-persistent index is created. Output bounds limit lines/hits, not input file size
-or regex execution time; use basic fallback search on suitable local source roots.
+persistent index is created. Output bounds limit passage lines, search hits and search excerpt characters,
+not input file size or regex execution time; use basic fallback search on suitable local source roots.
 
 Both source subcommands accept `--repo ROOT` (default current directory) and
 `--records PATH` (default ROOT/.aec/records.jsonl; an explicit relative path uses

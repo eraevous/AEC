@@ -120,3 +120,25 @@ Not done: actual private-corpus smoke test, representation-002, deletion-propaga
 fix, historical-record migration/acceptance or merge. These are outside this handoff.
 Result is returned in chat for claude:aec to file in the private ledger; no AEC handoff
 output file is created. HO-20261030-001 can be completed once that result is filed.
+
+## HO-20261030-001 technical review — bounded search hit text
+
+The reviewer found a blocking output-size gap: a line/hit limit does not bound
+single-line JSON captures. Added a synthetic >1 MB fixture generated only in /tmp;
+its test failed first, showing 1,200,018 unbounded characters before the final
+first-occurrence extension. No real corpus content was copied.
+
+Search now keeps a window around the first literal/regex match, with --max-chars
+(default 240, positive). This is a strict rendered-excerpt budget including omission
+markers, excluding hit metadata. Markers give per-side omitted character counts;
+short lines are unchanged. Over-budget matches can themselves be clipped; tiny
+budgets that cannot fit detailed markers show an ellipsis only. Hit/count/order,
+raw digest and record associations are unchanged. Named-root default is explicit
+in search help. The tests cover first occurrence, exact omission accounting, CLI
+bounds, invalid budgets, regex/edge/long matches and an unchanged short-line decoy.
+The fix also avoids retaining full matching lines in the transient hit list.
+
+Review-fix verification: 103 tests pass without skips, including the >1 MB single-
+line regression and exact omission-count accounting. Canonical record/edge and
+example checks each report 0 errors/0 warnings. Regenerated product edges twice,
+byte-identically; no prior record lines or propagation semantics changed.

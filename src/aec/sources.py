@@ -24,6 +24,8 @@ OUTPUT_TEMPLATES = {
     'no_passage': 'No resolved passage to display.',
     'truncated': '[truncated: {count} line(s) omitted; max-lines={limit}]',
     'hit': 'fallback root={root} path={path} line={line} sha256={sha256} records={records}: {text}',
+    'chars_omitted': '…[+{count} chars]',
+    'tiny_excerpt': '…',
     'summary': '{shown} hit(s) shown; limit={limit}; {omitted} hit(s) omitted; {total} matching line(s).',
 }
 
@@ -240,9 +242,32 @@ def anchored_files(store, sources: SourceContext) -> dict[Path, list[str]]:
     return {path: sorted(values) for path, values in refs.items()}
 
 
-def render_search(store, pattern: str, sources: SourceContext, *, root=None, regex=False, max_hits=20) -> str:
+def search_excerpt(line: str, match_start: int, match_end: int, max_chars: int) -> str:
+    """Bound the rendered hit text, including omission markers, around its first match."""
+    if len(line) <= max_chars:
+        return line
+    width = max_chars
+    while width > 0:
+        padding = max(0, width - (match_end - match_start)) // 2
+        start = max(0, match_start - padding)
+        end = min(len(line), start + width)
+        start = max(0, end - width)
+        prefix = OUTPUT_TEMPLATES['chars_omitted'].format(count=start) if start else ''
+        suffix = OUTPUT_TEMPLATES['chars_omitted'].format(count=len(line)-end) if end < len(line) else ''
+        overflow = end - start + len(prefix) + len(suffix) - max_chars
+        if overflow <= 0:
+            return prefix + line[start:end] + suffix
+        width -= overflow
+    # A tiny explicit limit cannot fit a useful window and detailed count markers.
+    return OUTPUT_TEMPLATES['tiny_excerpt']
+
+
+def render_search(store, pattern: str, sources: SourceContext, *, root=None, regex=False,
+                  max_hits=20, max_chars=240) -> str:
     if max_hits < 0:
         raise ValueError('max must be nonnegative')
+    if max_chars < 1:
+        raise ValueError('max-chars must be positive')
     try:
         compiled = re.compile(pattern) if regex else None
     except re.error as error:
@@ -279,9 +304,15 @@ def render_search(store, pattern: str, sources: SourceContext, *, root=None, reg
                 path = (base / relative).resolve()
                 linked = refs.get(path, [])
                 for number, line in enumerate(raw.decode('utf-8', errors='replace').splitlines(), 1):
-                    matches = compiled.search(line) is not None if compiled is not None else pattern in line
-                    if matches:
-                        hits.append((display, number, selected.name, sha, linked, line))
+                    if compiled is not None:
+                        match = compiled.search(line)
+                        span = match.span() if match else None
+                    else:
+                        position = line.find(pattern)
+                        span = (position, position + len(pattern)) if position >= 0 else None
+                    if span is not None:
+                        excerpt = search_excerpt(line, span[0], span[1], max_chars)
+                        hits.append((display, number, selected.name, sha, linked, excerpt))
     hits.sort(key=lambda hit: (hit[0], hit[1], hit[2]))
     shown = hits[:max_hits]
     out = [OUTPUT_TEMPLATES['heading'].format(mode='search')]

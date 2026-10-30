@@ -84,11 +84,12 @@ def main(argv=None) -> int:
     show.add_argument("--max-lines", type=int, default=80)
     show.add_argument("--repo", default=".", help="repository containing .aec/sources.json")
     show.add_argument("--records", help="record file (default: ROOT/.aec/records.jsonl)")
-    search = source_sub.add_parser("search")
+    search = source_sub.add_parser("search", description="Search named configured roots by default; use --root to select one.")
     search.add_argument("pattern")
-    search.add_argument("--root", help="configured root alias, or . for the repository")
+    search.add_argument("--root", help="configured alias, or . for the repository; default: named roots only")
     search.add_argument("--regex", action="store_true")
     search.add_argument("--max", type=int, default=20, dest="max_hits")
+    search.add_argument("--max-chars", type=int, default=240, help="maximum characters per hit excerpt, including truncation markers (default: 240)")
     search.add_argument("--repo", default=".", help="repository containing .aec/sources.json")
     search.add_argument("--records", help="record file (default: ROOT/.aec/records.jsonl)")
     a = ap.parse_args(argv)
@@ -104,7 +105,7 @@ def main(argv=None) -> int:
                 text = render_show(source_store, a.record_ref, context, context=a.context, max_lines=a.max_lines)
             else:
                 text = render_search(source_store, a.pattern, context, root=a.root,
-                                     regex=a.regex, max_hits=a.max_hits)
+                                     regex=a.regex, max_hits=a.max_hits, max_chars=a.max_chars)
         except (OSError, ValueError) as error:
             ap.error(str(error))
         print(text, end="")

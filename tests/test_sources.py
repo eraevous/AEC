@@ -318,5 +318,55 @@ class TestLocatorShape(SourceFixture):
         self.assertEqual(self.findings(self.record([self.anchor(locator='q:shared needle')])),[])
 
 
+class TestSearchCharacterBound(SourceFixture):
+    def long_line(self):
+        fixture=json.loads((ROOT/'tests/fixtures/anchors/long-line.json').read_text())
+        line='a'*fixture['prefix_chars']+'FIRST '+fixture['term']+' HERE'+'z'*fixture['suffix_chars']+' SECOND '+fixture['term']
+        self.assertGreaterEqual(len(line),1024*1024)
+        (self.corpus/'long.json').write_text(line+'\n')
+        return fixture,line
+
+    def payload(self, output):
+        hit=next(line for line in output.splitlines() if line.startswith('fallback '))
+        return hit.split('records=[]: ',1)[1]
+
+    def test_megabyte_line_default_and_cli_bounds_keep_first_match(self):
+        fixture,line=self.long_line()
+        args=('source','search',fixture['term'],'--repo',str(self.repo),'--root','corpus')
+        code,out,err=self.cli(*args)
+        self.assertEqual(code,0,err)
+        payload=self.payload(out)
+        self.assertLessEqual(len(payload),240)
+        self.assertIn('FIRST Merfolk HERE',payload)
+        self.assertNotIn('SECOND',payload)
+        import re
+        counts=[int(n) for n in re.findall(r'…\[\+(\d+) chars\]',payload)]
+        visible=re.sub(r'…\[\+\d+ chars\]','',payload)
+        self.assertEqual(sum(counts)+len(visible),len(line))
+        self.assertRegex(payload,r'^…\[\+\d+ chars\]')
+        self.assertRegex(payload,r'…\[\+\d+ chars\]$')
+        code,out,err=self.cli(*args,'--max-chars',str(fixture['max_chars']))
+        self.assertEqual(code,0,err)
+        self.assertLessEqual(len(self.payload(out)),fixture['max_chars'])
+        self.assertIn(fixture['term'],self.payload(out))
+        self.assertEqual((code,out,err),self.cli(*args,'--max-chars',str(fixture['max_chars'])))
+        self.assertEqual(self.cli(*args,'--max-chars','0')[0],2)
+        self.assertEqual(self.cli(*args,'--max-chars','-1')[0],2)
+
+    def test_regex_edges_long_matches_and_short_line_decoy(self):
+        from aec.sources import render_search
+        for line,pattern,regex in [('Merfolk'+'x'*1000,'Merfolk',False),
+                                   ('x'*1000+'Merfolk','Merf.lk',True),
+                                   ('x'*1000+'Merfolk'+'y'*1000,'x+Merfolk',True)]:
+            (self.corpus/'edge.txt').write_text(line)
+            out=render_search(Store([]),pattern,SourceContext(self.repo),root='corpus',regex=regex,max_chars=80)
+            self.assertLessEqual(len(self.payload(out)),80)
+            self.assertIn('…[+',self.payload(out))
+        out=render_search(Store([]),'third',SourceContext(self.repo),root='corpus',max_chars=80)
+        self.assertEqual(self.payload(out),'third')
+        out=render_search(Store([]),'needle',SourceContext(self.repo),root='corpus',max_chars=1)
+        self.assertEqual(self.payload(out),'…')
+
+
 if __name__ == '__main__':
     unittest.main()
