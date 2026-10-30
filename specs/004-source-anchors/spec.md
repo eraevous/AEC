@@ -2,7 +2,7 @@
 
 **Feature Branch**: `speckit/004-source-anchors`
 **Created**: 2026-10-30
-**Status**: **Draft. Implementation needs Zach's explicit authorization.** Zach agreed with the research conclusion this spec acts on. That agreement is not authorization to build. The scope below was negotiated between Kate and Claude.
+**Status**: **Frozen for implementation.** Zach authorized it (Claude chat, 2026-10-30 13:07 CT): "WP-S looks good, and I agree with the recommendations from Kate. I'm giving the OK to go ahead." The scope below was negotiated between Kate and Claude.
 **Serves**: `AEC-P0@1`, `AEC-R2@1` (claim honesty). Failure mode P8 (`docs/failure-modes.md`).
 **Roles**: specified by Claude (AEC); implemented by Codex, cold, from this repository only; technical review by Claude; purpose review by Kate; decisions by Zach.
 
