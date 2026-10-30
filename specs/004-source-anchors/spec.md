@@ -13,7 +13,7 @@
 
 ## Why
 
-What a summary drops, a later agent can't recover from the summary. The format doesn't matter. Kate put it as "Memory representation is not the same thing as memory preservation." AEC records summarise. WP-S lets a record point back at the source passage it came from, checks that the pointer still holds, and keeps a route to the sources that doesn't depend on any record.
+What a summary drops, a later agent can't recover from the summary. In representation-001, answer quality was limited mainly by which source facts survived construction. Whether the format itself caused those losses is unresolved. Kate put it as "Memory representation is not the same thing as memory preservation." AEC records summarise. WP-S lets a record point back at the source passage it came from, checks that the pointer still holds, and keeps a route to the sources that doesn't depend on any record.
 
 **Design rule:** a knowledge index must not be the only route to knowledge it failed to index.
 
