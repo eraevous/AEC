@@ -198,7 +198,7 @@ class TestSourceSearch(SourceFixture):
         self.assertEqual(len(self.hits(out)),1)
         self.assertIn('fallback',out)
         self.assertIn('../corpus/unindexed.txt',out)
-        self.assertIn('records=[]',out)
+        self.assertIn('records_digest_match=[] records_path_only=[]',out)
         self.assertIn(hashlib.sha256((self.corpus/'unindexed.txt').read_bytes()).hexdigest(),out)
         self.assertNotIn(str(self.base),out)
         self.assertIn('unavailable',out)  # absent configured root remains visible
@@ -307,7 +307,7 @@ class TestSourceEdgeCases(SourceFixture):
         self.records.unlink()
         result=self.cli('source','search','previously unrecorded','--repo',str(self.repo))
         self.assertEqual(result[0],0)
-        self.assertIn('records=[]',result[1])
+        self.assertIn('records_digest_match=[] records_path_only=[]',result[1])
 
 
 class TestLocatorShape(SourceFixture):
@@ -328,7 +328,7 @@ class TestSearchCharacterBound(SourceFixture):
 
     def payload(self, output):
         hit=next(line for line in output.splitlines() if line.startswith('fallback '))
-        return hit.split('records=[]: ',1)[1]
+        return hit.split('records_path_only=[]: ',1)[1]
 
     def test_megabyte_line_default_and_cli_bounds_keep_first_match(self):
         fixture,line=self.long_line()
@@ -366,6 +366,68 @@ class TestSearchCharacterBound(SourceFixture):
         self.assertEqual(self.payload(out),'third')
         out=render_search(Store([]),'needle',SourceContext(self.repo),root='corpus',max_chars=1)
         self.assertEqual(self.payload(out),'…')
+
+
+class TestShowCharacterBound(SourceFixture):
+    def test_single_megabyte_line_and_quote_focus_are_bounded(self):
+        fixture=json.loads((ROOT/'tests/fixtures/anchors/long-line.json').read_text())
+        text='a'*fixture['prefix_chars']+fixture['term']+'z'*fixture['suffix_chars']
+        self.assertGreater(len(text),1024*1024)
+        raw=(text+'\n').encode()
+        (self.corpus/'long.txt').write_bytes(raw)
+        anchor=self.anchor(path='long.txt',sha256=hashlib.sha256(raw).hexdigest(),locator='L1')
+        self.save([self.record([anchor])])
+        args=('source','show','C@1','--repo',str(self.repo),'--context','0')
+        code,out,err=self.cli(*args)
+        self.assertEqual(code,0,err)
+        content=next(line.split(' | ',1)[1] for line in out.splitlines() if line.startswith('1 | '))
+        self.assertLessEqual(len(content),240)
+        self.assertIn('…[+',content)
+        anchor['locator']='q:'+fixture['term']
+        self.save([self.record([anchor])])
+        result=self.cli(*args,'--max-chars','80')
+        self.assertEqual(result[0],0,result[2])
+        content=next(line.split(' | ',1)[1] for line in result[1].splitlines() if line.startswith('1 | '))
+        self.assertLessEqual(len(content),80)
+        self.assertIn(fixture['term'],content)
+        self.assertEqual(result,self.cli(*args,'--max-chars','80'))
+        self.assertEqual(self.cli(*args,'--max-chars','0')[0],2)
+        self.assertEqual(self.cli(*args,'--max-chars','-1')[0],2)
+
+    def test_context_lines_bounded_and_short_line_decoy_unchanged(self):
+        from aec.sources import render_show
+        raw=('x'*1000+'\nshort\n'+'y'*1000+'\n').encode()
+        (self.corpus/'context.txt').write_bytes(raw)
+        r=self.record([self.anchor(path='context.txt',sha256=hashlib.sha256(raw).hexdigest(),locator='L2')])
+        out=render_show(Store([r]),'C@1',SourceContext(self.repo),context=1,max_chars=80)
+        numbered=[line.split(' | ',1)[1] for line in out.splitlines() if ' | ' in line]
+        self.assertEqual(len(numbered),3)
+        self.assertTrue(all(len(line)<=80 for line in numbered))
+        self.assertEqual(numbered[1],'short')
+
+
+class TestDigestProvenance(SourceFixture):
+    def test_same_path_matching_and_stale_digests_have_separate_labels(self):
+        from aec.sources import render_search
+        fixture=json.loads((ROOT/'tests/fixtures/anchors/provenance.json').read_text())
+        matching=self.record()
+        matching.id=fixture['matching_ref'].split('@')[0]
+        stale=self.record([self.anchor(sha256=fixture['stale_sha256'])])
+        stale.id=fixture['path_only_ref'].split('@')[0]
+        out=render_search(Store([stale,matching]),fixture['term'],SourceContext(self.repo),root='corpus')
+        hit=next(line for line in out.splitlines() if line.startswith('fallback ') and 'valid.txt' in line)
+        self.assertIn('records_digest_match=["current@1"]',hit)
+        self.assertIn('records_path_only=["earlier@1"]',hit)
+        self.assertNotIn(' records=',hit)
+        self.assertEqual(out,render_search(Store([stale,matching]),fixture['term'],SourceContext(self.repo),root='corpus'))
+
+    def test_matching_digest_wins_for_record_with_both_versions_of_an_anchor(self):
+        from aec.sources import render_search
+        rec=self.record([self.anchor(sha256='0'*64),self.anchor(sha256=self.anchor()['sha256'].upper())])
+        out=render_search(Store([rec]),'needle',SourceContext(self.repo),root='corpus')
+        hit=next(line for line in out.splitlines() if line.startswith('fallback ') and 'valid.txt' in line)
+        self.assertIn('records_digest_match=["C@1"]',hit)
+        self.assertIn('records_path_only=[]',hit)
 
 
 if __name__ == '__main__':

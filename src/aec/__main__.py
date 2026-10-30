@@ -82,6 +82,7 @@ def main(argv=None) -> int:
     show.add_argument("record_ref")
     show.add_argument("--context", type=int, default=3)
     show.add_argument("--max-lines", type=int, default=80)
+    show.add_argument("--max-chars", type=int, default=240, help="maximum characters per source line, including truncation markers (default: 240)")
     show.add_argument("--repo", default=".", help="repository containing .aec/sources.json")
     show.add_argument("--records", help="record file (default: ROOT/.aec/records.jsonl)")
     search = source_sub.add_parser("search", description="Search named configured roots by default; use --root to select one.")
@@ -102,7 +103,7 @@ def main(argv=None) -> int:
             source_store = Store.load(records) if records.exists() else Store([])
             context = SourceContext(repo)
             if a.source_cmd == "show":
-                text = render_show(source_store, a.record_ref, context, context=a.context, max_lines=a.max_lines)
+                text = render_show(source_store, a.record_ref, context, context=a.context, max_lines=a.max_lines, max_chars=a.max_chars)
             else:
                 text = render_search(source_store, a.pattern, context, root=a.root,
                                      regex=a.regex, max_hits=a.max_hits, max_chars=a.max_chars)

@@ -138,7 +138,7 @@ No remote/URL/UNC providers are supported.
 
 ```bash
 PYTHONPATH=src python3 -m aec check .aec/records.jsonl
-PYTHONPATH=src python3 -m aec source show C-example@1 --context 3 --max-lines 80
+PYTHONPATH=src python3 -m aec source show C-example@1 --context 3 --max-lines 80 --max-chars 240
 PYTHONPATH=src python3 -m aec source search 'a forgotten fact' --root corpus --max 20
 PYTHONPATH=src python3 -m aec source search 'fact.*detail' --regex --root corpus
 ```
@@ -163,13 +163,22 @@ passage to display. Missing/unavailable sources never yield a passage.
 `source show` labels record, zero-based anchor index, field, state, path and
 locator. Context defaults to 3 lines; `--context` is nonnegative. `--max-lines`
 defaults to 80 and must be positive: each passage, including context, is capped
-and omitted lines are explicitly counted. UTF-8 replacement decoding is used only
+and omitted lines are explicitly counted. Each source line is also capped by
+`--max-chars` (default 240, positive), including character-omission markers but
+excluding the line-number prefix. Quote-anchored lines use a window around the
+first exact quote; range-anchored and context lines show a bounded prefix. Long
+quotes can themselves be clipped, and tiny budgets can yield only `…`. Short
+lines are unchanged. UTF-8 replacement decoding is used only
 for views, never for the digest; CRLF files keep the same logical line numbering.
 
 `source search` scans named configured roots directly even if no record points at
 the matching text or no default records file exists. Every matching line is
 labelled `fallback`, with displayed path, line number, current raw-byte SHA-256 and
-all record versions anchoring that file (even if their digests are stale). Literal
+two separate record lists: `records_digest_match` names record versions with an
+anchor digest equal to these current bytes; `records_path_only` names record
+versions linked to the same path only by different digests. If a record has both
+kinds of anchor, it appears only in the digest-match list. Matching a digest alone
+does not establish locator validity, interpretation or authority. Literal
 matching is default; `--regex` explicitly enables Python regular expressions.
 Results sort by path then line, with root alias as a tie-breaker; repeated aliases
 can produce separate hits. `--max` defaults to 20, is nonnegative, and reports the
@@ -184,7 +193,7 @@ very small budgets that cannot fit detailed markers produce only `…`.
 explicitly with `--root .`; it is not scanned by default. Unknown aliases are
 usage errors. Search never follows directory symlinks; in-root file symlinks are
 readable, while escaping ones and unreadable paths get visibility notes. No
-persistent index is created. Output bounds limit passage lines, search hits and search excerpt characters,
+persistent index is created. Output bounds limit passage lines, per-line passage characters, search hits and search excerpt characters,
 not input file size or regex execution time; use basic fallback search on suitable local source roots.
 
 Both source subcommands accept `--repo ROOT` (default current directory) and

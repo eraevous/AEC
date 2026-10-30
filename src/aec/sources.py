@@ -23,7 +23,7 @@ OUTPUT_TEMPLATES = {
     'unavailable': "source can't be checked here; root or file is unavailable or outside the read boundary",
     'no_passage': 'No resolved passage to display.',
     'truncated': '[truncated: {count} line(s) omitted; max-lines={limit}]',
-    'hit': 'fallback root={root} path={path} line={line} sha256={sha256} records={records}: {text}',
+    'hit': 'fallback root={root} path={path} line={line} sha256={sha256} records_digest_match={digest_match} records_path_only={path_only}: {text}',
     'chars_omitted': '…[+{count} chars]',
     'tiny_excerpt': '…',
     'summary': '{shown} hit(s) shown; limit={limit}; {omitted} hit(s) omitted; {total} matching line(s).',
@@ -190,9 +190,11 @@ def record_findings(record, context: SourceContext):
     return out
 
 
-def render_show(store, ref, sources: SourceContext, *, context=3, max_lines=80) -> str:
+def render_show(store, ref, sources: SourceContext, *, context=3, max_lines=80, max_chars=240) -> str:
     if context < 0 or max_lines < 1:
         raise ValueError('context must be nonnegative and max-lines positive')
+    if max_chars < 1:
+        raise ValueError('max-chars must be positive')
     record = store.by_ref.get(ref)
     if record is None:
         raise ValueError('record reference not found: ' + ref)
@@ -213,14 +215,22 @@ def render_show(store, ref, sources: SourceContext, *, context=3, max_lines=80) 
             continue
         start, end = max(1, item.span[0] - context), min(len(item.lines), item.span[1] + context)
         stop = min(end, start + max_lines - 1)
-        out.extend(f'{number} | {item.lines[number - 1]}' for number in range(start, stop + 1))
+        for number in range(start, stop + 1):
+            line = item.lines[number - 1]
+            focus_start, focus_end = 0, 0
+            if item.locator.startswith('q:') and number == item.span[0]:
+                quote = item.locator[2:]
+                focus_start = line.find(quote)
+                focus_end = focus_start + len(quote)
+            excerpt = search_excerpt(line, focus_start, focus_end, max_chars)
+            out.append(f'{number} | {excerpt}')
         if stop < end:
             out.append(OUTPUT_TEMPLATES['truncated'].format(count=end - stop, limit=max_lines))
     return '\n'.join(out) + '\n'
 
 
-def anchored_files(store, sources: SourceContext) -> dict[Path, list[str]]:
-    """Associate files with recorded anchors, irrespective of pinned digest freshness."""
+def anchored_files(store, sources: SourceContext) -> dict[Path, dict[str, set[str]]]:
+    """Retain each record's pinned digests for a file without implying current integrity."""
     refs = {}
     for record in store.records:
         anchors = record.get('anchors', [])
@@ -236,14 +246,14 @@ def anchored_files(store, sources: SourceContext) -> dict[Path, list[str]]:
                 base = root.base.resolve()
                 path = (base / anchor['path']).resolve()
                 if path.is_relative_to(base):
-                    refs.setdefault(path, set()).add(record.ref)
+                    refs.setdefault(path, {}).setdefault(record.ref, set()).add(anchor['sha256'].lower())
             except (OSError, RuntimeError, ValueError):
                 continue
-    return {path: sorted(values) for path, values in refs.items()}
+    return refs
 
 
 def search_excerpt(line: str, match_start: int, match_end: int, max_chars: int) -> str:
-    """Bound the rendered hit text, including omission markers, around its first match."""
+    """Bound a rendered source line, including omission markers, around its focus."""
     if len(line) <= max_chars:
         return line
     width = max_chars
@@ -302,7 +312,9 @@ def render_search(store, pattern: str, sources: SourceContext, *, root=None, reg
                     continue
                 sha = hashlib.sha256(raw).hexdigest()
                 path = (base / relative).resolve()
-                linked = refs.get(path, [])
+                linked = refs.get(path, {})
+                digest_match = sorted(ref for ref, digests in linked.items() if sha in digests)
+                path_only = sorted(set(linked) - set(digest_match))
                 for number, line in enumerate(raw.decode('utf-8', errors='replace').splitlines(), 1):
                     if compiled is not None:
                         match = compiled.search(line)
@@ -312,7 +324,7 @@ def render_search(store, pattern: str, sources: SourceContext, *, root=None, reg
                         span = (position, position + len(pattern)) if position >= 0 else None
                     if span is not None:
                         excerpt = search_excerpt(line, span[0], span[1], max_chars)
-                        hits.append((display, number, selected.name, sha, linked, excerpt))
+                        hits.append((display, number, selected.name, sha, digest_match, path_only, excerpt))
     hits.sort(key=lambda hit: (hit[0], hit[1], hit[2]))
     shown = hits[:max_hits]
     out = [OUTPUT_TEMPLATES['heading'].format(mode='search')]
@@ -321,8 +333,9 @@ def render_search(store, pattern: str, sources: SourceContext, *, root=None, reg
     out.extend(OUTPUT_TEMPLATES['warning'].format(detail=note) for note in sorted(set(notes)))
     out.extend(OUTPUT_TEMPLATES['hit'].format(root=json.dumps(name, ensure_ascii=False),
         path=json.dumps(path, ensure_ascii=False), line=line, sha256=sha,
-        records=json.dumps(linked, ensure_ascii=False), text=text)
-        for path, line, name, sha, linked, text in shown)
+        digest_match=json.dumps(digest_match, ensure_ascii=False),
+        path_only=json.dumps(path_only, ensure_ascii=False), text=text)
+        for path, line, name, sha, digest_match, path_only, text in shown)
     out.append(OUTPUT_TEMPLATES['summary'].format(shown=len(shown), limit=max_hits,
                                                 omitted=len(hits)-len(shown), total=len(hits)))
     return '\n'.join(out) + '\n'

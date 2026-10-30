@@ -142,3 +142,29 @@ Review-fix verification: 103 tests pass without skips, including the >1 MB singl
 line regression and exact omission-count accounting. Canonical record/edge and
 example checks each report 0 errors/0 warnings. Regenerated product edges twice,
 byte-identically; no prior record lines or propagation semantics changed.
+
+## HO-20261030-001 purpose-review fixes
+
+Kate's follow-up requested character bounds for source show and honest search
+provenance labels. Added tests before implementation: a >1 MB anchored line still
+printed 1,200,007 characters, and the matching/stale fixture still produced one
+undifferentiated records list. Both failures were reproduced first.
+
+show now accepts --max-chars (default 240 per source line, including markers,
+excluding line-number prefix), reusing search's window helper. Quote-anchor focus
+keeps the quote visible when it fits; range/context lines use bounded prefixes.
+Every displayed context line is bounded, short lines are unchanged, and zero or
+negative budgets are errors. Synthetic large sources are created only in /tmp.
+
+Search retains pinned digests alongside record references, then compares them
+with the currently read bytes: records_digest_match and records_path_only are
+separate, sorted lists. A record with any matching anchor is excluded from the
+path-only list even if another anchor is stale. Digest matches do not imply a
+valid locator, meaningful support or consent. The fixture includes one record in
+each list, plus an uppercase-digest/both-anchors decoy. Existing output tests use
+the new explicit labels. Frozen spec.md and PR description are left for Claude.
+
+Purpose-review verification: 107 tests pass without skips. Regenerated product
+edges twice with byte-identical output; canonical record/edge and example checks
+are clean (0 errors/0 warnings). Existing record lines, propagation and spec.md
+remain unchanged by this fix. No PR description edit or merge was performed.
