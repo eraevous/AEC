@@ -1,8 +1,8 @@
-{"aec_edges": 1, "files": 41, "files_sha": "764c5539d9079dbd", "modules": {"src.aec": "src/aec/__init__.py", "src.aec.__main__": "src/aec/__main__.py", "src.aec.code_impact": "src/aec/code_impact.py", "src.aec.edges": "src/aec/edges.py", "src.aec.impact": "src/aec/impact.py", "src.aec.init": "src/aec/init.py", "src.aec.purpose_import": "src/aec/purpose_import.py", "src.aec.records": "src/aec/records.py", "src.core": "src/core/__init__.py", "src.core.tools.ast_dependency_extractor": "src/core/tools/ast_dependency_extractor.py", "tests.fixtures.edges_pkg_v1.pkg": "tests/fixtures/edges_pkg_v1/pkg/__init__.py", "tests.fixtures.edges_pkg_v1.pkg.base": "tests/fixtures/edges_pkg_v1/pkg/base.py", "tests.fixtures.edges_pkg_v1.pkg.core": "tests/fixtures/edges_pkg_v1/pkg/core.py", "tests.fixtures.edges_pkg_v1.pkg.extras": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "tests.fixtures.edges_pkg_v1.pkg.util": "tests/fixtures/edges_pkg_v1/pkg/util.py", "tests.fixtures.edges_pkg_v2.pkg": "tests/fixtures/edges_pkg_v2/pkg/__init__.py", "tests.fixtures.edges_pkg_v2.pkg.base": "tests/fixtures/edges_pkg_v2/pkg/base.py", "tests.fixtures.edges_pkg_v2.pkg.core": "tests/fixtures/edges_pkg_v2/pkg/core.py", "tests.fixtures.edges_pkg_v2.pkg.extras": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "tests.fixtures.edges_pkg_v2.pkg.util": "tests/fixtures/edges_pkg_v2/pkg/util.py", "tests.fixtures.purpose_repo.pkg": "tests/fixtures/purpose_repo/pkg/__init__.py", "tests.fixtures.purpose_repo.pkg.a": "tests/fixtures/purpose_repo/pkg/a/__init__.py", "tests.fixtures.purpose_repo.pkg.a.helpers": "tests/fixtures/purpose_repo/pkg/a/helpers.py", "tests.fixtures.purpose_repo.pkg.b": "tests/fixtures/purpose_repo/pkg/b/__init__.py", "tests.fixtures.purpose_repo.pkg.b.helpers": "tests/fixtures/purpose_repo/pkg/b/helpers.py", "tests.fixtures.purpose_repo.pkg.cli": "tests/fixtures/purpose_repo/pkg/cli.py", "tests.fixtures.purpose_repo.pkg.core": "tests/fixtures/purpose_repo/pkg/core.py", "tests.fixtures.purpose_repo.pkg.util": "tests/fixtures/purpose_repo/pkg/util.py", "tests.test_aec": "tests/test_aec.py", "tests.test_code_impact": "tests/test_code_impact.py", "tests.test_docs_truth": "tests/test_docs_truth.py", "tests.test_edges": "tests/test_edges.py", "tests.test_extension": "tests/test_extension.py", "tests.test_import_purpose": "tests/test_import_purpose.py", "tests.test_init": "tests/test_init.py", "tests.test_install": "tests/test_install.py", "tests.test_reconstruct_decisions": "tests/test_reconstruct_decisions.py", "tests.test_stdlib_only": "tests/test_stdlib_only.py", "tools.reconstruct_decisions": "tools/reconstruct_decisions.py"}, "root": "/workspace/AEC", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "source_roots": ["src"], "tool_version": "0.3.0"}
-{"body_sha": "14c47ef51901", "dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "defines", "line": 24, "resolved": true, "src": "src.aec.__main__"}
-{"body_sha": "27783d1a92fc", "dst": "src.aec.__main__._git_user", "file": "src/aec/__main__.py", "kind": "defines", "line": 37, "resolved": true, "src": "src.aec.__main__"}
-{"body_sha": "8e177eb8eb96", "dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "defines", "line": 29, "resolved": true, "src": "src.aec.__main__"}
-{"body_sha": "0aab2724b73e", "dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "defines", "line": 46, "resolved": true, "src": "src.aec.__main__"}
+{"aec_edges": 1, "files": 43, "files_sha": "bde2bdaf385dd9ca", "modules": {"src.aec": "src/aec/__init__.py", "src.aec.__main__": "src/aec/__main__.py", "src.aec.code_impact": "src/aec/code_impact.py", "src.aec.edges": "src/aec/edges.py", "src.aec.impact": "src/aec/impact.py", "src.aec.init": "src/aec/init.py", "src.aec.purpose_import": "src/aec/purpose_import.py", "src.aec.records": "src/aec/records.py", "src.aec.sources": "src/aec/sources.py", "src.core": "src/core/__init__.py", "src.core.tools.ast_dependency_extractor": "src/core/tools/ast_dependency_extractor.py", "tests.fixtures.edges_pkg_v1.pkg": "tests/fixtures/edges_pkg_v1/pkg/__init__.py", "tests.fixtures.edges_pkg_v1.pkg.base": "tests/fixtures/edges_pkg_v1/pkg/base.py", "tests.fixtures.edges_pkg_v1.pkg.core": "tests/fixtures/edges_pkg_v1/pkg/core.py", "tests.fixtures.edges_pkg_v1.pkg.extras": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "tests.fixtures.edges_pkg_v1.pkg.util": "tests/fixtures/edges_pkg_v1/pkg/util.py", "tests.fixtures.edges_pkg_v2.pkg": "tests/fixtures/edges_pkg_v2/pkg/__init__.py", "tests.fixtures.edges_pkg_v2.pkg.base": "tests/fixtures/edges_pkg_v2/pkg/base.py", "tests.fixtures.edges_pkg_v2.pkg.core": "tests/fixtures/edges_pkg_v2/pkg/core.py", "tests.fixtures.edges_pkg_v2.pkg.extras": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "tests.fixtures.edges_pkg_v2.pkg.util": "tests/fixtures/edges_pkg_v2/pkg/util.py", "tests.fixtures.purpose_repo.pkg": "tests/fixtures/purpose_repo/pkg/__init__.py", "tests.fixtures.purpose_repo.pkg.a": "tests/fixtures/purpose_repo/pkg/a/__init__.py", "tests.fixtures.purpose_repo.pkg.a.helpers": "tests/fixtures/purpose_repo/pkg/a/helpers.py", "tests.fixtures.purpose_repo.pkg.b": "tests/fixtures/purpose_repo/pkg/b/__init__.py", "tests.fixtures.purpose_repo.pkg.b.helpers": "tests/fixtures/purpose_repo/pkg/b/helpers.py", "tests.fixtures.purpose_repo.pkg.cli": "tests/fixtures/purpose_repo/pkg/cli.py", "tests.fixtures.purpose_repo.pkg.core": "tests/fixtures/purpose_repo/pkg/core.py", "tests.fixtures.purpose_repo.pkg.util": "tests/fixtures/purpose_repo/pkg/util.py", "tests.test_aec": "tests/test_aec.py", "tests.test_code_impact": "tests/test_code_impact.py", "tests.test_docs_truth": "tests/test_docs_truth.py", "tests.test_edges": "tests/test_edges.py", "tests.test_extension": "tests/test_extension.py", "tests.test_import_purpose": "tests/test_import_purpose.py", "tests.test_init": "tests/test_init.py", "tests.test_install": "tests/test_install.py", "tests.test_reconstruct_decisions": "tests/test_reconstruct_decisions.py", "tests.test_sources": "tests/test_sources.py", "tests.test_stdlib_only": "tests/test_stdlib_only.py", "tools.reconstruct_decisions": "tools/reconstruct_decisions.py"}, "root": "/workspace/AEC", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "source_roots": ["src"], "tool_version": "0.3.0"}
+{"body_sha": "14c47ef51901", "dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "defines", "line": 26, "resolved": true, "src": "src.aec.__main__"}
+{"body_sha": "27783d1a92fc", "dst": "src.aec.__main__._git_user", "file": "src/aec/__main__.py", "kind": "defines", "line": 39, "resolved": true, "src": "src.aec.__main__"}
+{"body_sha": "8e177eb8eb96", "dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "defines", "line": 31, "resolved": true, "src": "src.aec.__main__"}
+{"body_sha": "dd253c5cf110", "dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "defines", "line": 48, "resolved": true, "src": "src.aec.__main__"}
 {"body_sha": "b31efe57b243", "dst": "src.aec.code_impact.code_impact", "file": "src/aec/code_impact.py", "kind": "defines", "line": 31, "resolved": true, "src": "src.aec.code_impact"}
 {"body_sha": "601f0c522966", "dst": "src.aec.code_impact.events_from_diff", "file": "src/aec/code_impact.py", "kind": "defines", "line": 19, "resolved": true, "src": "src.aec.code_impact"}
 {"body_sha": "9f2b4ccaa1be", "dst": "src.aec.code_impact.referenced_symbols", "file": "src/aec/code_impact.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.code_impact"}
@@ -91,7 +91,7 @@
 {"body_sha": "4ef1bd4da1aa", "dst": "src.aec.records.Store", "file": "src/aec/records.py", "kind": "defines", "line": 51, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "794882402acf", "dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "defines", "line": 19, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "be1cc61ebe3e", "dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "defines", "line": 11, "resolved": true, "src": "src.aec.records"}
-{"body_sha": "b5f79959b86a", "dst": "src.aec.records.check", "file": "src/aec/records.py", "kind": "defines", "line": 108, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "e5746bcceb42", "dst": "src.aec.records.check", "file": "src/aec/records.py", "kind": "defines", "line": 108, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "6803d19ab150", "dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "defines", "line": 98, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "69ceb481f811", "dst": "src.aec.records.ref", "file": "src/aec/records.py", "kind": "defines", "line": 22, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "5fc430c72f63", "dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "defines", "line": 26, "resolved": true, "src": "src.aec.records"}
@@ -102,6 +102,26 @@
 {"body_sha": "635ba544a3fd", "dst": "src.aec.records.Store.in_edges", "file": "src/aec/records.py", "kind": "defines", "line": 80, "resolved": true, "src": "src.aec.records.Store"}
 {"body_sha": "0bb3b059840e", "dst": "src.aec.records.Store.load", "file": "src/aec/records.py", "kind": "defines", "line": 64, "resolved": true, "src": "src.aec.records.Store"}
 {"body_sha": "62f45bc96b70", "dst": "src.aec.records.Store.out_edges", "file": "src/aec/records.py", "kind": "defines", "line": 77, "resolved": true, "src": "src.aec.records.Store"}
+{"body_sha": "059f75e56441", "dst": "src.aec.sources.Inspection", "file": "src/aec/sources.py", "kind": "defines", "line": 87, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "15be27ae2cdf", "dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "b5b3a6dd3c81", "dst": "src.aec.sources.SourceContext", "file": "src/aec/sources.py", "kind": "defines", "line": 106, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "965d7be57009", "dst": "src.aec.sources.SourceRoot", "file": "src/aec/sources.py", "kind": "defines", "line": 77, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "eddbba34b13a", "dst": "src.aec.sources.anchor_errors", "file": "src/aec/sources.py", "kind": "defines", "line": 33, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "d025e4b19f7c", "dst": "src.aec.sources.anchored_files", "file": "src/aec/sources.py", "kind": "defines", "line": 232, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "bdf70ab2a4f5", "dst": "src.aec.sources.locate", "file": "src/aec/sources.py", "kind": "defines", "line": 67, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "a4d121daafdc", "dst": "src.aec.sources.parse_locator", "file": "src/aec/sources.py", "kind": "defines", "line": 55, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "59a50edadd14", "dst": "src.aec.sources.record_findings", "file": "src/aec/sources.py", "kind": "defines", "line": 181, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "d498079bf67a", "dst": "src.aec.sources.render_search", "file": "src/aec/sources.py", "kind": "defines", "line": 275, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "f31e3eb59df6", "dst": "src.aec.sources.render_show", "file": "src/aec/sources.py", "kind": "defines", "line": 193, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "2559cad89e58", "dst": "src.aec.sources.render_status", "file": "src/aec/sources.py", "kind": "defines", "line": 100, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "f004ee470662", "dst": "src.aec.sources.search_excerpt", "file": "src/aec/sources.py", "kind": "defines", "line": 255, "resolved": true, "src": "src.aec.sources"}
+{"body_sha": "1d585e33b059", "dst": "src.aec.sources.SourceContext.__init__", "file": "src/aec/sources.py", "kind": "defines", "line": 107, "resolved": true, "src": "src.aec.sources.SourceContext"}
+{"body_sha": "50af01fa733f", "dst": "src.aec.sources.SourceContext.inspect", "file": "src/aec/sources.py", "kind": "defines", "line": 164, "resolved": true, "src": "src.aec.sources.SourceContext"}
+{"body_sha": "2c2a8d95d332", "dst": "src.aec.sources.SourceContext.inspect_record", "file": "src/aec/sources.py", "kind": "defines", "line": 153, "resolved": true, "src": "src.aec.sources.SourceContext"}
+{"body_sha": "34d5824c25b7", "dst": "src.aec.sources.SourceContext.read", "file": "src/aec/sources.py", "kind": "defines", "line": 137, "resolved": true, "src": "src.aec.sources.SourceContext"}
+{"body_sha": "d157a8c2cae4", "dst": "src.aec.sources.SourceContext.root", "file": "src/aec/sources.py", "kind": "defines", "line": 132, "resolved": true, "src": "src.aec.sources.SourceContext"}
+{"body_sha": "a12733a24e25", "dst": "src.aec.sources.SourceContext.roots", "file": "src/aec/sources.py", "kind": "defines", "line": 113, "resolved": true, "src": "src.aec.sources.SourceContext"}
+{"body_sha": "5cdb2628b910", "dst": "src.aec.sources.SourceRoot.label", "file": "src/aec/sources.py", "kind": "defines", "line": 82, "resolved": true, "src": "src.aec.sources.SourceRoot"}
 {"body_sha": "049c011ca10a", "dst": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 61, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
 {"body_sha": "dfa9a607bb91", "dst": "src.core.tools.ast_dependency_extractor.analyze", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 167, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
 {"body_sha": "3a099c59e02e", "dst": "src.core.tools.ast_dependency_extractor.app", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "defines", "line": 58, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
@@ -189,9 +209,11 @@
 {"body_sha": "5baa8d4a6b9a", "dst": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 93, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
 {"body_sha": "23bb9f9d59b5", "dst": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing", "file": "tests/test_code_impact.py", "kind": "defines", "line": 98, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
 {"body_sha": "be9edb93520a", "dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.test_docs_truth"}
+{"body_sha": "2a0c93707a67", "dst": "tests.test_docs_truth.TestAnchorOutputTruth", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 76, "resolved": true, "src": "tests.test_docs_truth"}
 {"body_sha": "83df6e5f74ed", "dst": "tests.test_docs_truth.TestDocsTruth", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_docs_truth"}
 {"body_sha": "14751d162912", "dst": "tests.test_docs_truth.doc_findings", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 34, "resolved": true, "src": "tests.test_docs_truth"}
 {"body_sha": "9ecabaefb2e5", "dst": "tests.test_docs_truth.registered_commands", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 13, "resolved": true, "src": "tests.test_docs_truth"}
+{"body_sha": "b1e72b36ab5e", "dst": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 77, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth"}
 {"body_sha": "a8c318c2412b", "dst": "tests.test_docs_truth.TestDocsTruth.test_examples_are_not_repository_artifacts", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 64, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth"}
 {"body_sha": "e7559bba2f72", "dst": "tests.test_docs_truth.TestDocsTruth.test_missing_path_violation_and_existing_path_decoy", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 51, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth"}
 {"body_sha": "65ada926523f", "dst": "tests.test_docs_truth.TestDocsTruth.test_readme_and_agents_tell_the_truth", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 70, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth"}
@@ -285,6 +307,54 @@
 {"body_sha": "b2e0c63fe33e", "dst": "tests.test_reconstruct_decisions.TestReconstruction.test_false_quote_bad_section_and_dangling_reversal_are_refused", "file": "tests/test_reconstruct_decisions.py", "kind": "defines", "line": 78, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction"}
 {"body_sha": "14dcc372de69", "dst": "tests.test_reconstruct_decisions.TestReconstruction.test_hash_candidate_reversal_prefix_and_confirmation_list", "file": "tests/test_reconstruct_decisions.py", "kind": "defines", "line": 38, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction"}
 {"body_sha": "7bc739871da2", "dst": "tests.test_reconstruct_decisions.TestReconstruction.test_idempotence_and_changed_source_append_versions", "file": "tests/test_reconstruct_decisions.py", "kind": "defines", "line": 57, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction"}
+{"body_sha": "be9edb93520a", "dst": "tests.test_sources.ROOT", "file": "tests/test_sources.py", "kind": "defines", "line": 12, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "f3f28b67e4d8", "dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "defines", "line": 21, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "b70466249dba", "dst": "tests.test_sources.TestAnchorChecks", "file": "tests/test_sources.py", "kind": "defines", "line": 62, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "25f03e077fae", "dst": "tests.test_sources.TestDigestProvenance", "file": "tests/test_sources.py", "kind": "defines", "line": 409, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "2d6a759b575e", "dst": "tests.test_sources.TestLocatorShape", "file": "tests/test_sources.py", "kind": "defines", "line": 313, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "f57cc7e5e2e4", "dst": "tests.test_sources.TestSearchCharacterBound", "file": "tests/test_sources.py", "kind": "defines", "line": 321, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "0cc5fd364e9a", "dst": "tests.test_sources.TestShowCharacterBound", "file": "tests/test_sources.py", "kind": "defines", "line": 371, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "2a4edea11795", "dst": "tests.test_sources.TestSourceEdgeCases", "file": "tests/test_sources.py", "kind": "defines", "line": 270, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "32925c94a625", "dst": "tests.test_sources.TestSourceSearch", "file": "tests/test_sources.py", "kind": "defines", "line": 188, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "0f1ac74ec16f", "dst": "tests.test_sources.TestSourceShow", "file": "tests/test_sources.py", "kind": "defines", "line": 141, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "90e434c58442", "dst": "tests.test_sources.VALID", "file": "tests/test_sources.py", "kind": "defines", "line": 18, "resolved": true, "src": "tests.test_sources"}
+{"body_sha": "ad3a4e701c8c", "dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "defines", "line": 38, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"body_sha": "80687c03bc10", "dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "defines", "line": 52, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"body_sha": "a20f43cd0876", "dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "defines", "line": 45, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"body_sha": "c6a5a658b641", "dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "defines", "line": 42, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"body_sha": "9a34c85c1af4", "dst": "tests.test_sources.SourceFixture.save", "file": "tests/test_sources.py", "kind": "defines", "line": 48, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"body_sha": "94bb364269b0", "dst": "tests.test_sources.SourceFixture.setUp", "file": "tests/test_sources.py", "kind": "defines", "line": 22, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"body_sha": "b7da90b719de", "dst": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically", "file": "tests/test_sources.py", "kind": "defines", "line": 128, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"body_sha": "f4ca05d4f762", "dst": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy", "file": "tests/test_sources.py", "kind": "defines", "line": 63, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"body_sha": "d30de39c5a2d", "dst": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text", "file": "tests/test_sources.py", "kind": "defines", "line": 93, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"body_sha": "49b4448e1831", "dst": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root", "file": "tests/test_sources.py", "kind": "defines", "line": 107, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"body_sha": "1ce744376bb0", "dst": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy", "file": "tests/test_sources.py", "kind": "defines", "line": 79, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"body_sha": "c14e2bee2a94", "dst": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink", "file": "tests/test_sources.py", "kind": "defines", "line": 119, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"body_sha": "d3e679424f5d", "dst": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor", "file": "tests/test_sources.py", "kind": "defines", "line": 424, "resolved": true, "src": "tests.test_sources.TestDigestProvenance"}
+{"body_sha": "7e9b36269806", "dst": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels", "file": "tests/test_sources.py", "kind": "defines", "line": 410, "resolved": true, "src": "tests.test_sources.TestDigestProvenance"}
+{"body_sha": "b5b10106f9c8", "dst": "tests.test_sources.TestLocatorShape.test_quote_line_breaks_and_rooted_paths_are_malformed_with_clean_decoy", "file": "tests/test_sources.py", "kind": "defines", "line": 314, "resolved": true, "src": "tests.test_sources.TestLocatorShape"}
+{"body_sha": "4bc52c29cdc0", "dst": "tests.test_sources.TestSearchCharacterBound.long_line", "file": "tests/test_sources.py", "kind": "defines", "line": 322, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound"}
+{"body_sha": "22009bf1287b", "dst": "tests.test_sources.TestSearchCharacterBound.payload", "file": "tests/test_sources.py", "kind": "defines", "line": 329, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound"}
+{"body_sha": "0d03a67e13d8", "dst": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match", "file": "tests/test_sources.py", "kind": "defines", "line": 333, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound"}
+{"body_sha": "60f890788653", "dst": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy", "file": "tests/test_sources.py", "kind": "defines", "line": 356, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound"}
+{"body_sha": "da04af8d6050", "dst": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged", "file": "tests/test_sources.py", "kind": "defines", "line": 397, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound"}
+{"body_sha": "c76cd8becf87", "dst": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded", "file": "tests/test_sources.py", "kind": "defines", "line": 372, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound"}
+{"body_sha": "c688f03bb9a7", "dst": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing", "file": "tests/test_sources.py", "kind": "defines", "line": 271, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases"}
+{"body_sha": "c8825a364c7a", "dst": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute", "file": "tests/test_sources.py", "kind": "defines", "line": 279, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases"}
+{"body_sha": "2b1f6d1b35bc", "dst": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate", "file": "tests/test_sources.py", "kind": "defines", "line": 299, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases"}
+{"body_sha": "d5b2173168b2", "dst": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command", "file": "tests/test_sources.py", "kind": "defines", "line": 290, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases"}
+{"body_sha": "cfeb667d577e", "dst": "tests.test_sources.TestSourceSearch.hits", "file": "tests/test_sources.py", "kind": "defines", "line": 193, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "669a648441b1", "dst": "tests.test_sources.TestSourceSearch.search", "file": "tests/test_sources.py", "kind": "defines", "line": 189, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "6f11955c83f8", "dst": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection", "file": "tests/test_sources.py", "kind": "defines", "line": 222, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "d63033913c4d", "dst": "tests.test_sources.TestSourceSearch.test_search_cli_repeat_and_bad_arguments", "file": "tests/test_sources.py", "kind": "defines", "line": 256, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "0f4744cf01b2", "dst": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash", "file": "tests/test_sources.py", "kind": "defines", "line": 206, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "484d00e59d40", "dst": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes", "file": "tests/test_sources.py", "kind": "defines", "line": 232, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "4815f0124f27", "dst": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records", "file": "tests/test_sources.py", "kind": "defines", "line": 196, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"body_sha": "8555ad684173", "dst": "tests.test_sources.TestSourceShow.numbered", "file": "tests/test_sources.py", "kind": "defines", "line": 146, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
+{"body_sha": "363ce39f172d", "dst": "tests.test_sources.TestSourceShow.show", "file": "tests/test_sources.py", "kind": "defines", "line": 142, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
+{"body_sha": "3ea99e260d64", "dst": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage", "file": "tests/test_sources.py", "kind": "defines", "line": 157, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
+{"body_sha": "d6d73c5bd654", "dst": "tests.test_sources.TestSourceShow.test_exact_inclusive_range_context_and_quote_first_match", "file": "tests/test_sources.py", "kind": "defines", "line": 150, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
+{"body_sha": "b7f59f0412f5", "dst": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records", "file": "tests/test_sources.py", "kind": "defines", "line": 171, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
 {"body_sha": "55d1f523b384", "dst": "tests.test_stdlib_only.SRC", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 7, "resolved": true, "src": "tests.test_stdlib_only"}
 {"body_sha": "d9b91b50af27", "dst": "tests.test_stdlib_only.TestStdlibOnly", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 10, "resolved": true, "src": "tests.test_stdlib_only"}
 {"body_sha": "77ccb0ddc1dd", "dst": "tests.test_stdlib_only.TestStdlibOnly.test_imports", "file": "tests/test_stdlib_only.py", "kind": "defines", "line": 11, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly"}
@@ -298,22 +368,26 @@
 {"body_sha": "114308ac627b", "dst": "tools.reconstruct_decisions.main", "file": "tools/reconstruct_decisions.py", "kind": "defines", "line": 150, "resolved": true, "src": "tools.reconstruct_decisions"}
 {"body_sha": "213eaf316c89", "dst": "tools.reconstruct_decisions.reconstruct", "file": "tools/reconstruct_decisions.py", "kind": "defines", "line": 74, "resolved": true, "src": "tools.reconstruct_decisions"}
 {"body_sha": "a9739f8039cb", "dst": "tools.reconstruct_decisions.confirmation.<locals>.cell", "file": "tools/reconstruct_decisions.py", "kind": "defines", "line": 58, "resolved": true, "src": "tools.reconstruct_decisions.confirmation"}
-{"dst": "__future__.annotations", "file": "src/aec/__main__.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "argparse", "file": "src/aec/__main__.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "imports", "line": 16, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "json", "file": "src/aec/__main__.py", "kind": "imports", "line": 14, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "imports", "line": 17, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "src.aec.edges", "file": "src/aec/__main__.py", "kind": "imports", "line": 19, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "src.aec.impact.impact", "file": "src/aec/__main__.py", "kind": "imports", "line": 20, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "src.aec.impact.render", "file": "src/aec/__main__.py", "kind": "imports", "line": 20, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "src.aec.records.Store", "file": "src/aec/__main__.py", "kind": "imports", "line": 21, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "src.aec.records.check", "file": "src/aec/__main__.py", "kind": "imports", "line": 21, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "sys", "file": "src/aec/__main__.py", "kind": "imports", "line": 15, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "subprocess", "file": "src/aec/__main__.py", "kind": "imports", "line": 38, "resolved": true, "src": "src.aec.__main__._git_user"}
-{"dst": "src.aec.code_impact.code_impact", "file": "src/aec/__main__.py", "kind": "imports", "line": 134, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.init.init", "file": "src/aec/__main__.py", "kind": "imports", "line": 79, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.purpose_import.import_purpose", "file": "src/aec/__main__.py", "kind": "imports", "line": 88, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.purpose_import.render", "file": "src/aec/__main__.py", "kind": "imports", "line": 88, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "__future__.annotations", "file": "src/aec/__main__.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "argparse", "file": "src/aec/__main__.py", "kind": "imports", "line": 15, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "imports", "line": 18, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "json", "file": "src/aec/__main__.py", "kind": "imports", "line": 16, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "imports", "line": 19, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.edges", "file": "src/aec/__main__.py", "kind": "imports", "line": 21, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.impact.impact", "file": "src/aec/__main__.py", "kind": "imports", "line": 22, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.impact.render", "file": "src/aec/__main__.py", "kind": "imports", "line": 22, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.records.Store", "file": "src/aec/__main__.py", "kind": "imports", "line": 23, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "src.aec.records.check", "file": "src/aec/__main__.py", "kind": "imports", "line": 23, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "sys", "file": "src/aec/__main__.py", "kind": "imports", "line": 17, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "subprocess", "file": "src/aec/__main__.py", "kind": "imports", "line": 40, "resolved": true, "src": "src.aec.__main__._git_user"}
+{"dst": "src.aec.code_impact.code_impact", "file": "src/aec/__main__.py", "kind": "imports", "line": 181, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.init.init", "file": "src/aec/__main__.py", "kind": "imports", "line": 115, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.purpose_import.import_purpose", "file": "src/aec/__main__.py", "kind": "imports", "line": 124, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.purpose_import.render", "file": "src/aec/__main__.py", "kind": "imports", "line": 124, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.SourceContext", "file": "src/aec/__main__.py", "kind": "imports", "line": 99, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.render_search", "file": "src/aec/__main__.py", "kind": "imports", "line": 99, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.render_show", "file": "src/aec/__main__.py", "kind": "imports", "line": 99, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.render_status", "file": "src/aec/__main__.py", "kind": "imports", "line": 160, "resolved": true, "src": "src.aec.__main__.main"}
 {"dst": "__future__.annotations", "file": "src/aec/code_impact.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.code_impact"}
 {"dst": "src.aec.edges", "file": "src/aec/code_impact.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.code_impact"}
 {"dst": "src.aec.impact.ImpactReport", "file": "src/aec/code_impact.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.code_impact"}
@@ -354,6 +428,17 @@
 {"dst": "dataclasses.field", "file": "src/aec/records.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.records"}
 {"dst": "json", "file": "src/aec/records.py", "kind": "imports", "line": 7, "resolved": true, "src": "src.aec.records"}
 {"dst": "pathlib.Path", "file": "src/aec/records.py", "kind": "imports", "line": 9, "resolved": true, "src": "src.aec.records"}
+{"dst": "src.aec.sources.SourceContext", "file": "src/aec/records.py", "kind": "imports", "line": 139, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.record_findings", "file": "src/aec/records.py", "kind": "imports", "line": 139, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "__future__.annotations", "file": "src/aec/sources.py", "kind": "imports", "line": 6, "resolved": true, "src": "src.aec.sources"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/sources.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.sources"}
+{"dst": "hashlib", "file": "src/aec/sources.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.sources"}
+{"dst": "json", "file": "src/aec/sources.py", "kind": "imports", "line": 9, "resolved": true, "src": "src.aec.sources"}
+{"dst": "os", "file": "src/aec/sources.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.sources"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.sources"}
+{"dst": "pathlib.PureWindowsPath", "file": "src/aec/sources.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.sources"}
+{"dst": "re", "file": "src/aec/sources.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.sources"}
+{"dst": "src.aec.records.Finding", "file": "src/aec/sources.py", "kind": "imports", "line": 182, "resolved": true, "src": "src.aec.sources.record_findings"}
 {"dst": "ast", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 48, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
 {"dst": "json", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 49, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
 {"dst": "os", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "imports", "line": 50, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
@@ -401,6 +486,7 @@
 {"dst": "sys", "file": "tests/test_docs_truth.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_docs_truth"}
 {"dst": "unittest", "file": "tests/test_docs_truth.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_docs_truth"}
 {"dst": "unittest.mock.patch", "file": "tests/test_docs_truth.py", "kind": "imports", "line": 7, "resolved": true, "src": "tests.test_docs_truth"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "tests/test_docs_truth.py", "kind": "imports", "line": 78, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
 {"dst": "src.aec.__main__.main", "file": "tests/test_docs_truth.py", "kind": "imports", "line": 14, "resolved": true, "src": "tests.test_docs_truth.registered_commands"}
 {"dst": "json", "file": "tests/test_edges.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_edges"}
 {"dst": "pathlib.Path", "file": "tests/test_edges.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_edges"}
@@ -462,6 +548,36 @@
 {"dst": "sys", "file": "tests/test_reconstruct_decisions.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_reconstruct_decisions"}
 {"dst": "tempfile", "file": "tests/test_reconstruct_decisions.py", "kind": "imports", "line": 6, "resolved": true, "src": "tests.test_reconstruct_decisions"}
 {"dst": "unittest", "file": "tests/test_reconstruct_decisions.py", "kind": "imports", "line": 7, "resolved": true, "src": "tests.test_reconstruct_decisions"}
+{"dst": "contextlib.redirect_stderr", "file": "tests/test_sources.py", "kind": "imports", "line": 8, "resolved": true, "src": "tests.test_sources"}
+{"dst": "contextlib.redirect_stdout", "file": "tests/test_sources.py", "kind": "imports", "line": 8, "resolved": true, "src": "tests.test_sources"}
+{"dst": "hashlib", "file": "tests/test_sources.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_sources"}
+{"dst": "io", "file": "tests/test_sources.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_sources"}
+{"dst": "json", "file": "tests/test_sources.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_sources"}
+{"dst": "pathlib.Path", "file": "tests/test_sources.py", "kind": "imports", "line": 9, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.__main__.main", "file": "tests/test_sources.py", "kind": "imports", "line": 14, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.records.Record", "file": "tests/test_sources.py", "kind": "imports", "line": 15, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "imports", "line": 15, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.records.TYPES", "file": "tests/test_sources.py", "kind": "imports", "line": 15, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.records.check", "file": "tests/test_sources.py", "kind": "imports", "line": 15, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "imports", "line": 16, "resolved": true, "src": "tests.test_sources"}
+{"dst": "sys", "file": "tests/test_sources.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_sources"}
+{"dst": "tempfile", "file": "tests/test_sources.py", "kind": "imports", "line": 6, "resolved": true, "src": "tests.test_sources"}
+{"dst": "unittest", "file": "tests/test_sources.py", "kind": "imports", "line": 7, "resolved": true, "src": "tests.test_sources"}
+{"dst": "unittest.mock.patch", "file": "tests/test_sources.py", "kind": "imports", "line": 10, "resolved": true, "src": "tests.test_sources"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "imports", "line": 425, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "imports", "line": 411, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "re", "file": "tests/test_sources.py", "kind": "imports", "line": 342, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "imports", "line": 357, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "imports", "line": 398, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "imports", "line": 280, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "imports", "line": 300, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "imports", "line": 291, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "imports", "line": 190, "resolved": true, "src": "tests.test_sources.TestSourceSearch.search"}
+{"dst": "os", "file": "tests/test_sources.py", "kind": "imports", "line": 233, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "imports", "line": 242, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "imports", "line": 242, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "re", "file": "tests/test_sources.py", "kind": "imports", "line": 147, "resolved": true, "src": "tests.test_sources.TestSourceShow.numbered"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "imports", "line": 143, "resolved": true, "src": "tests.test_sources.TestSourceShow.show"}
 {"dst": "ast", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_stdlib_only"}
 {"dst": "pathlib.Path", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_stdlib_only"}
 {"dst": "sys", "file": "tests/test_stdlib_only.py", "kind": "imports", "line": 3, "resolved": true, "src": "tests.test_stdlib_only"}
@@ -483,6 +599,7 @@
 {"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 16, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 50, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
 {"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 69, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"dst": "unittest.TestCase", "file": "tests/test_docs_truth.py", "kind": "inherits", "line": 76, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth"}
 {"dst": "unittest.TestCase", "file": "tests/test_docs_truth.py", "kind": "inherits", "line": 50, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth"}
 {"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 49, "resolved": true, "src": "tests.test_edges.TestDeterminism"}
 {"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 63, "resolved": true, "src": "tests.test_edges.TestDiff"}
@@ -498,57 +615,80 @@
 {"dst": "unittest.TestCase", "file": "tests/test_init.py", "kind": "inherits", "line": 24, "resolved": true, "src": "tests.test_init.TestInit"}
 {"dst": "unittest.TestCase", "file": "tests/test_install.py", "kind": "inherits", "line": 13, "resolved": true, "src": "tests.test_install.TestInstall"}
 {"dst": "unittest.TestCase", "file": "tests/test_reconstruct_decisions.py", "kind": "inherits", "line": 15, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction"}
+{"dst": "unittest.TestCase", "file": "tests/test_sources.py", "kind": "inherits", "line": 21, "resolved": true, "src": "tests.test_sources.SourceFixture"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 62, "resolved": true, "src": "tests.test_sources.TestAnchorChecks"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 409, "resolved": true, "src": "tests.test_sources.TestDigestProvenance"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 313, "resolved": true, "src": "tests.test_sources.TestLocatorShape"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 321, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 371, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 270, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 188, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
+{"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 141, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
 {"dst": "unittest.TestCase", "file": "tests/test_stdlib_only.py", "kind": "inherits", "line": 10, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly"}
-{"dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "calls", "line": 144, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "sys.exit", "file": "src/aec/__main__.py", "kind": "calls", "line": 144, "resolved": true, "src": "src.aec.__main__"}
-{"dst": "?Path(...).read_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 25, "resolved": false, "src": "src.aec.__main__._changes"}
-{"dst": "?Path(...).read_text(...).splitlines", "file": "src/aec/__main__.py", "kind": "calls", "line": 25, "resolved": false, "src": "src.aec.__main__._changes"}
-{"dst": "?l.strip", "file": "src/aec/__main__.py", "kind": "calls", "line": 26, "resolved": false, "src": "src.aec.__main__._changes"}
-{"dst": "?l.strip(...).startswith", "file": "src/aec/__main__.py", "kind": "calls", "line": 26, "resolved": false, "src": "src.aec.__main__._changes"}
-{"dst": "json.loads", "file": "src/aec/__main__.py", "kind": "calls", "line": 25, "resolved": true, "src": "src.aec.__main__._changes"}
-{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "calls", "line": 25, "resolved": true, "src": "src.aec.__main__._changes"}
-{"dst": "?out.stdout.strip", "file": "src/aec/__main__.py", "kind": "calls", "line": 41, "resolved": false, "src": "src.aec.__main__._git_user"}
-{"dst": "subprocess.run", "file": "src/aec/__main__.py", "kind": "calls", "line": 40, "resolved": true, "src": "src.aec.__main__._git_user"}
-{"dst": "?rep.impacts.values", "file": "src/aec/__main__.py", "kind": "calls", "line": 31, "resolved": false, "src": "src.aec.__main__._print_impact"}
-{"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "calls", "line": 31, "resolved": true, "src": "src.aec.__main__._print_impact"}
-{"dst": "json.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 31, "resolved": true, "src": "src.aec.__main__._print_impact"}
-{"dst": "src.aec.impact.render", "file": "src/aec/__main__.py", "kind": "calls", "line": 34, "resolved": true, "src": "src.aec.__main__._print_impact"}
-{"dst": "?Path(...).parent.mkdir", "file": "src/aec/__main__.py", "kind": "calls", "line": 110, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?Path(...).write_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 111, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?ap.add_subparsers", "file": "src/aec/__main__.py", "kind": "calls", "line": 48, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?ap.parse_args", "file": "src/aec/__main__.py", "kind": "calls", "line": 76, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?binop.is_dir", "file": "src/aec/__main__.py", "kind": "calls", "line": 90, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?c.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 56, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?ci.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 63, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?constant.join", "file": "src/aec/__main__.py", "kind": "calls", "line": 85, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?e.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 50, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?f.level.upper", "file": "src/aec/__main__.py", "kind": "calls", "line": 126, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?i.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 59, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?ip.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 71, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?it.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 68, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?rep[...].splitlines", "file": "src/aec/__main__.py", "kind": "calls", "line": 85, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?root.is_dir", "file": "src/aec/__main__.py", "kind": "calls", "line": 104, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "?sub.add_parser", "file": "src/aec/__main__.py", "kind": "calls", "line": 49, "resolved": false, "src": "src.aec.__main__.main"}
-{"dst": "argparse.ArgumentParser", "file": "src/aec/__main__.py", "kind": "calls", "line": 47, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "json.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 101, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "calls", "line": 89, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "calls", "line": 131, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.__main__._git_user", "file": "src/aec/__main__.py", "kind": "calls", "line": 80, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 131, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.code_impact.code_impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 135, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.edges.diff", "file": "src/aec/__main__.py", "kind": "calls", "line": 100, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.edges.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 108, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.edges.legacy_csv", "file": "src/aec/__main__.py", "kind": "calls", "line": 118, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.edges.load", "file": "src/aec/__main__.py", "kind": "calls", "line": 94, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.edges.render_diff", "file": "src/aec/__main__.py", "kind": "calls", "line": 101, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.edges.snapshot", "file": "src/aec/__main__.py", "kind": "calls", "line": 94, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.impact.impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 131, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.init.init", "file": "src/aec/__main__.py", "kind": "calls", "line": 80, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.purpose_import.import_purpose", "file": "src/aec/__main__.py", "kind": "calls", "line": 93, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.purpose_import.render", "file": "src/aec/__main__.py", "kind": "calls", "line": 95, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.records.Store.load", "file": "src/aec/__main__.py", "kind": "calls", "line": 121, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "src.aec.records.check", "file": "src/aec/__main__.py", "kind": "calls", "line": 124, "resolved": true, "src": "src.aec.__main__.main"}
-{"dst": "sys.stdout.write", "file": "src/aec/__main__.py", "kind": "calls", "line": 116, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "calls", "line": 191, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "sys.exit", "file": "src/aec/__main__.py", "kind": "calls", "line": 191, "resolved": true, "src": "src.aec.__main__"}
+{"dst": "?Path(...).read_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 27, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "?Path(...).read_text(...).splitlines", "file": "src/aec/__main__.py", "kind": "calls", "line": 27, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "?l.strip", "file": "src/aec/__main__.py", "kind": "calls", "line": 28, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "?l.strip(...).startswith", "file": "src/aec/__main__.py", "kind": "calls", "line": 28, "resolved": false, "src": "src.aec.__main__._changes"}
+{"dst": "json.loads", "file": "src/aec/__main__.py", "kind": "calls", "line": 27, "resolved": true, "src": "src.aec.__main__._changes"}
+{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "calls", "line": 27, "resolved": true, "src": "src.aec.__main__._changes"}
+{"dst": "?out.stdout.strip", "file": "src/aec/__main__.py", "kind": "calls", "line": 43, "resolved": false, "src": "src.aec.__main__._git_user"}
+{"dst": "subprocess.run", "file": "src/aec/__main__.py", "kind": "calls", "line": 42, "resolved": true, "src": "src.aec.__main__._git_user"}
+{"dst": "?rep.impacts.values", "file": "src/aec/__main__.py", "kind": "calls", "line": 33, "resolved": false, "src": "src.aec.__main__._print_impact"}
+{"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "calls", "line": 33, "resolved": true, "src": "src.aec.__main__._print_impact"}
+{"dst": "json.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 33, "resolved": true, "src": "src.aec.__main__._print_impact"}
+{"dst": "src.aec.impact.render", "file": "src/aec/__main__.py", "kind": "calls", "line": 36, "resolved": true, "src": "src.aec.__main__._print_impact"}
+{"dst": "?Path(...).absolute", "file": "src/aec/__main__.py", "kind": "calls", "line": 161, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?Path(...).parent.mkdir", "file": "src/aec/__main__.py", "kind": "calls", "line": 146, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?Path(...).write_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 147, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ap.add_subparsers", "file": "src/aec/__main__.py", "kind": "calls", "line": 50, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ap.error", "file": "src/aec/__main__.py", "kind": "calls", "line": 111, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ap.parse_args", "file": "src/aec/__main__.py", "kind": "calls", "line": 96, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?binop.is_dir", "file": "src/aec/__main__.py", "kind": "calls", "line": 126, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?c.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 58, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ci.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 66, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?constant.join", "file": "src/aec/__main__.py", "kind": "calls", "line": 121, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?context.inspect_record", "file": "src/aec/__main__.py", "kind": "calls", "line": 169, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?e.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 52, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?f.level.upper", "file": "src/aec/__main__.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?i.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 62, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?ip.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 74, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?it.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 71, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?records.exists", "file": "src/aec/__main__.py", "kind": "calls", "line": 103, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?rep[...].splitlines", "file": "src/aec/__main__.py", "kind": "calls", "line": 121, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?root.is_dir", "file": "src/aec/__main__.py", "kind": "calls", "line": 140, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?search.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 89, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?show.add_argument", "file": "src/aec/__main__.py", "kind": "calls", "line": 82, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?source.add_subparsers", "file": "src/aec/__main__.py", "kind": "calls", "line": 80, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?source_sub.add_parser", "file": "src/aec/__main__.py", "kind": "calls", "line": 81, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "?sub.add_parser", "file": "src/aec/__main__.py", "kind": "calls", "line": 51, "resolved": false, "src": "src.aec.__main__.main"}
+{"dst": "argparse.ArgumentParser", "file": "src/aec/__main__.py", "kind": "calls", "line": 49, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "json.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 137, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "pathlib.Path", "file": "src/aec/__main__.py", "kind": "calls", "line": 100, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "pathlib.Path.cwd", "file": "src/aec/__main__.py", "kind": "calls", "line": 162, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "calls", "line": 178, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.__main__._git_user", "file": "src/aec/__main__.py", "kind": "calls", "line": 116, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.__main__._print_impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 178, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.code_impact.code_impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 182, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.diff", "file": "src/aec/__main__.py", "kind": "calls", "line": 136, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.dumps", "file": "src/aec/__main__.py", "kind": "calls", "line": 144, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.legacy_csv", "file": "src/aec/__main__.py", "kind": "calls", "line": 154, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.load", "file": "src/aec/__main__.py", "kind": "calls", "line": 130, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.render_diff", "file": "src/aec/__main__.py", "kind": "calls", "line": 137, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.edges.snapshot", "file": "src/aec/__main__.py", "kind": "calls", "line": 130, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.impact.impact", "file": "src/aec/__main__.py", "kind": "calls", "line": 178, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.init.init", "file": "src/aec/__main__.py", "kind": "calls", "line": 116, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.purpose_import.import_purpose", "file": "src/aec/__main__.py", "kind": "calls", "line": 129, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.purpose_import.render", "file": "src/aec/__main__.py", "kind": "calls", "line": 131, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.records.Store", "file": "src/aec/__main__.py", "kind": "calls", "line": 103, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.records.Store.load", "file": "src/aec/__main__.py", "kind": "calls", "line": 103, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.records.check", "file": "src/aec/__main__.py", "kind": "calls", "line": 165, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.SourceContext", "file": "src/aec/__main__.py", "kind": "calls", "line": 104, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.render_search", "file": "src/aec/__main__.py", "kind": "calls", "line": 108, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.render_show", "file": "src/aec/__main__.py", "kind": "calls", "line": 106, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "src.aec.sources.render_status", "file": "src/aec/__main__.py", "kind": "calls", "line": 171, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "sys.stdout.write", "file": "src/aec/__main__.py", "kind": "calls", "line": 152, "resolved": true, "src": "src.aec.__main__.main"}
 {"dst": "src.aec.code_impact.events_from_diff", "file": "src/aec/code_impact.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.code_impact.code_impact"}
 {"dst": "src.aec.code_impact.referenced_symbols", "file": "src/aec/code_impact.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.code_impact.code_impact"}
 {"dst": "src.aec.edges.diff", "file": "src/aec/code_impact.py", "kind": "calls", "line": 32, "resolved": true, "src": "src.aec.code_impact.code_impact"}
@@ -893,23 +1033,133 @@
 {"dst": "pathlib.Path", "file": "src/aec/records.py", "kind": "calls", "line": 66, "resolved": true, "src": "src.aec.records.Store.load"}
 {"dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "calls", "line": 72, "resolved": true, "src": "src.aec.records.Store.load"}
 {"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 78, "resolved": false, "src": "src.aec.records.Store.out_edges"}
-{"dst": "?constant.join", "file": "src/aec/records.py", "kind": "calls", "line": 163, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?constant.join", "file": "src/aec/records.py", "kind": "calls", "line": 170, "resolved": false, "src": "src.aec.records.check"}
 {"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 121, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?ev.get", "file": "src/aec/records.py", "kind": "calls", "line": 160, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?ev.get", "file": "src/aec/records.py", "kind": "calls", "line": 167, "resolved": false, "src": "src.aec.records.check"}
 {"dst": "?out.append", "file": "src/aec/records.py", "kind": "calls", "line": 116, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?r.get", "file": "src/aec/records.py", "kind": "calls", "line": 137, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?out.extend", "file": "src/aec/records.py", "kind": "calls", "line": 142, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?r.get", "file": "src/aec/records.py", "kind": "calls", "line": 136, "resolved": false, "src": "src.aec.records.check"}
 {"dst": "?seen.add", "file": "src/aec/records.py", "kind": "calls", "line": 117, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?store.governs", "file": "src/aec/records.py", "kind": "calls", "line": 137, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?store.in_edges", "file": "src/aec/records.py", "kind": "calls", "line": 146, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?store.latest.get", "file": "src/aec/records.py", "kind": "calls", "line": 158, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.governs", "file": "src/aec/records.py", "kind": "calls", "line": 144, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.in_edges", "file": "src/aec/records.py", "kind": "calls", "line": 153, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.latest.get", "file": "src/aec/records.py", "kind": "calls", "line": 165, "resolved": false, "src": "src.aec.records.check"}
 {"dst": "?to.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 124, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "pathlib.Path.cwd", "file": "src/aec/records.py", "kind": "calls", "line": 141, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "calls", "line": 116, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "calls", "line": 112, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "calls", "line": 130, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.SourceContext", "file": "src/aec/records.py", "kind": "calls", "line": 141, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.record_findings", "file": "src/aec/records.py", "kind": "calls", "line": 142, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "?edges[...].get", "file": "src/aec/records.py", "kind": "calls", "line": 100, "resolved": false, "src": "src.aec.records.defined_symbols"}
 {"dst": "?out.add", "file": "src/aec/records.py", "kind": "calls", "line": 103, "resolved": false, "src": "src.aec.records.defined_symbols"}
 {"dst": "?r.rpartition", "file": "src/aec/records.py", "kind": "calls", "line": 27, "resolved": false, "src": "src.aec.records.split_ref"}
 {"dst": "?v.isdigit", "file": "src/aec/records.py", "kind": "calls", "line": 28, "resolved": false, "src": "src.aec.records.split_ref"}
+{"dst": "dataclasses.dataclass", "file": "src/aec/sources.py", "kind": "calls", "line": 76, "resolved": true, "src": "src.aec.sources"}
+{"dst": "?Path(...).absolute", "file": "src/aec/sources.py", "kind": "calls", "line": 108, "resolved": false, "src": "src.aec.sources.SourceContext.__init__"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "calls", "line": 108, "resolved": true, "src": "src.aec.sources.SourceContext.__init__"}
+{"dst": "?anchor.get", "file": "src/aec/sources.py", "kind": "calls", "line": 168, "resolved": false, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "?anchor[...].lower", "file": "src/aec/sources.py", "kind": "calls", "line": 175, "resolved": false, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "src/aec/sources.py", "kind": "calls", "line": 175, "resolved": false, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "?raw.decode", "file": "src/aec/sources.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "?raw.decode(...).splitlines", "file": "src/aec/sources.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "?root.label", "file": "src/aec/sources.py", "kind": "calls", "line": 169, "resolved": false, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "hashlib.sha256", "file": "src/aec/sources.py", "kind": "calls", "line": 175, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "src.aec.sources.Inspection", "file": "src/aec/sources.py", "kind": "calls", "line": 167, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "src.aec.sources.SourceContext.read", "file": "src/aec/sources.py", "kind": "calls", "line": 170, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "src.aec.sources.SourceContext.root", "file": "src/aec/sources.py", "kind": "calls", "line": 168, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "src.aec.sources.anchor_errors", "file": "src/aec/sources.py", "kind": "calls", "line": 165, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "src.aec.sources.locate", "file": "src/aec/sources.py", "kind": "calls", "line": 174, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "?record.get", "file": "src/aec/sources.py", "kind": "calls", "line": 156, "resolved": false, "src": "src.aec.sources.SourceContext.inspect_record"}
+{"dst": "src.aec.sources.Inspection", "file": "src/aec/sources.py", "kind": "calls", "line": 158, "resolved": true, "src": "src.aec.sources.SourceContext.inspect_record"}
+{"dst": "src.aec.sources.SourceContext.inspect", "file": "src/aec/sources.py", "kind": "calls", "line": 160, "resolved": true, "src": "src.aec.sources.SourceContext.inspect_record"}
+{"dst": "?base.is_dir", "file": "src/aec/sources.py", "kind": "calls", "line": 142, "resolved": false, "src": "src.aec.sources.SourceContext.read"}
+{"dst": "?binop.resolve", "file": "src/aec/sources.py", "kind": "calls", "line": 144, "resolved": false, "src": "src.aec.sources.SourceContext.read"}
+{"dst": "?root.base.resolve", "file": "src/aec/sources.py", "kind": "calls", "line": 141, "resolved": false, "src": "src.aec.sources.SourceContext.read"}
+{"dst": "?target.is_file", "file": "src/aec/sources.py", "kind": "calls", "line": 147, "resolved": false, "src": "src.aec.sources.SourceContext.read"}
+{"dst": "?target.is_relative_to", "file": "src/aec/sources.py", "kind": "calls", "line": 145, "resolved": false, "src": "src.aec.sources.SourceContext.read"}
+{"dst": "?target.read_bytes", "file": "src/aec/sources.py", "kind": "calls", "line": 149, "resolved": false, "src": "src.aec.sources.SourceContext.read"}
+{"dst": "src.aec.sources.SourceContext.roots.get", "file": "src/aec/sources.py", "kind": "calls", "line": 135, "resolved": true, "src": "src.aec.sources.SourceContext.root"}
+{"dst": "src.aec.sources.SourceRoot", "file": "src/aec/sources.py", "kind": "calls", "line": 134, "resolved": true, "src": "src.aec.sources.SourceContext.root"}
+{"dst": "?Path(...).as_posix", "file": "src/aec/sources.py", "kind": "calls", "line": 128, "resolved": false, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "?config.exists", "file": "src/aec/sources.py", "kind": "calls", "line": 117, "resolved": false, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "?config.read_text", "file": "src/aec/sources.py", "kind": "calls", "line": 117, "resolved": false, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "?data.get", "file": "src/aec/sources.py", "kind": "calls", "line": 120, "resolved": false, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "?data[...].items", "file": "src/aec/sources.py", "kind": "calls", "line": 123, "resolved": false, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "?path.startswith", "file": "src/aec/sources.py", "kind": "calls", "line": 126, "resolved": false, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "json.loads", "file": "src/aec/sources.py", "kind": "calls", "line": 117, "resolved": true, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "calls", "line": 128, "resolved": true, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "src.aec.sources.SourceRoot", "file": "src/aec/sources.py", "kind": "calls", "line": 128, "resolved": true, "src": "src.aec.sources.SourceContext.roots"}
+{"dst": "?binop.as_posix", "file": "src/aec/sources.py", "kind": "calls", "line": 83, "resolved": false, "src": "src.aec.sources.SourceRoot.label"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "calls", "line": 83, "resolved": true, "src": "src.aec.sources.SourceRoot.label"}
+{"dst": "?Path(...).is_absolute", "file": "src/aec/sources.py", "kind": "calls", "line": 39, "resolved": false, "src": "src.aec.sources.anchor_errors"}
+{"dst": "?anchor.get", "file": "src/aec/sources.py", "kind": "calls", "line": 37, "resolved": false, "src": "src.aec.sources.anchor_errors"}
+{"dst": "?errors.append", "file": "src/aec/sources.py", "kind": "calls", "line": 41, "resolved": false, "src": "src.aec.sources.anchor_errors"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "calls", "line": 39, "resolved": true, "src": "src.aec.sources.anchor_errors"}
+{"dst": "pathlib.PureWindowsPath", "file": "src/aec/sources.py", "kind": "calls", "line": 39, "resolved": true, "src": "src.aec.sources.anchor_errors"}
+{"dst": "re.fullmatch", "file": "src/aec/sources.py", "kind": "calls", "line": 46, "resolved": true, "src": "src.aec.sources.anchor_errors"}
+{"dst": "src.aec.sources.parse_locator", "file": "src/aec/sources.py", "kind": "calls", "line": 50, "resolved": true, "src": "src.aec.sources.anchor_errors"}
+{"dst": "?anchor.get", "file": "src/aec/sources.py", "kind": "calls", "line": 242, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?anchor[...].lower", "file": "src/aec/sources.py", "kind": "calls", "line": 249, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?binop.resolve", "file": "src/aec/sources.py", "kind": "calls", "line": 247, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?path.is_relative_to", "file": "src/aec/sources.py", "kind": "calls", "line": 248, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?record.get", "file": "src/aec/sources.py", "kind": "calls", "line": 236, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?refs.setdefault", "file": "src/aec/sources.py", "kind": "calls", "line": 249, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?refs.setdefault(...).setdefault", "file": "src/aec/sources.py", "kind": "calls", "line": 249, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?refs.setdefault(...).setdefault(...).add", "file": "src/aec/sources.py", "kind": "calls", "line": 249, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?root.base.resolve", "file": "src/aec/sources.py", "kind": "calls", "line": 246, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "?sources.root", "file": "src/aec/sources.py", "kind": "calls", "line": 242, "resolved": false, "src": "src.aec.sources.anchored_files"}
+{"dst": "src.aec.sources.anchor_errors", "file": "src/aec/sources.py", "kind": "calls", "line": 240, "resolved": true, "src": "src.aec.sources.anchored_files"}
+{"dst": "src.aec.sources.parse_locator", "file": "src/aec/sources.py", "kind": "calls", "line": 68, "resolved": true, "src": "src.aec.sources.locate"}
+{"dst": "?locator.startswith", "file": "src/aec/sources.py", "kind": "calls", "line": 62, "resolved": false, "src": "src.aec.sources.parse_locator"}
+{"dst": "re.fullmatch", "file": "src/aec/sources.py", "kind": "calls", "line": 58, "resolved": true, "src": "src.aec.sources.parse_locator"}
+{"dst": "?context.inspect_record", "file": "src/aec/sources.py", "kind": "calls", "line": 184, "resolved": false, "src": "src.aec.sources.record_findings"}
+{"dst": "?out.append", "file": "src/aec/sources.py", "kind": "calls", "line": 186, "resolved": false, "src": "src.aec.sources.record_findings"}
+{"dst": "src.aec.records.Finding", "file": "src/aec/sources.py", "kind": "calls", "line": 186, "resolved": true, "src": "src.aec.sources.record_findings"}
+{"dst": "src.aec.sources.render_status", "file": "src/aec/sources.py", "kind": "calls", "line": 189, "resolved": true, "src": "src.aec.sources.record_findings"}
+{"dst": "?OUTPUT_TEMPLATES[...].format", "file": "src/aec/sources.py", "kind": "calls", "line": 330, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?base.is_dir", "file": "src/aec/sources.py", "kind": "calls", "line": 297, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?binop.is_symlink", "file": "src/aec/sources.py", "kind": "calls", "line": 305, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?binop.relative_to", "file": "src/aec/sources.py", "kind": "calls", "line": 307, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?binop.relative_to(...).as_posix", "file": "src/aec/sources.py", "kind": "calls", "line": 307, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?binop.resolve", "file": "src/aec/sources.py", "kind": "calls", "line": 314, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?compiled.search", "file": "src/aec/sources.py", "kind": "calls", "line": 320, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?constant.join", "file": "src/aec/sources.py", "kind": "calls", "line": 341, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "src/aec/sources.py", "kind": "calls", "line": 313, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?hits.append", "file": "src/aec/sources.py", "kind": "calls", "line": 327, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?hits.sort", "file": "src/aec/sources.py", "kind": "calls", "line": 328, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?line.find", "file": "src/aec/sources.py", "kind": "calls", "line": 323, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?linked.items", "file": "src/aec/sources.py", "kind": "calls", "line": 316, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?match.span", "file": "src/aec/sources.py", "kind": "calls", "line": 321, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?notes.append", "file": "src/aec/sources.py", "kind": "calls", "line": 300, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?out.append", "file": "src/aec/sources.py", "kind": "calls", "line": 332, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?out.extend", "file": "src/aec/sources.py", "kind": "calls", "line": 333, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?raw.decode", "file": "src/aec/sources.py", "kind": "calls", "line": 318, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?raw.decode(...).splitlines", "file": "src/aec/sources.py", "kind": "calls", "line": 318, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?refs.get", "file": "src/aec/sources.py", "kind": "calls", "line": 315, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?selected.base.resolve", "file": "src/aec/sources.py", "kind": "calls", "line": 296, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?selected.label", "file": "src/aec/sources.py", "kind": "calls", "line": 309, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?sources.read", "file": "src/aec/sources.py", "kind": "calls", "line": 308, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?sources.root", "file": "src/aec/sources.py", "kind": "calls", "line": 288, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "?sources.roots.values", "file": "src/aec/sources.py", "kind": "calls", "line": 286, "resolved": false, "src": "src.aec.sources.render_search"}
+{"dst": "hashlib.sha256", "file": "src/aec/sources.py", "kind": "calls", "line": 313, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "json.dumps", "file": "src/aec/sources.py", "kind": "calls", "line": 300, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "os.walk", "file": "src/aec/sources.py", "kind": "calls", "line": 304, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "calls", "line": 305, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "re.compile", "file": "src/aec/sources.py", "kind": "calls", "line": 282, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "src.aec.sources.anchored_files", "file": "src/aec/sources.py", "kind": "calls", "line": 292, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "src.aec.sources.search_excerpt", "file": "src/aec/sources.py", "kind": "calls", "line": 326, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "?OUTPUT_TEMPLATES[...].format", "file": "src/aec/sources.py", "kind": "calls", "line": 201, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "?constant.join", "file": "src/aec/sources.py", "kind": "calls", "line": 207, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "?item.locator.startswith", "file": "src/aec/sources.py", "kind": "calls", "line": 221, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "?line.find", "file": "src/aec/sources.py", "kind": "calls", "line": 223, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "?out.append", "file": "src/aec/sources.py", "kind": "calls", "line": 204, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "?sources.inspect_record", "file": "src/aec/sources.py", "kind": "calls", "line": 202, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "?store.by_ref.get", "file": "src/aec/sources.py", "kind": "calls", "line": 198, "resolved": false, "src": "src.aec.sources.render_show"}
+{"dst": "src.aec.sources.render_status", "file": "src/aec/sources.py", "kind": "calls", "line": 208, "resolved": true, "src": "src.aec.sources.render_show"}
+{"dst": "src.aec.sources.search_excerpt", "file": "src/aec/sources.py", "kind": "calls", "line": 225, "resolved": true, "src": "src.aec.sources.render_show"}
+{"dst": "?OUTPUT_TEMPLATES[...].format", "file": "src/aec/sources.py", "kind": "calls", "line": 101, "resolved": false, "src": "src.aec.sources.render_status"}
+{"dst": "json.dumps", "file": "src/aec/sources.py", "kind": "calls", "line": 102, "resolved": true, "src": "src.aec.sources.render_status"}
+{"dst": "?OUTPUT_TEMPLATES[...].format", "file": "src/aec/sources.py", "kind": "calls", "line": 265, "resolved": false, "src": "src.aec.sources.search_excerpt"}
 {"dst": "pathlib.Path", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 179, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
 {"dst": "src.core.tools.ast_dependency_extractor.app", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 211, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
 {"dst": "src.core.tools.ast_dependency_extractor.app.command", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "calls", "line": 166, "resolved": true, "src": "src.core.tools.ast_dependency_extractor"}
@@ -1112,7 +1362,13 @@
 {"dst": "?Path(...).resolve", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 9, "resolved": false, "src": "tests.test_docs_truth"}
 {"dst": "pathlib.Path", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 9, "resolved": true, "src": "tests.test_docs_truth"}
 {"dst": "sys.path.insert", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 10, "resolved": true, "src": "tests.test_docs_truth"}
-{"dst": "unittest.main", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 77, "resolved": true, "src": "tests.test_docs_truth"}
+{"dst": "unittest.main", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 87, "resolved": true, "src": "tests.test_docs_truth"}
+{"dst": "?constant.join", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 80, "resolved": false, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
+{"dst": "?forbidden.search", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 80, "resolved": false, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
+{"dst": "?self.assertIsNone", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 80, "resolved": false, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
+{"dst": "?self.assertIsNotNone", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 82, "resolved": false, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
+{"dst": "re.compile", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 79, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES.values", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 80, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
 {"dst": "?self.assertEqual", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_docs_truth.TestDocsTruth.test_examples_are_not_repository_artifacts"}
 {"dst": "?self.assertIn", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 68, "resolved": false, "src": "tests.test_docs_truth.TestDocsTruth.test_examples_are_not_repository_artifacts"}
 {"dst": "tests.test_docs_truth.doc_findings", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth.test_examples_are_not_repository_artifacts"}
@@ -1463,6 +1719,290 @@
 {"dst": "?self.source.write_text", "file": "tests/test_reconstruct_decisions.py", "kind": "calls", "line": 64, "resolved": false, "src": "tests.test_reconstruct_decisions.TestReconstruction.test_idempotence_and_changed_source_append_versions"}
 {"dst": "src.aec.records.Store.load", "file": "tests/test_reconstruct_decisions.py", "kind": "calls", "line": 67, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction.test_idempotence_and_changed_source_append_versions"}
 {"dst": "tests.test_reconstruct_decisions.TestReconstruction.run_", "file": "tests/test_reconstruct_decisions.py", "kind": "calls", "line": 58, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction.test_idempotence_and_changed_source_append_versions"}
+{"dst": "?Path(...).resolve", "file": "tests/test_sources.py", "kind": "calls", "line": 12, "resolved": false, "src": "tests.test_sources"}
+{"dst": "pathlib.Path", "file": "tests/test_sources.py", "kind": "calls", "line": 12, "resolved": true, "src": "tests.test_sources"}
+{"dst": "sys.path.insert", "file": "tests/test_sources.py", "kind": "calls", "line": 13, "resolved": true, "src": "tests.test_sources"}
+{"dst": "unittest.main", "file": "tests/test_sources.py", "kind": "calls", "line": 434, "resolved": true, "src": "tests.test_sources"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "tests/test_sources.py", "kind": "calls", "line": 39, "resolved": false, "src": "tests.test_sources.SourceFixture.anchor"}
+{"dst": "hashlib.sha256", "file": "tests/test_sources.py", "kind": "calls", "line": 39, "resolved": true, "src": "tests.test_sources.SourceFixture.anchor"}
+{"dst": "?err.getvalue", "file": "tests/test_sources.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_sources.SourceFixture.cli"}
+{"dst": "?out.getvalue", "file": "tests/test_sources.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_sources.SourceFixture.cli"}
+{"dst": "contextlib.redirect_stderr", "file": "tests/test_sources.py", "kind": "calls", "line": 54, "resolved": true, "src": "tests.test_sources.SourceFixture.cli"}
+{"dst": "contextlib.redirect_stdout", "file": "tests/test_sources.py", "kind": "calls", "line": 54, "resolved": true, "src": "tests.test_sources.SourceFixture.cli"}
+{"dst": "io.StringIO", "file": "tests/test_sources.py", "kind": "calls", "line": 53, "resolved": true, "src": "tests.test_sources.SourceFixture.cli"}
+{"dst": "src.aec.__main__.main", "file": "tests/test_sources.py", "kind": "calls", "line": 56, "resolved": true, "src": "tests.test_sources.SourceFixture.cli"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 46, "resolved": true, "src": "tests.test_sources.SourceFixture.findings"}
+{"dst": "src.aec.records.check", "file": "tests/test_sources.py", "kind": "calls", "line": 46, "resolved": true, "src": "tests.test_sources.SourceFixture.findings"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 46, "resolved": true, "src": "tests.test_sources.SourceFixture.findings"}
+{"dst": "src.aec.records.Record", "file": "tests/test_sources.py", "kind": "calls", "line": 43, "resolved": true, "src": "tests.test_sources.SourceFixture.record"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 43, "resolved": true, "src": "tests.test_sources.SourceFixture.record"}
+{"dst": "?constant.join", "file": "tests/test_sources.py", "kind": "calls", "line": 50, "resolved": false, "src": "tests.test_sources.SourceFixture.save"}
+{"dst": "?self.records.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 50, "resolved": false, "src": "tests.test_sources.SourceFixture.save"}
+{"dst": "json.dumps", "file": "tests/test_sources.py", "kind": "calls", "line": 50, "resolved": true, "src": "tests.test_sources.SourceFixture.save"}
+{"dst": "?binop.mkdir", "file": "tests/test_sources.py", "kind": "calls", "line": 28, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?binop.read_text", "file": "tests/test_sources.py", "kind": "calls", "line": 34, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?binop.write_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 30, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 32, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?self.addCleanup", "file": "tests/test_sources.py", "kind": "calls", "line": 24, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?self.corpus.mkdir", "file": "tests/test_sources.py", "kind": "calls", "line": 29, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?self.records.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 36, "resolved": false, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "json.dumps", "file": "tests/test_sources.py", "kind": "calls", "line": 33, "resolved": true, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "json.loads", "file": "tests/test_sources.py", "kind": "calls", "line": 34, "resolved": true, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "pathlib.Path", "file": "tests/test_sources.py", "kind": "calls", "line": 25, "resolved": true, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "tempfile.TemporaryDirectory", "file": "tests/test_sources.py", "kind": "calls", "line": 23, "resolved": true, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "?a.setdefault", "file": "tests/test_sources.py", "kind": "calls", "line": 131, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "?case.items", "file": "tests/test_sources.py", "kind": "calls", "line": 130, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 134, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 136, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "src.aec.records.Record", "file": "tests/test_sources.py", "kind": "calls", "line": 137, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 137, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "calls", "line": 133, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 132, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "tests.test_sources.SourceFixture.save", "file": "tests/test_sources.py", "kind": "calls", "line": 132, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_check_cli_findings_exit_zero_errors_fail_and_repeat_identically"}
+{"dst": "?anchor.setdefault", "file": "tests/test_sources.py", "kind": "calls", "line": 67, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "?case.items", "file": "tests/test_sources.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "?ctx.inspect_record", "file": "tests/test_sources.py", "kind": "calls", "line": 70, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 74, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "?self.assertIsNone", "file": "tests/test_sources.py", "kind": "calls", "line": 73, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "?self.subTest", "file": "tests/test_sources.py", "kind": "calls", "line": 65, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 71, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "src.aec.records.check", "file": "tests/test_sources.py", "kind": "calls", "line": 71, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 69, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 68, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_frozen_cases_and_clean_decoy"}
+{"dst": "?f.rule.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 97, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "?rec.get", "file": "tests/test_sources.py", "kind": "calls", "line": 99, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "?reloaded.get", "file": "tests/test_sources.py", "kind": "calls", "line": 105, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 97, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "?self.assertTrue", "file": "tests/test_sources.py", "kind": "calls", "line": 100, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "src.aec.records.Record", "file": "tests/test_sources.py", "kind": "calls", "line": 101, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_sources.py", "kind": "calls", "line": 104, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 95, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 97, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 95, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "tests.test_sources.SourceFixture.save", "file": "tests/test_sources.py", "kind": "calls", "line": 103, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "?binop.write_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 109, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "?data.replace", "file": "tests/test_sources.py", "kind": "calls", "line": 113, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "tests/test_sources.py", "kind": "calls", "line": 110, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 112, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 116, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "hashlib.sha256", "file": "tests/test_sources.py", "kind": "calls", "line": 110, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 110, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 112, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 112, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_raw_bytes_hash_and_default_repo_root"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 87, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "?self.assertTrue", "file": "tests/test_sources.py", "kind": "calls", "line": 85, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "?self.subTest", "file": "tests/test_sources.py", "kind": "calls", "line": 83, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "src.aec.records.Record", "file": "tests/test_sources.py", "kind": "calls", "line": 89, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 84, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 84, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 84, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_shape_violations_with_valid_anchor_decoy"}
+{"dst": "?binop.symlink_to", "file": "tests/test_sources.py", "kind": "calls", "line": 120, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 122, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 125, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 126, "resolved": false, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 121, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 121, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 121, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_unavailable_is_distinct_from_missing_and_external_symlink"}
+{"dst": "?line.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 428, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "?out.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 428, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "?self.anchor(...)[...].upper", "file": "tests/test_sources.py", "kind": "calls", "line": 426, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 429, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 427, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 427, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "calls", "line": 427, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 426, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 426, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_matching_digest_wins_for_record_with_both_versions_of_an_anchor"}
+{"dst": "?binop.read_text", "file": "tests/test_sources.py", "kind": "calls", "line": 412, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?fixture[...].split", "file": "tests/test_sources.py", "kind": "calls", "line": 414, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?line.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 418, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?out.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 418, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 422, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 419, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 421, "resolved": false, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "json.loads", "file": "tests/test_sources.py", "kind": "calls", "line": 412, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 417, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 417, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "calls", "line": 417, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 415, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 413, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 318, "resolved": false, "src": "tests.test_sources.TestLocatorShape.test_quote_line_breaks_and_rooted_paths_are_malformed_with_clean_decoy"}
+{"dst": "?self.assertTrue", "file": "tests/test_sources.py", "kind": "calls", "line": 316, "resolved": false, "src": "tests.test_sources.TestLocatorShape.test_quote_line_breaks_and_rooted_paths_are_malformed_with_clean_decoy"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 316, "resolved": true, "src": "tests.test_sources.TestLocatorShape.test_quote_line_breaks_and_rooted_paths_are_malformed_with_clean_decoy"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 316, "resolved": true, "src": "tests.test_sources.TestLocatorShape.test_quote_line_breaks_and_rooted_paths_are_malformed_with_clean_decoy"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 316, "resolved": true, "src": "tests.test_sources.TestLocatorShape.test_quote_line_breaks_and_rooted_paths_are_malformed_with_clean_decoy"}
+{"dst": "?binop.read_text", "file": "tests/test_sources.py", "kind": "calls", "line": 323, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.long_line"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 326, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.long_line"}
+{"dst": "?self.assertGreaterEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 325, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.long_line"}
+{"dst": "json.loads", "file": "tests/test_sources.py", "kind": "calls", "line": 323, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.long_line"}
+{"dst": "?hit.split", "file": "tests/test_sources.py", "kind": "calls", "line": 331, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.payload"}
+{"dst": "?line.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 330, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.payload"}
+{"dst": "?output.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 330, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.payload"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 337, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 340, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "?self.assertLessEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 339, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 341, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "?self.assertRegex", "file": "tests/test_sources.py", "kind": "calls", "line": 346, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "re.findall", "file": "tests/test_sources.py", "kind": "calls", "line": 343, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "re.sub", "file": "tests/test_sources.py", "kind": "calls", "line": 344, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "calls", "line": 336, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "tests.test_sources.TestSearchCharacterBound.long_line", "file": "tests/test_sources.py", "kind": "calls", "line": 334, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "tests.test_sources.TestSearchCharacterBound.payload", "file": "tests/test_sources.py", "kind": "calls", "line": 338, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_megabyte_line_default_and_cli_bounds_keep_first_match"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 361, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 366, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 364, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "?self.assertLessEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 363, "resolved": false, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 362, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 362, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "calls", "line": 362, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "tests.test_sources.TestSearchCharacterBound.payload", "file": "tests/test_sources.py", "kind": "calls", "line": 363, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.test_regex_edges_long_matches_and_short_line_decoy"}
+{"dst": "?binop.encode", "file": "tests/test_sources.py", "kind": "calls", "line": 399, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?binop.write_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 400, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "tests/test_sources.py", "kind": "calls", "line": 401, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?line.split", "file": "tests/test_sources.py", "kind": "calls", "line": 403, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?out.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 403, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 404, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?self.assertTrue", "file": "tests/test_sources.py", "kind": "calls", "line": 405, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "hashlib.sha256", "file": "tests/test_sources.py", "kind": "calls", "line": 401, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 402, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 402, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "calls", "line": 402, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 401, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 401, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_context_lines_bounded_and_short_line_decoy_unchanged"}
+{"dst": "?binop.encode", "file": "tests/test_sources.py", "kind": "calls", "line": 376, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?binop.read_text", "file": "tests/test_sources.py", "kind": "calls", "line": 373, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?binop.write_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 377, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "tests/test_sources.py", "kind": "calls", "line": 378, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?line.split", "file": "tests/test_sources.py", "kind": "calls", "line": 383, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?line.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 383, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?out.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 383, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?result[...].splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 390, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 382, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?self.assertGreater", "file": "tests/test_sources.py", "kind": "calls", "line": 375, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 385, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?self.assertLessEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 384, "resolved": false, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "hashlib.sha256", "file": "tests/test_sources.py", "kind": "calls", "line": 378, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "json.loads", "file": "tests/test_sources.py", "kind": "calls", "line": 373, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 378, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "calls", "line": 381, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 379, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "tests.test_sources.SourceFixture.save", "file": "tests/test_sources.py", "kind": "calls", "line": 379, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 272, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 273, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "json.dumps", "file": "tests/test_sources.py", "kind": "calls", "line": 272, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 273, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 273, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "tests.test_sources.SourceFixture.save", "file": "tests/test_sources.py", "kind": "calls", "line": 274, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "unittest.mock.patch.object", "file": "tests/test_sources.py", "kind": "calls", "line": 275, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "?ctx.inspect_record", "file": "tests/test_sources.py", "kind": "calls", "line": 283, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 283, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 285, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 287, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 284, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 282, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "calls", "line": 284, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 281, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "tests.test_sources.SourceFixture.findings", "file": "tests/test_sources.py", "kind": "calls", "line": 288, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 281, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_mismatch_precedence_and_show_no_invalid_substitute"}
+{"dst": "?line.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 305, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "?out.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 305, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 309, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 306, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "?self.records.unlink", "file": "tests/test_sources.py", "kind": "calls", "line": 307, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 304, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 304, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "calls", "line": 304, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "calls", "line": 308, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 301, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_search_records_all_versions_and_missing_default_records_is_not_a_gate"}
+{"dst": "?SourceContext(...).inspect_record", "file": "tests/test_sources.py", "kind": "calls", "line": 297, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 295, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 294, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 296, "resolved": false, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 294, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "src.aec.records.check", "file": "tests/test_sources.py", "kind": "calls", "line": 294, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 293, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "calls", "line": 296, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 292, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_snapshot_reads_are_reused_within_one_command"}
+{"dst": "?line.startswith", "file": "tests/test_sources.py", "kind": "calls", "line": 194, "resolved": false, "src": "tests.test_sources.TestSourceSearch.hits"}
+{"dst": "?out.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 194, "resolved": false, "src": "tests.test_sources.TestSourceSearch.hits"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 191, "resolved": true, "src": "tests.test_sources.TestSourceSearch.search"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 191, "resolved": true, "src": "tests.test_sources.TestSourceSearch.search"}
+{"dst": "src.aec.sources.render_search", "file": "tests/test_sources.py", "kind": "calls", "line": 191, "resolved": true, "src": "tests.test_sources.TestSourceSearch.search"}
+{"dst": "?binop.unlink", "file": "tests/test_sources.py", "kind": "calls", "line": 229, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 223, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 224, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 226, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "?self.assertRaises", "file": "tests/test_sources.py", "kind": "calls", "line": 227, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "tests.test_sources.TestSourceSearch.hits", "file": "tests/test_sources.py", "kind": "calls", "line": 224, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "tests.test_sources.TestSourceSearch.search", "file": "tests/test_sources.py", "kind": "calls", "line": 224, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_only_configured_roots_and_explicit_implicit_repo_selection"}
+{"dst": "?binop.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 266, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_search_cli_repeat_and_bad_arguments"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 259, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_search_cli_repeat_and_bad_arguments"}
+{"dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "calls", "line": 258, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_search_cli_repeat_and_bad_arguments"}
+{"dst": "tests.test_sources.TestSourceSearch.hits", "file": "tests/test_sources.py", "kind": "calls", "line": 261, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_search_cli_repeat_and_bad_arguments"}
+{"dst": "?binop.read_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 216, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "tests/test_sources.py", "kind": "calls", "line": 216, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 209, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 212, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "hashlib.sha256", "file": "tests/test_sources.py", "kind": "calls", "line": 216, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 207, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 207, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 207, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "tests.test_sources.TestSourceSearch.hits", "file": "tests/test_sources.py", "kind": "calls", "line": 210, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "tests.test_sources.TestSourceSearch.search", "file": "tests/test_sources.py", "kind": "calls", "line": 208, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_stable_path_then_line_order_limit_omissions_and_current_hash"}
+{"dst": "?before.items", "file": "tests/test_sources.py", "kind": "calls", "line": 254, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?binop.symlink_to", "file": "tests/test_sources.py", "kind": "calls", "line": 237, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?external.write_text", "file": "tests/test_sources.py", "kind": "calls", "line": 236, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?p.is_file", "file": "tests/test_sources.py", "kind": "calls", "line": 234, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?p.read_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 234, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 248, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 253, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?self.assertTrue", "file": "tests/test_sources.py", "kind": "calls", "line": 249, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?self.base.rglob", "file": "tests/test_sources.py", "kind": "calls", "line": 234, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "os.mkfifo", "file": "tests/test_sources.py", "kind": "calls", "line": 241, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 252, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "src.aec.records.check", "file": "tests/test_sources.py", "kind": "calls", "line": 252, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 251, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "calls", "line": 253, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 250, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "tests.test_sources.TestSourceSearch.hits", "file": "tests/test_sources.py", "kind": "calls", "line": 248, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "tests.test_sources.TestSourceSearch.search", "file": "tests/test_sources.py", "kind": "calls", "line": 248, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "unittest.mock.patch", "file": "tests/test_sources.py", "kind": "calls", "line": 243, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "unittest.mock.patch.object", "file": "tests/test_sources.py", "kind": "calls", "line": 246, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
+{"dst": "?binop.read_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 202, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "?hashlib.sha256(...).hexdigest", "file": "tests/test_sources.py", "kind": "calls", "line": 202, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 198, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 199, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 203, "resolved": false, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "hashlib.sha256", "file": "tests/test_sources.py", "kind": "calls", "line": 202, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "tests.test_sources.TestSourceSearch.hits", "file": "tests/test_sources.py", "kind": "calls", "line": 198, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "tests.test_sources.TestSourceSearch.search", "file": "tests/test_sources.py", "kind": "calls", "line": 197, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_unindexed_fact_is_recovered_without_any_records"}
+{"dst": "?output.splitlines", "file": "tests/test_sources.py", "kind": "calls", "line": 148, "resolved": false, "src": "tests.test_sources.TestSourceShow.numbered"}
+{"dst": "re.fullmatch", "file": "tests/test_sources.py", "kind": "calls", "line": 148, "resolved": true, "src": "tests.test_sources.TestSourceShow.numbered"}
+{"dst": "src.aec.records.Store", "file": "tests/test_sources.py", "kind": "calls", "line": 144, "resolved": true, "src": "tests.test_sources.TestSourceShow.show"}
+{"dst": "src.aec.sources.SourceContext", "file": "tests/test_sources.py", "kind": "calls", "line": 144, "resolved": true, "src": "tests.test_sources.TestSourceShow.show"}
+{"dst": "src.aec.sources.render_show", "file": "tests/test_sources.py", "kind": "calls", "line": 144, "resolved": true, "src": "tests.test_sources.TestSourceShow.show"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 144, "resolved": true, "src": "tests.test_sources.TestSourceShow.show"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 144, "resolved": true, "src": "tests.test_sources.TestSourceShow.show"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 159, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 160, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "?self.assertNotIn", "file": "tests/test_sources.py", "kind": "calls", "line": 169, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "?self.assertTrue", "file": "tests/test_sources.py", "kind": "calls", "line": 164, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 158, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "tests.test_sources.TestSourceShow.numbered", "file": "tests/test_sources.py", "kind": "calls", "line": 159, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "tests.test_sources.TestSourceShow.show", "file": "tests/test_sources.py", "kind": "calls", "line": 158, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_bound_and_warnings_without_substitute_passage"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 151, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_exact_inclusive_range_context_and_quote_first_match"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 154, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_exact_inclusive_range_context_and_quote_first_match"}
+{"dst": "tests.test_sources.SourceFixture.anchor", "file": "tests/test_sources.py", "kind": "calls", "line": 153, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_exact_inclusive_range_context_and_quote_first_match"}
+{"dst": "tests.test_sources.TestSourceShow.numbered", "file": "tests/test_sources.py", "kind": "calls", "line": 151, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_exact_inclusive_range_context_and_quote_first_match"}
+{"dst": "tests.test_sources.TestSourceShow.show", "file": "tests/test_sources.py", "kind": "calls", "line": 151, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_exact_inclusive_range_context_and_quote_first_match"}
+{"dst": "?other.write_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 183, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "?self.assertEqual", "file": "tests/test_sources.py", "kind": "calls", "line": 175, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "?self.assertIn", "file": "tests/test_sources.py", "kind": "calls", "line": 178, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "?self.records.read_bytes", "file": "tests/test_sources.py", "kind": "calls", "line": 183, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "?self.records.unlink", "file": "tests/test_sources.py", "kind": "calls", "line": 184, "resolved": false, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "tests.test_sources.SourceFixture.cli", "file": "tests/test_sources.py", "kind": "calls", "line": 174, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "tests.test_sources.SourceFixture.record", "file": "tests/test_sources.py", "kind": "calls", "line": 172, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "tests.test_sources.SourceFixture.save", "file": "tests/test_sources.py", "kind": "calls", "line": 172, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
+{"dst": "tests.test_sources.TestSourceShow.numbered", "file": "tests/test_sources.py", "kind": "calls", "line": 177, "resolved": true, "src": "tests.test_sources.TestSourceShow.test_show_cli_repeat_limits_unknown_ref_and_alternate_records"}
 {"dst": "?Path(...).resolve", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 7, "resolved": false, "src": "tests.test_stdlib_only"}
 {"dst": "pathlib.Path", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 7, "resolved": true, "src": "tests.test_stdlib_only"}
 {"dst": "unittest.main", "file": "tests/test_stdlib_only.py", "kind": "calls", "line": 32, "resolved": true, "src": "tests.test_stdlib_only"}
@@ -1540,8 +2080,8 @@
 {"dst": "tools.reconstruct_decisions._section", "file": "tools/reconstruct_decisions.py", "kind": "calls", "line": 98, "resolved": true, "src": "tools.reconstruct_decisions.reconstruct"}
 {"dst": "tools.reconstruct_decisions._store", "file": "tools/reconstruct_decisions.py", "kind": "calls", "line": 80, "resolved": true, "src": "tools.reconstruct_decisions.reconstruct"}
 {"dst": "tools.reconstruct_decisions.confirmation", "file": "tools/reconstruct_decisions.py", "kind": "calls", "line": 134, "resolved": true, "src": "tools.reconstruct_decisions.reconstruct"}
-{"dst": "subprocess.SubprocessError", "file": "src/aec/__main__.py", "kind": "references", "line": 42, "resolved": true, "src": "src.aec.__main__._git_user"}
-{"dst": "sys.stderr", "file": "src/aec/__main__.py", "kind": "references", "line": 91, "resolved": true, "src": "src.aec.__main__.main"}
+{"dst": "subprocess.SubprocessError", "file": "src/aec/__main__.py", "kind": "references", "line": 44, "resolved": true, "src": "src.aec.__main__._git_user"}
+{"dst": "sys.stderr", "file": "src/aec/__main__.py", "kind": "references", "line": 127, "resolved": true, "src": "src.aec.__main__.main"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "references", "line": 33, "resolved": true, "src": "src.aec.code_impact.code_impact"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "references", "line": 24, "resolved": true, "src": "src.aec.code_impact.events_from_diff"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/code_impact.py", "kind": "references", "line": 16, "resolved": true, "src": "src.aec.code_impact.referenced_symbols"}
@@ -1603,13 +2143,20 @@
 {"dst": "dataclasses.dataclass", "file": "src/aec/records.py", "kind": "references", "line": 33, "resolved": true, "src": "src.aec.records"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 45, "resolved": true, "src": "src.aec.records.Record.ref"}
 {"dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "references", "line": 56, "resolved": true, "src": "src.aec.records.Store.__init__"}
-{"dst": "src.aec.records.CLAIM_CATEGORIES", "file": "src/aec/records.py", "kind": "references", "line": 156, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.CLAIM_CATEGORIES", "file": "src/aec/records.py", "kind": "references", "line": 163, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 124, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.EVIDENCE_KINDS", "file": "src/aec/records.py", "kind": "references", "line": 154, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.EVIDENCE_KINDS", "file": "src/aec/records.py", "kind": "references", "line": 161, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "references", "line": 111, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.RELATIONS", "file": "src/aec/records.py", "kind": "references", "line": 121, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "references", "line": 143, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "references", "line": 150, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "references", "line": 118, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "references", "line": 178, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
+{"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "references", "line": 79, "resolved": true, "src": "src.aec.sources.SourceRoot"}
+{"dst": "re.error", "file": "src/aec/sources.py", "kind": "references", "line": 283, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "references", "line": 330, "resolved": true, "src": "src.aec.sources.render_search"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "references", "line": 201, "resolved": true, "src": "src.aec.sources.render_show"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "references", "line": 101, "resolved": true, "src": "src.aec.sources.render_status"}
+{"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "references", "line": 265, "resolved": true, "src": "src.aec.sources.search_excerpt"}
 {"dst": "typing.Dict", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 63, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__"}
 {"dst": "typing.List", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 65, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__"}
 {"dst": "typing.Tuple", "file": "src/core/tools/ast_dependency_extractor.py", "kind": "references", "line": 63, "resolved": true, "src": "src.core.tools.ast_dependency_extractor.ASTDependencyExtractor.__init__"}
@@ -1634,6 +2181,7 @@
 {"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
 {"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
 {"dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "references", "line": 10, "resolved": true, "src": "tests.test_docs_truth"}
+{"dst": "re.I", "file": "tests/test_docs_truth.py", "kind": "references", "line": 79, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
 {"dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "references", "line": 66, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth.test_examples_are_not_repository_artifacts"}
 {"dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "references", "line": 52, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth.test_missing_path_violation_and_existing_path_decoy"}
 {"dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "references", "line": 73, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth.test_readme_and_agents_tell_the_truth"}
@@ -1672,6 +2220,16 @@
 {"dst": "tests.test_install.ROOT", "file": "tests/test_install.py", "kind": "references", "line": 18, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
 {"dst": "tests.test_reconstruct_decisions.ROOT", "file": "tests/test_reconstruct_decisions.py", "kind": "references", "line": 11, "resolved": true, "src": "tests.test_reconstruct_decisions"}
 {"dst": "tests.test_reconstruct_decisions.ROOT", "file": "tests/test_reconstruct_decisions.py", "kind": "references", "line": 30, "resolved": true, "src": "tests.test_reconstruct_decisions.TestReconstruction.setUp"}
+{"dst": "tests.test_sources.ROOT", "file": "tests/test_sources.py", "kind": "references", "line": 13, "resolved": true, "src": "tests.test_sources"}
+{"dst": "tests.test_sources.VALID", "file": "tests/test_sources.py", "kind": "references", "line": 39, "resolved": true, "src": "tests.test_sources.SourceFixture.anchor"}
+{"dst": "tests.test_sources.ROOT", "file": "tests/test_sources.py", "kind": "references", "line": 34, "resolved": true, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "tests.test_sources.VALID", "file": "tests/test_sources.py", "kind": "references", "line": 30, "resolved": true, "src": "tests.test_sources.SourceFixture.setUp"}
+{"dst": "src.aec.records.TYPES", "file": "tests/test_sources.py", "kind": "references", "line": 94, "resolved": true, "src": "tests.test_sources.TestAnchorChecks.test_rationale_and_all_record_types_preserve_text"}
+{"dst": "tests.test_sources.ROOT", "file": "tests/test_sources.py", "kind": "references", "line": 412, "resolved": true, "src": "tests.test_sources.TestDigestProvenance.test_same_path_matching_and_stale_digests_have_separate_labels"}
+{"dst": "tests.test_sources.ROOT", "file": "tests/test_sources.py", "kind": "references", "line": 323, "resolved": true, "src": "tests.test_sources.TestSearchCharacterBound.long_line"}
+{"dst": "tests.test_sources.ROOT", "file": "tests/test_sources.py", "kind": "references", "line": 373, "resolved": true, "src": "tests.test_sources.TestShowCharacterBound.test_single_megabyte_line_and_quote_focus_are_bounded"}
+{"dst": "pathlib.Path", "file": "tests/test_sources.py", "kind": "references", "line": 275, "resolved": true, "src": "tests.test_sources.TestSourceEdgeCases.test_absolute_root_and_permission_failure_do_not_become_missing"}
+{"dst": "pathlib.Path", "file": "tests/test_sources.py", "kind": "references", "line": 246, "resolved": true, "src": "tests.test_sources.TestSourceSearch.test_symlink_escape_no_execution_network_or_writes"}
 {"dst": "ast.Import", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 16, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
 {"dst": "ast.ImportFrom", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 18, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}
 {"dst": "sys.stdlib_module_names", "file": "tests/test_stdlib_only.py", "kind": "references", "line": 12, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly.test_imports"}

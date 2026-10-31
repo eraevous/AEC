@@ -1,0 +1,6 @@
+{
+  "matching_ref": "current@1",
+  "path_only_ref": "earlier@1",
+  "stale_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "term": "needle"
+}

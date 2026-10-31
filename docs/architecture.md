@@ -126,6 +126,7 @@ WP1–WP5 are approved as direction and work-package order. Each still requires 
 | WP | Content | Status |
 |---|---|---|
 | **WP0** | AEC reconciled with itself: importer repairs (singular field, structured fields, no silent truncation, heading variants); `AGENTS.md`, `CHARTER.md` and the constitution reconciled, and the `VISION.md` reference resolved; Oct 26–28 history imported as *candidate*, source-linked records, with a list of what Zach must confirm; evaluation criteria designed now (`docs/failure-modes.md`); a cold-agent usability check | **implemented; review fixes applied, awaiting Zach’s merge**: `specs/003-self-reconciliation/`. Claude’s technical review and Kate’s purpose review are complete; reconstructed history remains proposed, with confirmation separate from merging WP0 |
+| **WP-S** | Source anchors/rationale; raw-byte integrity and locator observations; bounded record-directed retrieval and direct configured-root fallback | **implemented, pending review**: `specs/004-source-anchors/`; meaning, authority, private providers and representation-002 remain outside this implementation |
 | WP1A | commit-addressed snapshots and structural diffs (merge-base vs head), basic reachability, fan-in and fan-out, a CI report as an artifact (no PR comments yet) | after WP0 |
 | WP2A | minimal `aec context <symbol>` and `--change` | right after WP1A |
 | WP1B | historical analytics: SCC per projection, temporal deltas, churn, co-change, boundary changes | alongside WP2 expansion |

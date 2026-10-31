@@ -73,5 +73,15 @@ class TestDocsTruth(unittest.TestCase):
                 self.assertEqual(doc_findings((ROOT / name).read_text(), ROOT, registered_commands()), [])
 
 
+class TestAnchorOutputTruth(unittest.TestCase):
+    def test_output_templates_make_only_integrity_observations(self):
+        from aec.sources import OUTPUT_TEMPLATES
+        forbidden = re.compile(r'\bsupports\b|\bverifies the claim\b|\bproves\b|\bauthorized\b',re.I)
+        self.assertIsNone(forbidden.search('\n'.join(OUTPUT_TEMPLATES.values())))
+        # Violation: the same check catches overclaiming; neutral source-state text is the decoy.
+        self.assertIsNotNone(forbidden.search('This anchor proves the claim.'))
+        self.assertIsNone(forbidden.search('artifact bytes and locator match'))
+
+
 if __name__ == '__main__':
     unittest.main()

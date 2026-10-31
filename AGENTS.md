@@ -54,6 +54,12 @@ Run from the repository root with PYTHONPATH=src:
 | `python -m aec code-impact` | Derive code change events from snapshots and report affected conclusions |
 | `python -m aec init` | Scaffold absent AEC files and snippets; never overwrite |
 | `python -m aec import-purpose` | Import declared contracts as provisional, source-linked claims |
+| `python -m aec source` | Show anchored passages or search local configured roots directly |
+
+Source check/show/search are offline and read-only. Anchors/rationale live in
+Record.data. Filesystem anchor states are warnings; malformed anchor shapes are
+errors. Integrity and locator matches do not establish meaning or consent. See
+`specs/004-source-anchors/` and `README.md` for root/limit details.
 
 Use --help for required arguments. Record checks do not establish evidence quality
 or semantic adequacy. AST calls through local objects/dynamic access can remain
@@ -76,7 +82,7 @@ dependencies available to pip. See `docs/speckit-log.md` for setup and actual co
 
 ## Built, partial and planned
 
-Built: the six commands above, structured purpose import, provenance-linked
+Built: the seven commands above, offline source integrity/retrieval, structured purpose import, provenance-linked
 candidate history and doc-truth checks. Partial: semantic reconciliation (declared
 fields and caller comparisons only), evidence adequacy/applicability (narrow
 rules only). Planned: commit-addressed snapshots, topology analytics, context
