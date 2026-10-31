@@ -29,9 +29,10 @@ decision-maker for that subject may accept a commitment.
 | Commit-addressed snapshots and topology/co-change analytics | planned | WP1A/WP1B |
 | Context delivery, reconciliation packets and automatic drift triggers | planned | WP2A/WP3 |
 | Handoff premise checks and comparative evaluation | planned | WP4/WP5 |
+| Adaptive, purpose-aware project reporting profiles | backlog proposal | WP6: project-specific baseline and interpretive reports, provenance, profile reconciliation; [issue #15](https://github.com/eraevous/AEC/issues/15) |
 
 See `docs/architecture.md` for the direction **approved by Zach on 29 October 2026**,
-and `docs/failure-modes.md` for evaluation design. WP1–WP5 are approved as direction;
+and `docs/failure-modes.md` for evaluation design. WP6 is separately tracked as a 2026-10-30 backlog addition, not yet specified or implemented. WP1–WP5 are approved as direction;
 each still needs its own spec and PR. Approval does not establish that planned
 features are built or that AEC improves owner outcomes. A passing record check
 establishes formal consistency only, not the truth, adequacy or independence of
