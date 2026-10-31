@@ -105,7 +105,7 @@ def defined_symbols(edges: dict) -> set[str]:
     return out
 
 
-def check(store: Store, edges: dict | None = None) -> list[Finding]:
+def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Finding]:
     """Deterministic cross-record checks. They say nothing about whether evidence is *good*.
     With an edge snapshot, `code:` references must name a symbol the snapshot defines."""
     out: list[Finding] = []
@@ -133,6 +133,13 @@ def check(store: Store, edges: dict | None = None) -> list[Finding]:
                 continue
             if to not in store.by_ref:
                 out.append(Finding("error", "reference", r.ref, f"{e.get('rel')} -> {to} does not resolve"))
+        if "rationale" in r.data and not isinstance(r.get("rationale"), str):
+            out.append(Finding("error", "rationale-shape", r.ref, "rationale must be a string"))
+        if "anchors" in r.data:
+            from .sources import SourceContext, record_findings
+            if sources is None:
+                sources = SourceContext(Path.cwd())
+            out.extend(record_findings(r, sources))
         # rule 1: accepted decisions need a governing authority
         if r.type == "decision" and r.get("status") == "accepted" and not store.governs(r.get("decided_by"), r.subject):
             out.append(Finding("error", "authority", r.ref,

@@ -155,3 +155,20 @@ recorded in the intent note rather than claimed as a pristine cold run.
   comparison. Useful findings: missing singular links, lost structured fields,
   ingestion truncation and inherited operating-rule drift; no assertion these
   would be missed by a careful ordinary review.
+
+## Feature 004: source anchors and retrieval (WP-S, 2026-10-30)
+
+Codex implements frozen spec 004 at 1afec55 after HO-20261030-001 and its network
+clarification (git operations allowed; AEC source commands stay offline).
+Plan/tasks preceded implementation. Tests-first coverage reproduces all P8/locator/
+root fixtures plus clean decoys, bounded retrieval, direct unindexed-fact search,
+current-digest associations, root confinement, no network/execution/writes, and
+repeatable CLI output. Synthetic sources are generated in temporary directories;
+no corpus is copied into the repository. Runtime is standard library only.
+
+101 tests pass without skips, including packaging and pinned Spec Kit v1.2.3
+install/remove. No Spec Kit agent analyze/converge workflow or comparative-outcome
+evaluation was run; structural conformance does not establish owner benefit.
+Code/record checks, final snapshot and measured cost are recorded in the dated
+WP-S intent note. Propagation, existing record lines and frozen spec are unchanged.
+Source-state observations remain separate from semantic/authority judgments.

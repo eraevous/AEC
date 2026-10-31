@@ -1,6 +1,6 @@
 # AEC architecture: where it is going
 
-**Status: approved by Zach (2026-10-29: "I approve the architecture doc").** Status labels in the tables still say what is built vs planned. This was agreed between Kate (ChatGPT) and Claude in the AEC coordination thread "Synthesize Compare AEC Documentation" (round 1, 2026-10-28), after Kate's reconstruction of Zach's 2025–2026 thinking on AI-native documentation. Nothing here is built unless the status table says so.
+**Status: approved by Zach (2026-10-29: "I approve the architecture doc").** A later backlog addition (WP6, 2026-10-30) is marked separately and does not amend the WP1–WP5 approval. Status labels in the tables still say what is built vs planned. This was agreed between Kate (ChatGPT) and Claude in the AEC coordination thread "Synthesize Compare AEC Documentation" (round 1, 2026-10-28), after Kate's reconstruction of Zach's 2025–2026 thinking on AI-native documentation. Nothing here is built unless the status table says so.
 
 ## What AEC is for
 
@@ -121,7 +121,7 @@ A typed `authorized_by` is a *claim* of authorization, not verified consent.
 
 ## Work packages
 
-WP1–WP5 are approved as direction and work-package order. Each still requires its own spec and PR; approval does not mean its planned capabilities are implemented.
+WP1–WP5 are approved as direction and work-package order. Each still requires its own spec and PR; approval does not mean its planned capabilities are implemented. **WP6 was added to the backlog on 2026-10-30 for later scoping; adding it to the roadmap does not authorize implementation.**
 
 | WP | Content | Status |
 |---|---|---|
@@ -129,10 +129,24 @@ WP1–WP5 are approved as direction and work-package order. Each still requires 
 | WP1A | commit-addressed snapshots and structural diffs (merge-base vs head), basic reachability, fan-in and fan-out, a CI report as an artifact (no PR comments yet) | **approved by Zach 2026-10-30**; spec `specs/005-commit-snapshots/` |
 | **WP2-probe** | Before any context delivery: show that giving agents graph information changes what they do, compared with the counterfactual of what they would produce without it, and find when it helps and when it misleads. Hand-built briefings at different levels of complexity, tasks where a hidden dependency matters, a control arm with ordinary repo access, and decoy (wrong or irrelevant) briefings | after WP1A; added by Zach's resequencing |
 | WP2A | minimal `aec context <symbol>` and `--change` | **moved back** behind WP2-probe (Zach, 2026-10-30): its design depends on what the probe shows actually changes agent decisions |
+| **WP-S** | Source anchors/rationale; raw-byte integrity and locator observations; bounded record-directed retrieval and direct configured-root fallback | **implemented, pending review**: `specs/004-source-anchors/`; meaning, authority, private providers and representation-002 remain outside this implementation |
 | WP1B | historical analytics: SCC per projection, temporal deltas, churn, co-change, boundary changes | alongside WP2 expansion |
 | WP3 | reconciliation packet, reviewer-agent protocol, `aec drift` | once WP1A and WP2A are usable |
 | WP4 | handoff premise check through relay-kit | — |
 | WP5 | evaluation: Data-Guide replays (realistic and information-matched), documentation-effectiveness conditions A/B/C, Kate's five blind cases, and graph-informed multi-agent task decomposition (fewer integration conflicts?) | criteria designed in WP0 |
+| **WP6** | **adaptive project reporting**: baseline facts, purpose-/phase-specific versioned reporting profiles, provenance-linked reviewer interpretation, and proposals to update (or preserve) the profile when circumstances change; lightweight CLI/Markdown/JSON first, optional dashboards later | **backlog — tracked in [#15](https://github.com/eraevous/AEC/issues/15); not specified or implemented** |
+
+### WP6 — adaptive reporting (backlog addition, 2026-10-30)
+
+**Question:** Are we making meaningful progress toward *this project's* purposes, and what evidence supports that assessment? Different software projects and phases may warrant different reporting questions. WP6 is a **reporting projection over AEC's existing evidence**, not a competing project-management system or new source of purpose authority.
+
+- **Baseline layer:** source-linked, deterministic reporting of available status, changes, tests, challenges, outstanding findings, and visibility/coverage limitations. Missing information remains missing.
+- **Adaptive layer:** per-project, versioned reporting profiles driven by the committed purpose, project type/stage, risks, and unresolved questions. Indicator definitions, sources, applicability, reasons for inclusion, and any proposed-vs-accepted status remain inspectable.
+- **Interpretive layer:** reviewer agents may identify consequential changes, evidence gaps, assumptions, and possible shifts of focus; interpretations are explicitly candidate claims rather than structural facts or owner decisions.
+- **Report-profile reconciliation:** meaningful changes may prompt a *proposed* profile revision with an explained delta. **No change warranted** must remain a valid outcome when new information is immaterial. There is no silent replacement of committed reporting criteria.
+- **Delivery:** an inspectable report model exposed first as CLI/Markdown/JSON for agents and people. Interactive dashboards may eventually consume it; no web app, central service, universal cross-project score, or Jira/Grafana replacement is in scope by default.
+
+**Dependencies:** reuse WP1A/WP1B's source-addressed facts, WP2A's context delivery, and WP3's reconciliation packets; evaluate incrementality with WP5's information-matched baseline and cost accounting. Scoping and implementation need a later spec/PR and authorization. A proposed validation is two different project types, one meaningful lifecycle transition, one immaterial-change decoy, provenance/applicability checks, and measurement of decision usefulness and false alarms rather than report volume. See [issue #15](https://github.com/eraevous/AEC/issues/15).
 
 Implementation is one implementer at a time **per overlapping architectural area**. Independent tasks may run in parallel.
 

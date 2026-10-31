@@ -1,0 +1,60 @@
+[
+  {
+    "id": "P8-1",
+    "path": "missing.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "L1",
+    "expected": "missing"
+  },
+  {
+    "id": "P8-2",
+    "path": "changed.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "L2",
+    "expected": "mismatch"
+  },
+  {
+    "id": "P8-3",
+    "path": "valid.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "L2-3",
+    "expected": "verified"
+  },
+  {
+    "id": "past-end",
+    "path": "valid.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "L99",
+    "expected": "locator_invalid"
+  },
+  {
+    "id": "absent-quote",
+    "path": "valid.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "q:not in the file",
+    "expected": "locator_invalid"
+  },
+  {
+    "id": "absent-root",
+    "root": "absent",
+    "path": "valid.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "L1",
+    "expected": "unavailable"
+  },
+  {
+    "id": "unknown-root",
+    "root": "unknown",
+    "path": "valid.txt",
+    "sha256": "d9849f035479079f954e4e63428785002799fca195d78c9afa18f3334aba9852",
+    "locator": "L1",
+    "expected": "unavailable"
+  },
+  {
+    "id": "bad-digest",
+    "path": "valid.txt",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "locator": "L1",
+    "expected": "error"
+  }
+]

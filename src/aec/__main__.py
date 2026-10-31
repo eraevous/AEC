@@ -7,6 +7,8 @@
   python -m aec code-impact RECORDS OLD NEW [--json]          code change -> affected conclusions
   python -m aec init [ROOT] [--owner NAME]                    scaffold .aec/ (never overwrites)
   python -m aec import-purpose [ROOT] [--dir D] [--dry-run]   Codex++ .purpose.md -> provisional records
+  python -m aec source show REF [--context N]                read anchored passages (offline)
+  python -m aec source search PATTERN [--root R] [--regex]   direct fallback source search (offline)
 """
 from __future__ import annotations
 
@@ -55,6 +57,7 @@ def main(argv=None) -> int:
     c = sub.add_parser("check")
     c.add_argument("records")
     c.add_argument("--edges")
+    c.add_argument("--repo", help="source config root (default: records under .aec/, otherwise cwd)")
     i = sub.add_parser("impact")
     i.add_argument("records")
     i.add_argument("changes")
@@ -73,8 +76,41 @@ def main(argv=None) -> int:
     ip.add_argument("--records", help="default: ROOT/.aec/records.jsonl")
     ip.add_argument("--edges", help="default: a fresh snapshot of ROOT")
     ip.add_argument("--dry-run", action="store_true", help="report only; append nothing")
+    source = sub.add_parser("source", help="offline source integrity and retrieval")
+    source_sub = source.add_subparsers(dest="source_cmd", required=True)
+    show = source_sub.add_parser("show")
+    show.add_argument("record_ref")
+    show.add_argument("--context", type=int, default=3)
+    show.add_argument("--max-lines", type=int, default=80)
+    show.add_argument("--max-chars", type=int, default=240, help="maximum characters per source line, including truncation markers (default: 240)")
+    show.add_argument("--repo", default=".", help="repository containing .aec/sources.json")
+    show.add_argument("--records", help="record file (default: ROOT/.aec/records.jsonl)")
+    search = source_sub.add_parser("search", description="Search named configured roots by default; use --root to select one.")
+    search.add_argument("pattern")
+    search.add_argument("--root", help="configured alias, or . for the repository; default: named roots only")
+    search.add_argument("--regex", action="store_true")
+    search.add_argument("--max", type=int, default=20, dest="max_hits")
+    search.add_argument("--max-chars", type=int, default=240, help="maximum characters per hit excerpt, including truncation markers (default: 240)")
+    search.add_argument("--repo", default=".", help="repository containing .aec/sources.json")
+    search.add_argument("--records", help="record file (default: ROOT/.aec/records.jsonl)")
     a = ap.parse_args(argv)
 
+    if a.cmd == "source":
+        from .sources import SourceContext, render_search, render_show
+        repo = Path(a.repo)
+        records = Path(a.records) if a.records else repo / ".aec/records.jsonl"
+        try:
+            source_store = Store.load(records) if records.exists() else Store([])
+            context = SourceContext(repo)
+            if a.source_cmd == "show":
+                text = render_show(source_store, a.record_ref, context, context=a.context, max_lines=a.max_lines, max_chars=a.max_chars)
+            else:
+                text = render_search(source_store, a.pattern, context, root=a.root,
+                                     regex=a.regex, max_hits=a.max_hits, max_chars=a.max_chars)
+        except (OSError, ValueError) as error:
+            ap.error(str(error))
+        print(text, end="")
+        return 0
     if a.cmd == "init":
         from .init import init
         rep = init(a.root, owner=a.owner or _git_user(a.root) or "owner")
@@ -121,7 +157,18 @@ def main(argv=None) -> int:
     store = Store.load(a.records)
     if a.cmd == "check":
         snap = E.load(a.edges) if a.edges else None
-        fs = check(store, edges=snap)
+        from .sources import SourceContext, render_status
+        records_parent = Path(a.records).absolute().parent
+        repo = Path(a.repo) if a.repo else records_parent.parent if records_parent.name == ".aec" else Path.cwd()
+        context = SourceContext(repo)
+        try:
+            fs = check(store, edges=snap, sources=context)
+        except ValueError as error:
+            ap.error(str(error))
+        for record in store.records:
+            for item in context.inspect_record(record):
+                if item.state == "verified":
+                    print(render_status(item))
         for f in fs:
             print(f"[{f.level.upper()}] {f.rule}: {f.ref}: {f.msg}")
         errors = [f for f in fs if f.level == "error"]
