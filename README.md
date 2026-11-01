@@ -116,10 +116,14 @@ what to look for wrote the requirement down, so it demonstrates the mechanism, n
 
 ## Stability
 
-AEC is alpha (v0.4). The seven commands and the record fields documented here are what this version
-supports; a minor version before 1.0 may change output formats or record fields, and every change is
-listed in [CHANGELOG.md](CHANGELOG.md). Compare edge snapshots made by the same AEC version: `edges
---diff` does not yet refuse snapshots from different extractor versions.
+AEC is alpha (v0.4). The current source checkout adds WP1A snapshot, diff, reach,
+fan and unresolved commands to the seven released commands; see
+[the structural reference](docs/reference/edges.md). These additions are not in the
+v0.4.1 installation example yet. A minor version before 1.0 may change output
+formats or record fields; every change is
+listed in [CHANGELOG.md](CHANGELOG.md). Extractor tool_version is now 0.4.0, separate
+from package version. Snapshot comparison refuses mismatched methods, including
+legacy/unknown methods; an explicit override labels a method comparison.
 
 ## Documentation
 

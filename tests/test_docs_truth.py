@@ -93,5 +93,18 @@ class TestAnchorOutputTruth(unittest.TestCase):
         self.assertIsNone(forbidden.search('artifact bytes and locator match'))
 
 
+class TestGraphVisibilityTruth(unittest.TestCase):
+    def test_reach_and_fan_render_visibility_denominators_and_exact_caveat(self):
+        from aec.graph import fan, reach, render_query, CAVEAT
+        snap={'header':{'modules':{'m':'m.py'},'skipped':[]},'edges':[]}
+        def omissions(text):
+            return [token for token in ('visibility','resolved','total',CAVEAT) if token not in text]
+        for report in (fan(snap),reach(snap,'m')):
+            text=render_query(report)
+            self.assertEqual(omissions(text),[])
+            self.assertIn(CAVEAT,omissions(text.replace(CAVEAT,'')))
+            self.assertIn('visibility',omissions(text.replace('visibility','hidden')))
+
+
 if __name__ == '__main__':
     unittest.main()
