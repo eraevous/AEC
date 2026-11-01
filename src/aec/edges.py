@@ -17,13 +17,14 @@ from __future__ import annotations
 import ast
 import builtins
 import hashlib
+import fnmatch
 import json
 import sys
 import tokenize
 import warnings
 from pathlib import Path
 
-TOOL_VERSION = "0.3.0"
+TOOL_VERSION = "0.4.0"
 KINDS = ("defines", "imports", "inherits", "calls", "references")
 BUILTINS = set(dir(builtins))
 DEFAULT_IGNORE = {".git", ".venv", "venv", "env", "__pycache__", ".tox", "node_modules", "build", "dist",
@@ -32,6 +33,12 @@ DEFAULT_IGNORE = {".git", ".venv", "venv", "env", "__pycache__", ".tox", "node_m
 
 def sort_key(e: dict):
     return (KINDS.index(e["kind"]) if e["kind"] in KINDS else 99, e["src"], e["dst"], e["file"], e["line"])
+
+
+def ignored(rel: Path, patterns) -> bool:
+    return any(part.endswith(".egg-info") for part in rel.parts[:-1]) or any(
+        fnmatch.fnmatchcase(rel.as_posix(), pattern) or any(fnmatch.fnmatchcase(part, pattern) for part in rel.parts)
+        for pattern in patterns)
 
 
 def _module_name(rel: Path) -> str:
@@ -76,12 +83,14 @@ class _Module:
         self.top_defs: dict[str, str] = {}   # bare name -> symbol (classes, functions, assigned names)
         self.order: list = []                # module-level ('imp', node) | ('name', bare) in statement order
         self.class_bases: list = []          # (class symbol, [base expr nodes], class node line)
+        self.exports = None
         self.bindings: dict[str, str] = {}   # final module namespace: name -> dotted target
 
 
 class _Extractor:
-    def __init__(self, root: Path, ignore: set[str]):
+    def __init__(self, root: Path, ignore: set[str], source_roots="auto"):
         self.root, self.ignore = root, ignore
+        self.source_root_config = source_roots
         self.modules: dict[str, _Module] = {}
         self.skipped: list[dict] = []
         self.file_hashes: list[str] = []
@@ -90,13 +99,17 @@ class _Extractor:
         self._class_syms: set[str] = set()
         self.defs: dict[str, str] = {}       # symbol -> body sha
         self.class_bases: dict[str, list[str]] = {}
+        self.import_modules = {}
 
     # ---------- pass 0: files ----------
     def files(self):
         out = []
         for p in sorted(self.root.rglob("*.py")):
             rel = p.relative_to(self.root)
-            if any(part in self.ignore or part.endswith(".egg-info") for part in rel.parts[:-1]):
+            if ignored(rel, self.ignore):
+                continue
+            if p.is_symlink() or not p.is_file():
+                self.skipped.append({"file": rel.as_posix(), "reason": "non-regular source not parsed"})
                 continue
             out.append((p, rel))
         return out
@@ -117,7 +130,7 @@ class _Extractor:
             try:
                 tree = self.parse(p, rel)
             except (SyntaxError, UnicodeDecodeError, LookupError, ValueError) as ex:
-                self.skipped.append({"file": rel.as_posix(), "reason": f"{type(ex).__name__}: {ex}".splitlines()[0][:200]})
+                self.skipped.append({"file": rel.as_posix(), "reason": f"{type(ex).__name__}: {ex}".replace(str(p), rel.as_posix()).splitlines()[0][:200]})
                 continue
             m = _Module(_module_name(rel), rel.as_posix(), p, rel.name == "__init__.py")
             self.modules[m.name] = m
@@ -137,15 +150,34 @@ class _Extractor:
                     if isinstance(t, ast.Name):
                         m.top_defs[t.id] = f"{m.name}.{t.id}"
                         m.order.append(("name", t.id))
+        for node in tree.body:
+            if isinstance(node, (ast.Assign, ast.AnnAssign)):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                if any(isinstance(t, ast.Name) and t.id == "__all__" for t in targets):
+                    try:
+                        names = ast.literal_eval(node.value)
+                        m.exports = list(names) if isinstance(names, (list, tuple)) and all(isinstance(n, str) for n in names) else None
+                    except (ValueError, TypeError, SyntaxError):
+                        m.exports = None
+            elif isinstance(node, ast.AugAssign) and isinstance(node.target, ast.Name) and node.target.id == "__all__":
+                m.exports = None
+        # A literal is useful only while other writes/uses do not make it uncertain.
+        all_targets = {id(t) for node in tree.body if isinstance(node, (ast.Assign, ast.AnnAssign))
+                       for t in (node.targets if isinstance(node, ast.Assign) else [node.target])
+                       if isinstance(t, ast.Name) and t.id == "__all__"}
+        if any((isinstance(node, ast.Name) and node.id == "__all__" and id(node) not in all_targets)
+               or (isinstance(node, ast.alias) and (node.asname or node.name.split(".")[0]) == "__all__")
+               for node in ast.walk(tree)):
+            m.exports = None
         self.collect_all_defs(m, tree)
 
     # ---------- helpers ----------
-    def edge(self, kind, src, dst, mod: _Module, node):
+    def edge(self, kind, src, dst, mod: _Module, node, why=None):
         key = (kind, src, dst)
         line = getattr(node, "lineno", 0)
         cur = self.edges.get(key)
         if cur is None or line < cur[1]:
-            self.edges[key] = (mod.rel, line)
+            self.edges[key] = (mod.rel, line, why)
 
     def _abs_module(self, mod: _Module, node: ast.ImportFrom) -> str:
         if not node.level:
@@ -160,6 +192,7 @@ class _Extractor:
             for a in node.names:
                 target = self._alias(a.name)
                 self.edge("imports", src, target, mod, node)
+                self.import_modules.setdefault((src, target), target)
                 if a.asname:
                     bind[a.asname] = target
                 else:
@@ -172,6 +205,7 @@ class _Extractor:
             for a in node.names:
                 if a.name == "*":
                     self.edge("imports", src, f"{base}.*", mod, node)
+                    self.import_modules.setdefault((src, f"{base}.*"), base)
                     target = self.modules.get(base)
                     if target:
                         for n, sym in target.top_defs.items():
@@ -180,6 +214,7 @@ class _Extractor:
                     continue
                 full = f"{base}.{a.name}" if base else a.name
                 self.edge("imports", src, full, mod, node)
+                self.import_modules.setdefault((src, full), full if full in self.modules else base)
                 bind[a.asname or a.name] = full
 
     def build_source_root_aliases(self):
@@ -195,6 +230,17 @@ class _Extractor:
         stdlib = getattr(sys, "stdlib_module_names", frozenset())
         self.root_alias = {x: f"{next(iter(roots))}.{x}" for x, roots in cand.items()
                            if len(roots) == 1 and x not in tops and x not in stdlib}
+        if self.source_root_config != "auto":
+            candidates = {}
+            for prefix in self.source_root_config:
+                dotted = _module_name(Path(prefix + "/__init__.py"))
+                for name in self.modules:
+                    if name.startswith(dotted + "."):
+                        suffix = name[len(dotted)+1:]
+                        top = suffix.split(".")[0]
+                        if top not in tops and top not in stdlib:
+                            candidates.setdefault(top, set()).add(dotted + "." + top)
+            self.root_alias = {name: next(iter(values)) for name, values in candidates.items() if len(values) == 1}
         self.source_roots_used: set[str] = set()
 
     def _alias(self, dotted: str) -> str:
@@ -334,18 +380,37 @@ class _Extractor:
                 self._scan_scope(mod, node.body, sym, local_bind, (locals_ if scope_sym != mod.name else set()) | params,
                                  cls if cls and scope_sym == cls else None)
 
+    def reflective(self, expr, mod, local_bind, locals_, cls):
+        if isinstance(expr, ast.Call):
+            d = _dotted(expr.func)
+            if d:
+                target, ok = self.resolve(d, mod, local_bind, locals_, cls)
+                return (d == "getattr" and target is None) or target == "builtins.getattr"
+            return False
+        d = _dotted(expr)
+        if not d:
+            return False
+        target, ok = self.resolve(d, mod, local_bind, locals_, cls)
+        return target in {"importlib.import_module", "builtins.__import__", "builtins.eval", "builtins.exec"} or (
+            target is None and d in {"__import__", "eval", "exec"})
+
     def _scan_expr(self, mod, st, src, local_bind, locals_, cls):
         call_funcs = set()
         for n in ast.walk(st):
             if isinstance(n, ast.Call):
                 call_funcs.add(id(n.func))
                 d = _dotted(n.func)
-                if d:
+                if self.reflective(n.func, mod, local_bind, locals_, cls):
+                    self.edge("calls", src, "?" + _expr_label(n.func), mod, n, "reflective")
+                elif d:
                     tgt, ok = self.resolve(d, mod, local_bind, locals_, cls)
                     if tgt:
-                        self.edge("calls", src, tgt, mod, n)
+                        root = d.split(".")[0]
+                        why = ("self_attr_unknown" if root in ("self", "cls") and cls else
+                               "local_value" if root in locals_ else "unbound_name") if not ok else None
+                        self.edge("calls", src, tgt, mod, n, why)
                 else:
-                    self.edge("calls", src, "?" + _expr_label(n.func), mod, n)
+                    self.edge("calls", src, "?" + _expr_label(n.func), mod, n, "computed_callee")
         # references: outermost Name/Attribute loads that are not call targets
         inner = set()
         for n in ast.walk(st):
@@ -371,23 +436,35 @@ class _Extractor:
         return self
 
 
-def snapshot(root: str | Path, ignore: set[str] | None = None) -> dict:
+def extract(root: str | Path, method: dict) -> dict:
     root = Path(root)
-    ex = _Extractor(root, DEFAULT_IGNORE | (ignore or set())).run()
+    ex = _Extractor(root, set(method["ignore"]), method["source_roots"]).run()
     edges = []
-    for (kind, src, dst), (file, line) in ex.edges.items():
+    for (kind, src, dst), (file, line, why) in ex.edges.items():
         e = {"kind": kind, "src": src, "dst": dst, "resolved": not dst.startswith("?"), "file": file, "line": line}
+        if kind == "calls" and not e["resolved"]:
+            e["why"] = why
         if kind == "defines":
             e["body_sha"] = ex.defs.get(dst, "")
         edges.append(e)
     ex.edges = {}
     edges.sort(key=sort_key)
-    header = {"aec_edges": 1, "tool_version": TOOL_VERSION, "root": root.as_posix(), "files": len(ex.file_hashes),
+    header = {"aec_edges": 1, "tool_version": TOOL_VERSION, "files": len(ex.file_hashes),
               "files_sha": hashlib.sha256("\n".join(sorted(ex.file_hashes)).encode()).hexdigest()[:16],
               "skipped": sorted(ex.skipped, key=lambda s: s["file"]),
               "modules": {name: m.rel for name, m in sorted(ex.modules.items())},
-              "source_roots": sorted(ex.source_roots_used)}
+              "source_roots": sorted(ex.source_roots_used),
+              "classes": sorted(ex._class_syms),
+              "bindings": {name: dict(sorted(m.bindings.items())) for name, m in sorted(ex.modules.items())},
+              "exports": {name: m.exports for name, m in sorted(ex.modules.items()) if m.exports is not None},
+              "import_modules": [{"src": src, "dst": dst, "module": module}
+                                 for (src, dst), module in sorted(ex.import_modules.items())]}
     return {"header": header, "edges": edges}
+
+
+def snapshot(root: str | Path, ignore: set[str] | None = None, *, rev=None, method=None, source_roots=None) -> dict:
+    from .snapshots import snapshot as take_snapshot
+    return take_snapshot(root, ignore, rev=rev, method=method, source_roots=source_roots)
 
 
 def dumps(snap: dict) -> str:
@@ -398,6 +475,8 @@ def dumps(snap: dict) -> str:
 
 def loads(text: str) -> dict:
     rows = [json.loads(l) for l in text.splitlines() if l.strip()]
+    if not rows[0].get("method") or rows[0].get("tool_version") != TOOL_VERSION:
+        rows[0]["revision_kind"] = "unknown"
     return {"header": rows[0], "edges": rows[1:]}
 
 
@@ -405,7 +484,11 @@ def load(path: str | Path) -> dict:
     return loads(Path(path).read_text(encoding="utf-8"))
 
 
-def diff(old: dict, new: dict) -> dict:
+def diff(old: dict, new: dict, *, allow_method_mismatch=False) -> dict:
+    from .snapshots import method_differences
+    fields = method_differences(old, new)
+    if fields and not allow_method_mismatch:
+        raise ValueError("method mismatch: " + ", ".join(fields))
     ident = lambda e: (e["kind"], e["src"], e["dst"])
     o = {ident(e): e for e in old["edges"]}
     n = {ident(e): e for e in new["edges"]}
@@ -417,6 +500,9 @@ def diff(old: dict, new: dict) -> dict:
         for m in snap["header"].get("modules", {}):
             d.setdefault(m, None)
     return {
+        "method_comparison": bool(fields), "method_differences": fields,
+        "modules_added": sorted(set(new["header"].get("modules", {})) - set(old["header"].get("modules", {}))),
+        "modules_removed": sorted(set(old["header"].get("modules", {})) - set(new["header"].get("modules", {}))),
         "added": sorted((n[k] for k in n.keys() - o.keys()), key=sort_key),
         "removed": sorted((o[k] for k in o.keys() - n.keys()), key=sort_key),
         "defs_added": sorted(nd.keys() - od.keys()),
@@ -431,7 +517,7 @@ def legacy_csv(snap: dict) -> str:
 
 
 def render_diff(d: dict) -> str:
-    out = ["# aec edges --diff (structural)"]
+    out = (["METHOD COMPARISON: compares methods, not just code"] if d.get("method_comparison") else []) + ["# aec edges --diff (structural)"]
     for e in d["added"]:
         out.append(f"+ {e['kind']}: {e['src']} -> {e['dst']}  ({e['file']}:{e['line']})")
     for e in d["removed"]:

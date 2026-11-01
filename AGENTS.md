@@ -55,6 +55,11 @@ Run from the repository root with PYTHONPATH=src:
 | `python -m aec init` | Scaffold absent AEC files and snippets; never overwrite |
 | `python -m aec import-purpose` | Import declared contracts as provisional, source-linked claims |
 | `python -m aec source` | Show anchored passages or search local configured roots directly |
+| `python -m aec snapshot` | Identify a working tree or local Git commit and extraction method |
+| `python -m aec diff` | Compare merge-base/head with one method or guarded stored snapshots |
+| `python -m aec reach` | Query known structural reach in one projection with visibility |
+| `python -m aec fan` | Count per-projection neighbors with visibility |
+| `python -m aec unresolved` | Retrieve unresolved calls by why and file/symbol region |
 
 Source check/show/search are offline and read-only. Anchors/rationale live in
 Record.data. Filesystem anchor states are warnings; malformed anchor shapes are
@@ -82,10 +87,10 @@ dependencies available to pip. See `docs/speckit-log.md` for setup and actual co
 
 ## Built, partial and planned
 
-Built: the seven commands above, offline source integrity/retrieval, structured purpose import, provenance-linked
+Built: the twelve commands above (WP1A additions in this source checkout), offline source integrity/retrieval, structured purpose import, provenance-linked
 candidate history and doc-truth checks. Partial: semantic reconciliation (declared
 fields and caller comparisons only), evidence adequacy/applicability (narrow
-rules only). Planned: commit-addressed snapshots, topology analytics, context
+rules only). Planned: WP1B topology/history analytics, context
 briefings, reconciliation packets, automatic drift triggers and handoff premise
 checks. `docs/architecture.md` records direction approved by Zach on 29 October
 2026; `docs/failure-modes.md` is evaluation design. WP1–WP5 are approved as direction,

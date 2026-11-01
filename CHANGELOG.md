@@ -3,6 +3,13 @@
 All notable changes to AEC. Versions follow [semantic versioning](https://semver.org/); before
 1.0, a minor version may change command output or record fields (see "Stability" in README).
 
+## WP1A (unreleased source-checkout additions)
+
+- Commit/working-tree snapshots with extractor tool_version 0.4.0 and method identity.
+- Symmetric merge-base/head structural diffs, guarded stored comparisons and CI artifact.
+- Projection-specific reach/fan and unresolved-call retrieval by five reason kinds, with visibility.
+- File/directory boundaries and conservative class/public-surface indicators.
+
 ## [0.4.1] - unreleased
 
 ### Changed

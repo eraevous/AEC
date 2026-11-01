@@ -172,3 +172,28 @@ evaluation was run; structural conformance does not establish owner benefit.
 Code/record checks, final snapshot and measured cost are recorded in the dated
 WP-S intent note. Propagation, existing record lines and frozen spec are unchanged.
 Source-state observations remain separate from semantic/authority judgments.
+
+## Feature 005: WP1A commit snapshots and structural queries (2026-11-01)
+
+Codex implemented spec 005 and its four owner clarifications from main@5000d00.
+Plan/tasks and violating fixtures preceded code. New commands address local Git
+commits/methods, compare merge-base/head symmetrically, retrieve unresolved calls
+by why, and compute reach/fan in separate projections with visibility. CI uploads
+the actual PR-head report as an artifact, without comments. No briefing/history
+analytics, anchor change or runtime tracing was introduced.
+
+An independent agent review found concrete issues despite initially passing
+fixtures: Git status helper/hook execution, false parent-package ownership,
+mutated export declarations, missing re-export ownership, dirty gitlinks and an
+expanding-alias recursion. Each received a failing regression fixture before its
+fix. Git reads now avoid status/filter/refresh paths and disable protocols/hooks;
+unknown targets remain distinguishable. See the dated WP1A intent for the full
+review/rework and spec interpretations (config location, query defaults, method
+parser fingerprint and region visibility).
+
+Final local suite: 150 tests run, 149 pass; the pre-existing optional Spec Kit
+install/remove test skips because its CLI is absent. Automatic approval review
+refused installing that optional dependency under this handoff's stdlib/Git-only
+limits, so no workaround was attempted. All WP1A fixtures run. No Spec Kit agent
+analyze/converge or comparative-benefit evaluation was claimed. Instrumented model
+cost is recorded in the intent; owner attention and token counts are unavailable.
