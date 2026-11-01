@@ -6,7 +6,7 @@ proud of." He chose "proud of" on purpose, to draw on the different ways people 
 whether something is ready. This file turns that phrase into checks. It is the bar for the
 first public release (v0.4.0), not for AEC as a finished product.
 
-People mean at least seven different things when they say they are proud of a release. A
+People mean at least eight different things when they say they are proud of a release. A
 release can pass one and fail another, so each gets its own checks.
 
 | Reading | The question a person asks | What would embarrass us |
@@ -18,12 +18,15 @@ release can pass one and fail another, so each gets its own checks.
 | **Proud of the result** | Does it do something measurably useful, for someone besides us? | Only self-referential evidence (AEC checking AEC); a demo that was tuned until it passed |
 | **Proud over time** | Will this version still make sense in six months? | No tag, no changelog, no statement of what is stable and what is experimental |
 | **Proud of how it was made** | Would we be comfortable if people saw the process? | Approvals no one can trace; an AI-written project that hides that it is AI-written |
+| **Proud to entrust** (added from Kate's review) | Could someone run this on work they care about without an unpleasant surprise? | Writing outside the paths it declares; a generated CI job that installs whatever `main` is today; a failed analysis that looks like a clean one |
 
 Two of these pull against each other. "Proud to show" wants a confident front page; "proud
 to stand behind" (and Constitution IV) wants every claim hedged to what is measured. The
 resolution is to be confident about what AEC *does* (deterministic, inspectable, specific)
 and exact about what it has *shown*. A null or mixed result reported plainly passes
-"proud of the result" better than a strong result nobody can reproduce.
+"proud of the result" better than a strong result nobody can reproduce. So the release requires
+an *honestly reported* test of incremental value, whatever it finds. A *positive* result is
+required only before AEC claims to improve anything (Kate, HO-20261101-001).
 
 ## The checklist
 
@@ -34,6 +37,8 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - 🔧 Quickstart works on a repository that is not AEC: `pip install`, `aec init`, `aec edges`, `aec check`.
 - 🔧 Governance detail (authority records, constitution) moves below the fold, linked, not deleted.
 - ✅ Example with real data (`examples/mtg-pilot/`).
+- 🔧 The worked example is reproducible by script, against a pinned commit (`examples/itsdangerous-demo/run.sh`).
+- ⏳ One independent clean-install walkthrough: a fresh agent, following only the README, with every failure recorded (`docs/evaluations/walkthrough-001.md`). It is an agent, not a stranger; a human walkthrough is better when one is available.
 
 ### Proud to stand behind
 - ✅ Doc-truth tests: every path and command named in README and AGENTS exists (`tests/test_docs_truth.py`).
@@ -55,8 +60,8 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - 👤 Three to five `good first issue` items opened on GitHub (drafts in this branch's PR description).
 
 ### Proud of the result
-- ⏳ One measured outcome on a task AEC did not design for itself: the WP2-probe pilot, pre-registered in `docs/evaluations/probe-001.md` before any run.
-- ⏳ The result, whatever it is, reported in README in one sentence with a link.
+- ⏳ One honestly reported test of incremental value on code AEC wasn't built for: the WP2-probe pilot, pre-registered in `docs/evaluations/probe-001.md` before any run. It is Zach's own repository with tasks built for the test, so it is better than self-testing but not independent evidence, and it is labelled that way.
+- ⏳ The result, whatever it is, reported in README in one sentence with a link. A null result does not block the release; it blocks any claim of improvement.
 
 ### Proud over time
 - 🔧 CHANGELOG.md, starting from v0.1.
@@ -68,6 +73,12 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - ✅ Approvals quoted with sources (handoffs, PR descriptions, `relay-kit-private` decision log).
 - ✅ Spec Kit workflow and its measured costs (`docs/speckit-log.md`).
 - 🔧 One paragraph in README saying plainly that AEC is built by Zach with AI agents (Claude, Codex, ChatGPT), and that its own records are the audit trail of that.
+
+### Proud to entrust
+- ✅ AEC never imports or runs the code it analyses, makes no network requests, and writes only where told; `SECURITY.md` states this and was checked against the code.
+- 🔧 The CI job that `aec init` generates installs a pinned release (`@v0.4.0`), not `main`. A test enforces it. Until Zach tags v0.4.0, that pin points at nothing.
+- ⏳ Failure is distinguishable from success: files the extractor skips are counted in its output (`aec edges: … (N skipped)`). There is not yet a non-zero exit code or warning when files are skipped.
+- ✅ Removal is clean: everything AEC adds lives in `.aec/`, plus any snippets you copied yourself.
 
 ## What is deliberately not required for v0.4.0
 

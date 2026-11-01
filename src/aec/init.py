@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from . import __version__
 from . import edges as E
 
 AEC_SOURCE = "git+https://github.com/eraevous/AEC.git"
@@ -44,7 +45,8 @@ HOOK = {
     }
 }
 
-CI = f"""# Copy into .github/workflows/aec.yml. Pin @<ref> to a release or commit you have reviewed.
+CI = f"""# Copy into .github/workflows/aec.yml. Pinned to the AEC release that generated it (v{__version__});
+# change the ref only to a release or commit you have reviewed.
 name: aec
 on: [push, pull_request]
 jobs:
@@ -54,7 +56,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {{ python-version: "3.12" }}
-      - run: pip install "aec @ {AEC_SOURCE}@main"
+      - run: pip install "aec @ {AEC_SOURCE}@v{__version__}"
       - name: Structural snapshot (regenerated, never trusted from the branch)
         run: python3 -m aec edges . -o .aec/edges.jsonl
       - name: Records check (fails on errors, including dangling code references)

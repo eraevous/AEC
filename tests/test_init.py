@@ -71,3 +71,13 @@ class TestInit(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCiSnippetPinned(unittest.TestCase):
+    """v0.4 (Kate's 'proud to entrust' review): the generated CI job installs a pinned release, not main."""
+
+    def test_snippet_pins_this_release(self):
+        from aec import __version__
+        from aec.init import CI
+        self.assertNotIn("@main", CI)
+        self.assertIn(f"@v{__version__}\"", CI)

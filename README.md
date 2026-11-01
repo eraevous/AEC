@@ -1,56 +1,53 @@
 # AEC
 
-**AEC keeps the reasons for code attached to the code, and tells you which of those reasons a change just broke.**
+**AEC keeps the recorded reasons for code attached to the code, and tells you which requirements, claims and decisions need reassessing when something they depend on changes.**
 
 AI coding agents are good at making a change and bad at knowing what else depended on the old
 behaviour: a requirement someone wrote down, a claim a decision rested on, a caller nobody
 mentioned. AEC records those reasons as plain, append-only JSON lines (purposes, requirements,
-claims, evidence, decisions and who has authority over them) and links them to the code through a
+claims, evidence, decisions, and who has authority over them) and links them to the code through a
 deterministic static-analysis snapshot. When the code or a record changes, AEC reports which
-conclusions are no longer supported and which changes were legitimate, authorized revisions.
+conclusions lost or changed their recorded support. It also tells apart changes that carry a
+recorded authorization from changes that don't. It checks that the record says so; it cannot
+verify that anyone actually consented.
 
-It is a standard-library Python command-line tool, works with or without
-[Spec Kit](https://github.com/github/spec-kit), and never edits your code or your specs.
+It is a standard-library Python command-line tool. It works with or without
+[Spec Kit](https://github.com/github/spec-kit), and it never edits your code or your specs.
 
-## A five-minute example on someone else's code
+## A worked example on someone else's code
 
-This uses [pallets/itsdangerous](https://github.com/pallets/itsdangerous) (commit `672971d`), a
-library for signing data so you can tell it wasn't tampered with.
+[`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces everything
+below in a temporary directory. It uses [pallets/itsdangerous](https://github.com/pallets/itsdangerous)
+at commit `672971d`, a library for signing data so you can tell it wasn't tampered with. The
+script installs AEC from this checkout, or from a tag you pass it, such as `run.sh v0.4.0`.
 
-```bash
-pip install git+https://github.com/eraevous/AEC.git
-cd itsdangerous
-aec init . --owner "Jane Dev"      # creates .aec/ with an owner, a purpose stub and an edge snapshot
-```
-
-Write down one requirement and one claim that rests on it, pointing at the code that implements
-them (append to `.aec/records.jsonl`):
-
-```json
-{"id": "R-ct", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Signature checks compare in constant time, so timing does not leak how much of a forged signature was right.", "relations": [{"rel": "implemented_by", "to": "code:src.itsdangerous.signer.SigningAlgorithm.verify_signature"}]}
-{"id": "C-ct", "version": 1, "type": "claim", "tier": "candidate", "text": "Unsigning a value cannot be used as a timing oracle.", "relations": [{"rel": "depends_on", "to": "R-ct@1"}, {"rel": "depends_on", "to": "code:src.itsdangerous.signer.SigningAlgorithm.verify_signature"}]}
-```
-
-`aec check .aec/records.jsonl --edges .aec/edges.jsonl` confirms both references resolve. (On the
-first try they didn't: the method is defined on `SigningAlgorithm`, not on `HMACAlgorithm`, and
-`check` said so.)
-
-Now an agent "simplifies" `hmac.compare_digest(sig, expected)` to `sig == expected`. All 297 of
-the library's own tests still pass. AEC does not:
+1. `aec init` creates `.aec/` with an owner, a purpose stub and an edge snapshot of the code.
+2. Append one requirement, and one claim that rests on it, to `.aec/records.jsonl`
+   ([`examples/itsdangerous-demo/records.jsonl`](examples/itsdangerous-demo/records.jsonl)). The
+   requirement says signature verification uses a constant-time comparison, and points at
+   `code:src.itsdangerous.signer.SigningAlgorithm.verify_signature`. `aec check` confirms both
+   references resolve. When this example was first written by hand, they didn't: the method is
+   defined on `SigningAlgorithm`, not on `HMACAlgorithm`, and `check` said so.
+3. An agent "simplifies" `hmac.compare_digest(sig, expected)` to `sig == expected`. All 297 of the
+   library's own tests still pass. AEC reports:
 
 ```text
-$ aec edges . -o .aec/edges.jsonl && aec edges --diff old.jsonl .aec/edges.jsonl
+$ aec edges --diff old.jsonl .aec/edges.jsonl
 - calls: src.itsdangerous.signer.SigningAlgorithm.verify_signature -> hmac.compare_digest  (src/itsdangerous/signer.py:28)
 
 $ aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl
-[stale] R-ct@1: Signature checks compare in constant time, so timing does not leak ...
-[stale] C-ct@1: Unsigning a value cannot be used as a timing oracle.
+[stale] R-ct@1: Signature verification compares signatures with a constant-time comparison.
+[stale] C-ct@1: Checking a forged signature does not reveal, through the comparison's timing, how many of its leading bytes were right.
 2 affected, 0 conclusions unaffected
 ```
 
-Be clear about what this example shows. The requirement was written by someone who knew what to
-look for, so it demonstrates the mechanism, not that AEC finds problems nobody anticipated. That
-second question is what [`docs/evaluations/probe-001.md`](docs/evaluations/probe-001.md) measures.
+Be exact about what this shows. `stale` means "the code this rests on changed, so reassess it". It
+does not mean "violated". The requirement could in principle still be met some other way, and AEC
+does not judge timing safety. AEC also didn't discover the requirement: someone who knew what to
+look for wrote it down. The example shows the mechanism, that recorded reasons get re-raised
+when their code moves, which ordinary tests here did not do. It does not show that AEC finds
+problems nobody anticipated. That question is what
+[`docs/evaluations/probe-001.md`](docs/evaluations/probe-001.md) tests.
 
 ## What AEC is not
 
@@ -75,8 +72,11 @@ from the same AEC version (refusing mismatches is part of planned WP1A).
 
 AEC is designed and owned by Zach Rhodes and built with AI agents (Claude, Codex and ChatGPT)
 working from written handoffs. It is developed with Spec Kit (`specs/`) and governs itself with
-its own records (`.aec/records.jsonl`): the approvals, rejected options and open questions behind
-it are in the repository, which makes the project its own longest-running test case.
+its own records (`.aec/records.jsonl`), which makes the project its own longest-running test case.
+What is public and what isn't: the specs, records, PR descriptions and evaluation write-ups here
+are public. The coordination handoffs and the owner's decision log are kept in a private
+repository. Where a public record cites them, it says so, and you are taking that citation on the
+maintainer's word.
 Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---

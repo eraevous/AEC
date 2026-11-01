@@ -1,0 +1,3 @@
+// Appended to the .aec/records.jsonl that `aec init` creates in itsdangerous (see run.sh).
+{"id": "R-ct", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Signature verification compares signatures with a constant-time comparison.", "relations": [{"rel": "implemented_by", "to": "code:src.itsdangerous.signer.SigningAlgorithm.verify_signature"}]}
+{"id": "C-ct", "version": 1, "type": "claim", "tier": "candidate", "text": "Checking a forged signature does not reveal, through the comparison's timing, how many of its leading bytes were right.", "relations": [{"rel": "depends_on", "to": "R-ct@1"}, {"rel": "depends_on", "to": "code:src.itsdangerous.signer.SigningAlgorithm.verify_signature"}]}
