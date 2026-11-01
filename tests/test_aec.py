@@ -176,3 +176,25 @@ class TestOutcomeSufficiency(unittest.TestCase):  # feature 002 US3 / FR-008, FR
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestMisplacedRelation(unittest.TestCase):
+    """v0.4: a relation name used as a top-level field is silently unchecked; warn about it.
+    Found while writing the README quickstart (a top-level implemented_by passed with 0 findings)."""
+
+    AU = {"id": "AU", "version": 1, "type": "authority", "governs": ["code"]}
+
+    def findings(self, rec):
+        return [f for f in check(store_from([self.AU, rec])) if f.rule == "relation-shape"]
+
+    def test_top_level_relation_is_flagged(self):
+        bad = {"id": "R", "version": 1, "type": "requirement", "subject": "code",
+               "implemented_by": ["code:pkg.mod.f"]}
+        fs = self.findings(bad)
+        self.assertEqual([(f.level, f.ref) for f in fs], [("warning", "R@1")])
+        self.assertIn("implemented_by", fs[0].msg)
+
+    def test_relations_array_decoy_is_not_flagged(self):
+        good = {"id": "R", "version": 1, "type": "requirement", "subject": "code",
+                "relations": [{"rel": "implemented_by", "to": "code:pkg.mod.f"}], "rationale": "why"}
+        self.assertEqual(self.findings(good), [])

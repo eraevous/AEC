@@ -133,6 +133,11 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
                 continue
             if to not in store.by_ref:
                 out.append(Finding("error", "reference", r.ref, f"{e.get('rel')} -> {to} does not resolve"))
+        misplaced = sorted(RELATIONS & set(r.data))
+        if misplaced:
+            out.append(Finding("warning", "relation-shape", r.ref,
+                               f"top-level field(s) {', '.join(misplaced)} look like relations but are not checked or "
+                               "propagated; write them as \"relations\": [{\"rel\": ..., \"to\": ...}]"))
         if "rationale" in r.data and not isinstance(r.get("rationale"), str):
             out.append(Finding("error", "rationale-shape", r.ref, "rationale must be a string"))
         if "anchors" in r.data:

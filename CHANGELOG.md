@@ -15,6 +15,8 @@ First public release candidate. No change to what any command computes.
 - `docs/evaluations/probe-001.md`: pre-registered design for the first outcome measurement (WP2-probe pilot).
 - CI runs the test suite on Python 3.10, 3.11, 3.12 and 3.13.
 - A test that the package version, `aec.__version__` and this changelog agree.
+- `check` warns (`relation-shape`) when a relation name such as `implemented_by` is used as a top-level
+  field. Such fields were silently unchecked; found while writing the README quickstart.
 
 ### Changed
 - README now opens with the problem, a quickstart and what AEC is not; governance detail moved lower.
