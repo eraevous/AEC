@@ -1,4 +1,44 @@
-{"aec_edges": 1, "files": 43, "files_sha": "b9a3195ce2bf5132", "modules": {"src.aec": "src/aec/__init__.py", "src.aec.__main__": "src/aec/__main__.py", "src.aec.code_impact": "src/aec/code_impact.py", "src.aec.edges": "src/aec/edges.py", "src.aec.impact": "src/aec/impact.py", "src.aec.init": "src/aec/init.py", "src.aec.purpose_import": "src/aec/purpose_import.py", "src.aec.records": "src/aec/records.py", "src.aec.sources": "src/aec/sources.py", "src.core": "src/core/__init__.py", "src.core.tools.ast_dependency_extractor": "src/core/tools/ast_dependency_extractor.py", "tests.fixtures.edges_pkg_v1.pkg": "tests/fixtures/edges_pkg_v1/pkg/__init__.py", "tests.fixtures.edges_pkg_v1.pkg.base": "tests/fixtures/edges_pkg_v1/pkg/base.py", "tests.fixtures.edges_pkg_v1.pkg.core": "tests/fixtures/edges_pkg_v1/pkg/core.py", "tests.fixtures.edges_pkg_v1.pkg.extras": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "tests.fixtures.edges_pkg_v1.pkg.util": "tests/fixtures/edges_pkg_v1/pkg/util.py", "tests.fixtures.edges_pkg_v2.pkg": "tests/fixtures/edges_pkg_v2/pkg/__init__.py", "tests.fixtures.edges_pkg_v2.pkg.base": "tests/fixtures/edges_pkg_v2/pkg/base.py", "tests.fixtures.edges_pkg_v2.pkg.core": "tests/fixtures/edges_pkg_v2/pkg/core.py", "tests.fixtures.edges_pkg_v2.pkg.extras": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "tests.fixtures.edges_pkg_v2.pkg.util": "tests/fixtures/edges_pkg_v2/pkg/util.py", "tests.fixtures.purpose_repo.pkg": "tests/fixtures/purpose_repo/pkg/__init__.py", "tests.fixtures.purpose_repo.pkg.a": "tests/fixtures/purpose_repo/pkg/a/__init__.py", "tests.fixtures.purpose_repo.pkg.a.helpers": "tests/fixtures/purpose_repo/pkg/a/helpers.py", "tests.fixtures.purpose_repo.pkg.b": "tests/fixtures/purpose_repo/pkg/b/__init__.py", "tests.fixtures.purpose_repo.pkg.b.helpers": "tests/fixtures/purpose_repo/pkg/b/helpers.py", "tests.fixtures.purpose_repo.pkg.cli": "tests/fixtures/purpose_repo/pkg/cli.py", "tests.fixtures.purpose_repo.pkg.core": "tests/fixtures/purpose_repo/pkg/core.py", "tests.fixtures.purpose_repo.pkg.util": "tests/fixtures/purpose_repo/pkg/util.py", "tests.test_aec": "tests/test_aec.py", "tests.test_code_impact": "tests/test_code_impact.py", "tests.test_docs_truth": "tests/test_docs_truth.py", "tests.test_edges": "tests/test_edges.py", "tests.test_extension": "tests/test_extension.py", "tests.test_import_purpose": "tests/test_import_purpose.py", "tests.test_init": "tests/test_init.py", "tests.test_install": "tests/test_install.py", "tests.test_reconstruct_decisions": "tests/test_reconstruct_decisions.py", "tests.test_sources": "tests/test_sources.py", "tests.test_stdlib_only": "tests/test_stdlib_only.py", "tools.reconstruct_decisions": "tools/reconstruct_decisions.py"}, "root": ".", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "source_roots": ["src"], "tool_version": "0.3.0"}
+{"aec_edges": 1, "files": 52, "files_sha": "0768596f38881d62", "modules": {"docs.evaluations.probe-001.hidden.test_T1_functionality": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "docs.evaluations.probe-001.hidden.test_T1_preservation": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "docs.evaluations.probe-001.hidden.test_T2_functionality": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "docs.evaluations.probe-001.hidden.test_T2_preservation": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "docs.evaluations.probe-001.hidden.test_T3_preservation": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "docs.evaluations.probe-001.tools.briefing": "docs/evaluations/probe-001/tools/briefing.py", "docs.evaluations.probe-001.tools.grade": "docs/evaluations/probe-001/tools/grade.py", "docs.evaluations.probe-001.tools.schedule": "docs/evaluations/probe-001/tools/schedule.py", "docs.evaluations.probe-001.tools.transcript": "docs/evaluations/probe-001/tools/transcript.py", "src.aec": "src/aec/__init__.py", "src.aec.__main__": "src/aec/__main__.py", "src.aec.code_impact": "src/aec/code_impact.py", "src.aec.edges": "src/aec/edges.py", "src.aec.impact": "src/aec/impact.py", "src.aec.init": "src/aec/init.py", "src.aec.purpose_import": "src/aec/purpose_import.py", "src.aec.records": "src/aec/records.py", "src.aec.sources": "src/aec/sources.py", "src.core": "src/core/__init__.py", "src.core.tools.ast_dependency_extractor": "src/core/tools/ast_dependency_extractor.py", "tests.fixtures.edges_pkg_v1.pkg": "tests/fixtures/edges_pkg_v1/pkg/__init__.py", "tests.fixtures.edges_pkg_v1.pkg.base": "tests/fixtures/edges_pkg_v1/pkg/base.py", "tests.fixtures.edges_pkg_v1.pkg.core": "tests/fixtures/edges_pkg_v1/pkg/core.py", "tests.fixtures.edges_pkg_v1.pkg.extras": "tests/fixtures/edges_pkg_v1/pkg/extras.py", "tests.fixtures.edges_pkg_v1.pkg.util": "tests/fixtures/edges_pkg_v1/pkg/util.py", "tests.fixtures.edges_pkg_v2.pkg": "tests/fixtures/edges_pkg_v2/pkg/__init__.py", "tests.fixtures.edges_pkg_v2.pkg.base": "tests/fixtures/edges_pkg_v2/pkg/base.py", "tests.fixtures.edges_pkg_v2.pkg.core": "tests/fixtures/edges_pkg_v2/pkg/core.py", "tests.fixtures.edges_pkg_v2.pkg.extras": "tests/fixtures/edges_pkg_v2/pkg/extras.py", "tests.fixtures.edges_pkg_v2.pkg.util": "tests/fixtures/edges_pkg_v2/pkg/util.py", "tests.fixtures.purpose_repo.pkg": "tests/fixtures/purpose_repo/pkg/__init__.py", "tests.fixtures.purpose_repo.pkg.a": "tests/fixtures/purpose_repo/pkg/a/__init__.py", "tests.fixtures.purpose_repo.pkg.a.helpers": "tests/fixtures/purpose_repo/pkg/a/helpers.py", "tests.fixtures.purpose_repo.pkg.b": "tests/fixtures/purpose_repo/pkg/b/__init__.py", "tests.fixtures.purpose_repo.pkg.b.helpers": "tests/fixtures/purpose_repo/pkg/b/helpers.py", "tests.fixtures.purpose_repo.pkg.cli": "tests/fixtures/purpose_repo/pkg/cli.py", "tests.fixtures.purpose_repo.pkg.core": "tests/fixtures/purpose_repo/pkg/core.py", "tests.fixtures.purpose_repo.pkg.util": "tests/fixtures/purpose_repo/pkg/util.py", "tests.test_aec": "tests/test_aec.py", "tests.test_code_impact": "tests/test_code_impact.py", "tests.test_docs_truth": "tests/test_docs_truth.py", "tests.test_edges": "tests/test_edges.py", "tests.test_extension": "tests/test_extension.py", "tests.test_import_purpose": "tests/test_import_purpose.py", "tests.test_init": "tests/test_init.py", "tests.test_install": "tests/test_install.py", "tests.test_reconstruct_decisions": "tests/test_reconstruct_decisions.py", "tests.test_sources": "tests/test_sources.py", "tests.test_stdlib_only": "tests/test_stdlib_only.py", "tools.reconstruct_decisions": "tools/reconstruct_decisions.py"}, "root": ".", "skipped": [{"file": "tests/fixtures/edges_pkg_v1/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}, {"file": "tests/fixtures/edges_pkg_v2/pkg/broken.py", "reason": "SyntaxError: invalid syntax (broken.py, line 1)"}], "source_roots": ["src"], "tool_version": "0.3.0"}
+{"body_sha": "df32829d9787", "dst": "docs.evaluations.probe-001.hidden.test_T1_functionality._df", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "defines", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"body_sha": "a42822e6f644", "dst": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_does_not_render_column_plots", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "defines", "line": 27, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"body_sha": "8d100efbcd28", "dst": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_returns_dataset_level_results", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "defines", "line": 18, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"body_sha": "f4c60153267b", "dst": "docs.evaluations.probe-001.hidden.test_T1_preservation.FIXTURE", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "defines", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"body_sha": "9d232c255f49", "dst": "docs.evaluations.probe-001.hidden.test_T1_preservation._gdf", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "defines", "line": 17, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"body_sha": "dbb1fa93e083", "dst": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_cli_profile_report_contains_column_statistics", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "defines", "line": 39, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"body_sha": "65ebaf8e61c0", "dst": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_columns_only", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "defines", "line": 34, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"body_sha": "8b9aaf2a8979", "dst": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_still_has_column_profiles", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "defines", "line": 26, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"body_sha": "9f163a5f4524", "dst": "docs.evaluations.probe-001.hidden.test_T2_functionality._df", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "defines", "line": 9, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality"}
+{"body_sha": "0d25fdfedb61", "dst": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_returned_artifact_matches_written_json", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "defines", "line": 21, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality"}
+{"body_sha": "a4619c385a11", "dst": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_understand_returns_artifact", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "defines", "line": 13, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality"}
+{"body_sha": "88dbd4f337d3", "dst": "docs.evaluations.probe-001.hidden.test_T2_preservation.runner", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "defines", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"body_sha": "dde7187d00f0", "dst": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_demo_reports_written_paths", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "defines", "line": 21, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"body_sha": "f502d8e89eb9", "dst": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_understand_reports_written_paths", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "defines", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"body_sha": "8f9776702f6e", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.CREDS", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 13, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "0166cfefab61", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.SF_ENV", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 15, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "86f2ff9d1512", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation._clean_env", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 19, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "d8a453d8b03b", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_env", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 45, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "417f9151d8d3", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 31, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "945f7822cdbb", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 54, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "479b6cc2a112", "dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_credentials_module_and_loader_exist", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "defines", "line": 25, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"body_sha": "bcda81a7c337", "dst": "docs.evaluations.probe-001.tools.briefing.briefing", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 80, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "f8d43248f91a", "dst": "docs.evaluations.probe-001.tools.briefing.callers", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 43, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "e47de38bd12e", "dst": "docs.evaluations.probe-001.tools.briefing.decoy_candidates", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 111, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "9aee32961d98", "dst": "docs.evaluations.probe-001.tools.briefing.decoy_for", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 96, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "24ee847e7220", "dst": "docs.evaluations.probe-001.tools.briefing.index", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 24, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "df9c3a1eda67", "dst": "docs.evaluations.probe-001.tools.briefing.load", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 17, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "7485fe9897bc", "dst": "docs.evaluations.probe-001.tools.briefing.module_of", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 34, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "672f9fde0fcd", "dst": "docs.evaluations.probe-001.tools.briefing.neighbourhood", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "defines", "line": 48, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"body_sha": "414861dab674", "dst": "docs.evaluations.probe-001.tools.grade.HIDDEN", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "defines", "line": 9, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"body_sha": "4cc69d4d42cb", "dst": "docs.evaluations.probe-001.tools.grade.ROOT", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "defines", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"body_sha": "f1885cdb763d", "dst": "docs.evaluations.probe-001.tools.grade.SEALED", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "defines", "line": 8, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"body_sha": "b94ae126156d", "dst": "docs.evaluations.probe-001.tools.grade.out", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "defines", "line": 11, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"body_sha": "07c31481494b", "dst": "docs.evaluations.probe-001.tools.grade.pytest", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "defines", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"body_sha": "0bfa0cd93d9c", "dst": "docs.evaluations.probe-001.tools.grade.sched", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "defines", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"body_sha": "f17628ef6467", "dst": "docs.evaluations.probe-001.tools.schedule.ids", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "defines", "line": 6, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"body_sha": "9391ecbf3c85", "dst": "docs.evaluations.probe-001.tools.schedule.sched", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "defines", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"body_sha": "68a7279739f5", "dst": "docs.evaluations.probe-001.tools.schedule.trials", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "defines", "line": 3, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"body_sha": "e0cf2461e08d", "dst": "docs.evaluations.probe-001.tools.transcript.ROOT", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "defines", "line": 8, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"body_sha": "0fa3d8efd9f6", "dst": "docs.evaluations.probe-001.tools.transcript.TASKS", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "defines", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
 {"body_sha": "4723523e56e5", "dst": "src.aec.__version__", "file": "src/aec/__init__.py", "kind": "defines", "line": 3, "resolved": true, "src": "src.aec"}
 {"body_sha": "d9010b3be5e1", "dst": "src.aec.__main__._changes", "file": "src/aec/__main__.py", "kind": "defines", "line": 27, "resolved": true, "src": "src.aec.__main__"}
 {"body_sha": "17a70e853f8a", "dst": "src.aec.__main__._git_user", "file": "src/aec/__main__.py", "kind": "defines", "line": 40, "resolved": true, "src": "src.aec.__main__"}
@@ -57,13 +97,13 @@
 {"body_sha": "81682862a89b", "dst": "src.aec.impact.impact", "file": "src/aec/impact.py", "kind": "defines", "line": 79, "resolved": true, "src": "src.aec.impact"}
 {"body_sha": "79c72d77e91b", "dst": "src.aec.impact.render", "file": "src/aec/impact.py", "kind": "defines", "line": 167, "resolved": true, "src": "src.aec.impact"}
 {"body_sha": "6c29987861a0", "dst": "src.aec.impact.ImpactReport.by_status", "file": "src/aec/impact.py", "kind": "defines", "line": 35, "resolved": true, "src": "src.aec.impact.ImpactReport"}
-{"body_sha": "3bf0dd08988e", "dst": "src.aec.init.AEC_SOURCE", "file": "src/aec/init.py", "kind": "defines", "line": 14, "resolved": true, "src": "src.aec.init"}
-{"body_sha": "010ca94ea60f", "dst": "src.aec.init.CI", "file": "src/aec/init.py", "kind": "defines", "line": 47, "resolved": true, "src": "src.aec.init"}
-{"body_sha": "9291fc634877", "dst": "src.aec.init.HOOK", "file": "src/aec/init.py", "kind": "defines", "line": 32, "resolved": true, "src": "src.aec.init"}
-{"body_sha": "7306d0d0f14d", "dst": "src.aec.init.README", "file": "src/aec/init.py", "kind": "defines", "line": 16, "resolved": true, "src": "src.aec.init"}
-{"body_sha": "d08d1630c84f", "dst": "src.aec.init._records", "file": "src/aec/init.py", "kind": "defines", "line": 65, "resolved": true, "src": "src.aec.init"}
-{"body_sha": "4ad6988ef4fb", "dst": "src.aec.init.init", "file": "src/aec/init.py", "kind": "defines", "line": 76, "resolved": true, "src": "src.aec.init"}
-{"body_sha": "3a65680b4fdd", "dst": "src.aec.init.init.<locals>.put", "file": "src/aec/init.py", "kind": "defines", "line": 81, "resolved": true, "src": "src.aec.init.init"}
+{"body_sha": "3bf0dd08988e", "dst": "src.aec.init.AEC_SOURCE", "file": "src/aec/init.py", "kind": "defines", "line": 15, "resolved": true, "src": "src.aec.init"}
+{"body_sha": "2660bf9a1562", "dst": "src.aec.init.CI", "file": "src/aec/init.py", "kind": "defines", "line": 48, "resolved": true, "src": "src.aec.init"}
+{"body_sha": "9291fc634877", "dst": "src.aec.init.HOOK", "file": "src/aec/init.py", "kind": "defines", "line": 33, "resolved": true, "src": "src.aec.init"}
+{"body_sha": "7306d0d0f14d", "dst": "src.aec.init.README", "file": "src/aec/init.py", "kind": "defines", "line": 17, "resolved": true, "src": "src.aec.init"}
+{"body_sha": "d08d1630c84f", "dst": "src.aec.init._records", "file": "src/aec/init.py", "kind": "defines", "line": 67, "resolved": true, "src": "src.aec.init"}
+{"body_sha": "4ad6988ef4fb", "dst": "src.aec.init.init", "file": "src/aec/init.py", "kind": "defines", "line": 78, "resolved": true, "src": "src.aec.init"}
+{"body_sha": "3a65680b4fdd", "dst": "src.aec.init.init.<locals>.put", "file": "src/aec/init.py", "kind": "defines", "line": 83, "resolved": true, "src": "src.aec.init.init"}
 {"body_sha": "bd336ea43b6b", "dst": "src.aec.purpose_import.HEADER", "file": "src/aec/purpose_import.py", "kind": "defines", "line": 20, "resolved": true, "src": "src.aec.purpose_import"}
 {"body_sha": "db644293a493", "dst": "src.aec.purpose_import.PEOPLE", "file": "src/aec/purpose_import.py", "kind": "defines", "line": 22, "resolved": true, "src": "src.aec.purpose_import"}
 {"body_sha": "dcc02032c94f", "dst": "src.aec.purpose_import.PLACEHOLDER", "file": "src/aec/purpose_import.py", "kind": "defines", "line": 21, "resolved": true, "src": "src.aec.purpose_import"}
@@ -92,8 +132,10 @@
 {"body_sha": "3d0e08151fb0", "dst": "src.aec.records.Store", "file": "src/aec/records.py", "kind": "defines", "line": 51, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "794882402acf", "dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "defines", "line": 19, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "be1cc61ebe3e", "dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "defines", "line": 11, "resolved": true, "src": "src.aec.records"}
-{"body_sha": "b91e83e08434", "dst": "src.aec.records.check", "file": "src/aec/records.py", "kind": "defines", "line": 108, "resolved": true, "src": "src.aec.records"}
-{"body_sha": "532f068e4dd8", "dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "defines", "line": 98, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "a57f403684e3", "dst": "src.aec.records._near", "file": "src/aec/records.py", "kind": "defines", "line": 98, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "edfe7eca1980", "dst": "src.aec.records._ref_shaped", "file": "src/aec/records.py", "kind": "defines", "line": 112, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "7eb814d21191", "dst": "src.aec.records.check", "file": "src/aec/records.py", "kind": "defines", "line": 128, "resolved": true, "src": "src.aec.records"}
+{"body_sha": "532f068e4dd8", "dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "defines", "line": 118, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "fb9e909df5e8", "dst": "src.aec.records.ref", "file": "src/aec/records.py", "kind": "defines", "line": 22, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "cb635a09f6a5", "dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "defines", "line": 26, "resolved": true, "src": "src.aec.records"}
 {"body_sha": "1c2d97e3c362", "dst": "src.aec.records.Record.get", "file": "src/aec/records.py", "kind": "defines", "line": 47, "resolved": true, "src": "src.aec.records.Record"}
@@ -165,12 +207,17 @@
 {"body_sha": "c841f511bac1", "dst": "tests.fixtures.purpose_repo.pkg.util.clean", "file": "tests/fixtures/purpose_repo/pkg/util.py", "kind": "defines", "line": 1, "resolved": true, "src": "tests.fixtures.purpose_repo.pkg.util"}
 {"body_sha": "dbd36421f3f1", "dst": "tests.test_aec.PILOT", "file": "tests/test_aec.py", "kind": "defines", "line": 19, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "3f0f179dfb51", "dst": "tests.test_aec.ROOT", "file": "tests/test_aec.py", "kind": "defines", "line": 14, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "6a545d66e9d9", "dst": "tests.test_aec.TestMisplacedRelation", "file": "tests/test_aec.py", "kind": "defines", "line": 178, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "9ff88c7aa24b", "dst": "tests.test_aec.TestOutcomeSufficiency", "file": "tests/test_aec.py", "kind": "defines", "line": 140, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "fd0b2f343cb4", "dst": "tests.test_aec.TestPilot", "file": "tests/test_aec.py", "kind": "defines", "line": 36, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "564cf9f6f9cb", "dst": "tests.test_aec.TestSemantics", "file": "tests/test_aec.py", "kind": "defines", "line": 74, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "cda3c6d1135f", "dst": "tests.test_aec.changes", "file": "tests/test_aec.py", "kind": "defines", "line": 22, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "aae3b0538c35", "dst": "tests.test_aec.statuses", "file": "tests/test_aec.py", "kind": "defines", "line": 26, "resolved": true, "src": "tests.test_aec"}
 {"body_sha": "b352eeee15f7", "dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "defines", "line": 30, "resolved": true, "src": "tests.test_aec"}
+{"body_sha": "0976790ef392", "dst": "tests.test_aec.TestMisplacedRelation.findings", "file": "tests/test_aec.py", "kind": "defines", "line": 184, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation"}
+{"body_sha": "7fbddb353fd8", "dst": "tests.test_aec.TestMisplacedRelation.test_date_valued_field_named_like_a_relation_is_not_flagged", "file": "tests/test_aec.py", "kind": "defines", "line": 194, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation"}
+{"body_sha": "852e0f4f70be", "dst": "tests.test_aec.TestMisplacedRelation.test_relations_array_decoy_is_not_flagged", "file": "tests/test_aec.py", "kind": "defines", "line": 198, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation"}
+{"body_sha": "428039e24383", "dst": "tests.test_aec.TestMisplacedRelation.test_top_level_relation_is_flagged", "file": "tests/test_aec.py", "kind": "defines", "line": 187, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation"}
 {"body_sha": "7971016a780f", "dst": "tests.test_aec.TestOutcomeSufficiency.run_check", "file": "tests/test_aec.py", "kind": "defines", "line": 141, "resolved": true, "src": "tests.test_aec.TestOutcomeSufficiency"}
 {"body_sha": "4dc27b010788", "dst": "tests.test_aec.TestOutcomeSufficiency.test_outcome_claim_on_conformance_only_warns", "file": "tests/test_aec.py", "kind": "defines", "line": 148, "resolved": true, "src": "tests.test_aec.TestOutcomeSufficiency"}
 {"body_sha": "c0bbb7cf0309", "dst": "tests.test_aec.TestOutcomeSufficiency.test_outcome_observation_makes_it_pass", "file": "tests/test_aec.py", "kind": "defines", "line": 154, "resolved": true, "src": "tests.test_aec.TestOutcomeSufficiency"}
@@ -195,20 +242,21 @@
 {"body_sha": "6eea5e6c99a9", "dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "defines", "line": 10, "resolved": true, "src": "tests.test_code_impact"}
 {"body_sha": "3f0f179dfb51", "dst": "tests.test_code_impact.ROOT", "file": "tests/test_code_impact.py", "kind": "defines", "line": 8, "resolved": true, "src": "tests.test_code_impact"}
 {"body_sha": "2523817148cd", "dst": "tests.test_code_impact.TestCodeImpact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 16, "resolved": true, "src": "tests.test_code_impact"}
-{"body_sha": "0fcc65674795", "dst": "tests.test_code_impact.TestDanglingCodeRefs", "file": "tests/test_code_impact.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_code_impact"}
-{"body_sha": "6fea26f2df59", "dst": "tests.test_code_impact.TestObservedOn", "file": "tests/test_code_impact.py", "kind": "defines", "line": 69, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "2d5d50c2aad9", "dst": "tests.test_code_impact.TestDanglingCodeRefs", "file": "tests/test_code_impact.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_code_impact"}
+{"body_sha": "6fea26f2df59", "dst": "tests.test_code_impact.TestObservedOn", "file": "tests/test_code_impact.py", "kind": "defines", "line": 84, "resolved": true, "src": "tests.test_code_impact"}
 {"body_sha": "24402408d94b", "dst": "tests.test_code_impact.TestCodeImpact.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 18, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"body_sha": "2f3d15129142", "dst": "tests.test_code_impact.TestCodeImpact.test_changed_symbol_reaches_requirement_claim_and_decision", "file": "tests/test_code_impact.py", "kind": "defines", "line": 24, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"body_sha": "07ddba13f32a", "dst": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_breaks_satisfaction_not_the_requirement", "file": "tests/test_code_impact.py", "kind": "defines", "line": 30, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"body_sha": "7a72e95c66bf", "dst": "tests.test_code_impact.TestCodeImpact.test_deleted_symbol_still_unjustifies_a_claim_that_depends_on_it", "file": "tests/test_code_impact.py", "kind": "defines", "line": 35, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"body_sha": "46c17003dead", "dst": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact", "file": "tests/test_code_impact.py", "kind": "defines", "line": 45, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"body_sha": "8f9a003c3cc4", "dst": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged", "file": "tests/test_code_impact.py", "kind": "defines", "line": 42, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
-{"body_sha": "6690cf87087f", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors", "file": "tests/test_code_impact.py", "kind": "defines", "line": 62, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"body_sha": "6690cf87087f", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors", "file": "tests/test_code_impact.py", "kind": "defines", "line": 77, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
 {"body_sha": "cb0f92708c5d", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid", "file": "tests/test_code_impact.py", "kind": "defines", "line": 51, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
-{"body_sha": "df115e3feade", "dst": "tests.test_code_impact.TestObservedOn.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 73, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
-{"body_sha": "450a811477e6", "dst": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 89, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
-{"body_sha": "419731649ae9", "dst": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 93, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
-{"body_sha": "4d6857146b52", "dst": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing", "file": "tests/test_code_impact.py", "kind": "defines", "line": 98, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "ca0174b46845", "dst": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols", "file": "tests/test_code_impact.py", "kind": "defines", "line": 62, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
+{"body_sha": "df115e3feade", "dst": "tests.test_code_impact.TestObservedOn.setUpClass", "file": "tests/test_code_impact.py", "kind": "defines", "line": 88, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "450a811477e6", "dst": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 104, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "419731649ae9", "dst": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review", "file": "tests/test_code_impact.py", "kind": "defines", "line": 108, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"body_sha": "4d6857146b52", "dst": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing", "file": "tests/test_code_impact.py", "kind": "defines", "line": 113, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
 {"body_sha": "3f0f179dfb51", "dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 9, "resolved": true, "src": "tests.test_docs_truth"}
 {"body_sha": "3d000c9d79e6", "dst": "tests.test_docs_truth.TestAnchorOutputTruth", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 76, "resolved": true, "src": "tests.test_docs_truth"}
 {"body_sha": "84d90532d0d9", "dst": "tests.test_docs_truth.TestDocsTruth", "file": "tests/test_docs_truth.py", "kind": "defines", "line": 50, "resolved": true, "src": "tests.test_docs_truth"}
@@ -290,8 +338,10 @@
 {"body_sha": "58257bfc2ca4", "dst": "tests.test_import_purpose.TestImport.test_template_is_skipped", "file": "tests/test_import_purpose.py", "kind": "defines", "line": 90, "resolved": true, "src": "tests.test_import_purpose.TestImport"}
 {"body_sha": "6eea5e6c99a9", "dst": "tests.test_init.FIX", "file": "tests/test_init.py", "kind": "defines", "line": 12, "resolved": true, "src": "tests.test_init"}
 {"body_sha": "3f0f179dfb51", "dst": "tests.test_init.ROOT", "file": "tests/test_init.py", "kind": "defines", "line": 10, "resolved": true, "src": "tests.test_init"}
+{"body_sha": "f5aacc247bc1", "dst": "tests.test_init.TestCiSnippetPinned", "file": "tests/test_init.py", "kind": "defines", "line": 73, "resolved": true, "src": "tests.test_init"}
 {"body_sha": "f7b68630bd28", "dst": "tests.test_init.TestInit", "file": "tests/test_init.py", "kind": "defines", "line": 24, "resolved": true, "src": "tests.test_init"}
 {"body_sha": "74197ad20d6e", "dst": "tests.test_init.fresh_repo", "file": "tests/test_init.py", "kind": "defines", "line": 18, "resolved": true, "src": "tests.test_init"}
+{"body_sha": "488effdc730b", "dst": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release", "file": "tests/test_init.py", "kind": "defines", "line": 76, "resolved": true, "src": "tests.test_init.TestCiSnippetPinned"}
 {"body_sha": "e1f6dd01dcdc", "dst": "tests.test_init.TestInit.test_cli", "file": "tests/test_init.py", "kind": "defines", "line": 62, "resolved": true, "src": "tests.test_init.TestInit"}
 {"body_sha": "c492972c6831", "dst": "tests.test_init.TestInit.test_plain_repo_gets_working_setup", "file": "tests/test_init.py", "kind": "defines", "line": 25, "resolved": true, "src": "tests.test_init.TestInit"}
 {"body_sha": "df56df21cce4", "dst": "tests.test_init.TestInit.test_second_run_overwrites_nothing", "file": "tests/test_init.py", "kind": "defines", "line": 40, "resolved": true, "src": "tests.test_init.TestInit"}
@@ -371,6 +421,46 @@
 {"body_sha": "d8c44dfe101b", "dst": "tools.reconstruct_decisions.main", "file": "tools/reconstruct_decisions.py", "kind": "defines", "line": 150, "resolved": true, "src": "tools.reconstruct_decisions"}
 {"body_sha": "cd873d575ea6", "dst": "tools.reconstruct_decisions.reconstruct", "file": "tools/reconstruct_decisions.py", "kind": "defines", "line": 74, "resolved": true, "src": "tools.reconstruct_decisions"}
 {"body_sha": "1477deb3cce5", "dst": "tools.reconstruct_decisions.confirmation.<locals>.cell", "file": "tools/reconstruct_decisions.py", "kind": "defines", "line": 58, "resolved": true, "src": "tools.reconstruct_decisions.confirmation"}
+{"dst": "data_profiler.DataProfiler", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "imports", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"dst": "matplotlib", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "imports", "line": 2, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"dst": "pandas", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "imports", "line": 5, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "matplotlib", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 2, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "pandas", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "pathlib.Path", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 5, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "profilers.univariate.profile", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 12, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "src.core.models.GuideDataFrame", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 11, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "src.core.models.SchemaContract", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 11, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "typer.testing.CliRunner", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "imports", "line": 8, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "json", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "imports", "line": 2, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality"}
+{"dst": "pandas", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality"}
+{"dst": "understanding.workflow.understand", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "imports", "line": 6, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "imports", "line": 5, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"dst": "pandas", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "imports", "line": 2, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"dst": "typer.testing.CliRunner", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "imports", "line": 3, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"dst": "cli", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 11, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "json", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 2, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "pandas", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 5, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "pytest", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 6, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "typer.testing.CliRunner", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 8, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "unittest.mock.MagicMock", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 3, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "unittest.mock.patch", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 3, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "yaml", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "connectors.credentials", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "imports", "line": 26, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_credentials_module_and_loader_exist"}
+{"dst": "collections.defaultdict", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "imports", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "json", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "imports", "line": 12, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "sys", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "imports", "line": 13, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "json", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "pathlib.Path", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "imports", "line": 5, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "shutil", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "subprocess", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "sys", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "json", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "imports", "line": 1, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "random", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "imports", "line": 1, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "json", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "pathlib.Path", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "imports", "line": 5, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "sys", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "imports", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
 {"dst": "__future__.annotations", "file": "src/aec/__main__.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.__main__"}
 {"dst": "argparse", "file": "src/aec/__main__.py", "kind": "imports", "line": 15, "resolved": true, "src": "src.aec.__main__"}
 {"dst": "dataclasses.asdict", "file": "src/aec/__main__.py", "kind": "imports", "line": 18, "resolved": true, "src": "src.aec.__main__"}
@@ -418,7 +508,8 @@
 {"dst": "__future__.annotations", "file": "src/aec/init.py", "kind": "imports", "line": 7, "resolved": true, "src": "src.aec.init"}
 {"dst": "json", "file": "src/aec/init.py", "kind": "imports", "line": 9, "resolved": true, "src": "src.aec.init"}
 {"dst": "pathlib.Path", "file": "src/aec/init.py", "kind": "imports", "line": 10, "resolved": true, "src": "src.aec.init"}
-{"dst": "src.aec.edges", "file": "src/aec/init.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.init"}
+{"dst": "src.aec.__version__", "file": "src/aec/init.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.init"}
+{"dst": "src.aec.edges", "file": "src/aec/init.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.init"}
 {"dst": "__future__.annotations", "file": "src/aec/purpose_import.py", "kind": "imports", "line": 11, "resolved": true, "src": "src.aec.purpose_import"}
 {"dst": "hashlib", "file": "src/aec/purpose_import.py", "kind": "imports", "line": 13, "resolved": true, "src": "src.aec.purpose_import"}
 {"dst": "json", "file": "src/aec/purpose_import.py", "kind": "imports", "line": 14, "resolved": true, "src": "src.aec.purpose_import"}
@@ -432,8 +523,9 @@
 {"dst": "dataclasses.field", "file": "src/aec/records.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.records"}
 {"dst": "json", "file": "src/aec/records.py", "kind": "imports", "line": 7, "resolved": true, "src": "src.aec.records"}
 {"dst": "pathlib.Path", "file": "src/aec/records.py", "kind": "imports", "line": 9, "resolved": true, "src": "src.aec.records"}
-{"dst": "src.aec.sources.SourceContext", "file": "src/aec/records.py", "kind": "imports", "line": 139, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.sources.record_findings", "file": "src/aec/records.py", "kind": "imports", "line": 139, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "difflib", "file": "src/aec/records.py", "kind": "imports", "line": 102, "resolved": true, "src": "src.aec.records._near"}
+{"dst": "src.aec.sources.SourceContext", "file": "src/aec/records.py", "kind": "imports", "line": 166, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.record_findings", "file": "src/aec/records.py", "kind": "imports", "line": 166, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "__future__.annotations", "file": "src/aec/sources.py", "kind": "imports", "line": 6, "resolved": true, "src": "src.aec.sources"}
 {"dst": "dataclasses.dataclass", "file": "src/aec/sources.py", "kind": "imports", "line": 12, "resolved": true, "src": "src.aec.sources"}
 {"dst": "hashlib", "file": "src/aec/sources.py", "kind": "imports", "line": 8, "resolved": true, "src": "src.aec.sources"}
@@ -536,6 +628,8 @@
 {"dst": "sys", "file": "tests/test_init.py", "kind": "imports", "line": 4, "resolved": true, "src": "tests.test_init"}
 {"dst": "tempfile", "file": "tests/test_init.py", "kind": "imports", "line": 5, "resolved": true, "src": "tests.test_init"}
 {"dst": "unittest", "file": "tests/test_init.py", "kind": "imports", "line": 6, "resolved": true, "src": "tests.test_init"}
+{"dst": "src.aec.__version__", "file": "tests/test_init.py", "kind": "imports", "line": 77, "resolved": true, "src": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release"}
+{"dst": "src.aec.init.CI", "file": "tests/test_init.py", "kind": "imports", "line": 78, "resolved": true, "src": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release"}
 {"dst": "src.aec.__main__.main", "file": "tests/test_init.py", "kind": "imports", "line": 63, "resolved": true, "src": "tests.test_init.TestInit.test_cli"}
 {"dst": "os", "file": "tests/test_install.py", "kind": "imports", "line": 2, "resolved": true, "src": "tests.test_install"}
 {"dst": "pathlib.Path", "file": "tests/test_install.py", "kind": "imports", "line": 7, "resolved": true, "src": "tests.test_install"}
@@ -599,12 +693,13 @@
 {"dst": "src.aec.records.check", "file": "tools/reconstruct_decisions.py", "kind": "imports", "line": 16, "resolved": true, "src": "tools.reconstruct_decisions"}
 {"dst": "tests.fixtures.edges_pkg_v1.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v1/pkg/core.py", "kind": "inherits", "line": 8, "resolved": true, "src": "tests.fixtures.edges_pkg_v1.pkg.core.Worker"}
 {"dst": "tests.fixtures.edges_pkg_v2.pkg.base.Base", "file": "tests/fixtures/edges_pkg_v2/pkg/core.py", "kind": "inherits", "line": 8, "resolved": true, "src": "tests.fixtures.edges_pkg_v2.pkg.core.Worker"}
+{"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 178, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation"}
 {"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 140, "resolved": true, "src": "tests.test_aec.TestOutcomeSufficiency"}
 {"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 36, "resolved": true, "src": "tests.test_aec.TestPilot"}
 {"dst": "unittest.TestCase", "file": "tests/test_aec.py", "kind": "inherits", "line": 74, "resolved": true, "src": "tests.test_aec.TestSemantics"}
 {"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 16, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact"}
 {"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 50, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs"}
-{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 69, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
+{"dst": "unittest.TestCase", "file": "tests/test_code_impact.py", "kind": "inherits", "line": 84, "resolved": true, "src": "tests.test_code_impact.TestObservedOn"}
 {"dst": "unittest.TestCase", "file": "tests/test_docs_truth.py", "kind": "inherits", "line": 76, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth"}
 {"dst": "unittest.TestCase", "file": "tests/test_docs_truth.py", "kind": "inherits", "line": 50, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth"}
 {"dst": "unittest.TestCase", "file": "tests/test_edges.py", "kind": "inherits", "line": 49, "resolved": true, "src": "tests.test_edges.TestDeterminism"}
@@ -618,6 +713,7 @@
 {"dst": "unittest.TestCase", "file": "tests/test_import_purpose.py", "kind": "inherits", "line": 155, "resolved": true, "src": "tests.test_import_purpose.TestContracts"}
 {"dst": "unittest.TestCase", "file": "tests/test_import_purpose.py", "kind": "inherits", "line": 112, "resolved": true, "src": "tests.test_import_purpose.TestIdempotence"}
 {"dst": "unittest.TestCase", "file": "tests/test_import_purpose.py", "kind": "inherits", "line": 41, "resolved": true, "src": "tests.test_import_purpose.TestImport"}
+{"dst": "unittest.TestCase", "file": "tests/test_init.py", "kind": "inherits", "line": 73, "resolved": true, "src": "tests.test_init.TestCiSnippetPinned"}
 {"dst": "unittest.TestCase", "file": "tests/test_init.py", "kind": "inherits", "line": 24, "resolved": true, "src": "tests.test_init.TestInit"}
 {"dst": "unittest.TestCase", "file": "tests/test_install.py", "kind": "inherits", "line": 13, "resolved": true, "src": "tests.test_install.TestInstall"}
 {"dst": "unittest.TestCase", "file": "tests/test_install.py", "kind": "inherits", "line": 36, "resolved": true, "src": "tests.test_install.TestVersionAgreement"}
@@ -632,6 +728,155 @@
 {"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 188, "resolved": true, "src": "tests.test_sources.TestSourceSearch"}
 {"dst": "tests.test_sources.SourceFixture", "file": "tests/test_sources.py", "kind": "inherits", "line": 141, "resolved": true, "src": "tests.test_sources.TestSourceShow"}
 {"dst": "unittest.TestCase", "file": "tests/test_stdlib_only.py", "kind": "inherits", "line": 10, "resolved": true, "src": "tests.test_stdlib_only.TestStdlibOnly"}
+{"dst": "matplotlib.use", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 3, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality"}
+{"dst": "pandas.DataFrame", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 11, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality._df"}
+{"dst": "pandas.date_range", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality._df"}
+{"dst": "?p.profile_dataset", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 29, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_does_not_render_column_plots"}
+{"dst": "?p.results.get", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 32, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_does_not_render_column_plots"}
+{"dst": "?tmp_path.rglob", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 30, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_does_not_render_column_plots"}
+{"dst": "data_profiler.DataProfiler", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 28, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_does_not_render_column_plots"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T1_functionality._df", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 28, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_does_not_render_column_plots"}
+{"dst": "?p.profile_dataset", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 20, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_returns_dataset_level_results"}
+{"dst": "data_profiler.DataProfiler", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 19, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_returns_dataset_level_results"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T1_functionality._df", "file": "docs/evaluations/probe-001/hidden/test_T1_functionality.py", "kind": "calls", "line": 19, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_functionality.test_profile_dataset_returns_dataset_level_results"}
+{"dst": "matplotlib.use", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 3, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "pathlib.Path", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation"}
+{"dst": "pandas.DataFrame", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 18, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation._gdf"}
+{"dst": "src.core.models.GuideDataFrame", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 23, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation._gdf"}
+{"dst": "src.core.models.SchemaContract", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 23, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation._gdf"}
+{"dst": "?CliRunner(...).invoke", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 41, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_cli_profile_report_contains_column_statistics"}
+{"dst": "?out.read_text", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 43, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_cli_profile_report_contains_column_statistics"}
+{"dst": "typer.testing.CliRunner", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 41, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_cli_profile_report_contains_column_statistics"}
+{"dst": "?res.column_stats.get", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 36, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_columns_only"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T1_preservation._gdf", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 35, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_columns_only"}
+{"dst": "profilers.univariate.profile", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 35, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_columns_only"}
+{"dst": "?res.column_stats.get", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 29, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_still_has_column_profiles"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T1_preservation._gdf", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 27, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_still_has_column_profiles"}
+{"dst": "profilers.univariate.profile", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "calls", "line": 27, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_univariate_profile_still_has_column_profiles"}
+{"dst": "pandas.DataFrame", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality._df"}
+{"dst": "?binop.exists", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 25, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_returned_artifact_matches_written_json"}
+{"dst": "?binop.read_text", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 23, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_returned_artifact_matches_written_json"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T2_functionality._df", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 22, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_returned_artifact_matches_written_json"}
+{"dst": "json.loads", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 23, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_returned_artifact_matches_written_json"}
+{"dst": "understanding.workflow.understand", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 22, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_returned_artifact_matches_written_json"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T2_functionality._df", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_understand_returns_artifact"}
+{"dst": "understanding.workflow.understand", "file": "docs/evaluations/probe-001/hidden/test_T2_functionality.py", "kind": "calls", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_functionality.test_understand_returns_artifact"}
+{"dst": "typer.testing.CliRunner", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "calls", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T2_preservation.runner.invoke", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "calls", "line": 23, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_demo_reports_written_paths"}
+{"dst": "?binop.exists", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "calls", "line": 17, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_understand_reports_written_paths"}
+{"dst": "?pd.DataFrame(...).to_csv", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "calls", "line": 12, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_understand_reports_written_paths"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T2_preservation.runner.invoke", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "calls", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_understand_reports_written_paths"}
+{"dst": "pandas.DataFrame", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "calls", "line": 12, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_understand_reports_written_paths"}
+{"dst": "pytest.fixture", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 18, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation"}
+{"dst": "?monkeypatch.delenv", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 20, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation._clean_env"}
+{"dst": "?conn.connect", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 50, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_env"}
+{"dst": "?monkeypatch.setenv", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 47, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_env"}
+{"dst": "cli._build_connector", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 49, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_env"}
+{"dst": "unittest.mock.patch", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 48, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_env"}
+{"dst": "?conn.connect", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 38, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "?conn.load", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 39, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "?f.write_text", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 33, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "cli._build_connector", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 37, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "json.dumps", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 33, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "pandas.DataFrame", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 35, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "unittest.mock.MagicMock", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 36, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "unittest.mock.patch", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 34, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "?CliRunner(...).invoke", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 60, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "?bad.write_text", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 56, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "?cfg.write_text", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 58, "resolved": false, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "json.dumps", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 56, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "typer.testing.CliRunner", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 60, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "yaml.dump", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "calls", "line": 58, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.briefing", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 136, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.decoy_for", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 132, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.load", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 129, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "?constant.join", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 93, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.briefing"}
+{"dst": "?e.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 82, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.briefing"}
+{"dst": "?parts.append", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 90, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.briefing"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.index", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 81, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.briefing"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.neighbourhood", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 89, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.briefing"}
+{"dst": "?by_dst.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 44, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.callers"}
+{"dst": "?e.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 45, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.callers"}
+{"dst": "?by_dst.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 121, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.decoy_candidates"}
+{"dst": "?cands.append", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 123, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.decoy_candidates"}
+{"dst": "?cands.sort", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 124, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.decoy_candidates"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.callers", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 113, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.decoy_candidates"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.index", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 112, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.decoy_candidates"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.module_of", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 114, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.decoy_candidates"}
+{"dst": "?constant.join", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 105, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.decoy_for"}
+{"dst": "?log.append", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 105, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.decoy_for"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.decoy_candidates", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 100, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.decoy_for"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.index", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 99, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.decoy_for"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.neighbourhood", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 101, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.decoy_for"}
+{"dst": "?by_dst[...].append", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 27, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.index"}
+{"dst": "?by_src[...].append", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 28, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.index"}
+{"dst": "collections.defaultdict", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 25, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.index"}
+{"dst": "?f.readline", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 19, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.load"}
+{"dst": "?line.strip", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 20, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.load"}
+{"dst": "json.loads", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 19, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.load"}
+{"dst": "?constant.join", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 38, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.module_of"}
+{"dst": "?header.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 35, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.module_of"}
+{"dst": "?sym.split", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 36, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.module_of"}
+{"dst": "?by_dst.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 58, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?by_src.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 68, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?constant.join", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 57, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?defs.get", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 50, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?mod.split", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 57, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?out.append", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 51, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?sym.split", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 56, "resolved": false, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.callers", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 52, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "docs.evaluations.probe-001.tools.briefing.module_of", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "calls", "line": 55, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing.neighbourhood"}
+{"dst": "?binop.exists", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 37, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?binop.read_text", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 10, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?binop.write_text", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 28, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?constant.join", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 46, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?diff.strip", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 37, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?diff.strip(...).splitlines", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 37, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?f.exists", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 41, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?f.relative_to", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 42, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?scratch.exists", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 30, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?untracked.strip", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 38, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?untracked.strip(...).splitlines", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 38, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "docs.evaluations.probe-001.tools.grade.HIDDEN.glob", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 33, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "docs.evaluations.probe-001.tools.grade.out.append", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 44, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "docs.evaluations.probe-001.tools.grade.pytest", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 35, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "json.dumps", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 45, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "json.loads", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 10, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "pathlib.Path", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "shutil.copy", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 34, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "shutil.copytree", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 32, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "shutil.rmtree", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 31, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "subprocess.run", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 25, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "?r.stdout.strip", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 17, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade.pytest"}
+{"dst": "?r.stdout.strip(...).splitlines", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 17, "resolved": false, "src": "docs.evaluations.probe-001.tools.grade.pytest"}
+{"dst": "subprocess.run", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "calls", "line": 15, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade.pytest"}
+{"dst": "json.dumps", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "calls", "line": 8, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "random.sample", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "calls", "line": 6, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "random.seed", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "calls", "line": 2, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "random.shuffle", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "calls", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "?Path(...).read_text", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 9, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?Path(...).read_text(...).split", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 9, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?b.get", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 32, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?binop.write_text", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 41, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?calls.append", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 35, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?constant.join", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 39, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?f.exists", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 14, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?f.read_text", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 17, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?f.read_text(...).splitlines", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 17, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?inp.get", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 34, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?j.get", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 22, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?line.split", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 12, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?line.strip", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 10, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?m.get", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 25, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?rep.exists", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 43, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?rep.read_text", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 43, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?rep.read_text(...).startswith", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 43, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?rep.write_text", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 44, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?texts.append", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 37, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "?u.get", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 26, "resolved": false, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "json.dumps", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 41, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "json.loads", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 19, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "pathlib.Path", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "calls", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
 {"dst": "src.aec.__main__.main", "file": "src/aec/__main__.py", "kind": "calls", "line": 193, "resolved": true, "src": "src.aec.__main__"}
 {"dst": "sys.exit", "file": "src/aec/__main__.py", "kind": "calls", "line": 193, "resolved": true, "src": "src.aec.__main__"}
 {"dst": "?Path(...).read_text", "file": "src/aec/__main__.py", "kind": "calls", "line": 28, "resolved": false, "src": "src.aec.__main__._changes"}
@@ -867,23 +1112,23 @@
 {"dst": "?rep.by_status", "file": "src/aec/impact.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.impact.render"}
 {"dst": "?rep.by_status(...).items", "file": "src/aec/impact.py", "kind": "calls", "line": 173, "resolved": false, "src": "src.aec.impact.render"}
 {"dst": "?store.by_ref.get", "file": "src/aec/impact.py", "kind": "calls", "line": 175, "resolved": false, "src": "src.aec.impact.render"}
-{"dst": "?constant.join", "file": "src/aec/init.py", "kind": "calls", "line": 73, "resolved": false, "src": "src.aec.init._records"}
-{"dst": "json.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 73, "resolved": true, "src": "src.aec.init._records"}
-{"dst": "?binop.is_dir", "file": "src/aec/init.py", "kind": "calls", "line": 97, "resolved": false, "src": "src.aec.init.init"}
-{"dst": "?constant.join", "file": "src/aec/init.py", "kind": "calls", "line": 105, "resolved": false, "src": "src.aec.init.init"}
-{"dst": "?put", "file": "src/aec/init.py", "kind": "calls", "line": 91, "resolved": false, "src": "src.aec.init.init"}
-{"dst": "?steps.insert", "file": "src/aec/init.py", "kind": "calls", "line": 103, "resolved": false, "src": "src.aec.init.init"}
-{"dst": "json.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 94, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "pathlib.Path", "file": "src/aec/init.py", "kind": "calls", "line": 77, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "src.aec.edges.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 92, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "src.aec.edges.snapshot", "file": "src/aec/init.py", "kind": "calls", "line": 92, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "src.aec.init._records", "file": "src/aec/init.py", "kind": "calls", "line": 91, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "?created.append", "file": "src/aec/init.py", "kind": "calls", "line": 89, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
-{"dst": "?kept.append", "file": "src/aec/init.py", "kind": "calls", "line": 85, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
-{"dst": "?make", "file": "src/aec/init.py", "kind": "calls", "line": 88, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
-{"dst": "?p.exists", "file": "src/aec/init.py", "kind": "calls", "line": 84, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
-{"dst": "?p.parent.mkdir", "file": "src/aec/init.py", "kind": "calls", "line": 87, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
-{"dst": "?p.write_text", "file": "src/aec/init.py", "kind": "calls", "line": 88, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
+{"dst": "?constant.join", "file": "src/aec/init.py", "kind": "calls", "line": 75, "resolved": false, "src": "src.aec.init._records"}
+{"dst": "json.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 75, "resolved": true, "src": "src.aec.init._records"}
+{"dst": "?binop.is_dir", "file": "src/aec/init.py", "kind": "calls", "line": 99, "resolved": false, "src": "src.aec.init.init"}
+{"dst": "?constant.join", "file": "src/aec/init.py", "kind": "calls", "line": 107, "resolved": false, "src": "src.aec.init.init"}
+{"dst": "?put", "file": "src/aec/init.py", "kind": "calls", "line": 93, "resolved": false, "src": "src.aec.init.init"}
+{"dst": "?steps.insert", "file": "src/aec/init.py", "kind": "calls", "line": 105, "resolved": false, "src": "src.aec.init.init"}
+{"dst": "json.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 96, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "pathlib.Path", "file": "src/aec/init.py", "kind": "calls", "line": 79, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "src.aec.edges.dumps", "file": "src/aec/init.py", "kind": "calls", "line": 94, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "src.aec.edges.snapshot", "file": "src/aec/init.py", "kind": "calls", "line": 94, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "src.aec.init._records", "file": "src/aec/init.py", "kind": "calls", "line": 93, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "?created.append", "file": "src/aec/init.py", "kind": "calls", "line": 91, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
+{"dst": "?kept.append", "file": "src/aec/init.py", "kind": "calls", "line": 87, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
+{"dst": "?make", "file": "src/aec/init.py", "kind": "calls", "line": 90, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
+{"dst": "?p.exists", "file": "src/aec/init.py", "kind": "calls", "line": 86, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
+{"dst": "?p.parent.mkdir", "file": "src/aec/init.py", "kind": "calls", "line": 89, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
+{"dst": "?p.write_text", "file": "src/aec/init.py", "kind": "calls", "line": 90, "resolved": false, "src": "src.aec.init.init.<locals>.put"}
 {"dst": "re.compile", "file": "src/aec/purpose_import.py", "kind": "calls", "line": 20, "resolved": true, "src": "src.aec.purpose_import"}
 {"dst": "?_strip_comment(...).lower", "file": "src/aec/purpose_import.py", "kind": "calls", "line": 49, "resolved": false, "src": "src.aec.purpose_import._bool"}
 {"dst": "?dict.get", "file": "src/aec/purpose_import.py", "kind": "calls", "line": 49, "resolved": false, "src": "src.aec.purpose_import._bool"}
@@ -1041,25 +1286,32 @@
 {"dst": "pathlib.Path", "file": "src/aec/records.py", "kind": "calls", "line": 66, "resolved": true, "src": "src.aec.records.Store.load"}
 {"dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "calls", "line": 72, "resolved": true, "src": "src.aec.records.Store.load"}
 {"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 78, "resolved": false, "src": "src.aec.records.Store.out_edges"}
-{"dst": "?constant.join", "file": "src/aec/records.py", "kind": "calls", "line": 170, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 121, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?ev.get", "file": "src/aec/records.py", "kind": "calls", "line": 167, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?out.append", "file": "src/aec/records.py", "kind": "calls", "line": 116, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?out.extend", "file": "src/aec/records.py", "kind": "calls", "line": 142, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?r.get", "file": "src/aec/records.py", "kind": "calls", "line": 136, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?seen.add", "file": "src/aec/records.py", "kind": "calls", "line": 117, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?store.governs", "file": "src/aec/records.py", "kind": "calls", "line": 144, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?store.in_edges", "file": "src/aec/records.py", "kind": "calls", "line": 153, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?store.latest.get", "file": "src/aec/records.py", "kind": "calls", "line": 165, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "?to.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 124, "resolved": false, "src": "src.aec.records.check"}
-{"dst": "pathlib.Path.cwd", "file": "src/aec/records.py", "kind": "calls", "line": 141, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "calls", "line": 116, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "calls", "line": 112, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "calls", "line": 130, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.sources.SourceContext", "file": "src/aec/records.py", "kind": "calls", "line": 141, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.sources.record_findings", "file": "src/aec/records.py", "kind": "calls", "line": 142, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "?edges[...].get", "file": "src/aec/records.py", "kind": "calls", "line": 100, "resolved": false, "src": "src.aec.records.defined_symbols"}
-{"dst": "?out.add", "file": "src/aec/records.py", "kind": "calls", "line": 103, "resolved": false, "src": "src.aec.records.defined_symbols"}
+{"dst": "?name.rpartition", "file": "src/aec/records.py", "kind": "calls", "line": 107, "resolved": false, "src": "src.aec.records._near"}
+{"dst": "?s.endswith", "file": "src/aec/records.py", "kind": "calls", "line": 104, "resolved": false, "src": "src.aec.records._near"}
+{"dst": "?s.rpartition", "file": "src/aec/records.py", "kind": "calls", "line": 108, "resolved": false, "src": "src.aec.records._near"}
+{"dst": "difflib.get_close_matches", "file": "src/aec/records.py", "kind": "calls", "line": 109, "resolved": true, "src": "src.aec.records._near"}
+{"dst": "?x.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 115, "resolved": false, "src": "src.aec.records._ref_shaped"}
+{"dst": "?constant.join", "file": "src/aec/records.py", "kind": "calls", "line": 147, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?e.get", "file": "src/aec/records.py", "kind": "calls", "line": 141, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?ev.get", "file": "src/aec/records.py", "kind": "calls", "line": 194, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?out.append", "file": "src/aec/records.py", "kind": "calls", "line": 136, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?out.extend", "file": "src/aec/records.py", "kind": "calls", "line": 169, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?r.get", "file": "src/aec/records.py", "kind": "calls", "line": 163, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?seen.add", "file": "src/aec/records.py", "kind": "calls", "line": 137, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.governs", "file": "src/aec/records.py", "kind": "calls", "line": 171, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.in_edges", "file": "src/aec/records.py", "kind": "calls", "line": 180, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?store.latest.get", "file": "src/aec/records.py", "kind": "calls", "line": 192, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "?to.startswith", "file": "src/aec/records.py", "kind": "calls", "line": 144, "resolved": false, "src": "src.aec.records.check"}
+{"dst": "pathlib.Path.cwd", "file": "src/aec/records.py", "kind": "calls", "line": 168, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "calls", "line": 136, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records._near", "file": "src/aec/records.py", "kind": "calls", "line": 146, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records._ref_shaped", "file": "src/aec/records.py", "kind": "calls", "line": 158, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.defined_symbols", "file": "src/aec/records.py", "kind": "calls", "line": 132, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.split_ref", "file": "src/aec/records.py", "kind": "calls", "line": 152, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.SourceContext", "file": "src/aec/records.py", "kind": "calls", "line": 168, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.sources.record_findings", "file": "src/aec/records.py", "kind": "calls", "line": 169, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "?edges[...].get", "file": "src/aec/records.py", "kind": "calls", "line": 120, "resolved": false, "src": "src.aec.records.defined_symbols"}
+{"dst": "?out.add", "file": "src/aec/records.py", "kind": "calls", "line": 123, "resolved": false, "src": "src.aec.records.defined_symbols"}
 {"dst": "?r.rpartition", "file": "src/aec/records.py", "kind": "calls", "line": 27, "resolved": false, "src": "src.aec.records.split_ref"}
 {"dst": "?v.isdigit", "file": "src/aec/records.py", "kind": "calls", "line": 28, "resolved": false, "src": "src.aec.records.split_ref"}
 {"dst": "dataclasses.dataclass", "file": "src/aec/sources.py", "kind": "calls", "line": 76, "resolved": true, "src": "src.aec.sources"}
@@ -1230,7 +1482,16 @@
 {"dst": "?Path(...).resolve", "file": "tests/test_aec.py", "kind": "calls", "line": 14, "resolved": false, "src": "tests.test_aec"}
 {"dst": "pathlib.Path", "file": "tests/test_aec.py", "kind": "calls", "line": 14, "resolved": true, "src": "tests.test_aec"}
 {"dst": "sys.path.insert", "file": "tests/test_aec.py", "kind": "calls", "line": 15, "resolved": true, "src": "tests.test_aec"}
-{"dst": "unittest.main", "file": "tests/test_aec.py", "kind": "calls", "line": 178, "resolved": true, "src": "tests.test_aec"}
+{"dst": "unittest.main", "file": "tests/test_aec.py", "kind": "calls", "line": 205, "resolved": true, "src": "tests.test_aec"}
+{"dst": "src.aec.records.check", "file": "tests/test_aec.py", "kind": "calls", "line": 185, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation.findings"}
+{"dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "calls", "line": 185, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation.findings"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 196, "resolved": false, "src": "tests.test_aec.TestMisplacedRelation.test_date_valued_field_named_like_a_relation_is_not_flagged"}
+{"dst": "tests.test_aec.TestMisplacedRelation.findings", "file": "tests/test_aec.py", "kind": "calls", "line": 196, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation.test_date_valued_field_named_like_a_relation_is_not_flagged"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 201, "resolved": false, "src": "tests.test_aec.TestMisplacedRelation.test_relations_array_decoy_is_not_flagged"}
+{"dst": "tests.test_aec.TestMisplacedRelation.findings", "file": "tests/test_aec.py", "kind": "calls", "line": 201, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation.test_relations_array_decoy_is_not_flagged"}
+{"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 191, "resolved": false, "src": "tests.test_aec.TestMisplacedRelation.test_top_level_relation_is_flagged"}
+{"dst": "?self.assertIn", "file": "tests/test_aec.py", "kind": "calls", "line": 192, "resolved": false, "src": "tests.test_aec.TestMisplacedRelation.test_top_level_relation_is_flagged"}
+{"dst": "tests.test_aec.TestMisplacedRelation.findings", "file": "tests/test_aec.py", "kind": "calls", "line": 190, "resolved": true, "src": "tests.test_aec.TestMisplacedRelation.test_top_level_relation_is_flagged"}
 {"dst": "src.aec.records.check", "file": "tests/test_aec.py", "kind": "calls", "line": 146, "resolved": true, "src": "tests.test_aec.TestOutcomeSufficiency.run_check"}
 {"dst": "tests.test_aec.store_from", "file": "tests/test_aec.py", "kind": "calls", "line": 146, "resolved": true, "src": "tests.test_aec.TestOutcomeSufficiency.run_check"}
 {"dst": "?self.assertEqual", "file": "tests/test_aec.py", "kind": "calls", "line": 150, "resolved": false, "src": "tests.test_aec.TestOutcomeSufficiency.test_outcome_claim_on_conformance_only_warns"}
@@ -1317,7 +1578,7 @@
 {"dst": "?Path(...).resolve", "file": "tests/test_code_impact.py", "kind": "calls", "line": 8, "resolved": false, "src": "tests.test_code_impact"}
 {"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 8, "resolved": true, "src": "tests.test_code_impact"}
 {"dst": "sys.path.insert", "file": "tests/test_code_impact.py", "kind": "calls", "line": 9, "resolved": true, "src": "tests.test_code_impact"}
-{"dst": "unittest.main", "file": "tests/test_code_impact.py", "kind": "calls", "line": 104, "resolved": true, "src": "tests.test_code_impact"}
+{"dst": "unittest.main", "file": "tests/test_code_impact.py", "kind": "calls", "line": 119, "resolved": true, "src": "tests.test_code_impact"}
 {"dst": "?cls.rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 22, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 21, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 20, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
@@ -1336,13 +1597,13 @@
 {"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 47, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
 {"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 46, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.test_no_change_no_impact"}
 {"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 43, "resolved": false, "src": "tests.test_code_impact.TestCodeImpact.test_unchanged_linked_code_is_not_flagged"}
-{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 63, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 66, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
-{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 63, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 79, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 81, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 79, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 78, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 81, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 81, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 78, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_code_refs_without_snapshot_are_not_errors"}
 {"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 53, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
 {"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 53, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
 {"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 59, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
@@ -1353,20 +1614,30 @@
 {"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
 {"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
 {"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 52, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 75, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 75, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "?rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 87, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 75, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 74, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 74, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 90, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review"}
-{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 94, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
-{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 96, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
-{"dst": "?self.st.values", "file": "tests/test_code_impact.py", "kind": "calls", "line": 96, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
-{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 99, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing"}
+{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "?self.assertIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 71, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 72, "resolved": false, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 64, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 63, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 70, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 70, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "src.aec.records.check", "file": "tests/test_code_impact.py", "kind": "calls", "line": 70, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 63, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "?constant.join", "file": "tests/test_code_impact.py", "kind": "calls", "line": 90, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "?f.write_text", "file": "tests/test_code_impact.py", "kind": "calls", "line": 90, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "?rep.impacts.items", "file": "tests/test_code_impact.py", "kind": "calls", "line": 102, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "json.dumps", "file": "tests/test_code_impact.py", "kind": "calls", "line": 90, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "pathlib.Path", "file": "tests/test_code_impact.py", "kind": "calls", "line": 89, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "src.aec.code_impact.code_impact", "file": "tests/test_code_impact.py", "kind": "calls", "line": 101, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "src.aec.edges.snapshot", "file": "tests/test_code_impact.py", "kind": "calls", "line": 101, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "src.aec.records.Store.load", "file": "tests/test_code_impact.py", "kind": "calls", "line": 101, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "tempfile.mkdtemp", "file": "tests/test_code_impact.py", "kind": "calls", "line": 89, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 105, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_changed_code_puts_evidence_and_its_claim_under_review"}
+{"dst": "?self.assertEqual", "file": "tests/test_code_impact.py", "kind": "calls", "line": 109, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 111, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
+{"dst": "?self.st.values", "file": "tests/test_code_impact.py", "kind": "calls", "line": 111, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_deleted_code_still_only_review"}
+{"dst": "?self.assertNotIn", "file": "tests/test_code_impact.py", "kind": "calls", "line": 114, "resolved": false, "src": "tests.test_code_impact.TestObservedOn.test_unrelated_code_flags_nothing"}
 {"dst": "?Path(...).resolve", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 9, "resolved": false, "src": "tests.test_docs_truth"}
 {"dst": "pathlib.Path", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 9, "resolved": true, "src": "tests.test_docs_truth"}
 {"dst": "sys.path.insert", "file": "tests/test_docs_truth.py", "kind": "calls", "line": 10, "resolved": true, "src": "tests.test_docs_truth"}
@@ -1616,7 +1887,9 @@
 {"dst": "?Path(...).resolve", "file": "tests/test_init.py", "kind": "calls", "line": 10, "resolved": false, "src": "tests.test_init"}
 {"dst": "pathlib.Path", "file": "tests/test_init.py", "kind": "calls", "line": 10, "resolved": true, "src": "tests.test_init"}
 {"dst": "sys.path.insert", "file": "tests/test_init.py", "kind": "calls", "line": 11, "resolved": true, "src": "tests.test_init"}
-{"dst": "unittest.main", "file": "tests/test_init.py", "kind": "calls", "line": 73, "resolved": true, "src": "tests.test_init"}
+{"dst": "unittest.main", "file": "tests/test_init.py", "kind": "calls", "line": 84, "resolved": true, "src": "tests.test_init"}
+{"dst": "?self.assertIn", "file": "tests/test_init.py", "kind": "calls", "line": 80, "resolved": false, "src": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release"}
+{"dst": "?self.assertNotIn", "file": "tests/test_init.py", "kind": "calls", "line": 79, "resolved": false, "src": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release"}
 {"dst": "?buf.getvalue", "file": "tests/test_init.py", "kind": "calls", "line": 69, "resolved": false, "src": "tests.test_init.TestInit.test_cli"}
 {"dst": "?self.assertEqual", "file": "tests/test_init.py", "kind": "calls", "line": 68, "resolved": false, "src": "tests.test_init.TestInit.test_cli"}
 {"dst": "?self.assertIn", "file": "tests/test_init.py", "kind": "calls", "line": 69, "resolved": false, "src": "tests.test_init.TestInit.test_cli"}
@@ -2096,6 +2369,28 @@
 {"dst": "tools.reconstruct_decisions._section", "file": "tools/reconstruct_decisions.py", "kind": "calls", "line": 98, "resolved": true, "src": "tools.reconstruct_decisions.reconstruct"}
 {"dst": "tools.reconstruct_decisions._store", "file": "tools/reconstruct_decisions.py", "kind": "calls", "line": 80, "resolved": true, "src": "tools.reconstruct_decisions.reconstruct"}
 {"dst": "tools.reconstruct_decisions.confirmation", "file": "tools/reconstruct_decisions.py", "kind": "calls", "line": 134, "resolved": true, "src": "tools.reconstruct_decisions.reconstruct"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "references", "line": 41, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_cli_profile_report_contains_column_statistics"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T1_preservation.FIXTURE", "file": "docs/evaluations/probe-001/hidden/test_T1_preservation.py", "kind": "references", "line": 41, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T1_preservation.test_cli_profile_report_contains_column_statistics"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "references", "line": 23, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_demo_reports_written_paths"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T2_preservation.py", "kind": "references", "line": 14, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T2_preservation.test_cli_understand_reports_written_paths"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.SF_ENV", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "references", "line": 21, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation._clean_env"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.SF_ENV", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "references", "line": 46, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_env"}
+{"dst": "docs.evaluations.probe-001.hidden.test_T3_preservation.CREDS", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "references", "line": 33, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_build_connector_resolves_snowflake_credentials_from_file"}
+{"dst": "cli.app", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "references", "line": 60, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_cli_run_reports_incomplete_snowflake_credentials"}
+{"dst": "connectors.credentials.CredentialsValidationError", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "references", "line": 28, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_credentials_module_and_loader_exist"}
+{"dst": "connectors.credentials.load_credentials", "file": "docs/evaluations/probe-001/hidden/test_T3_preservation.py", "kind": "references", "line": 27, "resolved": true, "src": "docs.evaluations.probe-001.hidden.test_T3_preservation.test_credentials_module_and_loader_exist"}
+{"dst": "sys.argv", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "references", "line": 129, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "sys.stderr", "file": "docs/evaluations/probe-001/tools/briefing.py", "kind": "references", "line": 134, "resolved": true, "src": "docs.evaluations.probe-001.tools.briefing"}
+{"dst": "docs.evaluations.probe-001.tools.grade.ROOT", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "references", "line": 23, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "docs.evaluations.probe-001.tools.grade.SEALED", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "references", "line": 9, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "docs.evaluations.probe-001.tools.grade.out", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "references", "line": 46, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "docs.evaluations.probe-001.tools.grade.sched", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "references", "line": 21, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade"}
+{"dst": "sys.executable", "file": "docs/evaluations/probe-001/tools/grade.py", "kind": "references", "line": 15, "resolved": true, "src": "docs.evaluations.probe-001.tools.grade.pytest"}
+{"dst": "docs.evaluations.probe-001.tools.schedule.ids", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "references", "line": 7, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "docs.evaluations.probe-001.tools.schedule.sched", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "references", "line": 8, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "docs.evaluations.probe-001.tools.schedule.trials", "file": "docs/evaluations/probe-001/tools/schedule.py", "kind": "references", "line": 4, "resolved": true, "src": "docs.evaluations.probe-001.tools.schedule"}
+{"dst": "docs.evaluations.probe-001.tools.transcript.ROOT", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "references", "line": 41, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
+{"dst": "docs.evaluations.probe-001.tools.transcript.TASKS", "file": "docs/evaluations/probe-001/tools/transcript.py", "kind": "references", "line": 13, "resolved": true, "src": "docs.evaluations.probe-001.tools.transcript"}
 {"dst": "subprocess.SubprocessError", "file": "src/aec/__main__.py", "kind": "references", "line": 45, "resolved": true, "src": "src.aec.__main__._git_user"}
 {"dst": "src.aec.__version__", "file": "src/aec/__main__.py", "kind": "references", "line": 51, "resolved": true, "src": "src.aec.__main__.main"}
 {"dst": "sys.stderr", "file": "src/aec/__main__.py", "kind": "references", "line": 129, "resolved": true, "src": "src.aec.__main__.main"}
@@ -2151,22 +2446,24 @@
 {"dst": "src.aec.impact.OBLIGATIONS", "file": "src/aec/impact.py", "kind": "references", "line": 99, "resolved": true, "src": "src.aec.impact.impact"}
 {"dst": "src.aec.impact.PROPAGATES", "file": "src/aec/impact.py", "kind": "references", "line": 111, "resolved": true, "src": "src.aec.impact.impact"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/impact.py", "kind": "references", "line": 99, "resolved": true, "src": "src.aec.impact.impact"}
-{"dst": "src.aec.init.AEC_SOURCE", "file": "src/aec/init.py", "kind": "references", "line": 57, "resolved": true, "src": "src.aec.init"}
-{"dst": "src.aec.init.CI", "file": "src/aec/init.py", "kind": "references", "line": 95, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "src.aec.init.HOOK", "file": "src/aec/init.py", "kind": "references", "line": 94, "resolved": true, "src": "src.aec.init.init"}
-{"dst": "src.aec.init.README", "file": "src/aec/init.py", "kind": "references", "line": 93, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "src.aec.__version__", "file": "src/aec/init.py", "kind": "references", "line": 48, "resolved": true, "src": "src.aec.init"}
+{"dst": "src.aec.init.AEC_SOURCE", "file": "src/aec/init.py", "kind": "references", "line": 59, "resolved": true, "src": "src.aec.init"}
+{"dst": "src.aec.init.CI", "file": "src/aec/init.py", "kind": "references", "line": 97, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "src.aec.init.HOOK", "file": "src/aec/init.py", "kind": "references", "line": 96, "resolved": true, "src": "src.aec.init.init"}
+{"dst": "src.aec.init.README", "file": "src/aec/init.py", "kind": "references", "line": 95, "resolved": true, "src": "src.aec.init.init"}
 {"dst": "src.aec.purpose_import.PEOPLE", "file": "src/aec/purpose_import.py", "kind": "references", "line": 278, "resolved": true, "src": "src.aec.purpose_import.import_purpose"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/purpose_import.py", "kind": "references", "line": 272, "resolved": true, "src": "src.aec.purpose_import.import_purpose"}
 {"dst": "dataclasses.dataclass", "file": "src/aec/records.py", "kind": "references", "line": 33, "resolved": true, "src": "src.aec.records"}
 {"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 45, "resolved": true, "src": "src.aec.records.Record.ref"}
 {"dst": "src.aec.records.Record", "file": "src/aec/records.py", "kind": "references", "line": 56, "resolved": true, "src": "src.aec.records.Store.__init__"}
-{"dst": "src.aec.records.CLAIM_CATEGORIES", "file": "src/aec/records.py", "kind": "references", "line": 163, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 124, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.EVIDENCE_KINDS", "file": "src/aec/records.py", "kind": "references", "line": 161, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "references", "line": 111, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.RELATIONS", "file": "src/aec/records.py", "kind": "references", "line": 121, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "references", "line": 150, "resolved": true, "src": "src.aec.records.check"}
-{"dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "references", "line": 118, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 115, "resolved": true, "src": "src.aec.records._ref_shaped"}
+{"dst": "src.aec.records.CLAIM_CATEGORIES", "file": "src/aec/records.py", "kind": "references", "line": 190, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.CODE", "file": "src/aec/records.py", "kind": "references", "line": 144, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.EVIDENCE_KINDS", "file": "src/aec/records.py", "kind": "references", "line": 188, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.Finding", "file": "src/aec/records.py", "kind": "references", "line": 131, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.RELATIONS", "file": "src/aec/records.py", "kind": "references", "line": 141, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.TIERS", "file": "src/aec/records.py", "kind": "references", "line": 177, "resolved": true, "src": "src.aec.records.check"}
+{"dst": "src.aec.records.TYPES", "file": "src/aec/records.py", "kind": "references", "line": 138, "resolved": true, "src": "src.aec.records.check"}
 {"dst": "src.aec.sources.OUTPUT_TEMPLATES", "file": "src/aec/sources.py", "kind": "references", "line": 178, "resolved": true, "src": "src.aec.sources.SourceContext.inspect"}
 {"dst": "pathlib.Path", "file": "src/aec/sources.py", "kind": "references", "line": 79, "resolved": true, "src": "src.aec.sources.SourceRoot"}
 {"dst": "re.error", "file": "src/aec/sources.py", "kind": "references", "line": 283, "resolved": true, "src": "src.aec.sources.render_search"}
@@ -2196,7 +2493,8 @@
 {"dst": "tests.test_code_impact.ROOT", "file": "tests/test_code_impact.py", "kind": "references", "line": 9, "resolved": true, "src": "tests.test_code_impact"}
 {"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 19, "resolved": true, "src": "tests.test_code_impact.TestCodeImpact.setUpClass"}
 {"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 57, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_and_valid"}
-{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 86, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
+{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 70, "resolved": true, "src": "tests.test_code_impact.TestDanglingCodeRefs.test_dangling_ref_suggests_close_symbols"}
+{"dst": "tests.test_code_impact.FIX", "file": "tests/test_code_impact.py", "kind": "references", "line": 101, "resolved": true, "src": "tests.test_code_impact.TestObservedOn.setUpClass"}
 {"dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "references", "line": 10, "resolved": true, "src": "tests.test_docs_truth"}
 {"dst": "re.I", "file": "tests/test_docs_truth.py", "kind": "references", "line": 79, "resolved": true, "src": "tests.test_docs_truth.TestAnchorOutputTruth.test_output_templates_make_only_integrity_observations"}
 {"dst": "tests.test_docs_truth.ROOT", "file": "tests/test_docs_truth.py", "kind": "references", "line": 66, "resolved": true, "src": "tests.test_docs_truth.TestDocsTruth.test_examples_are_not_repository_artifacts"}
@@ -2231,6 +2529,8 @@
 {"dst": "tests.test_import_purpose.PURPOSE_DIR", "file": "tests/test_import_purpose.py", "kind": "references", "line": 34, "resolved": true, "src": "tests.test_import_purpose.run"}
 {"dst": "tests.test_import_purpose.FIX", "file": "tests/test_import_purpose.py", "kind": "references", "line": 28, "resolved": true, "src": "tests.test_import_purpose.setup_repo"}
 {"dst": "tests.test_init.ROOT", "file": "tests/test_init.py", "kind": "references", "line": 11, "resolved": true, "src": "tests.test_init"}
+{"dst": "src.aec.__version__", "file": "tests/test_init.py", "kind": "references", "line": 80, "resolved": true, "src": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release"}
+{"dst": "src.aec.init.CI", "file": "tests/test_init.py", "kind": "references", "line": 79, "resolved": true, "src": "tests.test_init.TestCiSnippetPinned.test_snippet_pins_this_release"}
 {"dst": "tests.test_init.FIX", "file": "tests/test_init.py", "kind": "references", "line": 20, "resolved": true, "src": "tests.test_init.fresh_repo"}
 {"dst": "os.name", "file": "tests/test_install.py", "kind": "references", "line": 17, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}
 {"dst": "sys.executable", "file": "tests/test_install.py", "kind": "references", "line": 16, "resolved": true, "src": "tests.test_install.TestInstall.test_pip_install_and_run"}

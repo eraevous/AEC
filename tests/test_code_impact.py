@@ -93,11 +93,14 @@ class TestDanglingCodeRefs(unittest.TestCase):  # T013 / FR-006
             {"id": "R2", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:pkg.core.lod"}]},
             {"id": "R3", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:zzz.unrelated.qqq"}]},
             {"id": "R4", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:core.load"}]},
+            {"id": "R5", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:pkg.core.feed"}]},
         ]))
         fs = {x.ref: x.msg for x in check(Store.load(f), edges=E.snapshot(FIX / "edges_pkg_v1")) if x.rule == "code-reference"}
         self.assertIn("did you mean code:pkg.core.load", fs["R2@1"])
         self.assertNotIn("did you mean", fs["R3@1"])  # decoy: nothing close, no guess
         self.assertIn("did you mean code:pkg.core.load", fs["R4@1"])  # missing source-root prefix
+        # decoy: a sibling-shaped but different name; the shared `pkg.core.` prefix must not make it "close"
+        self.assertNotIn("did you mean", fs["R5@1"])
 
     def test_code_refs_without_snapshot_are_not_errors(self):
         f = Path(tempfile.mkdtemp()) / "r.jsonl"

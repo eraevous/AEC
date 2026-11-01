@@ -174,9 +174,6 @@ class TestOutcomeSufficiency(unittest.TestCase):  # feature 002 US3 / FR-008, FR
         self.assertEqual(errs, {("claim-category", "C@1"), ("evidence-kind", "T@1")})
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class TestMisplacedRelation(unittest.TestCase):
     """v0.4: a relation name used as a top-level field is silently unchecked; warn about it.
@@ -194,7 +191,15 @@ class TestMisplacedRelation(unittest.TestCase):
         self.assertEqual([(f.level, f.ref) for f in fs], [("warning", "R@1")])
         self.assertIn("implemented_by", fs[0].msg)
 
+    def test_date_valued_field_named_like_a_relation_is_not_flagged(self):  # decoy (review N3)
+        rec = {"id": "E", "version": 1, "type": "evidence", "observed_on": "2026-10-01"}
+        self.assertEqual(self.findings(rec), [])
+
     def test_relations_array_decoy_is_not_flagged(self):
         good = {"id": "R", "version": 1, "type": "requirement", "subject": "code",
                 "relations": [{"rel": "implemented_by", "to": "code:pkg.mod.f"}], "rationale": "why"}
         self.assertEqual(self.findings(good), [])
+
+
+if __name__ == "__main__":
+    unittest.main()

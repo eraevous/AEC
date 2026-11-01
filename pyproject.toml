@@ -32,3 +32,6 @@ Changelog = "https://github.com/eraevous/AEC/blob/main/CHANGELOG.md"
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["aec*"]   # the legacy src/core (2025 extractor, pandas/typer) is not shipped
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]   # docs/evaluations/ holds frozen probe tests that are not this project's tests

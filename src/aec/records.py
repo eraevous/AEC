@@ -96,13 +96,23 @@ class Finding:
 
 
 def _near(name: str, symbols: set[str]) -> list[str]:
-    """Up to two close spellings, tried on the full name and on each known symbol's tail. Deterministic."""
+    """Up to two likely intended names, deterministic. First a missing prefix (e.g. a source root such as
+    `src.`): known symbols that end with the whole name. Otherwise a misspelt last segment: siblings under
+    the same parent whose last segment is close. Shared module prefixes never count towards similarity."""
     import difflib
     pool = sorted(symbols)
-    hits = difflib.get_close_matches(name, pool, n=2, cutoff=0.8)
-    if not hits:  # a missing or extra prefix (e.g. a source root like `src.`) leaves the tail intact
-        hits = [s for s in pool if s.endswith("." + name)][:2]
-    return hits
+    hits = [s for s in pool if s.endswith("." + name)]
+    if hits:
+        return hits[:2]
+    parent, _, leaf = name.rpartition(".")
+    siblings = {s.rpartition(".")[2]: s for s in pool if s.rpartition(".")[0] == parent}
+    return [siblings[m] for m in difflib.get_close_matches(leaf, sorted(siblings), n=2, cutoff=0.75)]
+
+
+def _ref_shaped(v) -> bool:
+    """A value that looks like one or more relation targets: `code:...` or `id@version`."""
+    vals = v if isinstance(v, list) else [v]
+    return bool(vals) and all(isinstance(x, str) and (x.startswith(CODE) or "@" in x) for x in vals)
 
 
 def defined_symbols(edges: dict) -> set[str]:
@@ -145,7 +155,7 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
                 continue
             if to not in store.by_ref:
                 out.append(Finding("error", "reference", r.ref, f"{e.get('rel')} -> {to} does not resolve"))
-        misplaced = sorted(RELATIONS & set(r.data))
+        misplaced = sorted(k for k in RELATIONS & set(r.data) if _ref_shaped(r.data[k]))
         if misplaced:
             out.append(Finding("warning", "relation-shape", r.ref,
                                f"top-level field(s) {', '.join(misplaced)} look like relations but are not checked or "

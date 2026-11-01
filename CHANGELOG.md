@@ -5,7 +5,7 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 
 ## [0.4.0] - unreleased
 
-First public release candidate. No change to what any command computes.
+First public release candidate. `edges`, `impact` and `code-impact` compute the same results as before; `check` gains one warning (`relation-shape`) and near-miss hints.
 
 ### Added
 - `aec` console command after `pip install`, and `aec --version`.

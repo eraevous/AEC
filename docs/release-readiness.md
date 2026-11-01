@@ -47,7 +47,7 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - ✅ Every value claim in the README links to a recorded measurement, or is phrased as a hypothesis.
 
 ### Proud of the craft
-- ✅ 107 tests, standard library only, deterministic output, CI dogfoods AEC on itself.
+- ✅ 113 tests, standard library only, deterministic output, CI dogfoods AEC on itself.
 - 🔧 `aec` console command after install (`[project.scripts]`), and a `[build-system]` table.
 - 🔧 CI runs on Python 3.10, 3.11, 3.12 and 3.13 (the README claims 3.10+).
 - 🔧 Every subcommand has one line of `--help` text.
@@ -76,7 +76,7 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 
 ### Proud to entrust
 - ✅ AEC never imports or runs the code it analyses, makes no network requests, and writes only where told; `SECURITY.md` states this and was checked against the code.
-- 🔧 The CI job that `aec init` generates installs a pinned release (`@v0.4.0`), not `main`. A test enforces it. Until Zach tags v0.4.0, that pin points at nothing.
+- 🔧 The CI job that `aec init` generates installs a pinned release (`@v0.4.0`), not `main`. A test enforces it. **The `v0.4.0` tag must be created at merge**, or that pin points at nothing (found by the independent review).
 - ⏳ Failure is distinguishable from success: files the extractor skips are counted in its output (`aec edges: … (N skipped)`). There is not yet a non-zero exit code or warning when files are skipped.
 - ✅ Removal is clean: everything AEC adds lives in `.aec/`, plus any snippets you copied yourself.
 

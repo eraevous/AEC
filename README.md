@@ -17,7 +17,7 @@ It is a standard-library Python command-line tool. It works with or without
 ## Install
 
 ```bash
-pip install "aec @ git+https://github.com/eraevous/AEC.git@v0.4.0"   # or @main for the latest
+pip install "aec @ git+https://github.com/eraevous/AEC.git@main"   # once tagged, pin a release: @v0.4.0
 aec --version
 ```
 
@@ -48,10 +48,10 @@ Append a requirement that points at it, and a claim that rests on the requiremen
 
 ```bash
 aec check .aec/records.jsonl --edges .aec/edges.jsonl   # both references resolve? (suggests near misses)
-cp .aec/edges.jsonl /tmp/before.jsonl                   # keep the "before" snapshot
+cp .aec/edges.jsonl .aec/before.jsonl                   # keep the "before" snapshot
 # ...edit apply_discount...
 aec edges . -o .aec/edges.jsonl                          # the "after" snapshot
-aec code-impact .aec/records.jsonl /tmp/before.jsonl .aec/edges.jsonl
+aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl
 ```
 
 `code-impact` marks `R-1@1` as `stale` (the code it rests on changed) and `C-1@1` as
@@ -64,7 +64,7 @@ one, append the same `id` with `"version": 2`. The full vocabulary of types and 
 [`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces everything
 below in a temporary directory. It uses [pallets/itsdangerous](https://github.com/pallets/itsdangerous)
 at commit `672971d`, a library for signing data so you can tell it wasn't tampered with. The
-script installs AEC from this checkout, or from a tag you pass it, such as `run.sh v0.4.0`.
+script installs AEC from this checkout, or from a git ref you pass it, such as `run.sh main` (or a release tag once one exists).
 
 1. `aec init` creates `.aec/` with an owner, a purpose stub and an edge snapshot of the code.
 2. Append one requirement, and one claim that rests on it, to `.aec/records.jsonl`
@@ -74,7 +74,7 @@ script installs AEC from this checkout, or from a tag you pass it, such as `run.
    references resolve. When this example was first written by hand, they didn't: the method is
    defined on `SigningAlgorithm`, not on `HMACAlgorithm`, and `check` said so.
 3. An agent "simplifies" `hmac.compare_digest(sig, expected)` to `sig == expected`. All 297 of the
-   library's own tests still pass. AEC reports:
+   library's own tests still pass. AEC reports (output trimmed to the relevant lines; `run.sh` shows it in full):
 
 ```text
 $ aec edges --diff old.jsonl .aec/edges.jsonl
@@ -103,21 +103,26 @@ problems nobody anticipated. That question is what
 - **Not complete about your code.** The edge snapshot is static analysis of Python only. Calls
   through dynamic dispatch stay unresolved and are never guessed. No known caller is not proof of
   no caller.
-- **Not shown to improve outcomes.** In the first measured test, [probe-001](docs/evaluations/probe-001-results.md), Claude Sonnet agents found every hidden dependant without help on three dependency-sensitive tasks in a real repository (18 of 18 trials succeeded). AEC's structural briefing changed no outcome and raised token cost on two of the three tasks. The test also exposed a fixable gap in AEC's caller resolution. See "What this does not show (yet)" below.
+- **Not shown to improve outcomes.** In the first measured test,
+  [probe-001](docs/evaluations/probe-001-results.md), Claude Sonnet 5.5 agents found every hidden
+  dependant without help on three dependency-sensitive tasks in a real repository (18 of 18 trials
+  succeeded in every condition). AEC's structural briefing changed no outcome and raised token use
+  on two of the three tasks. It was a small, exploratory pilot. It also exposed a fixable gap in AEC's
+  caller resolution.
 
 ## Stability (v0.4)
 
 AEC is alpha. The seven commands and the record fields documented here are what v0.4 supports; a
 minor version before 1.0 may still change output formats or record fields, and every such change
-is listed in [CHANGELOG.md](CHANGELOG.md). Snapshots carry the *extractor's* `tool_version` (0.3.0 in
-v0.4), which changes only when extraction itself changes, independently of the package version. Edge snapshots record the extractor's `tool_version`,
-but `edges --diff` does not yet refuse snapshots made by different versions: compare snapshots
-from the same AEC version (refusing mismatches is part of planned WP1A).
+is listed in [CHANGELOG.md](CHANGELOG.md). Snapshots record the *extractor's* `tool_version` (0.3.0 in
+v0.4), which changes only when extraction itself changes, independently of the package version.
+`edges --diff` does not yet refuse snapshots made by different extractor versions, so compare
+snapshots from the same version (refusing mismatches is part of planned WP1A).
 
 ## How AEC is built
 
 AEC is designed and owned by Zach Rhodes and built with AI agents (Claude, Codex and ChatGPT)
-working from written handoffs. It is developed with Spec Kit (`specs/`) and governs itself with
+working from written handoffs. "Kate" in these documents is the maintainer's name for ChatGPT, which serves as an independent reviewer. It is developed with Spec Kit (`specs/`) and governs itself with
 its own records (`.aec/records.jsonl`), which makes the project its own longest-running test case.
 What is public and what isn't: the specs, records, PR descriptions and evaluation write-ups here
 are public. The coordination handoffs and the owner's decision log are kept in a private
