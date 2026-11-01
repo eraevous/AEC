@@ -109,3 +109,11 @@ in WP1A. It stays local_value; no instance/type inference was added.
 Delivery: new branch/PR only, CLA unticked; no merge, record acceptance, anchor
 behavior change, WP1B history analytics, WP2A briefings or PR comments. Final chat
 result is for claude:aec to file as outputs/HO-20261101-002.md privately.
+
+## PR delivery
+
+Opened https://github.com/eraevous/AEC/pull/31 against main; CLA box left unticked.
+Real committed-branch diff reports 605 added and 19 removed edges, equal method
+hashes, no absolute paths; record-touch passes. No merge or external messages.
+Instrumented elapsed through PR creation: 29.27 minutes, plus unmeasured initial intake/planning.
+Final timestamp: 2026-11-01T23:20:54.813844+00:00. Tokens/owner time unavailable.

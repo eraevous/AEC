@@ -12,4 +12,4 @@ Tests/fixtures precede code; every classifier/check has a violation and clean de
 - [X] T008 Write CLI/determinism/caveat and CI artifact tests; implement thin CLI and artifact step.
 - [X] T009 Update current reference/version docs, append candidate code claim/evidence, regenerate ignored edges.
 - [X] T010 Run full suite, canonical/example checks, record-touch, independent review; record rework/cost/issues.
-- [ ] T011 Commit/push branch and open PR against main with CLA unticked; return handoff result, no merge.
+- [X] T011 Commit/push branch and open PR against main with CLA unticked; return handoff result, no merge.
