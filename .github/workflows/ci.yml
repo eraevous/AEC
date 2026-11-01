@@ -22,6 +22,12 @@ jobs:
         run: PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl
       - name: Records check against the snapshot (fails on dangling code references)
         run: PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
+      - name: Code impact of this PR (report only; dogfood-001)
+        if: github.event_name == 'pull_request' && matrix.python-version == '3.12'
+        run: |
+          git worktree add -q "$RUNNER_TEMP/base" "origin/${{ github.base_ref }}"
+          PYTHONPATH=src python3 -m aec edges "$RUNNER_TEMP/base" -o "$RUNNER_TEMP/base.jsonl"
+          { echo '## aec code-impact (base -> this PR)'; echo '```'; PYTHONPATH=src python3 -m aec code-impact .aec/records.jsonl "$RUNNER_TEMP/base.jsonl" .aec/edges.jsonl; echo '```'; } | tee -a "$GITHUB_STEP_SUMMARY"
       - run: PYTHONPATH=src python3 -m aec check examples/mtg-pilot/records.jsonl
       - name: Adoption path on the fixture repo (init + import-purpose + check)
         run: |
