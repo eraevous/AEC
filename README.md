@@ -1,10 +1,95 @@
 # AEC
 
+**AEC keeps the reasons for code attached to the code, and tells you which of those reasons a change just broke.**
+
+AI coding agents are good at making a change and bad at knowing what else depended on the old
+behaviour: a requirement someone wrote down, a claim a decision rested on, a caller nobody
+mentioned. AEC records those reasons as plain, append-only JSON lines (purposes, requirements,
+claims, evidence, decisions and who has authority over them) and links them to the code through a
+deterministic static-analysis snapshot. When the code or a record changes, AEC reports which
+conclusions are no longer supported and which changes were legitimate, authorized revisions.
+
+It is a standard-library Python command-line tool, works with or without
+[Spec Kit](https://github.com/github/spec-kit), and never edits your code or your specs.
+
+## A five-minute example on someone else's code
+
+This uses [pallets/itsdangerous](https://github.com/pallets/itsdangerous) (commit `672971d`), a
+library for signing data so you can tell it wasn't tampered with.
+
+```bash
+pip install git+https://github.com/eraevous/AEC.git
+cd itsdangerous
+aec init . --owner "Jane Dev"      # creates .aec/ with an owner, a purpose stub and an edge snapshot
+```
+
+Write down one requirement and one claim that rests on it, pointing at the code that implements
+them (append to `.aec/records.jsonl`):
+
+```json
+{"id": "R-ct", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Signature checks compare in constant time, so timing does not leak how much of a forged signature was right.", "relations": [{"rel": "implemented_by", "to": "code:src.itsdangerous.signer.SigningAlgorithm.verify_signature"}]}
+{"id": "C-ct", "version": 1, "type": "claim", "tier": "candidate", "text": "Unsigning a value cannot be used as a timing oracle.", "relations": [{"rel": "depends_on", "to": "R-ct@1"}, {"rel": "depends_on", "to": "code:src.itsdangerous.signer.SigningAlgorithm.verify_signature"}]}
+```
+
+`aec check .aec/records.jsonl --edges .aec/edges.jsonl` confirms both references resolve. (On the
+first try they didn't: the method is defined on `SigningAlgorithm`, not on `HMACAlgorithm`, and
+`check` said so.)
+
+Now an agent "simplifies" `hmac.compare_digest(sig, expected)` to `sig == expected`. All 297 of
+the library's own tests still pass. AEC does not:
+
+```text
+$ aec edges . -o .aec/edges.jsonl && aec edges --diff old.jsonl .aec/edges.jsonl
+- calls: src.itsdangerous.signer.SigningAlgorithm.verify_signature -> hmac.compare_digest  (src/itsdangerous/signer.py:28)
+
+$ aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl
+[stale] R-ct@1: Signature checks compare in constant time, so timing does not leak ...
+[stale] C-ct@1: Unsigning a value cannot be used as a timing oracle.
+2 affected, 0 conclusions unaffected
+```
+
+Be clear about what this example shows. The requirement was written by someone who knew what to
+look for, so it demonstrates the mechanism, not that AEC finds problems nobody anticipated. That
+second question is what [`docs/evaluations/probe-001.md`](docs/evaluations/probe-001.md) measures.
+
+## What AEC is not
+
+- **Not a verifier.** Every result is structural: "this conclusion's recorded support changed",
+  never "this conclusion is false". `stale` means *look again*, not *broken*.
+- **Not a replacement for tests, review or Spec Kit.** It adds a layer those don't keep: why
+  things are the way they are, and who may change that.
+- **Not complete about your code.** The edge snapshot is static analysis of Python only. Calls
+  through dynamic dispatch stay unresolved and are never guessed. No known caller is not proof of
+  no caller.
+- **Not shown to improve outcomes yet.** See "What this does not show (yet)" below.
+
+## Stability (v0.4)
+
+AEC is alpha. The seven commands and the record fields documented here are what v0.4 supports; a
+minor version before 1.0 may still change output formats or record fields, and every such change
+is listed in [CHANGELOG.md](CHANGELOG.md). Edge snapshots record the extractor's `tool_version`,
+but `edges --diff` does not yet refuse snapshots made by different versions: compare snapshots
+from the same AEC version (refusing mismatches is part of planned WP1A).
+
+## How AEC is built
+
+AEC is designed and owned by Zach Rhodes and built with AI agents (Claude, Codex and ChatGPT)
+working from written handoffs. It is developed with Spec Kit (`specs/`) and governs itself with
+its own records (`.aec/records.jsonl`): the approvals, rejected options and open questions behind
+it are in the repository, which makes the project its own longest-running test case.
+Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+# Reference
+
+## Background
+
 AEC (formerly Codex++) explores continuous architectural reasoning for AI-assisted development: helping an AI development system understand what it is building, observe what it is becoming, detect when those diverge, and preserve the reasoning needed for deliberate change. It connects executable structure, semantic purpose, evidence, authority and agent coordination. The current implementation provides structural analysis and reasoning records, with a Spec Kit integration. Spec Kit is one integration surface, not the boundary of AEC; the capability table below distinguishes what is built, partial and planned.
 
 The white paper, *AEC as an extension to specification-driven development* (Zachary Rhodes, 26 October 2026), records the earlier positioning, evidence and validation plan. The approved direction is described in `docs/architecture.md`.
 
-## Authority and operating rules
+## Governance of this repository
 
 `.aec/records.jsonl` governs purpose and authority (`AEC-P0@1`, `AU-zach@1`).
 The engineering principles live in `.specify/memory/constitution.md`, applied by
