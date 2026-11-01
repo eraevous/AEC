@@ -79,5 +79,6 @@ you add would fail without your change.
 The project is under the [MIT licence](LICENSE). Contributions are made under the
 [Contributor License Agreement](CLA.md): they are licensed like the project, you keep your copyright,
 and the maintainer may also offer them in commercial versions. Tick the CLA box in the pull request
-template to agree. The maintainer's own pull requests, and those agents open on his behalf, don't need
-it, but ticking it does no harm.
+template to agree. Only the person (or organisation) granting those rights can agree: an agent must
+never tick the box on a contributor's behalf. The maintainer's own pull requests, including ones his
+agents open for him, don't need it.

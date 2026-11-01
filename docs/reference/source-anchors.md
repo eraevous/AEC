@@ -31,10 +31,10 @@ configuration/access is the caller's responsibility, not a power granted by a ha
 No remote/URL/UNC providers are supported.
 
 ```bash
-PYTHONPATH=src python3 -m aec check .aec/records.jsonl
-PYTHONPATH=src python3 -m aec source show C-example@1 --context 3 --max-lines 80 --max-chars 240
-PYTHONPATH=src python3 -m aec source search 'a forgotten fact' --root corpus --max 20
-PYTHONPATH=src python3 -m aec source search 'fact.*detail' --regex --root corpus
+aec check .aec/records.jsonl
+aec source show C-example@1 --context 3 --max-lines 80 --max-chars 240
+aec source search 'a forgotten fact' --root corpus --max 20
+aec source search 'fact.*detail' --regex --root corpus
 ```
 
 `check` prints each valid anchor's state. A `verified` anchor means matching raw
@@ -96,3 +96,5 @@ the current directory). `check --repo ROOT` overrides source configuration looku
 otherwise records under .aec/ imply their repository parent, and other paths use
 the current directory. Relative root configuration stays relative in displayed
 paths. Invalid configuration, regexes, references or limits are usage errors.
+
+(From a source checkout without installing, `PYTHONPATH=src python3 -m aec …` works the same.)

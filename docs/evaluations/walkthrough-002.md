@@ -1,6 +1,6 @@
 # walkthrough-002: fresh reader on the reorganized README (PR #29)
 
-A fresh Claude Sonnet agent with no project history read the README on branch `docs/reorg`, answered six comprehension questions before running anything, then followed the quickstart. Its report is reproduced unedited below. The fixes it led to are in the same PR: why to use AEC and what it costs; the record types and relations, plus `init`'s next steps, inline in the quickstart; a runnable command for the worked example; one pinned install line in both the README and the guide; `aec` instead of `PYTHONPATH=…` in the edges reference; and a real Spec Kit integration page. The install tag `v0.4.1` resolves once that release is published.
+A fresh Claude Sonnet agent with no project history read the README on branch `docs/reorg`, answered six comprehension questions before running anything, then followed the quickstart. Its report is reproduced unedited below. The fixes it led to are in the same PR: why to use AEC and what it costs; the record types and relations, plus `init`'s next steps, inline in the quickstart; a runnable command for the worked example; one pinned install line in both the README and the guide; `aec` instead of `PYTHONPATH=…` in the edges reference; and a real Spec Kit integration page. **Not tested: the published install command.** The release tag `v0.4.1` didn't exist yet, so the agent installed from the PR branch (`@docs/reorg`). Re-run the install line once v0.4.1 is published.
 
 ---
 

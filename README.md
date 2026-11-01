@@ -39,7 +39,7 @@ Python 3.10 or newer; no other dependencies.
 
 ```bash
 cd your-project
-aec init . --owner "Your Name"      # creates .aec/: records, an edge snapshot (git-ignored), CI/hook snippets
+aec init . --owner "Your Name"      # creates .aec/: records, an edge snapshot (git-ignored), CI/hook snippets (inactive until you copy them)
 grep '"defines"' .aec/edges.jsonl | grep apply_discount    # find the name AEC uses for your function
 ```
 
@@ -130,7 +130,7 @@ listed in [CHANGELOG.md](CHANGELOG.md). Compare edge snapshots made by the same 
 | anchor records to source passages | [docs/reference/source-anchors.md](docs/reference/source-anchors.md) |
 | use AEC inside Spec Kit | [docs/integrations/spec-kit.md](docs/integrations/spec-kit.md) |
 | see where AEC is going | [docs/architecture.md](docs/architecture.md) and [docs/history/about.md](docs/history/about.md) |
-| check the evidence | [docs/evaluations/](docs/evaluations/) |
+| check the evidence | [docs/evaluations/](docs/evaluations/README.md) |
 | see how the project governs itself | [docs/governance.md](docs/governance.md) |
 
 ## How AEC is built
