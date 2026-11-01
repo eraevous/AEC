@@ -3,9 +3,9 @@
 All notable changes to AEC. Versions follow [semantic versioning](https://semver.org/); before
 1.0, a minor version may change command output or record fields (see "Stability" in README).
 
-## [0.4.0] - unreleased
+## [0.4.0] - 2026-11-01
 
-First public release candidate. `edges`, `impact` and `code-impact` compute the same results as before; `check` gains one warning (`relation-shape`) and near-miss hints.
+First public release. `edges`, `impact` and `code-impact` compute the same results as before; `check` gains one warning (`relation-shape`) and near-miss hints.
 
 ### Added
 - `aec` console command after `pip install`, and `aec --version`.
