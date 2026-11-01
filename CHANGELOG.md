@@ -12,6 +12,10 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 - AEC's own repository no longer tracks `.aec/edges.jsonl`; CI and the Claude hook regenerate it.
 - README: how to build a baseline snapshot from a git worktree.
 - The CI job `aec init` generates now pins `@v0.4.1`.
+- AEC's own CI reports `aec code-impact` for each pull request (base to head, report only), so code
+  that moves ahead of its records is visible in the PR. Found by the dogfood-001 audit.
+- AEC's own records catch up with the day's changes: claims and evidence for `init` (AEC-R7) and
+  `check` (AEC-R8), AEC-R10 re-anchored after the WP1A clarifications, and DEC-023 to DEC-025.
 
 ## [0.4.0] - 2026-11-01
 
