@@ -17,6 +17,11 @@ For example, an agent "simplifies" `hmac.compare_digest(sig, expected)` to `sig 
 still pass. If a constant-time requirement had been recorded against that function, AEC reports it,
 and the claim resting on it, as `stale`: look again. ([Reproduce it](#worked-example).)
 
+What you get: reasons that resurface when the code under them moves; references from records to code
+that are checked, with near-miss suggestions when a name is wrong; and an append-only history of who
+decided what and on what basis, which agents and people can both read. What it costs: you (or your
+agent) write the records. AEC doesn't infer them.
+
 AEC records those reasons as plain, append-only JSON lines (purposes, requirements, claims, evidence,
 decisions, and who has authority over them). It links them to the code through a deterministic
 static-analysis snapshot of what defines, calls and imports what.
@@ -54,7 +59,13 @@ aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl
 ```
 
 `code-impact` marks `R-1@1` as `stale` and `C-1@1` as `needs_review`. Records are append-only:
-to change one, append the same `id` with `"version": 2`. The
+to change one, append the same `id` with `"version": 2`.
+
+The record types you'll use most are `purpose`, `requirement`, `claim`, `evidence` and `decision`, and
+the relations are `implemented_by` (to `code:` names), `depends_on`, `serves` and `supports`. All of them
+are listed in [docs/reasoning-vocabulary.md](docs/reasoning-vocabulary.md). `aec init` also prints its
+own next steps: replace its placeholder purpose record (`P0`) with yours, and optionally copy its CI and
+Claude Code hook snippets into place. The
 [getting-started guide](docs/guide/getting-started.md) covers comparing against a branch, CI and the
 Claude Code hook, and repositories with existing Codex++ purpose files.
 
@@ -77,8 +88,12 @@ flagged for review. The full vocabulary is in [docs/reasoning-vocabulary.md](doc
 
 ## Worked example
 
+```bash
+git clone https://github.com/eraevous/AEC && AEC/examples/itsdangerous-demo/run.sh
+```
+
 [`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces the
-itsdangerous example above end to end in a temporary directory: it clones the library at a pinned
+itsdangerous example above end to end in a temporary directory (it needs network access): it clones the library at a pinned
 commit, records a constant-time requirement and a claim, makes the edit, runs the library's tests
 (297 pass before and after) and shows AEC's report. Be exact about what it shows: someone who knew
 what to look for wrote the requirement down, so it demonstrates the mechanism, not discovery.
