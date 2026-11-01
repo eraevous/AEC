@@ -16,6 +16,7 @@ SEVERITY = ["exploratory", "rebaseline", "weakened", "contested", "needs_review"
 # broken, unauthorized or contested support makes dependents need review
 PROPAGATES = {"unjustified", "stale", "contested"}
 OBLIGATIONS = {"requirement", "purpose", "criterion"}  # never invalidated by code changes
+DELETION_UNJUSTIFIES = {"claim", "evidence"}  # with an explicit depends_on on deleted code (vocabulary invariant)
 
 
 @dataclass
@@ -64,6 +65,10 @@ def _dependents(store: Store, target_ref: str) -> list[tuple[Record, str]]:
     return [(r, how) for r, how in out if store.latest.get(r.id) is r]
 
 
+def _rels(record: Record, target_ref: str) -> set[str]:
+    return {e.get("rel") for e in record.relations if e.get("to") == target_ref}
+
+
 def _live_supports(store: Store, claim: Record, dead: set[str]) -> list[str]:
     return [ev.ref for ev in store.in_edges(claim.ref, "supports") if ev.ref not in dead]
 
@@ -105,6 +110,12 @@ def impact(store: Store, changes: list[dict]) -> ImpactReport:
                 elif dep.type == "decision" or how == "applicability":
                     # decisions belong to a human authority; observations stay valid records of what was seen.
                     # Either way: flag for review, never invalidate.
+                    status = "needs_review"
+                elif target.id.startswith(CODE) and not (
+                        dep.type in DELETION_UNJUSTIFIES and _rels(dep, target_ref) & {"depends_on"}):
+                    # the one exception to "code changes yield review statuses only": a claim or evidence
+                    # record whose explicit depends_on names deleted code. Evaluations, and selects or
+                    # implemented_by links from non-obligations, get review, not invalidation.
                     status = "needs_review"
                 else:
                     status = "unjustified"

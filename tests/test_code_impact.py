@@ -39,6 +39,34 @@ class TestCodeImpact(unittest.TestCase):
         rep, _ = code_impact(Store.load(f), self.v1, self.v2)
         self.assertEqual(rep.impacts["CL@1"].status, "unjustified")
 
+    def _deleted(self, *records):
+        f = Path(tempfile.mkdtemp()) / "r.jsonl"
+        f.write_text("\n".join(json.dumps(r) for r in records) + "\n")
+        rep, _ = code_impact(Store.load(f), self.v1, self.v2)
+        return {k: v.status for k, v in rep.impacts.items()}
+
+    def test_deleted_code_only_reviews_an_evaluation_that_depends_on_it(self):  # WP0 finding, fixed
+        st = self._deleted({"id": "EV", "version": 1, "type": "evaluation",
+                            "relations": [{"rel": "depends_on", "to": "code:pkg.core.fetch"}]})
+        self.assertEqual(st["EV@1"], "needs_review")
+
+    def test_deleted_code_only_reviews_a_claim_linked_by_implemented_by(self):  # WP0 finding, fixed
+        st = self._deleted({"id": "CL2", "version": 1, "type": "claim",
+                            "relations": [{"rel": "implemented_by", "to": "code:pkg.core.fetch"}]})
+        self.assertEqual(st["CL2@1"], "needs_review")
+
+    def test_deleted_code_still_unjustifies_evidence_that_depends_on_it(self):  # decoy: the exception holds
+        st = self._deleted({"id": "EVD", "version": 1, "type": "evidence",
+                            "relations": [{"rel": "depends_on", "to": "code:pkg.core.fetch"}]})
+        self.assertEqual(st["EVD@1"], "unjustified")
+
+    def test_claim_resting_on_an_unjustified_claim_is_still_unjustified(self):  # transitive rule unchanged
+        st = self._deleted({"id": "CL", "version": 1, "type": "claim",
+                            "relations": [{"rel": "depends_on", "to": "code:pkg.core.fetch"}]},
+                           {"id": "CL3", "version": 1, "type": "claim",
+                            "relations": [{"rel": "depends_on", "to": "CL@1"}]})
+        self.assertEqual(st["CL3@1"], "unjustified")
+
     def test_unchanged_linked_code_is_not_flagged(self):  # decoy, SC-004
         self.assertNotIn("REQ-extras@1", self.st)
 

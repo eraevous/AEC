@@ -76,13 +76,12 @@ synthetic code records and explicit events for the impact engine. Plain `aec imp
 does not discover deletions or create those records: an event naming an absent
 `code:` target is reported as unresolved, with no impact inferred.
 
-The deletion branch is broader than the intended exception above: the current
-`_dependents` implementation treats explicit `depends_on`, `selects` and
-`implemented_by` links as necessary for any record type. A non-obligation,
-non-decision record (including an evaluation) can therefore become `unjustified`
-when such a code target is deleted. `observed_on` still requests review. WP0
-records this discrepancy without changing propagation semantics or the vocabulary;
-review is needed before treating the narrower invariant as fully enforced.
+Fixed 2026-11-01 (the WP0 finding): on deletion, only a **claim or evidence** record whose explicit
+`depends_on` names the deleted code becomes `unjustified`. Evaluations, and `selects` or
+`implemented_by` links from records that are not obligations, get `needs_review`. Downstream
+propagation is unchanged: a record that necessarily rests on an unjustified claim is itself unjustified.
+`check` does not yet reject `implemented_by` on records that aren't obligations. That would touch
+`records.py`, which the open v0.4 release PR (#20) also edits, so it is left as a follow-up.
 
 ## Changes
 
