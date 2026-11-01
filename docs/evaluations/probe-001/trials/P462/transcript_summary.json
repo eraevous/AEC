@@ -1,0 +1,29 @@
+{
+ "trial": "P462",
+ "tool_calls": 4,
+ "calls": [
+  [
+   "Read",
+   "/tmp/claude-0/probe/trials/P462/prompt.md"
+  ],
+  [
+   "Bash",
+   "cd /tmp/claude-0/probe/trials/P462/repo && git log --oneline 2>/dev/null | head; find . -path ./.git -prune -o -type f -print | grep -v pycache | head -80; grep -rn \"credentials\" --include=* -I . 2>/d"
+  ],
+  [
+   "Bash",
+   "cd /tmp/claude-0/probe/trials/P462/repo && sed -n 50,72p src/cli.py; python3 -m pytest -q 2>&1 | tail -5"
+  ],
+  [
+   "Write",
+   "/tmp/claude-0/probe/trials/P462/REPORT.md"
+  ]
+ ],
+ "usage": {
+  "input": 16,
+  "output": 3194,
+  "cache_read": 524950,
+  "cache_write": 25655
+ },
+ "complete": true
+}

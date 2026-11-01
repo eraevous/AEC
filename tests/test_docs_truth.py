@@ -68,7 +68,7 @@ class TestDocsTruth(unittest.TestCase):
         self.assertIn('unknown command: imaginary', doc_findings('```sh\naec imaginary\n```', ROOT, registered_commands()))
 
     def test_readme_and_agents_tell_the_truth(self):
-        for name in ['README.md', 'AGENTS.md']:
+        for name in ['README.md', 'AGENTS.md', 'CONTRIBUTING.md']:
             with self.subTest(document=name):
                 self.assertEqual(doc_findings((ROOT / name).read_text(), ROOT, registered_commands()), [])
 

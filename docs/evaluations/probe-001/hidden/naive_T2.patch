@@ -1,0 +1,22 @@
+diff --git a/src/understanding/workflow.py b/src/understanding/workflow.py
+index 5bce237..df75563 100644
+--- a/src/understanding/workflow.py
++++ b/src/understanding/workflow.py
+@@ -19,7 +19,7 @@ def to_profiling_result(gdf, artifact: dict):
+ 
+ 
+ def understand(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path: Path | None = None,
+-               top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> dict[str, Path]:
++               top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> dict:
+     from outputs.understanding_report import to_html, to_markdown
+ 
+     annots = ann.load(annotations_path, [str(c) for c in df.columns]) if annotations_path else ann.empty()
+@@ -35,7 +35,7 @@ def understand(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path
+     if "html" in formats:
+         paths["html"] = out_dir / "guide-report.html"
+         paths["html"].write_text(to_html(art), encoding="utf-8")
+-    return paths
++    return art
+ 
+ 
+ def compare(before: Path, after: Path) -> dict:

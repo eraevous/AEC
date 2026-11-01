@@ -1,0 +1,12 @@
+diff --git a/src/data_profiler.py b/src/data_profiler.py
+index 55d8ec5..cfe1466 100644
+--- a/src/data_profiler.py
++++ b/src/data_profiler.py
+@@ -548,7 +548,6 @@ class DataProfiler:
+ 
+         self.results["metadata"] = metadata
+         self.results["column_types"] = self.type_resolver.as_dict()
+-        self.profile_columns()
+ 
+         if include_bivariate:
+             self.profile_bivariate(**(bivariate_kwargs or {}))

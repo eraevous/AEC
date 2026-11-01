@@ -1,0 +1,172 @@
+diff --git a/src/connectors/credentials.py b/src/connectors/credentials.py
+deleted file mode 100644
+index 48fe3e4..0000000
+--- a/src/connectors/credentials.py
++++ /dev/null
+@@ -1,86 +0,0 @@
+-from __future__ import annotations
+-
+-import json
+-import os
+-from pathlib import Path
+-
+-import yaml
+-
+-_SNOWFLAKE_REQUIRED = {"account", "user", "password", "warehouse", "database", "schema"}
+-
+-_REQUIRED_BY_TYPE: dict[str, set[str]] = {
+-    "snowflake": _SNOWFLAKE_REQUIRED,
+-}
+-
+-
+-class CredentialsValidationError(Exception):
+-    pass
+-
+-
+-def _load_file(path: str) -> dict:
+-    p = Path(path)
+-    if not p.exists():
+-        raise CredentialsValidationError(f"Credentials file not found: {path}")
+-    with p.open() as f:
+-        if p.suffix in {".yaml", ".yml"}:
+-            return yaml.safe_load(f)
+-        return json.load(f)
+-
+-
+-def _validate(creds: dict, connector_type: str) -> dict:
+-    if creds.get("type") and creds["type"] != connector_type:
+-        raise CredentialsValidationError(
+-            f"Credentials type mismatch: file says '{creds['type']}', "
+-            f"connector expects '{connector_type}'"
+-        )
+-    required = _REQUIRED_BY_TYPE.get(connector_type, set())
+-    for field in required:
+-        if not creds.get(field):
+-            raise CredentialsValidationError(
+-                f"Credentials missing required field: '{field}' for connector '{connector_type}'"
+-            )
+-    return creds
+-
+-
+-def load_credentials(
+-    connector_type: str,
+-    credentials_path: str | None = None,
+-) -> dict:
+-    """Resolve credentials using priority order:
+-    1. credentials_path argument (from --credentials CLI flag)
+-    2. GUIDE_CREDENTIALS_FILE env var (path to file)
+-    3. Individual connector env vars (SF_ACCOUNT etc.)
+-    4. Raise CredentialsValidationError
+-    """
+-    if credentials_path:
+-        return _validate(_load_file(credentials_path), connector_type)
+-
+-    env_file = os.environ.get("GUIDE_CREDENTIALS_FILE")
+-    if env_file:
+-        return _validate(_load_file(env_file), connector_type)
+-
+-    if connector_type == "snowflake":
+-        keys = ["SF_ACCOUNT", "SF_USER", "SF_PASSWORD", "SF_WAREHOUSE", "SF_DATABASE", "SF_SCHEMA"]
+-        env_vals = {k: os.environ.get(k) for k in keys}
+-        present = {k for k, v in env_vals.items() if v}
+-        if present == set(keys):
+-            return {
+-                "type": "snowflake",
+-                "account": env_vals["SF_ACCOUNT"],
+-                "user": env_vals["SF_USER"],
+-                "password": env_vals["SF_PASSWORD"],
+-                "warehouse": env_vals["SF_WAREHOUSE"],
+-                "database": env_vals["SF_DATABASE"],
+-                "schema": env_vals["SF_SCHEMA"],
+-            }
+-        if present:
+-            missing = sorted(set(keys) - present)
+-            raise CredentialsValidationError(
+-                f"Credentials missing required field: {missing} not set for connector 'snowflake'"
+-            )
+-
+-    raise CredentialsValidationError(
+-        f"No credentials found for connector '{connector_type}'. "
+-        "Provide --credentials <file>, set GUIDE_CREDENTIALS_FILE, "
+-        "or set connector-specific env vars."
+-    )
+diff --git a/tests/test_credentials.py b/tests/test_credentials.py
+deleted file mode 100644
+index 384fa3c..0000000
+--- a/tests/test_credentials.py
++++ /dev/null
+@@ -1,74 +0,0 @@
+-import json
+-import os
+-import pytest
+-from pathlib import Path
+-from connectors.credentials import CredentialsValidationError, load_credentials
+-
+-
+-def test_load_from_file(tmp_path):
+-    creds_file = tmp_path / "sf.credentials.json"
+-    creds_file.write_text(json.dumps({
+-        "type": "snowflake",
+-        "account": "myaccount",
+-        "user": "myuser",
+-        "password": "secret",
+-        "warehouse": "WH",
+-        "database": "DB",
+-        "schema": "PUBLIC",
+-    }))
+-    result = load_credentials("snowflake", credentials_path=str(creds_file))
+-    assert result["account"] == "myaccount"
+-    assert result["type"] == "snowflake"
+-
+-
+-def test_load_from_env_vars(monkeypatch):
+-    monkeypatch.setenv("SF_ACCOUNT", "envaccount")
+-    monkeypatch.setenv("SF_USER", "envuser")
+-    monkeypatch.setenv("SF_PASSWORD", "envpass")
+-    monkeypatch.setenv("SF_WAREHOUSE", "WH")
+-    monkeypatch.setenv("SF_DATABASE", "DB")
+-    monkeypatch.setenv("SF_SCHEMA", "PUBLIC")
+-    result = load_credentials("snowflake")
+-    assert result["account"] == "envaccount"
+-
+-
+-def test_load_from_guide_credentials_file_env(tmp_path, monkeypatch):
+-    creds_file = tmp_path / "sf.credentials.json"
+-    creds_file.write_text(json.dumps({
+-        "type": "snowflake",
+-        "account": "fileenvaccount",
+-        "user": "u",
+-        "password": "p",
+-        "warehouse": "W",
+-        "database": "D",
+-        "schema": "S",
+-    }))
+-    monkeypatch.setenv("GUIDE_CREDENTIALS_FILE", str(creds_file))
+-    result = load_credentials("snowflake")
+-    assert result["account"] == "fileenvaccount"
+-
+-
+-def test_wrong_type_raises(tmp_path):
+-    creds_file = tmp_path / "bad.credentials.json"
+-    creds_file.write_text(json.dumps({"type": "csv"}))
+-    with pytest.raises(CredentialsValidationError, match="type mismatch"):
+-        load_credentials("snowflake", credentials_path=str(creds_file))
+-
+-
+-def test_missing_required_field_raises(tmp_path):
+-    creds_file = tmp_path / "incomplete.credentials.json"
+-    creds_file.write_text(json.dumps({
+-        "type": "snowflake",
+-        "account": "a",
+-        # missing user, password, warehouse, database, schema
+-    }))
+-    with pytest.raises(CredentialsValidationError, match="missing required field"):
+-        load_credentials("snowflake", credentials_path=str(creds_file))
+-
+-
+-def test_no_credentials_raises(monkeypatch):
+-    monkeypatch.delenv("GUIDE_CREDENTIALS_FILE", raising=False)
+-    for key in ["SF_ACCOUNT", "SF_USER", "SF_PASSWORD", "SF_WAREHOUSE", "SF_DATABASE", "SF_SCHEMA"]:
+-        monkeypatch.delenv(key, raising=False)
+-    with pytest.raises(CredentialsValidationError, match="No credentials"):
+-        load_credentials("snowflake")

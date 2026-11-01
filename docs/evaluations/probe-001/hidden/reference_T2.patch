@@ -1,0 +1,88 @@
+diff --git a/src/cli.py b/src/cli.py
+index 001e00e..5dbdb55 100644
+--- a/src/cli.py
++++ b/src/cli.py
+@@ -206,6 +206,14 @@ def run(
+             typer.echo(f"WARNING: Unknown output type '{out_type}', skipping.")
+ 
+ 
++def _echo_outputs(out: Path) -> None:
++    from understanding.workflow import OUTPUT_FILES
++
++    for kind, name in OUTPUT_FILES.items():
++        if (out / name).exists():
++            typer.echo(f"{kind}: {out / name}")
++
++
+ @app.command()
+ def understand(
+     file: Path = typer.Argument(..., help="Data file (csv, xlsx, json, sqlite with --query)."),
+@@ -225,12 +233,11 @@ def understand(
+         cfg["query"] = query
+     gdf = _build_connector(connector_type, cfg).load()
+     try:
+-        paths = run_understand(gdf.df, source=file.name, out_dir=out, annotations_path=annotations, top_k=top_k)
++        run_understand(gdf.df, source=file.name, out_dir=out, annotations_path=annotations, top_k=top_k)
+     except AnnotationError as e:
+         typer.echo(f"ERROR: annotations: {e}", err=True)
+         raise typer.Exit(code=1)
+-    for kind, p in paths.items():
+-        typer.echo(f"{kind}: {p}")
++    _echo_outputs(out)
+ 
+ 
+ @app.command()
+@@ -260,9 +267,8 @@ def demo(out: Path = typer.Option(Path("guide-demo"), help="Output directory."))
+     df = encounters()
+     df.to_csv(out / "encounters.csv", index=False)
+     (out / "guide.yml").write_text(ANNOTATIONS_YAML, encoding="utf-8")
+-    paths = run_understand(df, source="encounters.csv (synthetic)", out_dir=out, annotations_path=out / "guide.yml")
+-    for kind, p in paths.items():
+-        typer.echo(f"{kind}: {p}")
++    run_understand(df, source="encounters.csv (synthetic)", out_dir=out, annotations_path=out / "guide.yml")
++    _echo_outputs(out)
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/src/understanding/workflow.py b/src/understanding/workflow.py
+index 5bce237..996af27 100644
+--- a/src/understanding/workflow.py
++++ b/src/understanding/workflow.py
+@@ -10,6 +10,8 @@ from understanding import annotations as ann
+ from understanding.artifact import build_artifact, dumps
+ from understanding.compare import compare_artifacts
+ 
++OUTPUT_FILES = {"json": "guide-profile.json", "md": "guide-report.md", "html": "guide-report.html"}
++
+ 
+ def to_profiling_result(gdf, artifact: dict):
+     """Attach the artifact to the approved ProfilingResult contract (April 2026 design)."""
+@@ -19,23 +21,19 @@ def to_profiling_result(gdf, artifact: dict):
+ 
+ 
+ def understand(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path: Path | None = None,
+-               top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> dict[str, Path]:
++               top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> dict:
+     from outputs.understanding_report import to_html, to_markdown
+ 
+     annots = ann.load(annotations_path, [str(c) for c in df.columns]) if annotations_path else ann.empty()
+     art = build_artifact(df, source=source, annotations=annots, top_k=top_k)
+     out_dir.mkdir(parents=True, exist_ok=True)
+-    paths = {}
+     if "json" in formats:
+-        paths["json"] = out_dir / "guide-profile.json"
+-        paths["json"].write_text(dumps(art), encoding="utf-8")
++        (out_dir / OUTPUT_FILES["json"]).write_text(dumps(art), encoding="utf-8")
+     if "md" in formats:
+-        paths["md"] = out_dir / "guide-report.md"
+-        paths["md"].write_text(to_markdown(art), encoding="utf-8")
++        (out_dir / OUTPUT_FILES["md"]).write_text(to_markdown(art), encoding="utf-8")
+     if "html" in formats:
+-        paths["html"] = out_dir / "guide-report.html"
+-        paths["html"].write_text(to_html(art), encoding="utf-8")
+-    return paths
++        (out_dir / OUTPUT_FILES["html"]).write_text(to_html(art), encoding="utf-8")
++    return art
+ 
+ 
+ def compare(before: Path, after: Path) -> dict:
