@@ -3,14 +3,23 @@
 All notable changes to AEC. Versions follow [semantic versioning](https://semver.org/); before
 1.0, a minor version may change command output or record fields (see "Stability" in README).
 
-## WP1A (unreleased source-checkout additions)
+## [Unreleased]
+
+### Added (WP1A, commit-addressed snapshots)
 
 - Commit/working-tree snapshots with extractor tool_version 0.4.0 and method identity.
 - Symmetric merge-base/head structural diffs, guarded stored comparisons and CI artifact.
 - Projection-specific reach/fan and unresolved-call retrieval by five reason kinds, with visibility.
 - File/directory boundaries and conservative class/public-surface indicators.
 
-## [0.4.1] - unreleased
+### Changed
+- The extractor (tool_version 0.4.1) resolves `x.m()` when `x` is a function local whose only
+  possible value is `C(...)` for a class defined in the analysed tree, like `self.m()`. Any local that
+  could hold something else stays unresolved. Found by probe-001 (its most consequential caller was
+  missed this way); measured in `docs/evaluations/resolver-001.md`: 25 of Data-Guide's 874 unresolved
+  calls resolve, all correct by hand check. Snapshots from extractor 0.4.0 and 0.4.1 are not comparable.
+
+## [0.4.1] - 2026-11-01
 
 ### Changed
 - `aec init` writes `.aec/.gitignore` so the generated snapshot (`edges.jsonl`, and a `before.jsonl`

@@ -9,8 +9,10 @@ Edge kinds: defines, calls, imports, inherits, references. Standard library only
 
 Resolution rules (research R1): a call or read resolves through local bindings (unresolved),
 module-level definitions, imports (explicit and star, in statement order), and `self.x` against the
-enclosing class and its known bases. Builtins are dropped. Anything else that is called is kept as
-an unresolved `?expr` target, never guessed. Reads that don't resolve are not edges.
+enclosing class and its known bases. One narrow exception to "locals are unresolved" (C-11, tool
+version 0.4.1): a function local whose only possible value is `C(...)` for a class C defined in the
+tree resolves `x.m` against C and its bases, like `self.m`. Builtins are dropped. Anything else that
+is called is kept as an unresolved `?expr` target, never guessed. Reads that don't resolve are not edges.
 """
 from __future__ import annotations
 
@@ -24,7 +26,7 @@ import tokenize
 import warnings
 from pathlib import Path
 
-TOOL_VERSION = "0.4.0"
+TOOL_VERSION = "0.4.1"
 KINDS = ("defines", "imports", "inherits", "calls", "references")
 BUILTINS = set(dir(builtins))
 DEFAULT_IGNORE = {".git", ".venv", "venv", "env", "__pycache__", ".tox", "node_modules", "build", "dist",
@@ -263,16 +265,14 @@ class _Extractor:
             m.bindings = bind
             m.order = []
 
-    def resolve(self, dotted: str, mod: _Module, local_bind: dict, locals_: set, cls: str | None):
+    def resolve(self, dotted: str, mod: _Module, local_bind: dict, locals_: set, cls: str | None,
+                local_types: dict | None = None):
         """Return (target, resolved) or (None, None) if it should be dropped (builtin)."""
         root, _, rest = dotted.partition(".")
         if root in ("self", "cls") and cls:
-            attr = rest.split(".")[0] if rest else ""
-            found = self._lookup_class_attr(cls, attr) if attr else None
-            if found:
-                tail = rest.split(".", 1)[1] if "." in rest else ""
-                return (f"{found}.{tail}" if tail else found), True
-            return f"?{dotted}", False
+            return self._via_class(dotted, cls, rest)
+        if local_types and root in local_types and rest:
+            return self._via_class(dotted, local_types[root], rest)
         if root in locals_:
             return f"?{dotted}", False
         if root in local_bind:
@@ -284,6 +284,68 @@ class _Extractor:
         else:
             return f"?{dotted}", False
         return (f"{base}.{rest}" if rest else base), True
+
+    def _via_class(self, dotted: str, cls_sym: str, rest: str):
+        """`<instance>.attr[.tail]` where the instance's class is known: resolve attr against the class
+        and its known bases. An attribute the class doesn't define (an instance attribute, or one from
+        an unknown base) stays unresolved."""
+        attr = rest.split(".")[0] if rest else ""
+        found = self._lookup_class_attr(cls_sym, attr) if attr else None
+        if found:
+            tail = rest.split(".", 1)[1] if "." in rest else ""
+            return (f"{found}.{tail}" if tail else found), True
+        return f"?{dotted}", False
+
+    def _local_types(self, mod, body, stmts, scope_locals, inherited_locals, local_bind):
+        """C-11: function locals whose only possible value is an instance of a known class.
+
+        A name qualifies when it is stored exactly once in the function, by a plain top-level statement
+        `x = C(...)` or `x: T = C(...)` (not inside if/for/try/with), C resolves to a class defined in the
+        analysed tree, and that class (or a known base) doesn't define `__new__`. Anything that could
+        give the name another value disqualifies it: a second store, a loop, `with` or `except` target,
+        a walrus, `del`, `global`/`nonlocal`, a parameter, an outer-scope local, a local import or a
+        nested definition of the same name. No type inference beyond that."""
+        stores: dict[str, int] = {}
+        banned: set[str] = set(inherited_locals) | set(local_bind)
+        for st in stmts:
+            for n in ast.walk(st):
+                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
+                    stores[n.id] = stores.get(n.id, 0) + 1
+                elif isinstance(n, ast.Name) and isinstance(n.ctx, ast.Del):
+                    banned.add(n.id)
+                elif isinstance(n, (ast.Global, ast.Nonlocal)):
+                    banned.update(n.names)
+                elif isinstance(n, ast.ExceptHandler) and n.name:
+                    banned.add(n.name)
+                elif isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    banned.add(n.name)
+                elif type(n).__name__ in ("MatchAs", "MatchStar") and getattr(n, "name", None):
+                    banned.add(n.name)
+                elif type(n).__name__ == "MatchMapping" and getattr(n, "rest", None):
+                    banned.add(n.rest)
+        for node in body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                banned.add(node.name)
+        out: dict[str, str] = {}
+        for node in body:
+            if isinstance(node, ast.Assign) and len(node.targets) == 1:
+                target, value = node.targets[0], node.value
+            elif isinstance(node, ast.AnnAssign) and node.value is not None:
+                target, value = node.target, node.value
+            else:
+                continue
+            if not isinstance(target, ast.Name) or not isinstance(value, ast.Call):
+                continue
+            name = target.id
+            if name in banned or stores.get(name) != 1 or name not in scope_locals:
+                continue
+            d = _dotted(value.func)
+            if not d:
+                continue
+            tgt, ok = self.resolve(d, mod, local_bind, scope_locals, None)
+            if ok and tgt in self._class_syms and not self._lookup_class_attr(tgt, "__new__"):
+                out[name] = tgt
+        return out
 
     def _lookup_class_attr(self, cls_sym: str, attr: str, seen=None) -> str | None:
         seen = seen or set()
@@ -365,8 +427,11 @@ class _Extractor:
                     self._import_bindings(mod, n, scope_sym, local_bind)
                 elif scope_sym != mod.name and isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
                     locals_.add(n.id)
+        is_function = scope_sym != mod.name and scope_sym not in self._class_syms
+        local_types = (self._local_types(mod, body, stmts, locals_, inherited_locals, local_bind)
+                       if is_function else None)
         for st in stmts:
-            self._scan_expr(mod, st, scope_sym, local_bind, locals_, cls)
+            self._scan_expr(mod, st, scope_sym, local_bind, locals_, cls, local_types)
         for node in nested:
             in_cls = isinstance(node, ast.ClassDef)
             sep = "." if (scope_sym == mod.name or scope_sym in self._class_syms) else ".<locals>."
@@ -394,7 +459,7 @@ class _Extractor:
         return target in {"importlib.import_module", "builtins.__import__", "builtins.eval", "builtins.exec"} or (
             target is None and d in {"__import__", "eval", "exec"})
 
-    def _scan_expr(self, mod, st, src, local_bind, locals_, cls):
+    def _scan_expr(self, mod, st, src, local_bind, locals_, cls, local_types=None):
         call_funcs = set()
         for n in ast.walk(st):
             if isinstance(n, ast.Call):
@@ -403,7 +468,7 @@ class _Extractor:
                 if self.reflective(n.func, mod, local_bind, locals_, cls):
                     self.edge("calls", src, "?" + _expr_label(n.func), mod, n, "reflective")
                 elif d:
-                    tgt, ok = self.resolve(d, mod, local_bind, locals_, cls)
+                    tgt, ok = self.resolve(d, mod, local_bind, locals_, cls, local_types)
                     if tgt:
                         root = d.split(".")[0]
                         why = ("self_attr_unknown" if root in ("self", "cls") and cls else
@@ -424,7 +489,7 @@ class _Extractor:
             d = _dotted(n)
             if not d:
                 continue
-            tgt, ok = self.resolve(d, mod, local_bind, locals_, cls)
+            tgt, ok = self.resolve(d, mod, local_bind, locals_, cls, local_types)
             if tgt and ok:
                 self.edge("references", src, tgt, mod, n)
 

@@ -70,7 +70,7 @@ class TestRevisionSnapshots(History):
         self.assertEqual(a['edges'],E.snapshot(self.root)['edges'])
         self.assertEqual(git(self.root,'rev-parse','HEAD'),self.base)
         self.assertEqual([x['file'] for x in a['header']['skipped']],['bad.py'])
-        self.assertEqual(a['header']['method']['tool_version'],'0.4.0')
+        self.assertEqual(a['header']['method']['tool_version'],E.TOOL_VERSION)
         self.assertEqual(len(a['header']['method_sha']),64)
 
     def test_dirty_clean_and_non_git_working_tree(self):
