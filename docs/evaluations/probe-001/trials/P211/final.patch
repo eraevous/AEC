@@ -1,0 +1,46 @@
+diff --git a/codex_++/purpose_files/data_profiler.purpose.md b/codex_++/purpose_files/data_profiler.purpose.md
+index cc1fbea..5c11be2 100644
+--- a/codex_++/purpose_files/data_profiler.purpose.md
++++ b/codex_++/purpose_files/data_profiler.purpose.md
+@@ -61,7 +61,7 @@
+ ### 9 Pipeline Integration
+ #### Coordination Mechanics
+ - Pipelines supply datasets plus optional `custom_types`
+-- `profile_dataset` normalises types, runs column routing, and (optionally) triggers bivariate profiling
++- `profile_dataset` computes dataset-level metadata and column types only (no per-column profiles or plots), and optionally triggers bivariate profiling; callers run `profile_columns` separately for per-column profiles and plots
+ - `generate_report` materialises Markdown referencing artefacts in `output_dir/plots`
+ 
+ #### Integration Points
+diff --git a/src/data_profiler.py b/src/data_profiler.py
+index 55d8ec5..d0fd1ec 100644
+--- a/src/data_profiler.py
++++ b/src/data_profiler.py
+@@ -548,7 +548,6 @@ class DataProfiler:
+ 
+         self.results["metadata"] = metadata
+         self.results["column_types"] = self.type_resolver.as_dict()
+-        self.profile_columns()
+ 
+         if include_bivariate:
+             self.profile_bivariate(**(bivariate_kwargs or {}))
+@@ -798,4 +797,5 @@ if __name__ == "__main__":  # pragma: no cover
+ 
+     profiler = DataProfiler(data, custom_types={"C": "string", "D": "date"}, output_dir="./profile_output")
+     profiler.profile_dataset()
++    profiler.profile_columns()
+     profiler.generate_report("markdown", "sample_profile.md")
+diff --git a/src/profilers/univariate.py b/src/profilers/univariate.py
+index c0aa327..88742d5 100644
+--- a/src/profilers/univariate.py
++++ b/src/profilers/univariate.py
+@@ -26,9 +26,8 @@ def profile(
+     profiler = DataProfiler(gdf.df, custom_types=custom_types, output_dir=output_dir)
+ 
+     if "dataset" in analyses:
+-        # profile_dataset() internally calls profile_columns(), so skip the explicit call
+         profiler.profile_dataset()
+-    elif "columns" in analyses:
++    if "columns" in analyses:
+         profiler.profile_columns()
+ 
+     dataset_stats = {

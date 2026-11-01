@@ -103,7 +103,7 @@ problems nobody anticipated. That question is what
 - **Not complete about your code.** The edge snapshot is static analysis of Python only. Calls
   through dynamic dispatch stay unresolved and are never guessed. No known caller is not proof of
   no caller.
-- **Not shown to improve outcomes yet.** See "What this does not show (yet)" below.
+- **Not shown to improve outcomes.** In the first measured test, [probe-001](docs/evaluations/probe-001-results.md), Claude Sonnet agents found every hidden dependant without help on three dependency-sensitive tasks in a real repository (18 of 18 trials succeeded). AEC's structural briefing changed no outcome and raised token cost on two of the three tasks. The test also exposed a fixable gap in AEC's caller resolution. See "What this does not show (yet)" below.
 
 ## Stability (v0.4)
 

@@ -1,0 +1,71 @@
+diff --git a/src/cli.py b/src/cli.py
+index 001e00e..bf3c803 100644
+--- a/src/cli.py
++++ b/src/cli.py
+@@ -217,7 +217,7 @@ def understand(
+ ) -> None:
+     """Build the understanding artifact (guide-profile.json) and its Markdown/HTML views."""
+     from understanding.annotations import AnnotationError
+-    from understanding.workflow import understand as run_understand
++    from understanding.workflow import understand_with_paths as run_understand
+ 
+     connector_type = _auto_detect_connector(file) if connector == "auto" else connector
+     cfg: dict = {"path": str(file)}
+@@ -225,7 +225,7 @@ def understand(
+         cfg["query"] = query
+     gdf = _build_connector(connector_type, cfg).load()
+     try:
+-        paths = run_understand(gdf.df, source=file.name, out_dir=out, annotations_path=annotations, top_k=top_k)
++        _, paths = run_understand(gdf.df, source=file.name, out_dir=out, annotations_path=annotations, top_k=top_k)
+     except AnnotationError as e:
+         typer.echo(f"ERROR: annotations: {e}", err=True)
+         raise typer.Exit(code=1)
+@@ -254,13 +254,13 @@ def compare(
+ def demo(out: Path = typer.Option(Path("guide-demo"), help="Output directory.")) -> None:
+     """Write a synthetic encounters table with planted problems, its annotations, and its guide."""
+     from understanding.demo import ANNOTATIONS_YAML, encounters
+-    from understanding.workflow import understand as run_understand
++    from understanding.workflow import understand_with_paths as run_understand
+ 
+     out.mkdir(parents=True, exist_ok=True)
+     df = encounters()
+     df.to_csv(out / "encounters.csv", index=False)
+     (out / "guide.yml").write_text(ANNOTATIONS_YAML, encoding="utf-8")
+-    paths = run_understand(df, source="encounters.csv (synthetic)", out_dir=out, annotations_path=out / "guide.yml")
++    _, paths = run_understand(df, source="encounters.csv (synthetic)", out_dir=out, annotations_path=out / "guide.yml")
+     for kind, p in paths.items():
+         typer.echo(f"{kind}: {p}")
+ 
+diff --git a/src/understanding/workflow.py b/src/understanding/workflow.py
+index 5bce237..9a9e84b 100644
+--- a/src/understanding/workflow.py
++++ b/src/understanding/workflow.py
+@@ -18,8 +18,9 @@ def to_profiling_result(gdf, artifact: dict):
+                            bivariate_stats=artifact["relations"], understanding=artifact)
+ 
+ 
+-def understand(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path: Path | None = None,
+-               top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> dict[str, Path]:
++def understand_with_paths(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path: Path | None = None,
++                          top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> tuple[dict, dict[str, Path]]:
++    """Build the artifact, write the requested files, and return (artifact, {format: path})."""
+     from outputs.understanding_report import to_html, to_markdown
+ 
+     annots = ann.load(annotations_path, [str(c) for c in df.columns]) if annotations_path else ann.empty()
+@@ -35,7 +36,15 @@ def understand(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path
+     if "html" in formats:
+         paths["html"] = out_dir / "guide-report.html"
+         paths["html"].write_text(to_html(art), encoding="utf-8")
+-    return paths
++    return art, paths
++
++
++def understand(df: pd.DataFrame, *, source: str, out_dir: Path, annotations_path: Path | None = None,
++               top_k: int = 10, formats: tuple[str, ...] = ("json", "md", "html")) -> dict:
++    """Write the output files and return the artifact dict (same content as guide-profile.json)."""
++    art, _ = understand_with_paths(df, source=source, out_dir=out_dir, annotations_path=annotations_path,
++                                   top_k=top_k, formats=formats)
++    return art
+ 
+ 
+ def compare(before: Path, after: Path) -> dict:

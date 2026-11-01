@@ -12,7 +12,7 @@ First public release candidate. No change to what any command computes.
 - One line of `--help` text for every subcommand.
 - `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, issue templates, and a full `CONTRIBUTING.md`.
 - `docs/release-readiness.md`: what "a release we can be proud of" means for AEC, as checks.
-- `docs/evaluations/probe-001.md`: pre-registered design for the first outcome measurement (WP2-probe pilot).
+- `docs/evaluations/probe-001.md` and `probe-001-results.md`: the first outcome measurement, a pre-registered WP2-probe pilot (18 trials). Result: no signal, and briefings raised token cost on 2 of 3 tasks. All materials are published under `docs/evaluations/probe-001/`.
 - CI runs the test suite on Python 3.10, 3.11, 3.12 and 3.13.
 - A test that the package version, `aec.__version__` and this changelog agree.
 - `check` suggests close matches for an unknown `code:` reference, including a missing source-root prefix such as `src.`.

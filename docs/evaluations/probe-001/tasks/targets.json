@@ -1,0 +1,3 @@
+{"T1": ["src.data_profiler.DataProfiler.profile_dataset"],
+ "T2": ["src.understanding.workflow.understand"],
+ "T3": ["src.connectors.credentials", "src.connectors.credentials.load_credentials"]}

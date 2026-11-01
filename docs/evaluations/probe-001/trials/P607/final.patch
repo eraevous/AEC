@@ -1,0 +1,45 @@
+diff --git a/src/data_profiler.py b/src/data_profiler.py
+index 55d8ec5..167a0c3 100644
+--- a/src/data_profiler.py
++++ b/src/data_profiler.py
+@@ -539,6 +539,11 @@ class DataProfiler:
+     # Profiling orchestration
+     # ------------------------------------------------------------------
+     def profile_dataset(self, include_bivariate: bool = False, bivariate_kwargs: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
++        """Compute dataset-level metadata and column types only.
++
++        Per-column profiles and plots are NOT generated here; call
++        ``profile_columns()`` separately for those.
++        """
+         metadata = {
+             "row_count": int(len(self.df)),
+             "column_count": int(self.df.shape[1]),
+@@ -548,7 +553,6 @@ class DataProfiler:
+ 
+         self.results["metadata"] = metadata
+         self.results["column_types"] = self.type_resolver.as_dict()
+-        self.profile_columns()
+ 
+         if include_bivariate:
+             self.profile_bivariate(**(bivariate_kwargs or {}))
+@@ -798,4 +802,5 @@ if __name__ == "__main__":  # pragma: no cover
+ 
+     profiler = DataProfiler(data, custom_types={"C": "string", "D": "date"}, output_dir="./profile_output")
+     profiler.profile_dataset()
++    profiler.profile_columns()
+     profiler.generate_report("markdown", "sample_profile.md")
+diff --git a/src/profilers/univariate.py b/src/profilers/univariate.py
+index c0aa327..88742d5 100644
+--- a/src/profilers/univariate.py
++++ b/src/profilers/univariate.py
+@@ -26,9 +26,8 @@ def profile(
+     profiler = DataProfiler(gdf.df, custom_types=custom_types, output_dir=output_dir)
+ 
+     if "dataset" in analyses:
+-        # profile_dataset() internally calls profile_columns(), so skip the explicit call
+         profiler.profile_dataset()
+-    elif "columns" in analyses:
++    if "columns" in analyses:
+         profiler.profile_columns()
+ 
+     dataset_stats = {

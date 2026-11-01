@@ -44,7 +44,7 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - ✅ Doc-truth tests: every path and command named in README and AGENTS exists (`tests/test_docs_truth.py`).
 - ✅ Built / partial / planned table, and "no known caller is not proof of no caller".
 - 🔧 A "What AEC is not" section near the top: not a semantic verifier, not a replacement for tests or Spec Kit.
-- ⏳ Every value claim in the README links to a recorded measurement, or is phrased as a hypothesis.
+- ✅ Every value claim in the README links to a recorded measurement, or is phrased as a hypothesis.
 
 ### Proud of the craft
 - ✅ 107 tests, standard library only, deterministic output, CI dogfoods AEC on itself.
@@ -60,8 +60,8 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - 👤 Three to five `good first issue` items opened on GitHub (drafts in this branch's PR description).
 
 ### Proud of the result
-- ⏳ One honestly reported test of incremental value on code AEC wasn't built for: the WP2-probe pilot, pre-registered in `docs/evaluations/probe-001.md` before any run. It is Zach's own repository with tasks built for the test, so it is better than self-testing but not independent evidence, and it is labelled that way.
-- ⏳ The result, whatever it is, reported in README in one sentence with a link. A null result does not block the release; it blocks any claim of improvement.
+- ✅ One honestly reported test of incremental value on code AEC wasn't built for: the WP2-probe pilot, pre-registered in `docs/evaluations/probe-001.md` before any run. It is Zach's own repository with tasks built for the test, so it is better than self-testing but not independent evidence, and it is labelled that way.
+- ✅ The result, whatever it is, reported in README in one sentence with a link. ([probe-001 results](evaluations/probe-001-results.md): no signal, plus a cost.) A null result does not block the release; it blocks any claim of improvement.
 
 ### Proud over time
 - 🔧 CHANGELOG.md, starting from v0.1.

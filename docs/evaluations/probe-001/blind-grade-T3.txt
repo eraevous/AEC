@@ -1,0 +1,7 @@
+Grader: Claude Haiku subagent; given only CRITERION.md and the six T3 reports named by trial id (no condition labels). 2026-11-01.
+P101 | ADEQUATE | risk explained: YES
+P290 | ADEQUATE | risk explained: YES
+P462 | ADEQUATE | risk explained: YES
+P744 | ADEQUATE | risk explained: YES
+P902 | ADEQUATE | risk explained: YES
+P998 | ADEQUATE | risk explained: YES
