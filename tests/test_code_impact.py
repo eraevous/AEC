@@ -87,6 +87,18 @@ class TestDanglingCodeRefs(unittest.TestCase):  # T013 / FR-006
         self.assertIn(("code-reference", "R2@1"), bad)
         self.assertNotIn(("code-reference", "R1@1"), bad)
 
+    def test_dangling_ref_suggests_close_symbols(self):  # v0.4 walkthrough: suggest the near miss
+        f = Path(tempfile.mkdtemp()) / "r.jsonl"
+        f.write_text("\n".join(json.dumps(x) for x in [
+            {"id": "R2", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:pkg.core.lod"}]},
+            {"id": "R3", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:zzz.unrelated.qqq"}]},
+            {"id": "R4", "version": 1, "type": "requirement", "relations": [{"rel": "implemented_by", "to": "code:core.load"}]},
+        ]))
+        fs = {x.ref: x.msg for x in check(Store.load(f), edges=E.snapshot(FIX / "edges_pkg_v1")) if x.rule == "code-reference"}
+        self.assertIn("did you mean code:pkg.core.load", fs["R2@1"])
+        self.assertNotIn("did you mean", fs["R3@1"])  # decoy: nothing close, no guess
+        self.assertIn("did you mean code:pkg.core.load", fs["R4@1"])  # missing source-root prefix
+
     def test_code_refs_without_snapshot_are_not_errors(self):
         f = Path(tempfile.mkdtemp()) / "r.jsonl"
         f.write_text(json.dumps({"id": "R", "version": 1, "type": "requirement",

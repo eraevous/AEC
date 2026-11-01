@@ -95,6 +95,16 @@ class Finding:
     msg: str
 
 
+def _near(name: str, symbols: set[str]) -> list[str]:
+    """Up to two close spellings, tried on the full name and on each known symbol's tail. Deterministic."""
+    import difflib
+    pool = sorted(symbols)
+    hits = difflib.get_close_matches(name, pool, n=2, cutoff=0.8)
+    if not hits:  # a missing or extra prefix (e.g. a source root like `src.`) leaves the tail intact
+        hits = [s for s in pool if s.endswith("." + name)][:2]
+    return hits
+
+
 def defined_symbols(edges: dict) -> set[str]:
     """Every symbol an edge snapshot defines (definitions plus the modules that contain them)."""
     out = set(edges["header"].get("modules", {}))
@@ -123,8 +133,10 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
             to = e.get("to", "")
             if to.startswith(CODE):
                 if symbols is not None and to[len(CODE):] not in symbols:
+                    near = _near(to[len(CODE):], symbols)
+                    hint = ("; did you mean " + " or ".join(CODE + n for n in near) + "?") if near else ""
                     out.append(Finding("error", "code-reference", r.ref,
-                                       f"{e.get('rel')} -> {to}: no such symbol in the edge snapshot (renamed or deleted?)"))
+                                       f"{e.get('rel')} -> {to}: no such symbol in the edge snapshot (renamed or deleted?){hint}"))
                 continue
             try:
                 split_ref(to)

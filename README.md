@@ -14,6 +14,51 @@ verify that anyone actually consented.
 It is a standard-library Python command-line tool. It works with or without
 [Spec Kit](https://github.com/github/spec-kit), and it never edits your code or your specs.
 
+## Install
+
+```bash
+pip install "aec @ git+https://github.com/eraevous/AEC.git@v0.4.0"   # or @main for the latest
+aec --version
+```
+
+Python 3.10 or newer; no other dependencies. From a clone, `pip install -e .` works too, as does
+`PYTHONPATH=src python3 -m aec …`, which is what the reference sections below use.
+
+## Your first `stale` report, on your own code
+
+```bash
+cd your-project
+aec init . --owner "Your Name"          # creates .aec/: records, an edge snapshot, CI/hook snippets
+```
+
+Find the name AEC uses for a function you care about. Names come from the snapshot and include any
+source-root folder, for example `src.mypkg.pricing.apply_discount` in a `src/` layout:
+
+```bash
+grep '"defines"' .aec/edges.jsonl | grep apply_discount
+```
+
+Append a requirement that points at it, and a claim that rests on the requirement, to
+`.aec/records.jsonl`. One JSON object per line; links go in `relations`:
+
+```json
+{"id": "R-1", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Discounts never make a price negative.", "relations": [{"rel": "implemented_by", "to": "code:src.mypkg.pricing.apply_discount"}]}
+{"id": "C-1", "version": 1, "type": "claim", "tier": "candidate", "text": "Checkout totals are never negative.", "relations": [{"rel": "depends_on", "to": "R-1@1"}]}
+```
+
+```bash
+aec check .aec/records.jsonl --edges .aec/edges.jsonl   # both references resolve? (suggests near misses)
+cp .aec/edges.jsonl /tmp/before.jsonl                   # keep the "before" snapshot
+# ...edit apply_discount...
+aec edges . -o .aec/edges.jsonl                          # the "after" snapshot
+aec code-impact .aec/records.jsonl /tmp/before.jsonl .aec/edges.jsonl
+```
+
+`code-impact` marks `R-1@1` as `stale` (the code it rests on changed) and `C-1@1` as
+`needs_review` (it rests on something stale). Both mean: look at this again. Edits to code no record points at report nothing. Records are append-only: to change
+one, append the same `id` with `"version": 2`. The full vocabulary of types and relations is in
+[`docs/reasoning-vocabulary.md`](docs/reasoning-vocabulary.md).
+
 ## A worked example on someone else's code
 
 [`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces everything
@@ -64,7 +109,8 @@ problems nobody anticipated. That question is what
 
 AEC is alpha. The seven commands and the record fields documented here are what v0.4 supports; a
 minor version before 1.0 may still change output formats or record fields, and every such change
-is listed in [CHANGELOG.md](CHANGELOG.md). Edge snapshots record the extractor's `tool_version`,
+is listed in [CHANGELOG.md](CHANGELOG.md). Snapshots carry the *extractor's* `tool_version` (0.3.0 in
+v0.4), which changes only when extraction itself changes, independently of the package version. Edge snapshots record the extractor's `tool_version`,
 but `edges --diff` does not yet refuse snapshots made by different versions: compare snapshots
 from the same AEC version (refusing mismatches is part of planned WP1A).
 
@@ -82,6 +128,36 @@ Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
 ---
 
 # Reference
+
+## Adopting AEC in an existing repo
+
+```bash
+python3 -m aec init . --owner "Your Name"     # .aec/: records with an authority + provisional purpose stub,
+                                               # the first edge snapshot, hook and CI snippets (never overwrites)
+python3 -m aec import-purpose .               # Codex++ .purpose.md files -> provisional records (append-only)
+python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
+```
+
+- `init` works with or without Spec Kit, and never edits Spec Kit files; with `.specify/` present it prints the extension command.
+- `import-purpose` records what each purpose file **claimed**: a `source` record (path, sha256, the file's own `@ai-generated`/`@ai-verified`) and a provisional, candidate-tier claim with the declared text verbatim, linked to the module only when the named file resolves unambiguously. Singular and plural source headers are supported; structured IO, risk, dependency, integration and guarantee sections are kept, along with all raw fields/sections and the full untruncated source text. It never creates an authority. It reports, and never corrects: missing or ambiguous source files, non-code sources, templates (skipped), and **declared vs observed callers** (`@ai-used-by` against what actually imports or calls the module). Re-running it appends nothing unless a file changed, which gives version 2.
+- On Data-Guide: 26 purpose files imported in about 0.6 s with init; 11 of the purpose files' source files no longer exist, and the declared callers of `data_profiler` (four pipeline modules) are all gone while three real callers are undeclared. See `docs/data-guide-trial.md`.
+- Code run with `src/` on `sys.path` (`from data_profiler import …` for Data-Guide:src/data_profiler.py) is now resolved to the real module; the snapshot header lists the `source_roots` it used. Stdlib names are never aliased.
+
+
+## The bedrock: code edges
+
+```bash
+PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl          # what defines/calls/imports/inherits/refers to what
+PYTHONPATH=src python3 -m aec edges --diff old.jsonl .aec/edges.jsonl   # what changed structurally
+PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl   # dangling code: references
+PYTHONPATH=src python3 -m aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl  # which conclusions a code change affects
+```
+
+- **Deterministic and stdlib-only**, fast enough to run after every edit: Data-Guide (32 files) takes about 0.2 s. It runs automatically through `.claude/settings.json` (PostToolUse) and in CI.
+- Records point at code with `code:<dotted.symbol>` (for example `implemented_by`). A changed symbol makes the conclusions resting on it `stale`. A deleted one makes claims that `depends_on` it `unjustified`; requirements and purposes only lose their recorded satisfaction (`needs_review` plus a finding), and decisions are only flagged. Evidence `observed_on` changed code needs an applicability review and is never invalidated. A code dependency is not a justificatory dependency: see the invariant in `docs/reasoning-vocabulary.md`.
+- Dynamic calls are kept as unresolved `?expr` targets and never guessed. On Data-Guide about half of all calls are unresolved (methods on local objects). They never trigger impact by themselves.
+- It replaces the 2025 `src/core/tools/ast_dependency_extractor.py` (pandas and typer, calls only, methods lost their class). `--legacy-csv` writes the old format for comparison. See `docs/data-guide-trial.md`.
+
 
 ## Background
 
@@ -161,34 +237,6 @@ On the MtG pilot, the six scenarios reproduce what the reviewers concluded by ha
 - The P-01 amendment is `stale` and reported until Zach authorizes it, and `rebaseline` once he does.
 - Rewording the provisional success criterion is `exploratory`.
 - An unrelated inventory change flags nothing.
-
-## The bedrock: code edges (v0.2)
-
-```bash
-PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl          # what defines/calls/imports/inherits/refers to what
-PYTHONPATH=src python3 -m aec edges --diff old.jsonl .aec/edges.jsonl   # what changed structurally
-PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl   # dangling code: references
-PYTHONPATH=src python3 -m aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl  # which conclusions a code change affects
-```
-
-- **Deterministic and stdlib-only**, fast enough to run after every edit: Data-Guide (32 files) takes about 0.2 s. It runs automatically through `.claude/settings.json` (PostToolUse) and in CI.
-- Records point at code with `code:<dotted.symbol>` (for example `implemented_by`). A changed symbol makes the conclusions resting on it `stale`. A deleted one makes claims that `depends_on` it `unjustified`; requirements and purposes only lose their recorded satisfaction (`needs_review` plus a finding), and decisions are only flagged. Evidence `observed_on` changed code needs an applicability review and is never invalidated. A code dependency is not a justificatory dependency: see the invariant in `docs/reasoning-vocabulary.md`.
-- Dynamic calls are kept as unresolved `?expr` targets and never guessed. On Data-Guide about half of all calls are unresolved (methods on local objects). They never trigger impact by themselves.
-- It replaces the 2025 `src/core/tools/ast_dependency_extractor.py` (pandas and typer, calls only, methods lost their class). `--legacy-csv` writes the old format for comparison. See `docs/data-guide-trial.md`.
-
-## Adopting AEC in an existing repo (v0.3)
-
-```bash
-python3 -m aec init . --owner "Your Name"     # .aec/: records with an authority + provisional purpose stub,
-                                               # the first edge snapshot, hook and CI snippets (never overwrites)
-python3 -m aec import-purpose .               # Codex++ .purpose.md files -> provisional records (append-only)
-python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
-```
-
-- `init` works with or without Spec Kit, and never edits Spec Kit files; with `.specify/` present it prints the extension command.
-- `import-purpose` records what each purpose file **claimed**: a `source` record (path, sha256, the file's own `@ai-generated`/`@ai-verified`) and a provisional, candidate-tier claim with the declared text verbatim, linked to the module only when the named file resolves unambiguously. Singular and plural source headers are supported; structured IO, risk, dependency, integration and guarantee sections are kept, along with all raw fields/sections and the full untruncated source text. It never creates an authority. It reports, and never corrects: missing or ambiguous source files, non-code sources, templates (skipped), and **declared vs observed callers** (`@ai-used-by` against what actually imports or calls the module). Re-running it appends nothing unless a file changed, which gives version 2.
-- On Data-Guide: 26 purpose files imported in about 0.6 s with init; 11 of the purpose files' source files no longer exist, and the declared callers of `data_profiler` (four pipeline modules) are all gone while three real callers are undeclared. See `docs/data-guide-trial.md`.
-- Code run with `src/` on `sys.path` (`from data_profiler import …` for Data-Guide:src/data_profiler.py) is now resolved to the real module; the snapshot header lists the `source_roots` it used. Stdlib names are never aliased.
 
 ## Source anchors and offline retrieval (WP-S)
 

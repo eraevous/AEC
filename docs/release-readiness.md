@@ -38,7 +38,7 @@ Status as of 2026-11-01. ✅ done · 🔧 in this release branch · ⏳ needs wo
 - 🔧 Governance detail (authority records, constitution) moves below the fold, linked, not deleted.
 - ✅ Example with real data (`examples/mtg-pilot/`).
 - 🔧 The worked example is reproducible by script, against a pinned commit (`examples/itsdangerous-demo/run.sh`).
-- ⏳ One independent clean-install walkthrough: a fresh agent, following only the README, with every failure recorded (`docs/evaluations/walkthrough-001.md`). It is an agent, not a stranger; a human walkthrough is better when one is available.
+- ✅ One independent clean-install walkthrough: a fresh agent, following only the README, with every failure recorded (`docs/evaluations/walkthrough-001.md`). It is an agent, not a stranger; a human walkthrough is better when one is available.
 
 ### Proud to stand behind
 - ✅ Doc-truth tests: every path and command named in README and AGENTS exists (`tests/test_docs_truth.py`).
