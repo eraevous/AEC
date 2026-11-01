@@ -59,7 +59,7 @@ Run from the repository root with PYTHONPATH=src:
 Source check/show/search are offline and read-only. Anchors/rationale live in
 Record.data. Filesystem anchor states are warnings; malformed anchor shapes are
 errors. Integrity and locator matches do not establish meaning or consent. See
-`specs/004-source-anchors/` and `README.md` for root/limit details.
+`specs/004-source-anchors/` and `docs/reference/source-anchors.md` for root/limit details.
 
 Use --help for required arguments. Record checks do not establish evidence quality
 or semantic adequacy. AST calls through local objects/dynamic access can remain
