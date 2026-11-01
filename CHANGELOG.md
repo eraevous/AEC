@@ -16,6 +16,12 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
   that moves ahead of its records is visible in the PR. Found by the dogfood-001 audit.
 - AEC's own records catch up with the day's changes: claims and evidence for `init` (AEC-R7) and
   `check` (AEC-R8), AEC-R10 re-anchored after the WP1A clarifications, and DEC-023 to DEC-025.
+- Documentation reorganised for readers outside the project. The README is now an entry point
+  (install, quickstart, what results mean, evidence and limitations). Technical depth moved to
+  `docs/guide/`, `docs/reference/`, `docs/integrations/`, `docs/governance.md` and `docs/history/`.
+  There is an evaluations index (`docs/evaluations/README.md`) and a second fresh-reader walkthrough.
+- SECURITY.md no longer refers to private vulnerability reporting, which isn't enabled.
+  CODE_OF_CONDUCT.md's own rules now govern. CONTRIBUTING.md clarifies who may tick the CLA box.
 
 ## [0.4.0] - 2026-11-01
 
