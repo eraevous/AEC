@@ -56,8 +56,8 @@ You may not, even in a pull request:
 - edit existing lines of `.aec/records.jsonl` or any other record file (records are append-only: add a new version);
 - hand-edit `.aec/edges.jsonl` (regenerate it with `aec edges`);
 - mark a proposed decision as accepted, or change AEC's purpose or authority records.
-  Only the maintainer, or someone he names for that subject, accepts commitments. Open an
-  issue with your proposal instead.
+  You can *propose* any of these (open an issue); only the maintainer, or someone he names for that
+  subject, can accept them.
 
 Larger features follow the Spec Kit workflow used for features 001 to 005 (`specs/`):
 open an issue first so the scope can be agreed before you write a spec.
@@ -65,7 +65,7 @@ open an issue first so the scope can be agreed before you write a spec.
 ## Where to start
 
 Issues labelled `good first issue` are scoped to one file or one fixture. If nothing is
-labelled, the "planned" rows in README's capability table and the fixture column of
+labelled, the "planned" rows in [docs/history/about.md](docs/history/about.md) and the fixture column of
 `docs/failure-modes.md` are the open work.
 
 ## Contributions written with AI agents
@@ -74,9 +74,10 @@ Welcome, and common here: AEC itself is built with Claude, Codex and ChatGPT. Sa
 the pull request, check the generated code as if you wrote it, and make sure the tests
 you add would fail without your change.
 
-## Licence
+## Licence and the CLA box
 
 The project is under the [MIT licence](LICENSE). Contributions are made under the
-[Contributor License Agreement](CLA.md): they are licensed like the project, you keep your
-copyright, and the maintainer may also offer them in commercial versions. Check the CLA
-box in the pull request template to agree.
+[Contributor License Agreement](CLA.md): they are licensed like the project, you keep your copyright,
+and the maintainer may also offer them in commercial versions. Tick the CLA box in the pull request
+template to agree. The maintainer's own pull requests, and those agents open on his behalf, don't need
+it, but ticking it does no harm.

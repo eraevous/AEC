@@ -13,10 +13,12 @@ Only the latest release receives fixes while AEC is pre-1.0.
 
 ## Reporting a vulnerability
 
-Please do not open a public issue. Use GitHub's private vulnerability reporting
-("Report a vulnerability" under the repository's Security tab), or contact the maintainer
-through his GitHub profile. Expect an acknowledgement within a week.
+Please do not put details in a public issue. Open an issue titled "Security contact request" with no
+details, and the maintainer will arrange a private channel. If the repository's Security tab shows
+"Report a vulnerability", use that instead: it goes straight to the maintainer privately.
 
-Of particular interest: any way to make AEC read outside its configured roots, write
-outside the paths it was given, execute code from the analysed repository, or make a
-network request.
+The tool itself makes no network requests. The install command and the CI job that `aec init`
+generates do download packages (pip, GitHub Actions); that is the installer's network use, not AEC's.
+
+Of particular interest: any way to make AEC read outside its configured roots, write outside the paths
+it was given, execute code from the analysed repository, or make a network request.
