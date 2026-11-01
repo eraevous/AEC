@@ -3,6 +3,16 @@
 All notable changes to AEC. Versions follow [semantic versioning](https://semver.org/); before
 1.0, a minor version may change command output or record fields (see "Stability" in README).
 
+## [0.4.1] - unreleased
+
+### Changed
+- `aec init` writes `.aec/.gitignore` so the generated snapshot (`edges.jsonl`, and a `before.jsonl`
+  baseline) is not committed. Committed snapshots made every pair of code-touching pull requests
+  conflict. An existing `.aec/.gitignore` is never overwritten.
+- AEC's own repository no longer tracks `.aec/edges.jsonl`; CI and the Claude hook regenerate it.
+- README: how to build a baseline snapshot from a git worktree.
+- The CI job `aec init` generates now pins `@v0.4.1`.
+
 ## [0.4.0] - 2026-11-01
 
 First public release. `edges`, `impact` and `code-impact` compute the same results as before; `check` gains one warning (`relation-shape`) and near-miss hints.

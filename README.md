@@ -59,6 +59,14 @@ aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl
 one, append the same `id` with `"version": 2`. The full vocabulary of types and relations is in
 [`docs/reasoning-vocabulary.md`](docs/reasoning-vocabulary.md).
 
+`.aec/edges.jsonl` is generated, and `aec init` git-ignores it: committed copies conflict on every pair
+of pull requests that touch code. To compare a branch against `main` without a saved copy, build
+the baseline from a worktree:
+
+```bash
+git worktree add /tmp/aec-base main && aec edges /tmp/aec-base -o .aec/before.jsonl && git worktree remove /tmp/aec-base
+```
+
 ## A worked example on someone else's code
 
 [`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces everything
