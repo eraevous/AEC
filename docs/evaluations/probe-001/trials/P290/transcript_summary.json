@@ -1,0 +1,33 @@
+{
+ "trial": "P290",
+ "tool_calls": 5,
+ "calls": [
+  [
+   "Read",
+   "/tmp/claude-0/probe/trials/P290/prompt.md"
+  ],
+  [
+   "Bash",
+   "cd /tmp/claude-0/probe/trials/P290/repo && git log --oneline 2>/dev/null | head -3; ls; cat src/connectors/credentials.py; grep -rn \"credentials\" --include=* -I . 2>/dev/null | grep -v \"^./.git/\" | gr"
+  ],
+  [
+   "Bash",
+   "cd /tmp/claude-0/probe/trials/P290/repo && sed -n 50,70p src/cli.py; python3 -m pytest -q 2>&1 | tail -3\ncat > /tmp/claude-0/probe/trials/P290/REPORT.md <<'EOF'\n# Report\n\n## What I changed\nNothing. I "
+  ],
+  [
+   "Bash",
+   "ls /tmp/claude-0/probe/trials/P290/REPORT.md 2>&1"
+  ],
+  [
+   "Bash",
+   "tail -5 /tmp/claude-0/-home-claude/bc494696-1b8d-58d8-947e-801d4f8541e2/tasks/bcezhixhr.output | cut -c1-300"
+  ]
+ ],
+ "usage": {
+  "input": 20,
+  "output": 3273,
+  "cache_read": 680415,
+  "cache_write": 32135
+ },
+ "complete": true
+}

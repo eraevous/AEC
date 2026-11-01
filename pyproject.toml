@@ -1,10 +1,37 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "aec"
-version = "0.3.0"
+version = "0.4.0"
 description = "AEC: purpose, authority, evidence and change-impact records for AI-assisted development (Spec Kit extension prototype)"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Zachary Rhodes" }]
 requires-python = ">=3.10"
 dependencies = []   # standard library only
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+[project.scripts]
+aec = "aec.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/eraevous/AEC"
+Issues = "https://github.com/eraevous/AEC/issues"
+Changelog = "https://github.com/eraevous/AEC/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["aec*"]   # the legacy src/core (2025 extractor, pandas/typer) is not shipped
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]   # docs/evaluations/ holds frozen probe tests that are not this project's tests

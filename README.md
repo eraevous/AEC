@@ -1,10 +1,176 @@
 # AEC
 
+**AEC keeps the recorded reasons for code attached to the code, and tells you which requirements, claims and decisions need reassessing when something they depend on changes.**
+
+AI coding agents are good at making a change and bad at knowing what else depended on the old
+behaviour: a requirement someone wrote down, a claim a decision rested on, a caller nobody
+mentioned. AEC records those reasons as plain, append-only JSON lines (purposes, requirements,
+claims, evidence, decisions, and who has authority over them) and links them to the code through a
+deterministic static-analysis snapshot. When the code or a record changes, AEC reports which
+conclusions lost or changed their recorded support. It also tells apart changes that carry a
+recorded authorization from changes that don't. It checks that the record says so; it cannot
+verify that anyone actually consented.
+
+It is a standard-library Python command-line tool. It works with or without
+[Spec Kit](https://github.com/github/spec-kit), and it never edits your code or your specs.
+
+## Install
+
+```bash
+pip install "aec @ git+https://github.com/eraevous/AEC.git@main"   # once tagged, pin a release: @v0.4.0
+aec --version
+```
+
+Python 3.10 or newer; no other dependencies. From a clone, `pip install -e .` works too, as does
+`PYTHONPATH=src python3 -m aec …`, which is what the reference sections below use.
+
+## Your first `stale` report, on your own code
+
+```bash
+cd your-project
+aec init . --owner "Your Name"          # creates .aec/: records, an edge snapshot, CI/hook snippets
+```
+
+Find the name AEC uses for a function you care about. Names come from the snapshot and include any
+source-root folder, for example `src.mypkg.pricing.apply_discount` in a `src/` layout:
+
+```bash
+grep '"defines"' .aec/edges.jsonl | grep apply_discount
+```
+
+Append a requirement that points at it, and a claim that rests on the requirement, to
+`.aec/records.jsonl`. One JSON object per line; links go in `relations`:
+
+```json
+{"id": "R-1", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Discounts never make a price negative.", "relations": [{"rel": "implemented_by", "to": "code:src.mypkg.pricing.apply_discount"}]}
+{"id": "C-1", "version": 1, "type": "claim", "tier": "candidate", "text": "Checkout totals are never negative.", "relations": [{"rel": "depends_on", "to": "R-1@1"}]}
+```
+
+```bash
+aec check .aec/records.jsonl --edges .aec/edges.jsonl   # both references resolve? (suggests near misses)
+cp .aec/edges.jsonl .aec/before.jsonl                   # keep the "before" snapshot
+# ...edit apply_discount...
+aec edges . -o .aec/edges.jsonl                          # the "after" snapshot
+aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl
+```
+
+`code-impact` marks `R-1@1` as `stale` (the code it rests on changed) and `C-1@1` as
+`needs_review` (it rests on something stale). Both mean: look at this again. Edits to code no record points at report nothing. Records are append-only: to change
+one, append the same `id` with `"version": 2`. The full vocabulary of types and relations is in
+[`docs/reasoning-vocabulary.md`](docs/reasoning-vocabulary.md).
+
+## A worked example on someone else's code
+
+[`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces everything
+below in a temporary directory. It uses [pallets/itsdangerous](https://github.com/pallets/itsdangerous)
+at commit `672971d`, a library for signing data so you can tell it wasn't tampered with. The
+script installs AEC from this checkout, or from a git ref you pass it, such as `run.sh main` (or a release tag once one exists).
+
+1. `aec init` creates `.aec/` with an owner, a purpose stub and an edge snapshot of the code.
+2. Append one requirement, and one claim that rests on it, to `.aec/records.jsonl`
+   ([`examples/itsdangerous-demo/records.jsonl`](examples/itsdangerous-demo/records.jsonl)). The
+   requirement says signature verification uses a constant-time comparison, and points at
+   `code:src.itsdangerous.signer.SigningAlgorithm.verify_signature`. `aec check` confirms both
+   references resolve. When this example was first written by hand, they didn't: the method is
+   defined on `SigningAlgorithm`, not on `HMACAlgorithm`, and `check` said so.
+3. An agent "simplifies" `hmac.compare_digest(sig, expected)` to `sig == expected`. All 297 of the
+   library's own tests still pass. AEC reports (output trimmed to the relevant lines; `run.sh` shows it in full):
+
+```text
+$ aec edges --diff old.jsonl .aec/edges.jsonl
+- calls: src.itsdangerous.signer.SigningAlgorithm.verify_signature -> hmac.compare_digest  (src/itsdangerous/signer.py:28)
+
+$ aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl
+[stale] R-ct@1: Signature verification compares signatures with a constant-time comparison.
+[stale] C-ct@1: Checking a forged signature does not reveal, through the comparison's timing, how many of its leading bytes were right.
+2 affected, 0 conclusions unaffected
+```
+
+Be exact about what this shows. `stale` means "the code this rests on changed, so reassess it". It
+does not mean "violated". The requirement could in principle still be met some other way, and AEC
+does not judge timing safety. AEC also didn't discover the requirement: someone who knew what to
+look for wrote it down. The example shows the mechanism, that recorded reasons get re-raised
+when their code moves, which ordinary tests here did not do. It does not show that AEC finds
+problems nobody anticipated. That question is what
+[`docs/evaluations/probe-001.md`](docs/evaluations/probe-001.md) tests.
+
+## What AEC is not
+
+- **Not a verifier.** Every result is structural: "this conclusion's recorded support changed",
+  never "this conclusion is false". `stale` means *look again*, not *broken*.
+- **Not a replacement for tests, review or Spec Kit.** It adds a layer those don't keep: why
+  things are the way they are, and who may change that.
+- **Not complete about your code.** The edge snapshot is static analysis of Python only. Calls
+  through dynamic dispatch stay unresolved and are never guessed. No known caller is not proof of
+  no caller.
+- **Not shown to improve outcomes.** In the first measured test,
+  [probe-001](docs/evaluations/probe-001-results.md), Claude Sonnet 5.5 agents found every hidden
+  dependant without help on three dependency-sensitive tasks in a real repository (18 of 18 trials
+  succeeded in every condition). AEC's structural briefing changed no outcome and raised token use
+  on two of the three tasks. It was a small, exploratory pilot. It also exposed a fixable gap in AEC's
+  caller resolution.
+
+## Stability (v0.4)
+
+AEC is alpha. The seven commands and the record fields documented here are what v0.4 supports; a
+minor version before 1.0 may still change output formats or record fields, and every such change
+is listed in [CHANGELOG.md](CHANGELOG.md). Snapshots record the *extractor's* `tool_version` (0.3.0 in
+v0.4), which changes only when extraction itself changes, independently of the package version.
+`edges --diff` does not yet refuse snapshots made by different extractor versions, so compare
+snapshots from the same version (refusing mismatches is part of planned WP1A).
+
+## How AEC is built
+
+AEC is designed and owned by Zach Rhodes and built with AI agents (Claude, Codex and ChatGPT)
+working from written handoffs. "Kate" in these documents is the maintainer's name for ChatGPT, which serves as an independent reviewer. It is developed with Spec Kit (`specs/`) and governs itself with
+its own records (`.aec/records.jsonl`), which makes the project its own longest-running test case.
+What is public and what isn't: the specs, records, PR descriptions and evaluation write-ups here
+are public. The coordination handoffs and the owner's decision log are kept in a private
+repository. Where a public record cites them, it says so, and you are taking that citation on the
+maintainer's word.
+Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+# Reference
+
+## Adopting AEC in an existing repo
+
+```bash
+python3 -m aec init . --owner "Your Name"     # .aec/: records with an authority + provisional purpose stub,
+                                               # the first edge snapshot, hook and CI snippets (never overwrites)
+python3 -m aec import-purpose .               # Codex++ .purpose.md files -> provisional records (append-only)
+python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
+```
+
+- `init` works with or without Spec Kit, and never edits Spec Kit files; with `.specify/` present it prints the extension command.
+- `import-purpose` records what each purpose file **claimed**: a `source` record (path, sha256, the file's own `@ai-generated`/`@ai-verified`) and a provisional, candidate-tier claim with the declared text verbatim, linked to the module only when the named file resolves unambiguously. Singular and plural source headers are supported; structured IO, risk, dependency, integration and guarantee sections are kept, along with all raw fields/sections and the full untruncated source text. It never creates an authority. It reports, and never corrects: missing or ambiguous source files, non-code sources, templates (skipped), and **declared vs observed callers** (`@ai-used-by` against what actually imports or calls the module). Re-running it appends nothing unless a file changed, which gives version 2.
+- On Data-Guide: 26 purpose files imported in about 0.6 s with init; 11 of the purpose files' source files no longer exist, and the declared callers of `data_profiler` (four pipeline modules) are all gone while three real callers are undeclared. See `docs/data-guide-trial.md`.
+- Code run with `src/` on `sys.path` (`from data_profiler import …` for Data-Guide:src/data_profiler.py) is now resolved to the real module; the snapshot header lists the `source_roots` it used. Stdlib names are never aliased.
+
+
+## The bedrock: code edges
+
+```bash
+PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl          # what defines/calls/imports/inherits/refers to what
+PYTHONPATH=src python3 -m aec edges --diff old.jsonl .aec/edges.jsonl   # what changed structurally
+PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl   # dangling code: references
+PYTHONPATH=src python3 -m aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl  # which conclusions a code change affects
+```
+
+- **Deterministic and stdlib-only**, fast enough to run after every edit: Data-Guide (32 files) takes about 0.2 s. It runs automatically through `.claude/settings.json` (PostToolUse) and in CI.
+- Records point at code with `code:<dotted.symbol>` (for example `implemented_by`). A changed symbol makes the conclusions resting on it `stale`. A deleted one makes claims that `depends_on` it `unjustified`; requirements and purposes only lose their recorded satisfaction (`needs_review` plus a finding), and decisions are only flagged. Evidence `observed_on` changed code needs an applicability review and is never invalidated. A code dependency is not a justificatory dependency: see the invariant in `docs/reasoning-vocabulary.md`.
+- Dynamic calls are kept as unresolved `?expr` targets and never guessed. On Data-Guide about half of all calls are unresolved (methods on local objects). They never trigger impact by themselves.
+- It replaces the 2025 `src/core/tools/ast_dependency_extractor.py` (pandas and typer, calls only, methods lost their class). `--legacy-csv` writes the old format for comparison. See `docs/data-guide-trial.md`.
+
+
+## Background
+
 AEC (formerly Codex++) explores continuous architectural reasoning for AI-assisted development: helping an AI development system understand what it is building, observe what it is becoming, detect when those diverge, and preserve the reasoning needed for deliberate change. It connects executable structure, semantic purpose, evidence, authority and agent coordination. The current implementation provides structural analysis and reasoning records, with a Spec Kit integration. Spec Kit is one integration surface, not the boundary of AEC; the capability table below distinguishes what is built, partial and planned.
 
 The white paper, *AEC as an extension to specification-driven development* (Zachary Rhodes, 26 October 2026), records the earlier positioning, evidence and validation plan. The approved direction is described in `docs/architecture.md`.
 
-## Authority and operating rules
+## Governance of this repository
 
 `.aec/records.jsonl` governs purpose and authority (`AEC-P0@1`, `AU-zach@1`).
 The engineering principles live in `.specify/memory/constitution.md`, applied by
@@ -76,34 +242,6 @@ On the MtG pilot, the six scenarios reproduce what the reviewers concluded by ha
 - The P-01 amendment is `stale` and reported until Zach authorizes it, and `rebaseline` once he does.
 - Rewording the provisional success criterion is `exploratory`.
 - An unrelated inventory change flags nothing.
-
-## The bedrock: code edges (v0.2)
-
-```bash
-PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl          # what defines/calls/imports/inherits/refers to what
-PYTHONPATH=src python3 -m aec edges --diff old.jsonl .aec/edges.jsonl   # what changed structurally
-PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl   # dangling code: references
-PYTHONPATH=src python3 -m aec code-impact .aec/records.jsonl old.jsonl .aec/edges.jsonl  # which conclusions a code change affects
-```
-
-- **Deterministic and stdlib-only**, fast enough to run after every edit: Data-Guide (32 files) takes about 0.2 s. It runs automatically through `.claude/settings.json` (PostToolUse) and in CI.
-- Records point at code with `code:<dotted.symbol>` (for example `implemented_by`). A changed symbol makes the conclusions resting on it `stale`. A deleted one makes claims that `depends_on` it `unjustified`; requirements and purposes only lose their recorded satisfaction (`needs_review` plus a finding), and decisions are only flagged. Evidence `observed_on` changed code needs an applicability review and is never invalidated. A code dependency is not a justificatory dependency: see the invariant in `docs/reasoning-vocabulary.md`.
-- Dynamic calls are kept as unresolved `?expr` targets and never guessed. On Data-Guide about half of all calls are unresolved (methods on local objects). They never trigger impact by themselves.
-- It replaces the 2025 `src/core/tools/ast_dependency_extractor.py` (pandas and typer, calls only, methods lost their class). `--legacy-csv` writes the old format for comparison. See `docs/data-guide-trial.md`.
-
-## Adopting AEC in an existing repo (v0.3)
-
-```bash
-python3 -m aec init . --owner "Your Name"     # .aec/: records with an authority + provisional purpose stub,
-                                               # the first edge snapshot, hook and CI snippets (never overwrites)
-python3 -m aec import-purpose .               # Codex++ .purpose.md files -> provisional records (append-only)
-python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
-```
-
-- `init` works with or without Spec Kit, and never edits Spec Kit files; with `.specify/` present it prints the extension command.
-- `import-purpose` records what each purpose file **claimed**: a `source` record (path, sha256, the file's own `@ai-generated`/`@ai-verified`) and a provisional, candidate-tier claim with the declared text verbatim, linked to the module only when the named file resolves unambiguously. Singular and plural source headers are supported; structured IO, risk, dependency, integration and guarantee sections are kept, along with all raw fields/sections and the full untruncated source text. It never creates an authority. It reports, and never corrects: missing or ambiguous source files, non-code sources, templates (skipped), and **declared vs observed callers** (`@ai-used-by` against what actually imports or calls the module). Re-running it appends nothing unless a file changed, which gives version 2.
-- On Data-Guide: 26 purpose files imported in about 0.6 s with init; 11 of the purpose files' source files no longer exist, and the declared callers of `data_profiler` (four pipeline modules) are all gone while three real callers are undeclared. See `docs/data-guide-trial.md`.
-- Code run with `src/` on `sys.path` (`from data_profiler import …` for Data-Guide:src/data_profiler.py) is now resolved to the real module; the snapshot header lists the `source_roots` it used. Stdlib names are never aliased.
 
 ## Source anchors and offline retrieval (WP-S)
 

@@ -1,0 +1,110 @@
+[
+ {
+  "trial": "P739",
+  "task": "T2",
+  "cond": "A",
+  "rep": 2
+ },
+ {
+  "trial": "P101",
+  "task": "T3",
+  "cond": "C",
+  "rep": 2
+ },
+ {
+  "trial": "P462",
+  "task": "T3",
+  "cond": "A",
+  "rep": 2
+ },
+ {
+  "trial": "P126",
+  "task": "T2",
+  "cond": "B",
+  "rep": 1
+ },
+ {
+  "trial": "P603",
+  "task": "T2",
+  "cond": "B",
+  "rep": 2
+ },
+ {
+  "trial": "P497",
+  "task": "T2",
+  "cond": "A",
+  "rep": 1
+ },
+ {
+  "trial": "P205",
+  "task": "T1",
+  "cond": "A",
+  "rep": 2
+ },
+ {
+  "trial": "P607",
+  "task": "T1",
+  "cond": "C",
+  "rep": 2
+ },
+ {
+  "trial": "P106",
+  "task": "T1",
+  "cond": "C",
+  "rep": 1
+ },
+ {
+  "trial": "P290",
+  "task": "T3",
+  "cond": "C",
+  "rep": 1
+ },
+ {
+  "trial": "P800",
+  "task": "T2",
+  "cond": "C",
+  "rep": 1
+ },
+ {
+  "trial": "P902",
+  "task": "T3",
+  "cond": "B",
+  "rep": 2
+ },
+ {
+  "trial": "P998",
+  "task": "T3",
+  "cond": "B",
+  "rep": 1
+ },
+ {
+  "trial": "P992",
+  "task": "T2",
+  "cond": "C",
+  "rep": 2
+ },
+ {
+  "trial": "P211",
+  "task": "T1",
+  "cond": "A",
+  "rep": 1
+ },
+ {
+  "trial": "P744",
+  "task": "T3",
+  "cond": "A",
+  "rep": 1
+ },
+ {
+  "trial": "P437",
+  "task": "T1",
+  "cond": "B",
+  "rep": 2
+ },
+ {
+  "trial": "P977",
+  "task": "T1",
+  "cond": "B",
+  "rep": 1
+ }
+]

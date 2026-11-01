@@ -1,4 +1,4 @@
-"""AEC command line. All results are structural (Constitution IV).
+"""AEC command line. Results are structural: they report what the records and code say, not whether a conclusion is true.
 
   python -m aec edges [ROOT] [-o FILE] [--legacy-csv FILE]   edge snapshot of a Python tree
   python -m aec edges --diff OLD NEW [--json]                 structural diff of two snapshots
@@ -18,6 +18,7 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 
+from . import __version__
 from . import edges as E
 from .impact import impact, render
 from .records import Store, check
@@ -47,30 +48,31 @@ def _git_user(root) -> str | None:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="aec", description=__doc__.split("\n\n")[0])
+    ap.add_argument("--version", action="version", version="%(prog)s " + __version__)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    e = sub.add_parser("edges")
+    e = sub.add_parser("edges", help="extract a static edge snapshot of a Python tree, or diff two snapshots")
     e.add_argument("root", nargs="?", default=".")
     e.add_argument("-o", "--output")
     e.add_argument("--legacy-csv")
     e.add_argument("--diff", nargs=2, metavar=("OLD", "NEW"))
     e.add_argument("--json", action="store_true")
-    c = sub.add_parser("check")
+    c = sub.add_parser("check", help="check record invariants; with --edges, also dangling code references")
     c.add_argument("records")
     c.add_argument("--edges")
     c.add_argument("--repo", help="source config root (default: records under .aec/, otherwise cwd)")
-    i = sub.add_parser("impact")
+    i = sub.add_parser("impact", help="classify which conclusions a set of record changes affects")
     i.add_argument("records")
     i.add_argument("changes")
     i.add_argument("--json", action="store_true")
-    ci = sub.add_parser("code-impact")
+    ci = sub.add_parser("code-impact", help="derive change events from two edge snapshots and report affected conclusions")
     ci.add_argument("records")
     ci.add_argument("old")
     ci.add_argument("new")
     ci.add_argument("--json", action="store_true")
-    it = sub.add_parser("init")
+    it = sub.add_parser("init", help="scaffold .aec/ in a repository (never overwrites)")
     it.add_argument("root", nargs="?", default=".")
     it.add_argument("--owner", help="name for the authority stub (default: git user.name, else 'owner')")
-    ip = sub.add_parser("import-purpose")
+    ip = sub.add_parser("import-purpose", help="import Codex++ purpose files as provisional, source-linked records")
     ip.add_argument("root", nargs="?", default=".")
     ip.add_argument("--dir", default="codex_++/purpose_files", help="purpose-file directory, relative to ROOT")
     ip.add_argument("--records", help="default: ROOT/.aec/records.jsonl")
@@ -78,14 +80,14 @@ def main(argv=None) -> int:
     ip.add_argument("--dry-run", action="store_true", help="report only; append nothing")
     source = sub.add_parser("source", help="offline source integrity and retrieval")
     source_sub = source.add_subparsers(dest="source_cmd", required=True)
-    show = source_sub.add_parser("show")
+    show = source_sub.add_parser("show", help="print the passages a record's source anchors point to")
     show.add_argument("record_ref")
     show.add_argument("--context", type=int, default=3)
     show.add_argument("--max-lines", type=int, default=80)
     show.add_argument("--max-chars", type=int, default=240, help="maximum characters per source line, including truncation markers (default: 240)")
     show.add_argument("--repo", default=".", help="repository containing .aec/sources.json")
     show.add_argument("--records", help="record file (default: ROOT/.aec/records.jsonl)")
-    search = source_sub.add_parser("search", description="Search named configured roots by default; use --root to select one.")
+    search = source_sub.add_parser("search", help="search configured source roots directly", description="Search named configured roots by default; use --root to select one.")
     search.add_argument("pattern")
     search.add_argument("--root", help="configured alias, or . for the repository; default: named roots only")
     search.add_argument("--regex", action="store_true")

@@ -21,8 +21,31 @@ class TestInstall(unittest.TestCase):
                            capture_output=True, text=True, cwd=d)
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn('"aec_edges": 1', r.stdout.splitlines()[0])
+        # The console script is installed and agrees with the package version (v0.4 readiness).
+        exe = py.parent / ("aec.exe" if os.name == "nt" else "aec")
+        r = subprocess.run([str(exe), "--version"], capture_output=True, text=True, cwd=d)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        from importlib import util
+        spec = util.spec_from_file_location("aec_pkg", ROOT / "src" / "aec" / "__init__.py")
+        mod = util.module_from_spec(spec); spec.loader.exec_module(mod)
+        self.assertEqual(r.stdout.strip(), "aec " + mod.__version__)
         r = subprocess.run([str(py), "-c", "import core"], capture_output=True, text=True, cwd=d)
         self.assertNotEqual(r.returncode, 0, "legacy top-level 'core' package must not be installed")
+
+
+class TestVersionAgreement(unittest.TestCase):
+    """pyproject.toml, aec.__version__ and the newest CHANGELOG entry name the same version."""
+
+    def test_versions_agree(self):
+        import re
+        toml = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        pkg = (ROOT / "src" / "aec" / "__init__.py").read_text(encoding="utf-8")
+        log = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        v_toml = re.search(r'^version = "([^"]+)"', toml, re.M).group(1)
+        v_pkg = re.search(r'__version__ = "([^"]+)"', pkg).group(1)
+        v_log = re.search(r"^## \[?v?(\d+\.\d+\.\d+)", log, re.M).group(1)
+        self.assertEqual(v_toml, v_pkg)
+        self.assertEqual(v_toml, v_log)
 
 
 if __name__ == "__main__":

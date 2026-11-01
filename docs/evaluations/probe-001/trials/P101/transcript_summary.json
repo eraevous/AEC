@@ -1,0 +1,41 @@
+{
+ "trial": "P101",
+ "tool_calls": 7,
+ "calls": [
+  [
+   "Read",
+   "/tmp/claude-0/probe/trials/P101/prompt.md"
+  ],
+  [
+   "Bash",
+   "cd /tmp/claude-0/probe/trials/P101/repo && git log --oneline 2>/dev/null | head -3; find . -name '*.py' -not -path './.git/*' | head -50; grep -rniE \"credentials\" --include='*' . -l --exclude-dir=.git"
+  ],
+  [
+   "Grep",
+   "/tmp/claude-0/probe/trials/P101/repo/src/cli.py"
+  ],
+  [
+   "Grep",
+   "/tmp/claude-0/probe/trials/P101/repo/tests/test_connectors.py"
+  ],
+  [
+   "Grep",
+   "/tmp/claude-0/probe/trials/P101/repo/CHARTER.md"
+  ],
+  [
+   "Bash",
+   "cd /tmp/claude-0/probe/trials/P101/repo && sed -n 55,68p src/cli.py; python3 -m pytest -q 2>&1 | tail -5"
+  ],
+  [
+   "Write",
+   "/tmp/claude-0/probe/trials/P101/REPORT.md"
+  ]
+ ],
+ "usage": {
+  "input": 24,
+  "output": 4840,
+  "cache_read": 754215,
+  "cache_write": 83091
+ },
+ "complete": true
+}
