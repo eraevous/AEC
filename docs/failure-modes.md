@@ -38,6 +38,28 @@ For each row, the evaluation records the following (columns 1–6 are filled per
 | P7 | **Governance outgrows the work**: process artefacts multiply without changing decisions | proportionality, lean review | count decisions changed and failures caught, not records written; imported records exposed only when relevant | ongoing |
 | P8 | **Unsupported artefact attestation**: a model reports an artefact as existing and identified (a SHA-256, a path, "frozen") without keeping verifiable access to it. The precision of the digest lends the claim credibility it hasn't earned. Observed twice in representation-001 (2026-10-29/30): the question and key digests had no recoverable artefacts. | content addressing, reproducible builds, signed artefacts | verify existence, integrity and locator *separately* from support and authority. Results are `verified` / `missing` / `mismatch` / `locator_invalid` / `unavailable`. Failure to recover an artefact doesn't prove it never existed; it proves the provenance chain can't be verified | built (WP-S, `specs/004-source-anchors/`): five-state fixtures and offline retrieval; source meaning/authority remain outside the check |
 
+## Lens: structural special cases (candidate, 2026-11-01)
+
+From the 2026-10-31 drift round (`relay-kit-private/aec-drift/round-2/addendum-special-cases.md`; Kate and claude:aec; candidate C-05; not binding).
+
+A special case is often not rare: it is ordinary conditions lining up badly. Rarity and exceptionalism are independent. A daylight-saving bug happens every year. When a fixture is built for any row above, classify it on two separate dimensions. They are not severity levels, and one incident can sit at several points.
+
+| Dimension | Values |
+|---|---|
+| **Structural mechanism** | boundary (behaviour flips across a threshold); composition (each part is valid, the combination isn't); intersection (several rules apply at once); degeneracy (an assumption fails, as with collinear points); conflict (valid rules require incompatible outcomes); missing category |
+| **Relation to the model** | anticipated and represented; representable but unanticipated; not representable (model-breaking: the concept is missing) |
+
+**Examples from AEC's own history:**
+- **The handoff ID collision (Oct 29).** Composition: two lanes each created a valid ID, and together they collided. It was also model-breaking, because the IDs had no concept of a namespace.
+- **Data Guide's aggregate rows.** A missing category: "one row per country" didn't hold. It counts as model-breaking only where the data model had no notion of row type.
+- **The WP0 deletion over-propagation.** Conflict: the vocabulary invariant and the code disagreed. Fixed in PR #21.
+
+**Related heuristics (candidates):**
+- Check that components' assumptions stay compatible when the components are composed. Treat a case that can't be represented as a possible defect in the model, not just a missing test.
+- Choose the least costly mechanism whose applicability and reliability are justified for what is at stake. Escalate on evidence, not on self-reported confidence. Capability is not authority.
+
+**Why this matters for P8 and WP-S:** "no conflict found" is not "compatible", and "no caller found" is not "no caller". Any index, register or summary is a lossy representation, and model-breaking cases are exactly what it never recorded.
+
 ## Not counted as success
 
 More records, longer reports, more findings, or a passing structural check. A row is "caught" only when the finding is specific, comes before the harm (or explains it after), and a reviewer would act on it.
