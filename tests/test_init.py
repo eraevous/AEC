@@ -1,6 +1,7 @@
 """Feature 002 US1 (T007): `aec init` scaffolds AEC into any repository without overwriting."""
 import io
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -36,6 +37,23 @@ class TestInit(unittest.TestCase):
         self.assertIn("Zach", auth[0].text)
         purpose = [r for r in st.records if r.type == "purpose"]
         self.assertEqual(purpose[0].get("epistemic"), "provisional")  # a stub never authorizes anything
+
+    def test_snapshot_is_git_ignored(self):  # v0.4.1: a committed snapshot conflicts across PRs
+        d = fresh_repo()
+        subprocess.run(["git", "init", "-q", str(d)], check=True)
+        init(d, owner="Zach")
+        ignored = subprocess.run(["git", "-C", str(d), "check-ignore", "-q", ".aec/edges.jsonl"])
+        self.assertEqual(ignored.returncode, 0, ".aec/edges.jsonl should be ignored")
+        kept = subprocess.run(["git", "-C", str(d), "check-ignore", "-q", ".aec/records.jsonl"])
+        self.assertNotEqual(kept.returncode, 0, "records must stay tracked")  # decoy: records are not ignored
+
+    def test_existing_aec_gitignore_is_kept(self):  # decoy: init never overwrites
+        d = fresh_repo()
+        (d / ".aec").mkdir()
+        (d / ".aec" / ".gitignore").write_text("# mine\n")
+        rep = init(d, owner="Zach")
+        self.assertEqual((d / ".aec" / ".gitignore").read_text(), "# mine\n")
+        self.assertIn(".aec/.gitignore", rep["kept"])
 
     def test_second_run_overwrites_nothing(self):  # US1-2
         d = fresh_repo()
