@@ -18,7 +18,7 @@
   ["pkg.core.load", "json.loads"],
   ["pkg.core.load", "?getattr(...)"],
   ["pkg.core.main", "pkg.core.Worker"],
-  ["pkg.core.main", "?w.run"]
+  ["pkg.core.main", "pkg.base.Base.run"]
  ],
  "references": [
   ["pkg.core.main", "pkg.core.CONSTANT"], ["pkg.core.load", "os"], ["pkg.util.helper", "pkg.base.Base"]

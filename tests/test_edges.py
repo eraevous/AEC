@@ -104,5 +104,254 @@ class TestSourceRootAliases(unittest.TestCase):  # feature 002: code run with sr
         self.assertIn(("src.use", "json"), idents(self.snap(), "imports"))
 
 
+LOCAL_CTOR_MODELS = '''\
+class Base:
+    def run(self):
+        return 1
+
+
+class Model(Base):
+    def fit(self):
+        return 2
+
+
+class Odd:
+    def __new__(cls):
+        return object.__new__(cls)
+
+    def run(self):
+        return 3
+
+
+def make():
+    return Model()
+'''
+
+LOCAL_CTOR_USE = '''\
+from pkg.models import Model, Odd, make
+
+
+def resolves(flag):
+    m = Model()
+    m.fit()
+    m.run()
+    a: Model = Model()
+    a.fit()
+    cb = m.fit
+    return cb
+
+
+def stays_unresolved(flag, p):
+    r = Model()
+    r = make()
+    r.fit()
+    if flag:
+        s = Model()
+    s.fit()
+    p = Model()
+    p.fit()
+    n = Odd()
+    n.run()
+    w = make()
+    w.fit()
+    k = Model()
+    k.missing()
+    k.data.fit()
+    for t in []:
+        pass
+    t = Model()
+    t.fit()
+    try:
+        e = Model()
+    except Exception as e:
+        pass
+    e.fit()
+    q = Model()
+
+    def inner():
+        q.fit()
+    return inner
+
+
+def global_name():
+    global g
+    g = Model()
+    g.fit()
+
+
+class Holder:
+    h = Model()
+    h.fit()
+'''
+
+
+class TestLocalConstructorCalls(unittest.TestCase):
+    """C-11 (probe-001): `x = C(...); x.m()` resolves when the local has exactly one possible value,
+    assigned from a known class in the same function. Everything else stays unresolved, never guessed."""
+
+    @classmethod
+    def setUpClass(cls):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "pkg").mkdir()
+        (d / "pkg" / "__init__.py").write_text("")
+        (d / "pkg" / "models.py").write_text(LOCAL_CTOR_MODELS)
+        (d / "pkg" / "use.py").write_text(LOCAL_CTOR_USE)
+        cls.snap = E.snapshot(d)
+        cls.calls = idents(cls.snap, "calls")
+
+    def test_method_on_local_from_known_class_resolves(self):  # violation: was ?m.fit
+        self.assertIn(("pkg.use.resolves", "pkg.models.Model.fit"), self.calls)
+        self.assertNotIn(("pkg.use.resolves", "?m.fit"), self.calls)
+
+    def test_inherited_method_resolves_through_bases(self):
+        self.assertIn(("pkg.use.resolves", "pkg.models.Base.run"), self.calls)
+
+    def test_annotated_assignment_resolves(self):
+        self.assertNotIn(("pkg.use.resolves", "?a.fit"), self.calls)
+
+    def test_bound_method_reference_resolves(self):
+        self.assertIn(("pkg.use.resolves", "pkg.models.Model.fit"), idents(self.snap, "references"))
+
+    def test_ambiguous_locals_stay_unresolved(self):  # decoys
+        src = "pkg.use.stays_unresolved"
+        for dst in ("?r.fit", "?s.fit", "?p.fit", "?n.run", "?w.fit", "?k.missing", "?k.data.fit", "?t.fit", "?e.fit"):
+            with self.subTest(dst=dst):
+                self.assertIn((src, dst), self.calls)
+        resolved = {d for s, d in self.calls if s == src and not d.startswith("?")}
+        self.assertFalse(resolved & {"pkg.models.Model.fit", "pkg.models.Odd.run", "pkg.models.Base.run"}, resolved)
+
+    def test_no_resolution_through_closures_globals_or_class_bodies(self):  # decoys
+        self.assertIn(("pkg.use.stays_unresolved.<locals>.inner", "?q.fit"), self.calls)
+        self.assertNotIn(("pkg.use.global_name", "pkg.models.Model.fit"), self.calls)
+        self.assertNotIn(("pkg.use.Holder", "pkg.models.Model.fit"), self.calls)
+
+
+
+LOCAL_CTOR_REVIEW_MODELS = '''\
+from abc import ABC
+
+
+class Model:
+    def fit(self):
+        return 1
+
+
+class AssignedNew:
+    __new__ = staticmethod(lambda cls: Model())
+
+    def run(self):
+        return 2
+
+
+class Meta(type):
+    def __call__(cls, *a, **k):
+        return Model()
+
+
+class ViaMeta(metaclass=Meta):
+    def run(self):
+        return 3
+
+
+class Child(ViaMeta):
+    pass
+
+
+class Abstract(ABC):
+    def go(self):
+        return 4
+
+
+class Concrete(Abstract):
+    pass
+
+
+def make():
+    return Model()
+'''
+
+LOCAL_CTOR_REVIEW_OTHER = '''\
+class Model:
+    def fit(self):
+        return 5
+'''
+
+LOCAL_CTOR_REVIEW_USE = '''\
+from pkg.models import AssignedNew, Child, Concrete, Model, ViaMeta, make
+
+
+def nonlocal_write():
+    m = Model()
+
+    def reset():
+        nonlocal m
+        m = make()
+    reset()
+    m.fit()
+
+
+def rebound_import():
+    from pkg.models import Model as M
+    m = M()
+    from pkg.other import Model as M
+    m.fit()
+
+
+def lambda_param():
+    m = Model()
+    cb = lambda m: m.fit()
+    return cb(make())
+
+
+def odd_construction():
+    n = AssignedNew()
+    n.run()
+    v = ViaMeta()
+    v.run()
+    c = Child()
+    c.run()
+
+
+def abc_still_resolves():
+    a = Concrete()
+    a.go()
+'''
+
+
+class TestLocalConstructorReviewCases(unittest.TestCase):
+    """Cases from the Copilot review of PR #32: each would have produced a wrong resolved edge."""
+
+    @classmethod
+    def setUpClass(cls):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "pkg").mkdir()
+        (d / "pkg" / "__init__.py").write_text("")
+        (d / "pkg" / "models.py").write_text(LOCAL_CTOR_REVIEW_MODELS)
+        (d / "pkg" / "other.py").write_text(LOCAL_CTOR_REVIEW_OTHER)
+        (d / "pkg" / "use.py").write_text(LOCAL_CTOR_REVIEW_USE)
+        cls.calls = idents(E.snapshot(d), "calls")
+
+    def resolved_from(self, fn):
+        return {d for s, d in self.calls if s == f"pkg.use.{fn}" and not d.startswith("?")}
+
+    def test_nonlocal_write_in_nested_function_disqualifies(self):
+        self.assertNotIn("pkg.models.Model.fit", self.resolved_from("nonlocal_write"))
+
+    def test_constructor_name_rebound_by_local_import_disqualifies(self):
+        r = self.resolved_from("rebound_import")
+        self.assertFalse({"pkg.models.Model.fit", "pkg.other.Model.fit"} & r, r)
+
+    def test_lambda_parameter_shadowing_disqualifies(self):
+        self.assertNotIn("pkg.models.Model.fit", self.resolved_from("lambda_param"))
+
+    def test_assigned_new_and_custom_metaclass_call_disqualify(self):
+        r = self.resolved_from("odd_construction")
+        self.assertFalse({"pkg.models.AssignedNew.run", "pkg.models.ViaMeta.run"} & r, r)
+
+    def test_ordinary_abc_subclass_still_resolves(self):  # decoy: don't over-exclude metaclasses
+        self.assertIn("pkg.models.Abstract.go", self.resolved_from("abc_still_resolves"))
+
 if __name__ == "__main__":
     unittest.main()
