@@ -21,6 +21,20 @@ This is deliberately not a graph platform. Records are plain JSON lines, version
 | `decision` | a choice made on a recorded basis | `status`, `decided_by` |
 | `authority` | who or what governs a subject | `governs` (list of subjects) |
 | `revision` | an authorized change to an earlier commitment | `authorized_by`, `reason` |
+| `ambition` | a direction the project, or a project derived from it, may take; not a commitment | `owner`, `source` quote |
+| `experiment` | trying a few things, to or with the package; not a commitment to a feature or to long-term support | `variants`, `status` |
+
+**Ambitions and experiments** (DEC-033, Zach, 2026-11-02).
+- An **ambition** records "we might want to do this at some point". Its main job is to keep the
+  implementation limber: before a commitment (a decision, a committed requirement, a design choice) is
+  made, the ambitions it could foreclose can be checked. It is not a commitment and creates no obligation.
+- An **experiment** codifies trying a couple of different things. It is not a commitment to a feature, a
+  full feature or long-term support. Its *results* can be promoted (a decision or requirement may cite the
+  evidence it `produced`). The experiment itself needn't be supported later.
+- Neither is a conclusion: `impact` never reports an ambition or an experiment for reassessment, and
+  `check` applies no obligation rules to them.
+- Nothing yet checks whether a commitment forecloses an ambition. That review question is the reason
+  the type exists. How to mechanise it is undecided and would itself start as an experiment.
 
 **Code references** (v0.2): a relation target `code:<dotted.symbol>` points at code. It is unversioned; the edge snapshot (`aec edges`) supplies its current state, `aec check --edges` reports dangling ones, and `aec code-impact` turns code changes into change events.
 

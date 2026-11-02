@@ -5,6 +5,12 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 
 ## [Unreleased]
 
+### Added (vocabulary, DEC-033)
+- Record types `ambition` (a direction the project or a derived project may take, kept visible so
+  commitments don't foreclose it; not a commitment) and `experiment` (trying a few things; results can
+  be promoted, the experiment needn't be supported). Neither is reported by `impact`. AEC's own records
+  gain its first two ambitions.
+
 ### Added (WP1A, commit-addressed snapshots)
 
 - Commit/working-tree snapshots with extractor tool_version 0.4.0 and method identity.
