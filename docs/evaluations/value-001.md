@@ -48,7 +48,9 @@ requirement `implemented_by` a `code:` symbol, and one claim that `depends_on` i
 - the edge snapshots before and after, from the extractor;
 - `check` (references resolve) and `code-impact` (propagation).
 
-That is about 1,100 of AEC's roughly 2,300 lines (records, impact, code_impact, edges). Source anchors,
+That is about 1,100 of AEC's roughly 2,300 lines (records, impact, code_impact, edges). This is an
+illustrative code footprint, not an established lower installation or maintenance cost: condition B
+runs on the same full package. Source anchors,
 commit snapshots and graph queries, purpose import and init are outside it.
 
 **Minimal AEC, as a candidate definition (condition B):**
@@ -93,7 +95,9 @@ earlier written obligation.
 - **Obligations written before the change:**
   - `docs/RECONCILIATION_PLAN.md` (`3b2f110`, 2025-07-20): "Merge useful features from `profiler.py`
     and `profiler_update.py` then delete those modules." The PR deleted, but didn't merge.
-  - `src/pipeline.purpose.md` (`e877113`, 2025-07-19): the pipeline "orchestrates DataProfiler … and
+  - The pipeline's purpose file, written at `src/pipeline.purpose.md` (`e877113`, 2025-07-19) and moved
+    unchanged to `purpose_files/pipeline.purpose.md` by `3834af3` (same day, `R100`). It is present at the
+    pre-change commit `097c307^` with the text: the pipeline "orchestrates DataProfiler … and
     writes reports".
 - **How it was noticed:** never as a defect. It was repaired incidentally three months later (`d435bd7`,
   2025-10-21). Harm was latent: work had moved to the CLI the same day.
@@ -177,6 +181,63 @@ this study should use at least 3.
 **Not built for this study:** any new subsystem. The study uses existing tools, a frozen scenario, a
 short protocol and a recorded result.
 
+## Amendments to make before the freeze (Kate's purpose review, PR #35)
+
+Kate reviewed this draft at `4af62a2` and recommended running it as a bounded, explicitly retrospective
+case study, but not freezing it yet. Her review is posted on PR #35. Each item below is accepted and must
+be settled in this document before the freeze.
+
+0. **Provenance (resolved).** Kate found `src/pipeline.purpose.md` missing at `097c307^`. It was moved, not
+   lost: `3834af3` renamed it to `purpose_files/pipeline.purpose.md` on 2025-07-19, and it is present at the
+   pre-change commit (text cited above). A reviewer at the time had it in the repository. Every arm gets the
+   same files at the pre-change commit. Archived text is never injected into one arm only.
+1. **A is a well-configured conventional workflow.** AEC-R3 requires that.
+   - A has Spec Kit-style requirements, general smoke and regression tests, CI and PR review, as a
+     responsible team could have set up in advance. B and C have the same.
+   - The smoke-test selection rule is written before outcomes are seen. No oracle test aimed at the known
+     `output_dir` defect is allowed.
+   - What actually happened in 2025 (no tests, no review) is a descriptive reference, not a fourth arm.
+   - Whether a type checker would flag this in largely untyped Python is measured, not assumed.
+2. **No hindsight in the records.** A link such as `implemented_by code:src.profiler.DataProfiler` written by
+   someone who knows the class gets deleted would favour B.
+   - A preparer who hasn't seen the post-change diff or the outcome encodes *all* pre-change obligations
+     by a frozen general rule. A's notes get the same facts, equally specific.
+   - The control and decoys run against those same records.
+   - The report states that the links were reconstructed, not written at the time.
+3. **Exactly what each arm gets and must do.**
+   - A: notes or ADRs of comparable specificity.
+   - B: minimal records plus the generated `check` and `code-impact` output.
+   - C: only full-AEC capabilities and records that genuinely apply.
+   - This is a counterfactual tool replay; AEC didn't exist in 2025.
+   - Cost includes setup, authoring, repair, false alarms, review and future maintenance, not just
+     run tokens.
+4. **No credit for mere alarms.** Catching the issue requires all three of:
+   - identifying the incompatibility correctly;
+   - a justified review decision (request changes or reject);
+   - an adequate repair or verification step.
+
+   Also track detection latency against when standard checks would catch it, and work caused by harmless
+   alerts. The October CLI break is a **positive control** (another real defect). AEC R8 and the config
+   move are **negative decoys**.
+5. **What n=1 can decide.** Three events in about 320 commits is search yield under strict criteria, not a
+   base rate.
+   - If A ties B and C: record "no added value on this case; deprioritise expansion", not "discontinue AEC".
+   - If B or C wins: that's evidence for a prospective outside test, not an adoption claim.
+   - If B equals C: minimise only the features these scenarios exercised.
+6. **Grading.** Three separate roles:
+   - A historian who knows the outcomes writes a deterministic key from verified source and executable
+     acceptance tests, then freezes and hides it.
+   - A different preparer sees only pre-change material.
+   - Trial agents never see the key or the later repair.
+
+   Executable checks decide correctness first. Qualitative grading uses cold graders on redacted outputs,
+   with leaks noted. Full blindness isn't claimed where an AEC briefing reveals itself. The Codex and
+   Copilot value assessments are design input, not blinded grades.
+7. **Authority and C-19.** Ambition stays out of B. AEC-R3 and DEC-031 supply the study criteria.
+
+**Process note.** Kate's review on GitHub shows the author `eraevous`, because her connector acts through
+Zach's account. The review text is signed "— Kate". Read authorship from that signature, not the account.
+
 ## Independent views gathered alongside
 
 The same cold question ("is AEC worth it?") is going to Codex (HO-AEC-20261102-A5RR) and GitHub
@@ -191,4 +252,5 @@ frozen materials. To be filled at freeze.]*
 ## Change log (pre-freeze)
 
 - 2026-11-01: first draft (claude:aec-release). Ontology audit filled in; scenarios pending.
+- 2026-11-01: Kate's review folded in as pre-freeze amendments; purpose-file provenance resolved (moved by 3834af3, present at 097c307^).
 - 2026-11-01: scenarios from the history search; primary scenario verified against Data-Guide commits (097c307, 3b2f110, e877113).
