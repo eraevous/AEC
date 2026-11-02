@@ -228,5 +228,24 @@ class TestRecordIdentityAndFreeze(unittest.TestCase):
         lines = [{"id": "P", "version": 1, "type": "claim", "tier": "prospective", "frozen_sha256": "0f" * 32}]
         self.assertEqual(self.errors(lines), set())
 
+
+class TestDeprecatedImplements(unittest.TestCase):
+    """`implements` (code -> requirement) duplicated `implemented_by` (requirement -> code) in reverse, and
+    nothing propagated through it: a record using it was silently ignored by impact. It still loads, with a
+    warning naming the relation to use (standard traceability: the requirement is satisfied by the code)."""
+
+    def rules(self, lines):
+        return {(f.level, f.rule) for f in check(store_from(lines))}
+
+    def test_implements_warns(self):
+        lines = [{"id": "R", "version": 1, "type": "requirement"},
+                 {"id": "C", "version": 1, "type": "claim", "relations": [{"rel": "implements", "to": "R@1"}]}]
+        self.assertIn(("warning", "deprecated-relation"), self.rules(lines))
+
+    def test_implemented_by_does_not_warn(self):  # decoy
+        lines = [{"id": "R", "version": 1, "type": "requirement",
+                  "relations": [{"rel": "implemented_by", "to": "code:pkg.f"}]}]
+        self.assertNotIn(("warning", "deprecated-relation"), self.rules(lines))
+
 if __name__ == "__main__":
     unittest.main()

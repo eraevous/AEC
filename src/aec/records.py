@@ -17,6 +17,11 @@ RELATIONS = {"serves", "implements", "implemented_by", "depends_on", "supports",
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 EVIDENCE_KINDS = {"contract_conformance", "behavioral_observation", "outcome_observation"}
 CLAIM_CATEGORIES = {"requirement_satisfaction", "purpose_outcome"}
+# Relations kept for old records but no longer recommended: relation -> what to use instead.
+DEPRECATED_RELATIONS = {
+    "implements": "'implements' is deprecated and impact ignores it: put 'implemented_by' on the requirement "
+                  "instead (the requirement is satisfied by the code, SysML <<satisfy>>)",
+}
 CODE = "code:"  # unversioned reference to a code symbol; the edge snapshot supplies its current state
 TIERS = {"candidate", "reviewed", "observed", "prospective"}
 
@@ -149,6 +154,8 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
         for e in r.relations:
             if e.get("rel") not in RELATIONS:
                 out.append(Finding("error", "relation", r.ref, f"unknown relation {e.get('rel')!r}"))
+            elif e.get("rel") in DEPRECATED_RELATIONS:
+                out.append(Finding("warning", "deprecated-relation", r.ref, DEPRECATED_RELATIONS[e["rel"]]))
             to = e.get("to", "")
             if to.startswith(CODE):
                 if symbols is not None and to[len(CODE):] not in symbols:

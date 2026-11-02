@@ -5,6 +5,13 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 
 ## [Unreleased]
 
+### Changed (naming)
+- `check` warns on the relation `implements` (deprecated): it duplicated `implemented_by` in reverse,
+  and `impact` never propagated through it. Use `implemented_by` on the requirement.
+- `docs/reasoning-vocabulary.md` maps each AEC term to the established one (requirements traceability,
+  ADRs, configuration management, event sourcing, change impact analysis), and says where AEC differs.
+- `aec edges --help` calls its output the dependency graph, as `snapshot` does.
+
 ### Added (WP1A, commit-addressed snapshots)
 
 - Commit/working-tree snapshots with extractor tool_version 0.4.0 and method identity.

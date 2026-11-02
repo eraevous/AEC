@@ -49,7 +49,7 @@ version, never rewriting history. No sources are copied into the repository.
 | relation | from → to | meaning, and what it does **not** mean |
 |---|---|---|
 | `serves` | requirement → purpose | meeting the requirement is intended to advance the purpose. It does not mean the purpose is achieved |
-| `implements` | any → requirement | the artifact is meant to meet the requirement. It does not mean it does |
+| `implements` | any → requirement | **Deprecated** (`check` warns; `impact` ignores it). Use `implemented_by` on the requirement |
 | `implemented_by` | requirement → `code:<symbol>` | the requirement's *satisfaction* is claimed through this code. If the code changes, satisfaction must be re-examined, not the obligation itself (added in v0.2) |
 | `depends_on` | claim, decision, requirement, evaluation → anything | the conclusion relies on this. If it changes, the conclusion must be re-examined |
 | `supports` | evidence → claim | counts toward the claim. It does not establish it |
@@ -59,6 +59,29 @@ version, never rewriting history. No sources are copied into the repository.
 | `selects` | decision → claim or alternative | what the decision adopted |
 | `supersedes` | revision or record → record@version | the newer commitment replaces the older one. The old one is kept |
 | `observed_on` | evidence → `code:<symbol>` | the observation was made against this code. If the code changes, whether the evidence still *applies* needs review. It does not mean the observation was wrong (v0.3) |
+
+## Standard terms
+
+AEC's vocabulary maps onto established practice. Most names are kept because they read plainly to
+developers and agents. Where AEC's idea is new, the AEC name is the point.
+
+| AEC term | Nearest established term | Field | Where AEC differs |
+|---|---|---|---|
+| `requirement` → `implemented_by` → `code:` | requirement *satisfied by* a design element (SysML «satisfy»); requirements traceability | requirements engineering (ISO/IEC/IEEE 29148) | Traces to code symbols resolved from a dependency graph, not to model elements |
+| `evaluation` → `tests` → claim | verification («verify»); test case verifies requirement | requirements engineering | Applies to claims as well as requirements |
+| `serves` (requirement → purpose) | derived requirement («deriveReqt»), goal refinement | goal-oriented RE (KAOS, i*) | Records intent only; never asserts the purpose is met |
+| `decision` with `decided_by` | architecture decision record (ADR) | software architecture | Machine-checked: an accepted decision must name an authority that governs its subject |
+| `epistemic: committed` / `provisional` | baselined (under change control) / draft | configuration management | "Provisional" makes exploration explicit, so changing it isn't drift |
+| `revision`, disposition `rebaseline` | change request, rebaselining | configuration management | Authorized changes are distinguished from unauthorized ones by `impact` |
+| append-only records, `supersedes`, `id@version` | event sourcing; immutable versioned records | software architecture | The current state is the latest version; old ones stay citable |
+| `impact` / `code-impact` | change impact analysis | software maintenance | Propagates through *justification* (what rests on what), not only code dependencies |
+| disposition `stale` / `needs_review` | suspect link (traceability tools flag links whose ends changed) | requirements management (e.g. DOORS) | Separates the obligation (stands) from its satisfaction (needs re-checking) |
+| `tier: prospective` | pre-registered prediction | experimental method | A tier label never establishes validity by itself |
+| `evidence_kind` | verification vs validation ("built it right" vs "built the right thing") | systems engineering | Warns when an outcome claim rests only on conformance evidence |
+| `.aec/edges.jsonl`, `aec edges` / `snapshot` | dependency graph, call graph (static analysis) | program analysis | Unresolved calls are kept and labelled, never guessed |
+| `experiment` | spike; experiment | agile; empirical method | Results can be promoted; the experiment needn't be supported |
+| `ambition` | (no close equivalent; nearest are option value and a product vision item) | AEC | Recorded so commitments don't foreclose it; not a commitment |
+| purpose discovery vs purpose preservation; drift | requirements elicitation vs change control; architecture drift and erosion | RE; software architecture | AEC's term for a project whose purpose is still being found |
 
 ## A code dependency is not a justificatory dependency
 
