@@ -67,7 +67,7 @@ below serve. Whether it becomes a record type, and how it differs from `purpose`
 committed and govern requirements; an ambition is broader and less testable), is a vocabulary
 decision for Zach. It is not settled here.
 
-## Step 2: scenarios (to be filled from the history search)
+## Step 2: scenarios
 
 Requirements for a scenario:
 - a real past change in AEC, Data-Guide or Fathom;
@@ -77,7 +77,66 @@ Requirements for a scenario:
 
 Plus at least one real decoy: a change to the same kind of code that endangered nothing consequential.
 
-*[Candidates, evidence and the chosen pair go here.]*
+**Search.** About 320 commits across AEC, Data-Guide and relay-kit-private (2026-11-01, a separate
+agent with a strict brief). I checked the primary scenario against the commits myself. Only Data-Guide's
+2025 history gives clean events where the obligation was written before the change. AEC and relay-kit
+are young (from 2026-10-26) and heavily reviewed. Their defects were caught in the same PR, or had no
+earlier written obligation.
+
+**Primary scenario: DG-097c307, profiler consolidation (Data-Guide, 2025-07-21).**
+- **The change.** Codex PR #7 (`097c307`, merged 46 seconds later) deleted `src/profiler.py` and
+  `profiler_update.py`. It switched three pipelines from `from profiler import DataProfiler` to
+  `from data_profiler import DataProfiler`. The old class took `output_dir`
+  (`097c307^:src/profiler.py:421`); the new one doesn't (`097c307:src/data_profiler.py:18`).
+  `src/pipeline.py:54` still passes `output_dir=`, so every pipeline run raises TypeError. The same
+  commit deleted `test_profiler.py`.
+- **Obligations written before the change:**
+  - `docs/RECONCILIATION_PLAN.md` (`3b2f110`, 2025-07-20): "Merge useful features from `profiler.py`
+    and `profiler_update.py` then delete those modules." The PR deleted, but didn't merge.
+  - `src/pipeline.purpose.md` (`e877113`, 2025-07-19): the pipeline "orchestrates DataProfiler … and
+    writes reports".
+- **How it was noticed:** never as a defect. It was repaired incidentally three months later (`d435bd7`,
+  2025-10-21). Harm was latent: work had moved to the CLI the same day.
+
+**Control scenario: DG-d435bd7, CLI broken by a profiler rewrite (2025-10-21).**
+- `d435bd7` changed `generate_report(format, dataset)` to `generate_report(format, output_filename)`.
+  `src/typer_cli.py:56` still passed `dataset=`, so every CLI run failed.
+- Obligation: `typer_cli.purpose.md` (`4e7445f`, 2025-07-21), "Write profiling reports to an output
+  directory".
+- Zach caught and fixed it about an hour later (`37426e7`), presumably by running the CLI. This tests
+  whether the conditions tie when the problem is quick to surface.
+
+**Decoys:**
+- AEC #20 (`860b781`). It changed `records.check`; `code-impact` flags AEC-R8, yet the R8 rules were
+  unchanged (CL-R8-check). This is a real AEC false alarm.
+- Data-Guide `d1e614c`. It moved CLI options into config, deliberately, by the owner. The purpose holds;
+  only the docs drifted.
+
+**Considered and set aside:**
+- A third Data-Guide event: `37426e7` silently disabled report writing. Its obligation was only an hour
+  old, and the affected callers were dormant.
+- AEC's untagged release pin (C-14). It depends on release tagging, not on code. AEC flagged AEC-R7 stale,
+  but a claim still asserted R7 held, so the flag didn't lead to the catch.
+- Ledger CH-012. It's data, not code.
+- C-11's wrong edges. Copilot caught them before merge.
+- Reconstructed HIST-* records, the staged itsdangerous demo, probe-001's built tasks, and the MtG pilot
+  (real, but not code).
+
+**What the scarcity means.** Three qualifying events in about 320 commits, all in one area of one repository.
+- Real cases of "a change broke a written obligation and slipped through" are uncommon here.
+- Both strong cases would plausibly be caught by a smoke test or a type checker, and their history had
+  neither tests nor review. The conventional condition is therefore strong, and a gap between A and C
+  could just reflect that original weakness.
+- At n=1 in the owner's own repository, this study is a case report. A positive result motivates the
+  outside-adopter replication. A null result doesn't show AEC has no value, but under AEC-R3 it does
+  argue for simplifying.
+
+**What AEC can and can't see here.** For condition B to flag anything, the obligation must already be a
+record linked to code: for example, the pipeline requirement `implemented_by` `code:src.profiler.DataProfiler`.
+- Deleting that class makes `code-impact` mark the requirement for review.
+- AEC does not check call signatures. So B can say "this obligation's code was deleted; look again", not
+  "TypeError".
+- Whether that prompt leads a reviewer to the broken call is exactly what the replay measures.
 
 **If no real scenario qualifies,** that is a finding in its own right. It would mean the failure AEC
 guards against is rare at this project's scale, or invisible in its history. The study then reports
@@ -132,3 +191,4 @@ frozen materials. To be filled at freeze.]*
 ## Change log (pre-freeze)
 
 - 2026-11-01: first draft (claude:aec-release). Ontology audit filled in; scenarios pending.
+- 2026-11-01: scenarios from the history search; primary scenario verified against Data-Guide commits (097c307, 3b2f110, e877113).
