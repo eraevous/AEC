@@ -19,6 +19,15 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
   missed this way); measured in `docs/evaluations/resolver-001.md`: 25 of Data-Guide's 874 unresolved
   calls resolve, all correct by hand check; five edge cases found by GitHub Copilot's review are excluded. Snapshots from extractor 0.4.0 and 0.4.1 are not comparable.
 
+### Fixed (from GitHub Copilot's repository review, 2026-11-01)
+- `check` no longer coerces a non-integer `version` (`1.9` loaded as version 1, a different
+  `id@version`). Such a record is an error and isn't loaded.
+- `check` requires `frozen_sha256` on a prospective claim to be a SHA-256 digest, not any non-empty value.
+- The extractor reports `foo.py` as shadowed when a package `foo/` exists. Before, one file's calls
+  disappeared without a trace.
+- `aec edges` stops if a file changes between its two passes, instead of mixing two versions in one
+  snapshot. Both passes now parse the exact bytes that were hashed.
+
 ## [0.4.1] - 2026-11-01
 
 ### Changed

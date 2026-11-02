@@ -19,6 +19,7 @@ from __future__ import annotations
 import ast
 import builtins
 import hashlib
+import io
 import fnmatch
 import json
 import sys
@@ -82,11 +83,16 @@ class _Module:
 
     def __init__(self, name: str, rel: str, path: Path, is_pkg: bool):
         self.name, self.rel, self.path, self.is_pkg = name, rel, path, is_pkg
+        self.digest = ""                     # SHA-256 of the bytes parsed in pass 1
         self.top_defs: dict[str, str] = {}   # bare name -> symbol (classes, functions, assigned names)
         self.order: list = []                # module-level ('imp', node) | ('name', bare) in statement order
         self.class_bases: list = []          # (class symbol, [base expr nodes], class node line)
         self.exports = None
         self.bindings: dict[str, str] = {}   # final module namespace: name -> dotted target
+
+
+class SourceChanged(ValueError):
+    """A source file changed while it was being extracted, so the snapshot would mix two versions."""
 
 
 class _Extractor:
@@ -118,24 +124,38 @@ class _Extractor:
         return out
 
     @staticmethod
-    def parse(path: Path, rel: Path):
-        with tokenize.open(path) as f:
-            src = f.read()
+    def parse(raw: bytes, rel: Path):
+        """Parse exactly these bytes (the ones that were hashed), decoded as Python decodes source."""
+        encoding, _ = tokenize.detect_encoding(io.BytesIO(raw).readline)
+        src = raw.decode(encoding)
+        if src.startswith("\ufeff"):
+            src = src[1:]
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")  # e.g. SyntaxWarning for invalid escapes in analysed code
             return ast.parse(src, filename=str(rel))
 
     def load(self):
-        """Pass 1: parse each file once, index it, and drop the tree."""
-        for p, rel in self.files():
+        """Pass 1: parse each file once, index it, and drop the tree.
+
+        `foo.py` beside a package `foo/` would map to the same module name. Python imports the package,
+        so the package is analysed and `foo.py` is reported as skipped, never silently merged or dropped."""
+        files = self.files()
+        packages = {_module_name(rel) for _, rel in files if rel.name == "__init__.py"}
+        for p, rel in files:
+            if rel.name != "__init__.py" and _module_name(rel) in packages:
+                self.skipped.append({"file": rel.as_posix(), "reason": "shadowed by package "
+                                     f"{rel.with_suffix('').as_posix()}/ (Python imports the package); not analysed"})
+                continue
             raw = p.read_bytes()
-            self.file_hashes.append(f"{rel.as_posix()}:{hashlib.sha256(raw).hexdigest()}")
+            digest = hashlib.sha256(raw).hexdigest()
+            self.file_hashes.append(f"{rel.as_posix()}:{digest}")
             try:
-                tree = self.parse(p, rel)
+                tree = self.parse(raw, rel)
             except (SyntaxError, UnicodeDecodeError, LookupError, ValueError) as ex:
                 self.skipped.append({"file": rel.as_posix(), "reason": f"{type(ex).__name__}: {ex}".replace(str(p), rel.as_posix()).splitlines()[0][:200]})
                 continue
             m = _Module(_module_name(rel), rel.as_posix(), p, rel.name == "__init__.py")
+            m.digest = digest
             self.modules[m.name] = m
             self.index(m, tree)
             del tree
@@ -437,9 +457,14 @@ class _Extractor:
                 self._unsafe_ctor.add(sym)
 
     def scan_bodies(self):
-        """Pass 2: re-parse one file at a time for the body scan, so only one tree is alive."""
+        """Pass 2: re-parse one file at a time for the body scan, so only one tree is alive. A file whose
+        bytes differ from pass 1 stops extraction: a snapshot mixing two versions must not look complete."""
         for m in self.modules.values():
-            tree = self.parse(m.path, Path(m.rel))
+            raw = m.path.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != m.digest:
+                raise SourceChanged(f"{m.rel} changed during extraction; run it again on a stable tree "
+                                    "(or snapshot a commit)")
+            tree = self.parse(raw, Path(m.rel))
             self._scan_scope(m, tree.body, m.name, {}, set(), None)
             del tree
 

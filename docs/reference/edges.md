@@ -116,6 +116,14 @@ on C or a base, and no metaclass from the analysed tree overriding `__call__`. A
 local_value, as does an attribute C doesn't define. This is not general type inference.
 Known static re-exports are traced; cyclic/expanding aliases stay uncertain.
 
+## Extraction integrity
+
+- A module file beside a same-named package (`foo.py` and `foo/__init__.py`) is listed in the header's
+  `skipped` as shadowed. Python imports the package, so only the package is analysed.
+- Working-tree extraction reads each file twice. If a file's bytes change between the passes,
+  `aec edges` stops with an error rather than write a snapshot that mixes two versions. Run it again on
+  a stable tree, or snapshot a commit (`aec snapshot --rev`), which reads immutable blobs.
+
 ## CI and existing records
 
 Pull-request CI uses actual head SHA plus merge-base and uploads JSON as a workflow

@@ -5,6 +5,7 @@ Records are JSON lines (see docs/reasoning-vocabulary.md). Standard library only
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -13,6 +14,7 @@ TYPES = {"purpose", "requirement", "criterion", "assumption", "source", "claim",
 RELATIONS = {"serves", "implements", "implemented_by", "depends_on", "supports", "contradicts", "tests",
              "produced", "selects", "supersedes", "observed_on"}
 # feature 002: tell contract conformance from outcome (Kate, AEC round 3). Both fields are optional.
+SHA256_RE = re.compile(r"[0-9a-f]{64}")
 EVIDENCE_KINDS = {"contract_conformance", "behavioral_observation", "outcome_observation"}
 CLAIM_CATEGORIES = {"requirement_satisfaction", "purpose_outcome"}
 CODE = "code:"  # unversioned reference to a code symbol; the edge snapshot supplies its current state
@@ -51,8 +53,9 @@ class Record:
 class Store:
     """All versions of all records. A record id may appear with several versions; none is ever edited."""
 
-    def __init__(self, records: list[Record]):
+    def __init__(self, records: list[Record], problems: list | None = None):
         self.records = records
+        self.problems = problems or []   # records that couldn't be loaded, reported by check()
         self.by_ref: dict[str, Record] = {}
         self.latest: dict[str, Record] = {}
         for r in records:
@@ -62,17 +65,23 @@ class Store:
 
     @classmethod
     def load(cls, path: str | Path) -> "Store":
-        recs = []
+        recs, problems = [], []
         for n, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
             line = line.strip()
             if not line or line.startswith("//"):
                 continue
             d = json.loads(line)
             known = {"id", "version", "type", "text", "subject", "relations"}
-            recs.append(Record(id=d["id"], version=int(d["version"]), type=d["type"], text=d.get("text", ""),
+            v = d.get("version")
+            if not isinstance(v, int) or isinstance(v, bool) or v < 1:
+                # never coerce: 1.9 or "1" read as 1 would silently become a different id@version
+                problems.append(Finding("error", "version", f"{d.get('id')}@{v!r}",
+                                        f"line {n}: version must be a positive JSON integer; record not loaded"))
+                continue
+            recs.append(Record(id=d["id"], version=v, type=d["type"], text=d.get("text", ""),
                                subject=d.get("subject"), relations=d.get("relations", []),
-                               data={k: v for k, v in d.items() if k not in known}))
-        return cls(recs)
+                               data={k: x for k, x in d.items() if k not in known}))
+        return cls(recs, problems)
 
     def out_edges(self, r: Record, rel: str) -> list[str]:
         return [e["to"] for e in r.relations if e.get("rel") == rel]
@@ -128,7 +137,7 @@ def defined_symbols(edges: dict) -> set[str]:
 def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Finding]:
     """Deterministic cross-record checks. They say nothing about whether evidence is *good*.
     With an edge snapshot, `code:` references must name a symbol the snapshot defines."""
-    out: list[Finding] = []
+    out: list[Finding] = list(getattr(store, "problems", []))
     symbols = defined_symbols(edges) if edges else None
     seen = set()
     for r in store.records:
@@ -182,8 +191,10 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
                 if not backed:
                     out.append(Finding("error", "tier", r.ref,
                                        "tier 'observed' but no supporting evidence was produced by an evaluation"))
-            if tier == "prospective" and not r.get("frozen_sha256"):
-                out.append(Finding("error", "tier", r.ref, "tier 'prospective' needs frozen_sha256 (freeze before the outcome)"))
+            digest = r.get("frozen_sha256")
+            if tier == "prospective" and not (isinstance(digest, str) and SHA256_RE.fullmatch(digest)):
+                out.append(Finding("error", "tier", r.ref, "tier 'prospective' needs frozen_sha256, a 64-character "
+                                   "lowercase hex SHA-256 of the frozen source (freeze before the outcome)"))
         kind, cat = r.get("evidence_kind"), r.get("claim_category")
         if kind is not None and kind not in EVIDENCE_KINDS:
             out.append(Finding("error", "evidence-kind", r.ref, f"unknown evidence_kind {kind!r}"))

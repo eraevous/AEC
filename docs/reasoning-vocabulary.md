@@ -24,7 +24,7 @@ This is deliberately not a graph platform. Records are plain JSON lines, version
 
 **Code references** (v0.2): a relation target `code:<dotted.symbol>` points at code. It is unversioned; the edge snapshot (`aec edges`) supplies its current state, `aec check --edges` reports dangling ones, and `aec code-impact` turns code changes into change events.
 
-Every record has `id`, `version` (int), `type`, `text`, optional `subject` (what it is about, for authority checks) and `relations`. A reference is `id@version`. Pinning the version is what lets a later change be detected.
+Every record has `id`, `version` (a positive JSON integer: `1.9`, `"1"` and `true` are errors, never coerced), `type`, `text`, optional `subject` (what it is about, for authority checks) and `relations`. A reference is `id@version`. Pinning the version is what lets a later change be detected.
 
 **Epistemic status** (`epistemic`) separates purpose *discovery* from purpose *preservation*. A `provisional` purpose, criterion or requirement may be reframed during exploration without that being drift. The history is still kept. A `committed` one changes only through an authorized `revision`.
 
@@ -118,7 +118,7 @@ Everything else is reported as unaffected. Over-flagging is a failure too.
 
 0. Unknown record types, relations, tiers, evidence kinds and claim categories are errors.
 1. A `decision` with `status: accepted` must have `decided_by` set to an authority that governs its subject.
-2. A claim with `tier: observed` must be supported by evidence that an evaluation `produced`. A claim with `tier: prospective` must reference a frozen source (`frozen_sha256`).
+2. A claim with `tier: observed` must be supported by evidence that an evaluation `produced`. A claim with `tier: prospective` must reference a frozen source: `frozen_sha256` is the 64-character lowercase hex SHA-256 of that source. The check validates the digest's form, not that it matches a real file or that the freeze happened before the outcome.
 3. Every `id@version` reference must resolve.
 4. A committed criterion or purpose changed without an authorized revision is flagged. A provisional one is not.
 
