@@ -174,7 +174,9 @@ tagged by what kind of value it offers and gated by a result it must show before
    proposals; each is settled when its item comes up.
 2. A gate names three things: the cheapest alternative the item must beat, the result that would justify
    building it, and the result that would mean dropping or simplifying it.
-3. Gates for research bets are pre-registered, like probe-001 and value-001.
+3. Gates for research bets are pre-registered, like probe-001 and value-001. A research bet runs as an
+   `experiment` record (DEC-033): trying a few variants commits to no feature and no long-term support.
+   Only a result that passes its gate is promoted into a spec.
 4. A null result lowers an item's priority. "A later feature will make it pay off" isn't a reason to proceed.
 
 | Item | Kind | Cheapest alternative to beat | Gate: result required before building | Evidence so far |
@@ -189,10 +191,15 @@ tagged by what kind of value it offers and gated by a result it must show before
 | WP4 handoff premise check (with relay-kit) | research bet | the handoff's "Context" section and a recipient re-reading main | a replay of real handoffs finds a recipient acting on a stale premise that the check would have flagged | relay-kit challenges list coordination failures, none yet traced to a stale premise |
 | WP6 adaptive reporting | research bet | a plain status report from existing facts | its own validation (two project types, a lifecycle change, an immaterial-change decoy) shows decisions changed compared with the plain report | none; backlog (#15) |
 | C-17 decision-context distillation | research bet | the decision ledger plus `git log` and the threads | a retrieval test recovers why a decision was made better or faster than those sources | none |
+| Tiered agents with asymmetric information (C-20; AMB-tiered-agents; DEC-034: the stated purpose of edge snapshots) | research bet | every agent sees everything | an experiment where an architect agent works only from the edge snapshot, and implementers hold module and function detail, beats or matches the all-see arm on a task where architecture-level decisions matter, at lower cost or with fewer integration conflicts | none; probe-001 tested briefings, not this division of labour |
 | WP5 evaluation | — | — | not a feature: the gates above are its instalments | value-001 is the first |
 
-**Not gated here (decisions for Zach, not evidence questions):** the `ambition` record type (C-19), the
-anchors question (C-09), what the edge snapshot is for (C-16), and the package name and PyPI release.
+**Ambitions.** Directions AEC might take are recorded as `ambition` records (DEC-033), not as roadmap
+commitments. Before an item here is committed, the question is which recorded ambitions it would
+foreclose. AEC's own: others find it useful, and tiered agentic development.
+
+**Not gated here (decisions for Zach, not evidence questions):** the anchors question (C-09), how current
+edge-snapshot use compares with its stated purpose (C-16, owner-held; purpose stated in DEC-034), and the package name and PyPI release.
 
 ### WP6 — adaptive reporting (backlog addition, 2026-10-30)
 
