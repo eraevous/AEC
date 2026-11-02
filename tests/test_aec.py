@@ -201,5 +201,32 @@ class TestMisplacedRelation(unittest.TestCase):
         self.assertEqual(self.findings(good), [])
 
 
+
+class TestRecordIdentityAndFreeze(unittest.TestCase):
+    """From GitHub Copilot's repository review (2026-11-01): `version` 1.9 loaded silently as 1, and any
+    truthy `frozen_sha256` passed. A version is a positive JSON integer; a freeze marker is a SHA-256 digest."""
+
+    def errors(self, lines):
+        return {(f.rule, f.ref) for f in check(store_from(lines)) if f.level == "error"}
+
+    def test_non_integer_versions_are_errors(self):
+        for v in (1.9, "1", True, 0, -1, None):
+            with self.subTest(version=v):
+                rules = {rule for rule, _ in self.errors([{"id": "R", "version": v, "type": "requirement"}])}
+                self.assertIn("version", rules)
+
+    def test_integer_version_is_fine(self):  # decoy
+        self.assertEqual(self.errors([{"id": "R", "version": 2, "type": "requirement"}]), set())
+
+    def test_malformed_freeze_digest_is_an_error(self):
+        for digest in ("not-a-sha256", "ABC", "a" * 63, "g" * 64, 123):
+            with self.subTest(digest=digest):
+                lines = [{"id": "P", "version": 1, "type": "claim", "tier": "prospective", "frozen_sha256": digest}]
+                self.assertIn(("tier", "P@1"), self.errors(lines))
+
+    def test_well_formed_freeze_digest_is_fine(self):  # decoy
+        lines = [{"id": "P", "version": 1, "type": "claim", "tier": "prospective", "frozen_sha256": "0f" * 32}]
+        self.assertEqual(self.errors(lines), set())
+
 if __name__ == "__main__":
     unittest.main()

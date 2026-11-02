@@ -216,7 +216,11 @@ def main(argv=None) -> int:
         if not root.is_dir():
             print(f"aec edges: {root} is not a directory", file=sys.stderr)
             return 2
-        snap = E.snapshot(root)
+        try:
+            snap = E.snapshot(root)
+        except E.SourceChanged as error:
+            print(f"aec edges: {error}", file=sys.stderr)
+            return 2
         text = E.dumps(snap)
         if a.output:
             Path(a.output).parent.mkdir(parents=True, exist_ok=True)

@@ -353,5 +353,50 @@ class TestLocalConstructorReviewCases(unittest.TestCase):
     def test_ordinary_abc_subclass_still_resolves(self):  # decoy: don't over-exclude metaclasses
         self.assertIn("pkg.models.Abstract.go", self.resolved_from("abc_still_resolves"))
 
+
+class TestModuleNameCollision(unittest.TestCase):
+    """From Copilot's repository review: `foo.py` beside `foo/__init__.py` both mapped to module `foo`, and
+    one file's calls vanished without a trace. Python imports the package, so the package is analysed and
+    the module file is reported as skipped (shadowed), not silently merged or dropped."""
+
+    def test_package_wins_and_shadowed_module_is_reported(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "foo").mkdir()
+        (d / "foo.py").write_text("def a():\n    b()\n\n\ndef b():\n    pass\n")
+        (d / "foo" / "__init__.py").write_text("def c():\n    d()\n\n\ndef d():\n    pass\n")
+        (d / "bar.py").write_text("def e():\n    pass\n")
+        s = E.snapshot(d)
+        self.assertIn(("foo.c", "foo.d"), idents(s, "calls"))
+        self.assertNotIn(("foo", "foo.a"), idents(s, "defines"))
+        skipped = {x["file"]: x["reason"] for x in s["header"]["skipped"]}
+        self.assertIn("foo.py", skipped)
+        self.assertIn("shadowed", skipped["foo.py"])
+        self.assertNotIn("bar.py", skipped)  # decoy: an unrelated module is untouched
+
+
+class TestFileChangedDuringExtraction(unittest.TestCase):
+    """From Copilot's repository review: a file edited between the two passes produced a snapshot mixing
+    both versions. Extraction now fails rather than return a snapshot that looks complete."""
+
+    def test_change_between_passes_raises(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        f = d / "demo.py"
+        f.write_text("def old():\n    pass\n")
+        ex = E._Extractor(d, set(E.DEFAULT_IGNORE))
+        ex.load()
+        f.write_text("def new():\n    old()\n")
+        ex.build_module_bindings()
+        ex.collect_bases()
+        with self.assertRaises(E.SourceChanged):
+            ex.scan_bodies()
+
+    def test_unchanged_tree_extracts(self):  # decoy
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "demo.py").write_text("def old():\n    pass\n")
+        self.assertIn(("demo", "demo.old"), idents(E.snapshot(d), "defines"))
+
 if __name__ == "__main__":
     unittest.main()
