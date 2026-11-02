@@ -8,7 +8,7 @@ what does it cost?
 **Answer, in one line.** On Data-Guide it resolves 25 of the 874 unresolved calls (2.9%). The
 probe-001 caller is one of them. All 25 were correct when checked by hand. Eight more calls on
 constructor-assigned locals stay unresolved by design, because those locals can hold more than one
-value. Extraction takes about 15% longer.
+value. Extraction takes about 20% longer.
 
 **What this does not show.** Whether resolving these calls changes what an agent does. probe-001's
 agents found every dependant without AEC's caller list, so this is a better measuring tool, not a
@@ -21,9 +21,13 @@ already did, when all of these hold:
 
 - it is assigned exactly once in the function, by a plain top-level statement `x = C(...)` or
   `x: T = C(...)`, not inside `if`, `for`, `while`, `try` or `with`;
-- `C` resolves to a class defined in the analysed tree, and neither C nor a known base defines `__new__`;
-- the name is not a parameter, a loop, `with` or `except` target, a walrus target, deleted,
-  declared `global` or `nonlocal`, imported locally, or defined as a nested function or class;
+- `C` resolves to a class defined in the analysed tree, and isn't bound by more than one local import;
+- `C(...)` returns a C: neither C nor a known base defines or assigns `__new__`, or uses a metaclass
+  from the analysed tree that overrides `__call__`. Metaclasses from outside the tree, such as
+  `abc.ABCMeta`, are not inspected;
+- the name is not a parameter or lambda parameter, a loop, `with` or `except` target, a walrus target,
+  deleted, declared `global` or `nonlocal` (including by a nested function), imported locally, or
+  defined as a nested function or class;
 - the use is in the same function. Closures, module-level code and class bodies are not covered.
 
 An attribute C doesn't define (an instance attribute such as `x.data.fit()`, or a method from an
@@ -42,7 +46,7 @@ unknown base) stays unresolved, with why `local_value`. Everything else is uncha
   class defined in the repository and later used as `name.method(...)`. Each was classified by why
   the rule does or doesn't apply. The scan matches class names loosely (by last segment), so it
   over-counts candidates, which is the safe direction for recall.
-- **Cost:** median of 7 in-process `snapshot()` runs on the same machine.
+- **Cost:** median of 15 in-process `snapshot()` runs, main and branch interleaved, three rounds, on the same machine.
 
 ## Results
 
@@ -52,7 +56,7 @@ unknown base) stays unresolved, with why `local_value`. Everything else is uncha
 | Call edges | 1,578 | 1,578 |
 | Unresolved call edges | 874 | 849 |
 | of which `local_value` | 519 | 494 |
-| Median extraction time | 0.34 s | 0.40 s |
+| Median extraction time | 0.36 s | 0.43 s |
 
 The edge count doesn't change because each of the 25 edges changes its destination: `?x.m` becomes
 the method's symbol.
@@ -87,7 +91,20 @@ fix was never meant to touch them. Their cost is unchanged: impact never travels
 inherited method, an annotated assignment and a bound-method reference. Its decoys cover a
 reassigned local, a conditional assignment, a parameter, a class with `__new__`, a factory function,
 a missing method, an instance attribute, a loop target, an `except` target, a closure, a `global`,
-and a class body. The hand-labelled fixture `edges_pkg_v1` had exactly this pattern
+and a class body.
+
+`TestLocalConstructorReviewCases` adds the five cases GitHub Copilot found when reviewing PR #32.
+Each produced a wrong resolved edge in the first version:
+- a nested function's `nonlocal` write;
+- a constructor rebound by a second local import;
+- a lambda parameter shadowing the local;
+- an assigned `__new__`;
+- a custom metaclass `__call__`, directly and inherited.
+
+Its control, an ordinary `ABC` subclass, still resolves. The Data-Guide snapshot is byte-identical
+before and after those fixes, so the 25 results stand.
+
+The hand-labelled fixture `edges_pkg_v1` had exactly this pattern
 (`w = Worker(); w.run()`), labelled unresolved under the old rule. It is relabelled
 `pkg.base.Base.run`, the method Worker inherits.
 

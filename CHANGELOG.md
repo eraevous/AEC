@@ -17,7 +17,7 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
   possible value is `C(...)` for a class defined in the analysed tree, like `self.m()`. Any local that
   could hold something else stays unresolved. Found by probe-001 (its most consequential caller was
   missed this way); measured in `docs/evaluations/resolver-001.md`: 25 of Data-Guide's 874 unresolved
-  calls resolve, all correct by hand check. Snapshots from extractor 0.4.0 and 0.4.1 are not comparable.
+  calls resolve, all correct by hand check; five edge cases found by GitHub Copilot's review are excluded. Snapshots from extractor 0.4.0 and 0.4.1 are not comparable.
 
 ## [0.4.1] - 2026-11-01
 

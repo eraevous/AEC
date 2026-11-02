@@ -101,6 +101,7 @@ class _Extractor:
         self._class_syms: set[str] = set()
         self.defs: dict[str, str] = {}       # symbol -> body sha
         self.class_bases: dict[str, list[str]] = {}
+        self._unsafe_ctor: set[str] = set()  # classes whose C(...) may not return a C (C-11)
         self.import_modules = {}
 
     # ---------- pass 0: files ----------
@@ -296,20 +297,42 @@ class _Extractor:
             return (f"{found}.{tail}" if tail else found), True
         return f"?{dotted}", False
 
+    def _constructs_itself(self, cls_sym: str, seen=None) -> bool:
+        """False if C(...) might return something other than a C: C or a known base defines or assigns
+        `__new__`, or uses a metaclass from the analysed tree that overrides `__call__`. A metaclass from
+        outside the tree (abc.ABCMeta, enum) is not inspected."""
+        seen = seen or set()
+        if cls_sym in seen:
+            return True
+        seen.add(cls_sym)
+        if cls_sym in self._unsafe_ctor or f"{cls_sym}.__new__" in self._all_def_names:
+            return False
+        return all(self._constructs_itself(b, seen) for b in self.class_bases.get(cls_sym, []))
+
     def _local_types(self, mod, body, stmts, scope_locals, inherited_locals, local_bind):
         """C-11: function locals whose only possible value is an instance of a known class.
 
         A name qualifies when it is stored exactly once in the function, by a plain top-level statement
         `x = C(...)` or `x: T = C(...)` (not inside if/for/try/with), C resolves to a class defined in the
-        analysed tree, and that class (or a known base) doesn't define `__new__`. Anything that could
-        give the name another value disqualifies it: a second store, a loop, `with` or `except` target,
-        a walrus, `del`, `global`/`nonlocal`, a parameter, an outer-scope local, a local import or a
-        nested definition of the same name. No type inference beyond that."""
+        analysed tree, C is not rebound by a second local import, and C(...) returns a C (see
+        `_constructs_itself`). Anything that could give the name another value disqualifies it: a second
+        store, a loop, `with` or `except` target, a walrus, `del`, `global`/`nonlocal` (including a
+        nested function's `nonlocal`), a parameter or lambda parameter of that name, an outer-scope
+        local, a local import or a nested definition of the same name. No type inference beyond that."""
         stores: dict[str, int] = {}
         banned: set[str] = set(inherited_locals) | set(local_bind)
+        import_binds: dict[str, int] = {}  # names bound by local imports; rebinding makes C path-dependent
         for st in stmts:
             for n in ast.walk(st):
-                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
+                if isinstance(n, (ast.Import, ast.ImportFrom)):
+                    for a in n.names:
+                        nm = a.asname or a.name.split(".")[0]
+                        import_binds[nm] = import_binds.get(nm, 0) + 1
+                elif isinstance(n, ast.Lambda):  # a lambda parameter shadows the local inside the lambda
+                    a = n.args
+                    banned.update(x.arg for x in a.posonlyargs + a.args + a.kwonlyargs)
+                    banned.update(x.arg for x in (a.vararg, a.kwarg) if x)
+                elif isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
                     stores[n.id] = stores.get(n.id, 0) + 1
                 elif isinstance(n, ast.Name) and isinstance(n.ctx, ast.Del):
                     banned.add(n.id)
@@ -326,6 +349,9 @@ class _Extractor:
         for node in body:
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
                 banned.add(node.name)
+                for n in ast.walk(node):  # a nested function can rebind the local with `nonlocal`
+                    if isinstance(n, ast.Nonlocal):
+                        banned.update(n.names)
         out: dict[str, str] = {}
         for node in body:
             if isinstance(node, ast.Assign) and len(node.targets) == 1:
@@ -340,10 +366,10 @@ class _Extractor:
             if name in banned or stores.get(name) != 1 or name not in scope_locals:
                 continue
             d = _dotted(value.func)
-            if not d:
+            if not d or import_binds.get(d.split(".")[0], 0) > 1:
                 continue
             tgt, ok = self.resolve(d, mod, local_bind, scope_locals, None)
-            if ok and tgt in self._class_syms and not self._lookup_class_attr(tgt, "__new__"):
+            if ok and tgt in self._class_syms and self._constructs_itself(tgt):
                 out[name] = tgt
         return out
 
@@ -373,6 +399,10 @@ class _Extractor:
                     if isinstance(node, ast.ClassDef):
                         self._class_syms.add(sym)
                         mod.class_bases.append((sym, list(node.bases), node))
+                        for st in node.body:  # `__new__ = ...` in the class body (a def is found by lookup)
+                            tg = st.targets if isinstance(st, ast.Assign) else [st.target] if isinstance(st, ast.AnnAssign) else []
+                            if any(isinstance(t, ast.Name) and t.id == "__new__" for t in tg):
+                                self._unsafe_ctor.add(sym)
                     walk(node.body, sym, mod, not isinstance(node, ast.ClassDef))
                 elif not in_function and isinstance(node, (ast.Assign, ast.AnnAssign)) and scope_sym == mod.name:
                     targets = node.targets if isinstance(node, ast.Assign) else [node.target]
@@ -385,8 +415,14 @@ class _Extractor:
         walk(tree.body, m.name, m, False)
 
     def collect_bases(self):
+        metas = []
         for m in self.modules.values():
             for sym, bases, node in m.class_bases:
+                for kw in node.keywords:  # metaclasses, checked for __call__ once all bases are known
+                    d = _dotted(kw.value) if kw.arg == "metaclass" else None
+                    meta = self.resolve(d, m, {}, set(), None)[0] if d else None
+                    if meta in self._class_syms:
+                        metas.append((sym, meta))
                 for b in bases:
                     d = _dotted(b)
                     if not d:
@@ -396,6 +432,9 @@ class _Extractor:
                         self.class_bases.setdefault(sym, []).append(tgt)
                         self.edge("inherits", sym, tgt, m, node)
             m.class_bases = []
+        for sym, meta in metas:  # a metaclass in the tree that overrides __call__ (C-11)
+            if self._lookup_class_attr(meta, "__call__"):
+                self._unsafe_ctor.add(sym)
 
     def scan_bodies(self):
         """Pass 2: re-parse one file at a time for the body scan, so only one tree is alive."""

@@ -227,5 +227,131 @@ class TestLocalConstructorCalls(unittest.TestCase):
         self.assertNotIn(("pkg.use.Holder", "pkg.models.Model.fit"), self.calls)
 
 
+
+LOCAL_CTOR_REVIEW_MODELS = '''\
+from abc import ABC
+
+
+class Model:
+    def fit(self):
+        return 1
+
+
+class AssignedNew:
+    __new__ = staticmethod(lambda cls: Model())
+
+    def run(self):
+        return 2
+
+
+class Meta(type):
+    def __call__(cls, *a, **k):
+        return Model()
+
+
+class ViaMeta(metaclass=Meta):
+    def run(self):
+        return 3
+
+
+class Child(ViaMeta):
+    pass
+
+
+class Abstract(ABC):
+    def go(self):
+        return 4
+
+
+class Concrete(Abstract):
+    pass
+
+
+def make():
+    return Model()
+'''
+
+LOCAL_CTOR_REVIEW_OTHER = '''\
+class Model:
+    def fit(self):
+        return 5
+'''
+
+LOCAL_CTOR_REVIEW_USE = '''\
+from pkg.models import AssignedNew, Child, Concrete, Model, ViaMeta, make
+
+
+def nonlocal_write():
+    m = Model()
+
+    def reset():
+        nonlocal m
+        m = make()
+    reset()
+    m.fit()
+
+
+def rebound_import():
+    from pkg.models import Model as M
+    m = M()
+    from pkg.other import Model as M
+    m.fit()
+
+
+def lambda_param():
+    m = Model()
+    cb = lambda m: m.fit()
+    return cb(make())
+
+
+def odd_construction():
+    n = AssignedNew()
+    n.run()
+    v = ViaMeta()
+    v.run()
+    c = Child()
+    c.run()
+
+
+def abc_still_resolves():
+    a = Concrete()
+    a.go()
+'''
+
+
+class TestLocalConstructorReviewCases(unittest.TestCase):
+    """Cases from the Copilot review of PR #32: each would have produced a wrong resolved edge."""
+
+    @classmethod
+    def setUpClass(cls):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d / "pkg").mkdir()
+        (d / "pkg" / "__init__.py").write_text("")
+        (d / "pkg" / "models.py").write_text(LOCAL_CTOR_REVIEW_MODELS)
+        (d / "pkg" / "other.py").write_text(LOCAL_CTOR_REVIEW_OTHER)
+        (d / "pkg" / "use.py").write_text(LOCAL_CTOR_REVIEW_USE)
+        cls.calls = idents(E.snapshot(d), "calls")
+
+    def resolved_from(self, fn):
+        return {d for s, d in self.calls if s == f"pkg.use.{fn}" and not d.startswith("?")}
+
+    def test_nonlocal_write_in_nested_function_disqualifies(self):
+        self.assertNotIn("pkg.models.Model.fit", self.resolved_from("nonlocal_write"))
+
+    def test_constructor_name_rebound_by_local_import_disqualifies(self):
+        r = self.resolved_from("rebound_import")
+        self.assertFalse({"pkg.models.Model.fit", "pkg.other.Model.fit"} & r, r)
+
+    def test_lambda_parameter_shadowing_disqualifies(self):
+        self.assertNotIn("pkg.models.Model.fit", self.resolved_from("lambda_param"))
+
+    def test_assigned_new_and_custom_metaclass_call_disqualify(self):
+        r = self.resolved_from("odd_construction")
+        self.assertFalse({"pkg.models.AssignedNew.run", "pkg.models.ViaMeta.run"} & r, r)
+
+    def test_ordinary_abc_subclass_still_resolves(self):  # decoy: don't over-exclude metaclasses
+        self.assertIn("pkg.models.Abstract.go", self.resolved_from("abc_still_resolves"))
+
 if __name__ == "__main__":
     unittest.main()

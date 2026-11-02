@@ -109,8 +109,10 @@ caller/callee identity and earliest location, rather than promising every callsi
 An imported third-party call is resolved external, not unresolved. A function local whose
 only possible value is `C(...)`, for a class C defined in the analysed tree, resolves `x.m()` against C
 and its known bases (tool_version 0.4.1, C-11). It must be assigned exactly once, by a plain top-level
-statement, and must not be a parameter, loop, `with` or `except` target, `global`/`nonlocal`, deleted,
-or captured from an outer function; C (or a base) must not define `__new__`. Any other local stays
+statement, and must not be a parameter or lambda parameter, loop, `with` or `except` target,
+`global`/`nonlocal` (also from a nested function), deleted, or captured from an outer function. C must
+not be rebound by a second local import, and C(...) must return a C: no `__new__` (defined or assigned)
+on C or a base, and no metaclass from the analysed tree overriding `__call__`. Any other local stays
 local_value, as does an attribute C doesn't define. This is not general type inference.
 Known static re-exports are traced; cyclic/expanding aliases stay uncertain.
 
