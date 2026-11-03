@@ -8,7 +8,7 @@ extension:
   category: "governance"
   effect: "read-only"
   author: "Zachary Rhodes (eraevous)"
-  repository: https://github.com/eraevous/AEC
+  repository: https://github.com/eraevous/Telosmith
   license: MIT
 
 requires:

@@ -26,9 +26,9 @@ telosmith = "aec.__main__:main"
 aec = "aec.__main__:main"          # the pre-0.5 name, kept as an alias
 
 [project.urls]
-Homepage = "https://github.com/eraevous/AEC"
-Issues = "https://github.com/eraevous/AEC/issues"
-Changelog = "https://github.com/eraevous/AEC/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/eraevous/Telosmith"
+Issues = "https://github.com/eraevous/Telosmith/issues"
+Changelog = "https://github.com/eraevous/Telosmith/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]

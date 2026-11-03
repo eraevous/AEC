@@ -7,7 +7,7 @@ repositories that already have Codex++ purpose files. For what the results mean,
 ## Install
 
 ```bash
-pip install "aec @ git+https://github.com/eraevous/AEC.git@v0.4.1"   # or @main for unreleased changes
+pip install "git+https://github.com/eraevous/Telosmith.git@v0.4.1"   # or @main for unreleased changes
 aec --version
 ```
 

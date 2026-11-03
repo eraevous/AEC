@@ -14,7 +14,7 @@ In a repo that does not use AEC yet, run `python3 -m aec init .` first (it detec
 
 
 ```bash
-pip install git+https://github.com/eraevous/AEC        # the aec commands (stdlib only)
+pip install git+https://github.com/eraevous/Telosmith        # the aec commands (stdlib only)
 specify extension add --dev /path/to/AEC/extension      # from a checkout
 # or: specify extension add aec --from <release zip URL>
 ```
