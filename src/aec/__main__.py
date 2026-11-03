@@ -52,7 +52,7 @@ def _prog() -> str:
     return "aec" if name.startswith("aec") else "telosmith"
 
 
-def main(argv=None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog=_prog(), description=__doc__.split("\n\n")[0])
     ap.add_argument("--version", action="version", version="%(prog)s " + __version__)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -130,151 +130,192 @@ def main(argv=None) -> int:
         parser.add_argument("--repo", default=".")
         parser.add_argument("--rev")
         parser.add_argument("--json", action="store_true")
-    a = ap.parse_args(argv)
+    return ap
 
-    if a.cmd in ("snapshot", "diff", "reach", "fan", "unresolved"):
-        from .graph import fan, reach, render_query, unresolved
-        from .snapshots import compare_revisions, structural_diff
-        try:
-            if a.cmd == "snapshot":
-                text = E.dumps(E.snapshot(a.root, rev=a.rev))
-                if a.output:
-                    Path(a.output).parent.mkdir(parents=True, exist_ok=True)
-                    Path(a.output).write_text(text, encoding="utf-8")
-                else:
-                    sys.stdout.write(text)
-                return 0
-            if a.cmd == "diff":
-                if a.base_snapshot or a.head_snapshot:
-                    if not (a.base_snapshot and a.head_snapshot) or a.base or a.head:
-                        raise ValueError("provide both stored snapshots, without revision arguments")
-                    report = structural_diff(E.load(a.base_snapshot), E.load(a.head_snapshot),
-                                             allow_method_mismatch=a.allow_method_mismatch)
-                else:
-                    if a.allow_method_mismatch:
-                        raise ValueError("method override is for stored-snapshot comparisons only")
-                    report = compare_revisions(a.repo, base=a.base or "origin/main", head=a.head or "HEAD")
-                if a.json:
-                    print(json.dumps({"comparison": report["comparison"], **report}, indent=2))
-                else:
-                    if report.get("method_comparison"):
-                        print("METHOD COMPARISON: compares methods, not just code")
-                    print("# aec diff (structural)")
-                    print(json.dumps(report, indent=2))
-                return 0
-            snap = E.snapshot(a.repo, rev=a.rev)
-            if a.cmd == "reach":
-                report = reach(snap, a.symbol, direction=a.direction, projection=a.projection, depth=a.depth)
-            elif a.cmd == "fan":
-                report = fan(snap, projection=a.projection, top=a.top)
-            else:
-                reasons = [item for group in (a.why or []) for item in group]
-                report = {"label": "structural", "edges": unresolved(snap, why=reasons, scope=a.scope)}
-            print(json.dumps(report, sort_keys=True, indent=2) if a.json or a.cmd == "unresolved" else render_query(report))
-            return 0
-        except (OSError, ValueError) as error:
-            ap.error(str(error))
-    if a.cmd == "source":
-        from .sources import SourceContext, render_search, render_show
-        repo = Path(a.repo)
-        records = Path(a.records) if a.records else repo / ".aec/records.jsonl"
-        try:
-            source_store = Store.load(records) if records.exists() else Store([])
-            context = SourceContext(repo)
-            if a.source_cmd == "show":
-                text = render_show(source_store, a.record_ref, context, context=a.context, max_lines=a.max_lines, max_chars=a.max_chars)
-            else:
-                text = render_search(source_store, a.pattern, context, root=a.root,
-                                     regex=a.regex, max_hits=a.max_hits, max_chars=a.max_chars)
-        except (OSError, ValueError) as error:
-            ap.error(str(error))
-        print(text, end="")
-        return 0
-    if a.cmd == "init":
-        from .init import init
-        rep = init(a.root, owner=a.owner or _git_user(a.root) or "owner")
-        for f in rep["created"]:
-            print(f"created {f}")
-        for f in rep["kept"]:
-            print(f"kept    {f} (exists; not overwritten)")
-        print("\nNext steps:\n" + "\n".join(f"  - {x}" for x in rep["next_steps"].splitlines()))
-        return 0
-    if a.cmd == "import-purpose":
-        from .purpose_import import import_purpose
-        from .purpose_import import render as render_import
-        root = Path(a.root)
-        if not (root / a.dir).is_dir():
-            print(f"aec import-purpose: no purpose-file directory {root / a.dir} (use --dir)", file=sys.stderr)
-            return 2
-        rep = import_purpose(root, root / a.dir, Path(a.records) if a.records else root / ".aec" / "records.jsonl",
-                             E.load(a.edges) if a.edges else E.snapshot(root), dry_run=a.dry_run)
-        print(render_import(rep))
-        return 0
 
-    if a.cmd == "edges":
-        if a.diff:
-            try:
-                d = E.diff(E.load(a.diff[0]), E.load(a.diff[1]), allow_method_mismatch=a.allow_method_mismatch)
-            except (OSError, ValueError) as error:
-                ap.error(str(error))
-            print(json.dumps(d, indent=1) if a.json else E.render_diff(d))
-            return 0
-        root = Path(a.root)
-        if not root.is_dir():
-            print(f"aec edges: {root} is not a directory", file=sys.stderr)
-            return 2
-        try:
-            snap = E.snapshot(root)
-        except E.SourceChanged as error:
-            print(f"aec edges: {error}", file=sys.stderr)
-            return 2
-        text = E.dumps(snap)
+def _cmd_snapshot(a, ap) -> int:
+    try:
+        text = E.dumps(E.snapshot(a.root, rev=a.rev))
         if a.output:
             Path(a.output).parent.mkdir(parents=True, exist_ok=True)
             Path(a.output).write_text(text, encoding="utf-8")
-            h = snap["header"]
-            print(f"aec edges: {len(snap['edges'])} edges from {h['files']} files "
-                  f"({len(h['skipped'])} skipped) -> {a.output}", file=sys.stderr)
         else:
             sys.stdout.write(text)
-        if a.legacy_csv:
-            Path(a.legacy_csv).write_text(E.legacy_csv(snap), encoding="utf-8")
-        return 0
+    except (OSError, ValueError) as error:
+        ap.error(str(error))
+    return 0
 
-    store = Store.load(a.records)
-    if a.cmd == "check":
-        snap = E.load(a.edges) if a.edges else None
-        from .sources import SourceContext, render_status
-        records_parent = Path(a.records).absolute().parent
-        repo = Path(a.repo) if a.repo else records_parent.parent if records_parent.name == ".aec" else Path.cwd()
+
+def _diff_report(a) -> dict:
+    from .snapshots import compare_revisions, structural_diff
+    if a.base_snapshot or a.head_snapshot:
+        if not (a.base_snapshot and a.head_snapshot) or a.base or a.head:
+            raise ValueError("provide both stored snapshots, without revision arguments")
+        return structural_diff(E.load(a.base_snapshot), E.load(a.head_snapshot),
+                               allow_method_mismatch=a.allow_method_mismatch)
+    if a.allow_method_mismatch:
+        raise ValueError("method override is for stored-snapshot comparisons only")
+    return compare_revisions(a.repo, base=a.base or "origin/main", head=a.head or "HEAD")
+
+
+def _cmd_diff(a, ap) -> int:
+    try:
+        report = _diff_report(a)
+        if a.json:
+            print(json.dumps({"comparison": report["comparison"], **report}, indent=2))
+        else:
+            if report.get("method_comparison"):
+                print("METHOD COMPARISON: compares methods, not just code")
+            print("# aec diff (structural)")
+            print(json.dumps(report, indent=2))
+    except (OSError, ValueError) as error:
+        ap.error(str(error))
+    return 0
+
+
+def _cmd_query(a, ap) -> int:
+    """reach, fan and unresolved: read-only queries over one snapshot."""
+    from .graph import fan, reach, render_query, unresolved
+    try:
+        snap = E.snapshot(a.repo, rev=a.rev)
+        if a.cmd == "reach":
+            report = reach(snap, a.symbol, direction=a.direction, projection=a.projection, depth=a.depth)
+        elif a.cmd == "fan":
+            report = fan(snap, projection=a.projection, top=a.top)
+        else:
+            reasons = [item for group in (a.why or []) for item in group]
+            report = {"label": "structural", "edges": unresolved(snap, why=reasons, scope=a.scope)}
+        print(json.dumps(report, sort_keys=True, indent=2) if a.json or a.cmd == "unresolved" else render_query(report))
+    except (OSError, ValueError) as error:
+        ap.error(str(error))
+    return 0
+
+
+def _cmd_source(a, ap) -> int:
+    from .sources import SourceContext, render_search, render_show
+    repo = Path(a.repo)
+    records = Path(a.records) if a.records else repo / ".aec/records.jsonl"
+    try:
+        source_store = Store.load(records) if records.exists() else Store([])
         context = SourceContext(repo)
+        if a.source_cmd == "show":
+            text = render_show(source_store, a.record_ref, context, context=a.context, max_lines=a.max_lines, max_chars=a.max_chars)
+        else:
+            text = render_search(source_store, a.pattern, context, root=a.root,
+                                 regex=a.regex, max_hits=a.max_hits, max_chars=a.max_chars)
+    except (OSError, ValueError) as error:
+        ap.error(str(error))
+    print(text, end="")
+    return 0
+
+
+def _cmd_init(a, ap) -> int:
+    from .init import init
+    rep = init(a.root, owner=a.owner or _git_user(a.root) or "owner")
+    for f in rep["created"]:
+        print(f"created {f}")
+    for f in rep["kept"]:
+        print(f"kept    {f} (exists; not overwritten)")
+    print("\nNext steps:\n" + "\n".join(f"  - {x}" for x in rep["next_steps"].splitlines()))
+    return 0
+
+
+def _cmd_import_purpose(a, ap) -> int:
+    from .purpose_import import import_purpose
+    from .purpose_import import render as render_import
+    root = Path(a.root)
+    if not (root / a.dir).is_dir():
+        print(f"aec import-purpose: no purpose-file directory {root / a.dir} (use --dir)", file=sys.stderr)
+        return 2
+    rep = import_purpose(root, root / a.dir, Path(a.records) if a.records else root / ".aec" / "records.jsonl",
+                         E.load(a.edges) if a.edges else E.snapshot(root), dry_run=a.dry_run)
+    print(render_import(rep))
+    return 0
+
+
+def _cmd_edges(a, ap) -> int:
+    if a.diff:
         try:
-            fs = check(store, edges=snap, sources=context)
-        except ValueError as error:
+            d = E.diff(E.load(a.diff[0]), E.load(a.diff[1]), allow_method_mismatch=a.allow_method_mismatch)
+        except (OSError, ValueError) as error:
             ap.error(str(error))
-        for record in store.records:
-            for item in context.inspect_record(record):
-                if item.state == "verified":
-                    print(render_status(item))
-        for f in fs:
-            print(f"[{f.level.upper()}] {f.rule}: {f.ref}: {f.msg}")
-        errors = [f for f in fs if f.level == "error"]
-        print(f"aec check: {len(errors)} error(s), {len(fs) - len(errors)} warning(s) (structural)")
-        return 1 if errors else 0
-    if a.cmd == "impact":
-        _print_impact(store, impact(store, _changes(a.changes)), a.json)
+        print(json.dumps(d, indent=1) if a.json else E.render_diff(d))
         return 0
-    if a.cmd == "code-impact":
-        from .code_impact import code_impact
-        try:
-            rep, events = code_impact(store, E.load(a.old), E.load(a.new))
-        except ValueError as error:
-            ap.error(str(error))
-        if not a.json:
-            print(f"# derived {len(events)} change event(s) from the structural diff")
-        _print_impact(store, rep, a.json)
-        return 0
-    return 2
+    root = Path(a.root)
+    if not root.is_dir():
+        print(f"aec edges: {root} is not a directory", file=sys.stderr)
+        return 2
+    try:
+        snap = E.snapshot(root)
+    except E.SourceChanged as error:
+        print(f"aec edges: {error}", file=sys.stderr)
+        return 2
+    text = E.dumps(snap)
+    if a.output:
+        Path(a.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.output).write_text(text, encoding="utf-8")
+        h = snap["header"]
+        print(f"aec edges: {len(snap['edges'])} edges from {h['files']} files "
+              f"({len(h['skipped'])} skipped) -> {a.output}", file=sys.stderr)
+    else:
+        sys.stdout.write(text)
+    if a.legacy_csv:
+        Path(a.legacy_csv).write_text(E.legacy_csv(snap), encoding="utf-8")
+    return 0
+
+
+def _cmd_check(a, ap) -> int:
+    store = Store.load(a.records)
+    snap = E.load(a.edges) if a.edges else None
+    from .sources import SourceContext, render_status
+    records_parent = Path(a.records).absolute().parent
+    repo = Path(a.repo) if a.repo else records_parent.parent if records_parent.name == ".aec" else Path.cwd()
+    context = SourceContext(repo)
+    try:
+        fs = check(store, edges=snap, sources=context)
+    except ValueError as error:
+        ap.error(str(error))
+    for record in store.records:
+        for item in context.inspect_record(record):
+            if item.state == "verified":
+                print(render_status(item))
+    for f in fs:
+        print(f"[{f.level.upper()}] {f.rule}: {f.ref}: {f.msg}")
+    errors = [f for f in fs if f.level == "error"]
+    print(f"aec check: {len(errors)} error(s), {len(fs) - len(errors)} warning(s) (structural)")
+    return 1 if errors else 0
+
+
+def _cmd_impact(a, ap) -> int:
+    store = Store.load(a.records)
+    _print_impact(store, impact(store, _changes(a.changes)), a.json)
+    return 0
+
+
+def _cmd_code_impact(a, ap) -> int:
+    store = Store.load(a.records)
+    from .code_impact import code_impact
+    try:
+        rep, events = code_impact(store, E.load(a.old), E.load(a.new))
+    except ValueError as error:
+        ap.error(str(error))
+    if not a.json:
+        print(f"# derived {len(events)} change event(s) from the structural diff")
+    _print_impact(store, rep, a.json)
+    return 0
+
+
+HANDLERS = {
+    "edges": _cmd_edges, "check": _cmd_check, "impact": _cmd_impact, "code-impact": _cmd_code_impact,
+    "init": _cmd_init, "import-purpose": _cmd_import_purpose, "source": _cmd_source,
+    "snapshot": _cmd_snapshot, "diff": _cmd_diff, "reach": _cmd_query, "fan": _cmd_query, "unresolved": _cmd_query,
+}
+
+
+def main(argv=None) -> int:
+    ap = build_parser()
+    a = ap.parse_args(argv)
+    return HANDLERS[a.cmd](a, ap)
 
 
 if __name__ == "__main__":
