@@ -50,7 +50,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="aec", description=__doc__.split("\n\n")[0])
     ap.add_argument("--version", action="version", version="%(prog)s " + __version__)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    e = sub.add_parser("edges", help="extract a static edge snapshot of a Python tree, or diff two snapshots")
+    e = sub.add_parser("edges", help="extract the dependency graph of a Python working tree (like `snapshot`), or diff two")
     e.add_argument("root", nargs="?", default=".")
     e.add_argument("-o", "--output")
     e.add_argument("--legacy-csv")
