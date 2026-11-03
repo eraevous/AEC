@@ -153,7 +153,7 @@ WP1–WP5 are approved as direction and work-package order. Each still requires 
 | WP3 | reconciliation packet, reviewer-agent protocol, `aec drift` | once WP1A and WP2A are usable |
 | WP4 | handoff premise check through relay-kit | — |
 | WP5 | evaluation: Data-Guide replays (realistic and information-matched), documentation-effectiveness conditions A/B/C, Kate's five blind cases, and graph-informed multi-agent task decomposition (fewer integration conflicts?) | criteria designed in WP0 |
-| **WP6** | **adaptive project reporting**: baseline facts, purpose-/phase-specific versioned reporting profiles, provenance-linked reviewer interpretation, and proposals to update (or preserve) the profile when circumstances change; lightweight CLI/Markdown/JSON first, optional dashboards later | **backlog — tracked in [#15](https://github.com/eraevous/AEC/issues/15); not specified or implemented** |
+| **WP6** | **adaptive project reporting**: baseline facts, purpose-/phase-specific versioned reporting profiles, provenance-linked reviewer interpretation, and proposals to update (or preserve) the profile when circumstances change; lightweight CLI/Markdown/JSON first, optional dashboards later | **backlog — tracked in [#15](https://github.com/eraevous/Telosmith/issues/15); not specified or implemented** |
 
 ### Value map and build gates (DEC-032, 2026-11-01)
 
@@ -211,7 +211,7 @@ edge-snapshot use compares with its stated purpose (C-16, owner-held; purpose st
 - **Report-profile reconciliation:** meaningful changes may prompt a *proposed* profile revision with an explained delta. **No change warranted** must remain a valid outcome when new information is immaterial. There is no silent replacement of committed reporting criteria.
 - **Delivery:** an inspectable report model exposed first as CLI/Markdown/JSON for agents and people. Interactive dashboards may eventually consume it; no web app, central service, universal cross-project score, or Jira/Grafana replacement is in scope by default.
 
-**Dependencies:** reuse WP1A/WP1B's source-addressed facts, WP2A's context delivery, and WP3's reconciliation packets; evaluate incrementality with WP5's information-matched baseline and cost accounting. Scoping and implementation need a later spec/PR and authorization. A proposed validation is two different project types, one meaningful lifecycle transition, one immaterial-change decoy, provenance/applicability checks, and measurement of decision usefulness and false alarms rather than report volume. See [issue #15](https://github.com/eraevous/AEC/issues/15).
+**Dependencies:** reuse WP1A/WP1B's source-addressed facts, WP2A's context delivery, and WP3's reconciliation packets; evaluate incrementality with WP5's information-matched baseline and cost accounting. Scoping and implementation need a later spec/PR and authorization. A proposed validation is two different project types, one meaningful lifecycle transition, one immaterial-change decoy, provenance/applicability checks, and measurement of decision usefulness and false alarms rather than report volume. See [issue #15](https://github.com/eraevous/Telosmith/issues/15).
 
 Implementation is one implementer at a time **per overlapping architectural area**. Independent tasks may run in parallel.
 

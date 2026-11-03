@@ -15,7 +15,7 @@ echo "# working in $WORK"
 python3 -m venv "$WORK/venv"
 PY="$WORK/venv/bin/python"; AEC="$WORK/venv/bin/aec"
 if [ "${1:-}" ]; then
-  "$PY" -m pip install -q "aec @ git+https://github.com/eraevous/AEC.git@$1"
+  "$PY" -m pip install -q "git+https://github.com/eraevous/Telosmith.git@$1"
 else
   "$PY" -m pip install -q "$AEC_ROOT"
 fi

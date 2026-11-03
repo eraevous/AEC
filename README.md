@@ -33,7 +33,7 @@ static-analysis snapshot of what defines, calls and imports what.
 ## Install
 
 ```bash
-pip install "git+https://github.com/eraevous/AEC.git@v0.4.1"
+pip install "git+https://github.com/eraevous/Telosmith.git@v0.4.1"
 aec --version
 ```
 
@@ -93,7 +93,7 @@ flagged for review. The full vocabulary is in [docs/reasoning-vocabulary.md](doc
 ## Worked example
 
 ```bash
-git clone https://github.com/eraevous/AEC && AEC/examples/itsdangerous-demo/run.sh
+git clone https://github.com/eraevous/Telosmith && Telosmith/examples/itsdangerous-demo/run.sh
 ```
 
 [`examples/itsdangerous-demo/run.sh`](examples/itsdangerous-demo/run.sh) reproduces the

@@ -12,13 +12,13 @@ from pathlib import Path
 from . import __version__
 from . import edges as E
 
-AEC_SOURCE = "git+https://github.com/eraevous/AEC.git"
+AEC_SOURCE = "git+https://github.com/eraevous/Telosmith.git"
 
 README = """# .aec: purpose and justification records (AEC)
 
 - `records.jsonl`: append-only reasoning records (purpose, requirements, claims, evidence, decisions,
   authorities). Never edit a line; append a new version. Vocabulary:
-  https://github.com/eraevous/AEC/blob/main/docs/reasoning-vocabulary.md
+  https://github.com/eraevous/Telosmith/blob/main/docs/reasoning-vocabulary.md
 - `edges.jsonl`: the structural snapshot of the code (`aec edges`). Generated, so it is git-ignored
   (`.aec/.gitignore`): regenerate it rather than committing or hand-editing it.
 - `snippets/`: a Claude Code hook and a CI job to copy into place. Nothing here is active until you do.

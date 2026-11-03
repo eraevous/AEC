@@ -8,7 +8,7 @@ description: "AEC: structural diff of the code and the conclusions it affects"
 
 ## Locate AEC
 
-Run commands as `python -m aec …`. If `import aec` fails, try `PYTHONPATH="$AEC_HOME/src"` (where `AEC_HOME` is a checkout of https://github.com/eraevous/AEC). If neither works, say AEC is not installed (`pip install git+https://github.com/eraevous/AEC`) and stop. Do not fail silently.
+Run commands as `python -m aec …`. If `import aec` fails, try `PYTHONPATH="$AEC_HOME/src"` (where `AEC_HOME` is a checkout of https://github.com/eraevous/Telosmith). If neither works, say Telosmith (formerly AEC) is not installed (`pip install git+https://github.com/eraevous/Telosmith`) and stop. Do not fail silently.
 
 ## Steps
 

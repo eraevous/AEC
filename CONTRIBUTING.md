@@ -6,8 +6,8 @@ changes can be made and tested in a few minutes.
 ## Set up
 
 ```bash
-git clone https://github.com/eraevous/AEC
-cd AEC
+git clone https://github.com/eraevous/Telosmith
+cd Telosmith
 python3 -m venv .venv && . .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e .
 aec --help
