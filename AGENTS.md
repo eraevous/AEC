@@ -1,6 +1,8 @@
-# AEC agent operating guide
+# Telosmith agent operating guide
 
-AEC keeps the reasons for a change attached to the code and flags conclusions
+Telosmith was called AEC until November 2026. The package, the `aec` command and the `.aec/` folder keep that name.
+
+Telosmith keeps the reasons for a change attached to the code and flags conclusions
 whose recorded support changed. Deterministic results are **structural**; a
 passing check does not establish semantic correctness or purpose achievement.
 Read `README.md`, `.specify/memory/constitution.md`, and the feature's spec,
@@ -9,11 +11,11 @@ plan and tasks before implementing. No runtime dependencies beyond Python 3.10+.
 ## Which source governs which question
 
 - `.aec/records.jsonl` governs purpose and authority: `AEC-P0@1` is the purpose;
-  `AU-zach@1` governs AEC design intent and acceptance, by recorded subject.
+  `AU-zach@1` governs Telosmith design intent and acceptance, by recorded subject.
 - `.specify/memory/constitution.md` governs engineering principles; `CHARTER.md`
   states their practical application. A conflict goes to the constitution.
 - `AGENTS.md` governs agent behavior. When a project uses Spec Kit, Spec Kit owns
-  specs, plans, tasks and its workflow; an AEC report is a review item, never
+  specs, plans, tasks and its workflow; a Telosmith report is a review item, never
   permission to rewrite them.
 - `codex_++/purpose_files/` holds semantic contracts as **candidate claims**.
   They cannot override committed purpose or authority records. Report disagreement
@@ -52,7 +54,7 @@ Run from the repository root with PYTHONPATH=src:
 | `python -m aec impact` | Classify consequences of explicit record change events |
 | `python -m aec edges` | Extract a Python AST snapshot or compare two snapshots |
 | `python -m aec code-impact` | Derive code change events from snapshots and report affected conclusions |
-| `python -m aec init` | Scaffold absent AEC files and snippets; never overwrite |
+| `python -m aec init` | Scaffold absent Telosmith files and snippets; never overwrite |
 | `python -m aec import-purpose` | Import declared contracts as provisional, source-linked claims |
 | `python -m aec source` | Show anchored passages or search local configured roots directly |
 | `python -m aec snapshot` | Identify a working tree or local Git commit and extraction method |

@@ -46,7 +46,7 @@ def doc_findings(text, root, commands):
                 continue
             if not (root / token).exists():
                 findings.append('missing path: ' + token)
-    for command in re.findall(r'\baec\s+([a-z][a-z-]*)\b', text):
+    for command in re.findall(r'\b(?:aec|telosmith)\s+([a-z][a-z-]*)\b', text):
         if command not in commands:
             findings.append('unknown command: ' + command)
     return findings
@@ -76,6 +76,7 @@ class TestDocsTruth(unittest.TestCase):
         self.assertEqual(doc_findings(text, ROOT, registered_commands()), [])
         # Commands are still checked in fenced examples.
         self.assertIn('unknown command: imaginary', doc_findings('```sh\naec imaginary\n```', ROOT, registered_commands()))
+        self.assertIn('unknown command: imaginary', doc_findings('```sh\ntelosmith imaginary\n```', ROOT, registered_commands()))
 
     def test_readme_and_agents_tell_the_truth(self):
         for name in ['README.md', 'AGENTS.md', 'CONTRIBUTING.md']:

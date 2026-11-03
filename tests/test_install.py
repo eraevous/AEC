@@ -22,13 +22,14 @@ class TestInstall(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn('"aec_edges": 1', r.stdout.splitlines()[0])
         # The console script is installed and agrees with the package version (v0.4 readiness).
-        exe = py.parent / ("aec.exe" if os.name == "nt" else "aec")
-        r = subprocess.run([str(exe), "--version"], capture_output=True, text=True, cwd=d)
-        self.assertEqual(r.returncode, 0, r.stderr)
         from importlib import util
         spec = util.spec_from_file_location("aec_pkg", ROOT / "src" / "aec" / "__init__.py")
         mod = util.module_from_spec(spec); spec.loader.exec_module(mod)
-        self.assertEqual(r.stdout.strip(), "aec " + mod.__version__)
+        for name in ("telosmith", "aec"):  # the product name, and its pre-0.5 alias
+            exe = py.parent / (name + ".exe" if os.name == "nt" else name)
+            r = subprocess.run([str(exe), "--version"], capture_output=True, text=True, cwd=d)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertEqual(r.stdout.strip(), f"{name} {mod.__version__}")
         r = subprocess.run([str(py), "-c", "import core"], capture_output=True, text=True, cwd=d)
         self.assertNotEqual(r.returncode, 0, "legacy top-level 'core' package must not be installed")
 
