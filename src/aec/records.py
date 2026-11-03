@@ -88,6 +88,9 @@ class Store:
                                data={k: x for k, x in d.items() if k not in known}))
         return cls(recs, problems)
 
+    def out_edges(self, r: Record, rel: str) -> list[str]:
+        return [e["to"] for e in r.relations if e.get("rel") == rel]
+
     def in_edges(self, target_ref: str, rel: str) -> list[Record]:
         return [r for r in self.records if any(e.get("rel") == rel and e.get("to") == target_ref for e in r.relations)]
 

@@ -10,7 +10,9 @@ the code before the change, then compare the code after it:
 
 Inputs are the repository's own fixtures and examples. `--extra PATH` adds a Python tree (such as a
 checkout of another project) to the extraction cases, which is how real-world code is covered without
-shipping it. Outputs record stdout, stderr and the exit code; local paths are replaced so baselines
+shipping it. To include Telosmith's own code, pass a *pinned* checkout (`git worktree add DIR <sha>`),
+never the working tree: analysing the code you are refactoring changes its own output legitimately.
+This is a tool for comparing two revisions, not a second test suite: behaviour is specified in tests/. Outputs record stdout, stderr and the exit code; local paths are replaced so baselines
 taken from different checkouts compare. Standard library only.
 """
 from __future__ import annotations
