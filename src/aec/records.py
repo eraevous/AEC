@@ -9,7 +9,7 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-TYPES = {"purpose", "requirement", "criterion", "assumption", "source", "claim", "evidence",
+TYPES = {"purpose", "requirement", "criterion", "assumption", "source", "claim", "evidence", "ambition", "experiment",
          "evaluation", "decision", "authority", "revision"}
 RELATIONS = {"serves", "implements", "implemented_by", "depends_on", "supports", "contradicts", "tests",
              "produced", "selects", "supersedes", "observed_on"}

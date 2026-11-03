@@ -11,6 +11,11 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 - `docs/reasoning-vocabulary.md` maps each AEC term to the established one (requirements traceability,
   ADRs, configuration management, event sourcing, change impact analysis), and says where AEC differs.
 - `aec edges --help` calls its output the dependency graph, as `snapshot` does.
+### Added (vocabulary, DEC-033)
+- Record types `ambition` (a direction the project or a derived project may take, kept visible so
+  commitments don't foreclose it; not a commitment) and `experiment` (trying a few things; results can
+  be promoted, the experiment needn't be supported). Neither is reported by `impact`. AEC's own records
+  gain its first two ambitions.
 
 ### Added (WP1A, commit-addressed snapshots)
 
