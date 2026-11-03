@@ -73,6 +73,11 @@ def run(dest: Path, extras: list[Path]) -> None:
     work = Path(tempfile.mkdtemp(prefix="golden-"))
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"))
     replacements = [(str(work), "WORK"), (str(ROOT), "ROOT")] + [(str(e), f"EXTRA{i}") for i, e in enumerate(extras)]
+    # Fixtures live inside this repository, so snapshots of them record its HEAD commit, which every
+    # commit changes. Normalise it, or the comparison would report the commit rather than behaviour.
+    head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    if head:
+        replacements.append((head, "REPO_HEAD"))
     for name, args in cases(work, extras):
         r = subprocess.run([sys.executable, "-m", "aec", *args], cwd=ROOT, env=env, capture_output=True, text=True)
         text = f"{r.stdout}\n--- stderr ---\n{r.stderr}\n--- exit {r.returncode} ---\n"
