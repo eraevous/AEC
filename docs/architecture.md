@@ -146,14 +146,60 @@ WP1–WP5 are approved as direction and work-package order. Each still requires 
 |---|---|---|
 | **WP0** | AEC reconciled with itself: importer repairs (singular field, structured fields, no silent truncation, heading variants); `AGENTS.md`, `CHARTER.md` and the constitution reconciled, and the `VISION.md` reference resolved; Oct 26–28 history imported as *candidate*, source-linked records, with a list of what Zach must confirm; evaluation criteria designed now (`docs/failure-modes.md`); a cold-agent usability check | **merged (PR #14), released in v0.4.0**: `specs/003-self-reconciliation/`. Reconstructed history remains proposed until Zach confirms it (`docs/decisions-to-confirm.md`) |
 | WP1A | commit-addressed snapshots and structural diffs (merge-base vs head), basic reachability, fan-in and fan-out, a CI report as an artifact (no PR comments yet) | **approved by Zach 2026-10-30; merged (PR #31), not yet released**; spec `specs/005-commit-snapshots/` |
-| **WP2-probe** | Before any context delivery: show that giving agents graph information changes what they do, compared with the counterfactual of what they would produce without it, and find when it helps and when it misleads. Hand-built briefings at different levels of complexity, tasks where a hidden dependency matters, a control arm with ordinary repo access, and decoy (wrong or irrelevant) briefings | after WP1A; added by Zach's resequencing |
+| **WP2-probe** | Before any context delivery: show that giving agents graph information changes what they do, compared with the counterfactual of what they would produce without it, and find when it helps and when it misleads. Hand-built briefings at different levels of complexity, tasks where a hidden dependency matters, a control arm with ordinary repo access, and decoy (wrong or irrelevant) briefings | **run as probe-001 (2026-11-01): no signal** on easy tasks; it exposed the resolver gap fixed in C-11 (PR #32). A harder probe is C-12 |
 | WP2A | minimal `aec context <symbol>` and `--change` | **moved back** behind WP2-probe (Zach, 2026-10-30): its design depends on what the probe shows actually changes agent decisions |
-| **WP-S** | Source anchors/rationale; raw-byte integrity and locator observations; bounded record-directed retrieval and direct configured-root fallback | **implemented, pending review**: `specs/004-source-anchors/`; meaning, authority, private providers and representation-002 remain outside this implementation |
+| **WP-S** | Source anchors/rationale; raw-byte integrity and locator observations; bounded record-directed retrieval and direct configured-root fallback | **merged (PR #17), released in v0.4.0**: `specs/004-source-anchors/`; meaning, authority, private providers and representation-002 remain outside this implementation |
 | WP1B | historical analytics: SCC per projection, temporal deltas, churn, co-change, boundary changes | alongside WP2 expansion |
 | WP3 | reconciliation packet, reviewer-agent protocol, `aec drift` | once WP1A and WP2A are usable |
 | WP4 | handoff premise check through relay-kit | — |
 | WP5 | evaluation: Data-Guide replays (realistic and information-matched), documentation-effectiveness conditions A/B/C, Kate's five blind cases, and graph-informed multi-agent task decomposition (fewer integration conflicts?) | criteria designed in WP0 |
 | **WP6** | **adaptive project reporting**: baseline facts, purpose-/phase-specific versioned reporting profiles, provenance-linked reviewer interpretation, and proposals to update (or preserve) the profile when circumstances change; lightweight CLI/Markdown/JSON first, optional dashboards later | **backlog — tracked in [#15](https://github.com/eraevous/AEC/issues/15); not specified or implemented** |
+
+### Value map and build gates (DEC-032, 2026-11-01)
+
+Most of AEC's stated promise sits in parts that aren't built. That's especially true of getting the right
+context to agents at the right time, and of coordination across agents. The costs are present today:
+writing records, keeping them current, reviewing false alarms. Most of the planned cost relief is future
+work. To stop "the next feature will unlock the value" becoming a standing excuse, every planned item is
+tagged by what kind of value it offers and gated by a result it must show before it is built.
+
+**Kinds**
+- **Core:** the built mechanism whose value is being tested.
+- **Cost reducer:** makes records cheaper to write or keep accurate.
+- **Adoption unlock:** makes AEC usable or visible to someone outside the project without more research.
+- **Research bet:** a hypothesis about agents or projects that needs evidence before engineering.
+
+**Rules**
+1. No planned item gets a spec until its gate is written and Zach has accepted it. The gates below are
+   proposals; each is settled when its item comes up.
+2. A gate names three things: the cheapest alternative the item must beat, the result that would justify
+   building it, and the result that would mean dropping or simplifying it.
+3. Gates for research bets are pre-registered, like probe-001 and value-001. A research bet runs as an
+   `experiment` record (DEC-033): trying a few variants commits to no feature and no long-term support.
+   Only a result that passes its gate is promoted into a spec.
+4. A null result lowers an item's priority. "A later feature will make it pay off" isn't a reason to proceed.
+
+| Item | Kind | Cheapest alternative to beat | Gate: result required before building | Evidence so far |
+|---|---|---|---|---|
+| Records, `check`, `impact`, `code-impact` | core | notes or ADRs, tests and PR review with the same facts | **value-001** (in progress, PR #35): catches a consequential issue the well-configured baseline misses, at acceptable cost | probe-001: no outcome effect from graph briefings; self-hosting catches lapses, which a cheaper rule might also catch |
+| Record authoring aid (agents draft records from specs, purpose files and PRs; people confirm) | cost reducer, adoption unlock | hand-written records; `import-purpose` | drafted records reach the same accuracy at much lower authoring time per record kept, measured on a real repository | `import-purpose` seeds provisional claims; authoring cost only partly logged (`docs/speckit-log.md`) |
+| `code-impact` as a pull-request comment (WP1A posts no comments yet) | adoption unlock | running the command by hand; the CI artifact | over a run of real PRs, reviewers act on a meaningful share of comments, and the false-alarm rate on harmless changes is acceptable | AEC's own CI step is report-only; one known false alarm (AEC-R8, #20) |
+| WP2A `aec context` (context delivery) | research bet | an agent searching the repository itself | a pre-registered harder probe (C-12) where search falls short shows briefings change outcomes, without the token cost eating the gain | probe-001: no signal, higher cost on 2 of 3 tasks |
+| WP3 `aec drift`, reconciliation packet, automatic triggers | cost reducer, research bet | periodic manual audit (dogfood-001 is the baseline) | on a real history, finds stale records people missed, with high precision, in less review time than a manual audit | dogfood-001 found records lagging code by hand |
+| Semantic reconciliation (purpose-file contracts against code) | research bet | `import-purpose`'s caller comparison; reading the purpose file in review | finds real contract–code breaks (such as Data-Guide `097c307`) beyond what the caller comparison already reports, at acceptable false alarms | value-001's scenario search: 3 qualifying breaks in about 320 commits |
+| WP1B co-change and history analytics | research bet | static graph and `git log` | recovers dependants that later broke and that the static graph missed, on real history | none |
+| WP4 handoff premise check (with relay-kit) | research bet | the handoff's "Context" section and a recipient re-reading main | a replay of real handoffs finds a recipient acting on a stale premise that the check would have flagged | relay-kit challenges list coordination failures, none yet traced to a stale premise |
+| WP6 adaptive reporting | research bet | a plain status report from existing facts | its own validation (two project types, a lifecycle change, an immaterial-change decoy) shows decisions changed compared with the plain report | none; backlog (#15) |
+| C-17 decision-context distillation | research bet | the decision ledger plus `git log` and the threads | a retrieval test recovers why a decision was made better or faster than those sources | none |
+| Tiered agents with asymmetric information (C-20; AMB-tiered-agents; DEC-034: the stated purpose of edge snapshots) | research bet | every agent sees everything | an experiment where an architect agent works only from the edge snapshot, and implementers hold module and function detail, beats or matches the all-see arm on a task where architecture-level decisions matter, at lower cost or with fewer integration conflicts | none; probe-001 tested briefings, not this division of labour |
+| WP5 evaluation | — | — | not a feature: the gates above are its instalments | value-001 is the first |
+
+**Ambitions.** Directions AEC might take are recorded as `ambition` records (DEC-033), not as roadmap
+commitments. Before an item here is committed, the question is which recorded ambitions it would
+foreclose. AEC's own: others find it useful, and tiered agentic development.
+
+**Not gated here (decisions for Zach, not evidence questions):** the anchors question (C-09), how current
+edge-snapshot use compares with its stated purpose (C-16, owner-held; purpose stated in DEC-034), and the package name and PyPI release.
 
 ### WP6 — adaptive reporting (backlog addition, 2026-10-30)
 
