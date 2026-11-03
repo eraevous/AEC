@@ -72,21 +72,23 @@ def run(dest: Path, extras: list[Path]) -> None:
     dest.mkdir(parents=True, exist_ok=True)
     work = Path(tempfile.mkdtemp(prefix="golden-"))
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"))
-    replacements = [(str(work), "WORK"), (str(ROOT), "ROOT")] + [(str(e), f"EXTRA{i}") for i, e in enumerate(extras)]
-    # Fixtures live inside this repository, so snapshots of them record its HEAD commit, which every
-    # commit changes. Normalise it, or the comparison would report the commit rather than behaviour.
-    head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-    if head:
-        replacements.append((head, "REPO_HEAD"))
-    for name, args in cases(work, extras):
-        r = subprocess.run([sys.executable, "-m", "aec", *args], cwd=ROOT, env=env, capture_output=True, text=True)
-        text = f"{r.stdout}\n--- stderr ---\n{r.stderr}\n--- exit {r.returncode} ---\n"
-        for old, new in replacements:
+    paths = [(str(work), "WORK"), (str(ROOT), "ROOT")] + [(str(e), f"EXTRA{i}") for i, e in enumerate(extras)]
+    # The fixtures live inside this repository, so their snapshots record its HEAD commit, which every
+    # commit changes: normalise it there. Extra trees keep their own (pinned) commits.
+    head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], check=False, capture_output=True, text=True).stdout.strip()
+
+    def normalise(text: str, own_fixture: bool) -> str:
+        for old, new in paths:
             text = text.replace(old, new)
-        (dest / f"{name}.txt").write_text(text, encoding="utf-8")
+        return text.replace(head, "REPO_HEAD") if head and own_fixture else text
+
+    for name, args in cases(work, extras):
+        r = subprocess.run([sys.executable, "-m", "aec", *args], check=False, cwd=ROOT, env=env, capture_output=True, text=True)
+        text = f"{r.stdout}\n--- stderr ---\n{r.stderr}\n--- exit {r.returncode} ---\n"
+        (dest / f"{name}.txt").write_text(normalise(text, not name.startswith("extra")), encoding="utf-8")
     for name in ("v1.jsonl", "v2.jsonl", "legacy.csv"):
         if (work / name).exists():
-            (dest / name).write_bytes((work / name).read_bytes())
+            (dest / name).write_text(normalise((work / name).read_text(encoding="utf-8"), True), encoding="utf-8")
 
 
 def main(argv=None) -> int:
