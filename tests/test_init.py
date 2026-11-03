@@ -101,7 +101,7 @@ class TestCiSnippetPinned(unittest.TestCase):
         """The install line works whether the pinned tag ships as `aec` (<= 0.4.1) or `telosmith` (0.5+):
         pip refuses a `name @ url` whose name differs from the package it finds."""
         from aec.init import CI
-        line = next(l for l in CI.splitlines() if "pip install" in l)
+        line = next(x for x in CI.splitlines() if "pip install" in x)
         self.assertNotIn(" @ ", line)
         self.assertIn("git+https://github.com/eraevous/", line)
 

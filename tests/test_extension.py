@@ -1,5 +1,4 @@
 """US3 tests (T017, T018): the Spec Kit extension manifest, and install/remove in a real Spec Kit project."""
-import json
 import os
 import re
 import shutil

@@ -14,7 +14,7 @@ aec --help
 ```
 
 Telosmith has no runtime dependencies beyond Python 3.10+. The optional pre-commit hooks
-(`.pre-commit-config.yaml`) run black, ruff and isort.
+(`.pre-commit-config.yaml`) run ruff: lint, import order and formatting, configured in `pyproject.toml`.
 
 ## Run the checks
 

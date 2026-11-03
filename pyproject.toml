@@ -34,5 +34,29 @@ Changelog = "https://github.com/eraevous/Telosmith/blob/main/CHANGELOG.md"
 where = ["src"]
 include = ["aec*"]   # the legacy src/core (2025 extractor, pandas/typer) is not shipped
 
+[tool.ruff]
+line-length = 120            # the code's existing width; black's 88 was never applied
+target-version = "py310"
+extend-exclude = [
+  "src/core",                   # legacy, not shipped
+  "tests/fixtures",             # deliberately odd code: syntax errors, star imports
+  "docs/evaluations/probe-001", # frozen experiment materials
+  "build",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
+ignore = [
+  "E731",   # small named lambdas are used deliberately in a few places
+  "B023",   # closures here are used within the loop iteration that defines them
+  "E701", "E702",  # one-line compound statements: the formatter settles these, not the linter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]   # tests put src/ on sys.path before importing aec
+
+[tool.ruff.format]
+quote-style = "preserve"     # don't churn modules written with single quotes
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]   # docs/evaluations/ holds frozen probe tests that are not this project's tests

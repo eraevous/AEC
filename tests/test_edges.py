@@ -53,7 +53,7 @@ class TestDeterminism(unittest.TestCase):
         self.assertEqual(a, b)
         lines = a.splitlines()
         self.assertTrue(json.loads(lines[0]).get("aec_edges"))
-        self.assertEqual(lines[1:], sorted(lines[1:], key=lambda l: E.sort_key(json.loads(l))))
+        self.assertEqual(lines[1:], sorted(lines[1:], key=lambda line: E.sort_key(json.loads(line))))
 
     def test_roundtrip(self):
         s = E.snapshot(FIX / "edges_pkg_v1")

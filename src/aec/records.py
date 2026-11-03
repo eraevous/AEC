@@ -69,7 +69,7 @@ class Store:
                 self.latest[r.id] = r
 
     @classmethod
-    def load(cls, path: str | Path) -> "Store":
+    def load(cls, path: str | Path) -> Store:
         recs, problems = [], []
         for n, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
             line = line.strip()

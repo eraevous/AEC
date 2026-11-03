@@ -109,7 +109,7 @@ def _io_rows(body: str, title: str) -> list[dict]:
             continue
         if "name" not in columns or len(values) != len(columns):
             continue
-        row = dict(zip(columns, values))
+        row = dict(zip(columns, values, strict=True))  # lengths checked equal above
         direction = _title(row.get("direction", default))
         row["direction"] = {"in": "input", "out": "output"}.get(direction, direction)
         rows.append({**dict.fromkeys(("direction", "name", "type", "description"), ""), **row})
@@ -168,7 +168,7 @@ def parse(text: str) -> dict:
     if headers:
         declared = "\n".join(x for x in [intent] + section if x)
     else:  # no headers: keep the prose itself, verbatim
-        declared = "\n".join(l.rstrip() for l in lines if l.strip() and not l.lstrip().startswith("#"))
+        declared = "\n".join(line.rstrip() for line in lines if line.strip() and not line.lstrip().startswith("#"))
     return {"headers": headers, "intent": intent, "declared_text": declared,
             "declared_fields": fields, "declared_raw": text, **_contracts(text)}
 

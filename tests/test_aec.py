@@ -20,7 +20,7 @@ PILOT = ROOT / "examples" / "mtg-pilot"
 
 
 def changes(name):
-    return [json.loads(l) for l in (PILOT / name).read_text().splitlines() if l.strip() and not l.startswith("//")]
+    return [json.loads(line) for line in (PILOT / name).read_text().splitlines() if line.strip() and not line.startswith("//")]
 
 
 def statuses(rep):
