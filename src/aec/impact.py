@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .records import CODE, Record, Store
+from .records import CODE, Record, Store, split_ref  # noqa: F401  (split_ref: kept importable from aec.impact)
 
 # severity order: a conclusion keeps the most severe status it reaches
 SEVERITY = ["exploratory", "rebaseline", "weakened", "contested", "needs_review", "stale", "unjustified"]
