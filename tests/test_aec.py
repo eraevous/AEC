@@ -228,5 +228,31 @@ class TestRecordIdentityAndFreeze(unittest.TestCase):
         lines = [{"id": "P", "version": 1, "type": "claim", "tier": "prospective", "frozen_sha256": "0f" * 32}]
         self.assertEqual(self.errors(lines), set())
 
+
+class TestAmbitionAndExperimentTypes(unittest.TestCase):
+    """DEC-033 (Zach, 2026-11-02): `ambition` (a direction the project or a derived project may take; not a
+    commitment) and `experiment` (trying a few things; not a commitment to a feature or to support) are
+    record types. Neither is a conclusion that `impact` flags for reassessment."""
+
+    LINES = [
+        {"id": "AMB-1", "version": 1, "type": "ambition", "owner": "zach", "text": "others find it useful"},
+        {"id": "EXP-1", "version": 1, "type": "experiment", "text": "try two variants",
+         "relations": [{"rel": "serves", "to": "AMB-1@1"}]},
+        {"id": "EV-1", "version": 1, "type": "evidence", "text": "variant B was faster",
+         "relations": [{"rel": "produced", "to": "EXP-1@1"}]},
+    ]
+
+    def test_types_are_known(self):
+        self.assertEqual([f for f in check(store_from(self.LINES)) if f.level == "error"], [])
+
+    def test_unknown_type_is_still_an_error(self):  # decoy
+        rules = {f.rule for f in check(store_from([{"id": "X", "version": 1, "type": "aspiration"}]))}
+        self.assertIn("type", rules)
+
+    def test_changing_an_ambition_flags_no_ambition_or_experiment(self):
+        rep = impact(store_from(self.LINES), [{"change": "retract", "target": "AMB-1@1"}])
+        flagged = set(rep.impacts)
+        self.assertFalse({"AMB-1@1", "EXP-1@1"} & flagged, flagged)
+
 if __name__ == "__main__":
     unittest.main()
