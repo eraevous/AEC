@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {{ python-version: "3.12" }}
-      - run: pip install "aec @ {AEC_SOURCE}@v{__version__}"
+      - run: pip install "{AEC_SOURCE}@v{__version__}"
       - name: Structural snapshot (regenerated, never trusted from the branch)
         run: python3 -m aec edges . -o .aec/edges.jsonl
       - name: Records check (fails on errors, including dangling code references)

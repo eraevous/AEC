@@ -21,7 +21,7 @@ cd your-project
 aec init . --owner "Your Name"          # creates .aec/: records, an edge snapshot, CI/hook snippets
 ```
 
-Find the name AEC uses for a function you care about. Names come from the snapshot and include any
+Find the name Telosmith uses for a function you care about. Names come from the snapshot and include any
 source-root folder, for example `src.mypkg.pricing.apply_discount` in a `src/` layout:
 
 ```bash

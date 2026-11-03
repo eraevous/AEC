@@ -5,6 +5,15 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 
 ## [Unreleased]
 
+### Changed (name)
+- **AEC is now Telosmith** (Zach, 2026-11-02; DEC-036). The distribution is `telosmith`: `aec` and `each`
+  are taken on PyPI by unrelated packages, and "AEC" was never expanded and reads as architecture,
+  engineering and construction. The `telosmith` command is added. The `aec` command, the Python
+  package `aec` and the `.aec/` folder keep working as before.
+- The CI job `init` generates installs by URL alone (no `aec @`), so it works across the rename.
+- The README and contributor docs use the new name. Their examples keep `aec` until a release ships
+  `telosmith`.
+
 ### Changed (naming)
 - `check` warns on the relation `implements` (deprecated): it duplicated `implemented_by` in reverse,
   and `impact` never propagated through it. Use `implemented_by` on the requirement.

@@ -1,4 +1,4 @@
-"""AEC command line. Results are structural: they report what the records and code say, not whether a conclusion is true.
+"""Telosmith command line (formerly AEC; `aec` still works). Results are structural: they report what the records and code say, not whether a conclusion is true.
 
   python -m aec edges [ROOT] [-o FILE] [--legacy-csv FILE]   edge snapshot of a Python tree
   python -m aec edges --diff OLD NEW [--json]                 structural diff of two snapshots
@@ -46,8 +46,14 @@ def _git_user(root) -> str | None:
         return None
 
 
+def _prog() -> str:
+    """Help and errors name the command the user typed: `telosmith`, or `aec`, its pre-0.5 alias."""
+    name = Path(sys.argv[0]).name if sys.argv and sys.argv[0] else ""
+    return "aec" if name.startswith("aec") else "telosmith"
+
+
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(prog="aec", description=__doc__.split("\n\n")[0])
+    ap = argparse.ArgumentParser(prog=_prog(), description=__doc__.split("\n\n")[0])
     ap.add_argument("--version", action="version", version="%(prog)s " + __version__)
     sub = ap.add_subparsers(dest="cmd", required=True)
     e = sub.add_parser("edges", help="extract the dependency graph of a Python working tree (like `snapshot`), or diff two")
