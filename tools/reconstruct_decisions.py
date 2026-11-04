@@ -15,7 +15,6 @@ from pathlib import Path
 
 from aec.records import Record, Store, check
 
-
 REQUIRED = {'id', 'text', 'source_path', 'source_section', 'source_quote'}
 ALLOWED = REQUIRED | {'status', 'supersedes'}
 

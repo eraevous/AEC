@@ -25,8 +25,8 @@ from .records import Store, check
 
 
 def _changes(path: str) -> list[dict]:
-    return [json.loads(l) for l in Path(path).read_text(encoding="utf-8").splitlines()
-            if l.strip() and not l.strip().startswith("//")]
+    return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.strip().startswith("//")]
 
 
 def _print_impact(store, rep, as_json):
@@ -133,8 +133,8 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
 
     if a.cmd in ("snapshot", "diff", "reach", "fan", "unresolved"):
+        from .graph import fan, reach, render_query, unresolved
         from .snapshots import compare_revisions, structural_diff
-        from .graph import reach, fan, unresolved, render_query
         try:
             if a.cmd == "snapshot":
                 text = E.dumps(E.snapshot(a.root, rev=a.rev))
@@ -200,7 +200,8 @@ def main(argv=None) -> int:
         print("\nNext steps:\n" + "\n".join(f"  - {x}" for x in rep["next_steps"].splitlines()))
         return 0
     if a.cmd == "import-purpose":
-        from .purpose_import import import_purpose, render as render_import
+        from .purpose_import import import_purpose
+        from .purpose_import import render as render_import
         root = Path(a.root)
         if not (root / a.dir).is_dir():
             print(f"aec import-purpose: no purpose-file directory {root / a.dir} (use --dir)", file=sys.stderr)

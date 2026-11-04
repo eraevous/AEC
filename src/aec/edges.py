@@ -18,9 +18,9 @@ from __future__ import annotations
 
 import ast
 import builtins
+import fnmatch
 import hashlib
 import io
-import fnmatch
 import json
 import sys
 import tokenize
@@ -603,7 +603,7 @@ def dumps(snap: dict) -> str:
 
 
 def loads(text: str) -> dict:
-    rows = [json.loads(l) for l in text.splitlines() if l.strip()]
+    rows = [json.loads(line) for line in text.splitlines() if line.strip()]
     if not rows[0].get("method") or rows[0].get("tool_version") != TOOL_VERSION:
         rows[0]["revision_kind"] = "unknown"
     return {"header": rows[0], "edges": rows[1:]}

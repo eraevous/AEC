@@ -2,14 +2,12 @@
 import copy
 import io
 import json
-import os
 import subprocess
 import sys
 import tempfile
 import unittest
-from contextlib import redirect_stdout, redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
-from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT/'src'))
@@ -184,7 +182,7 @@ class TestProjectionQueries(History):
         self.snap=E.snapshot(self.root)
 
     def test_reach_region_visibility_and_projection_decoys(self):
-        from aec.graph import reach, CAVEAT
+        from aec.graph import CAVEAT, reach
         report=reach(self.snap,'region.target',direction='callers',depth=1)
         self.assertEqual(report['reachable'],['region.direct'])
         self.assertEqual(report['visibility']['region']['unresolved_by_why']['local_value'],1)
@@ -201,7 +199,7 @@ class TestProjectionQueries(History):
         with self.assertRaises(ValueError):reach(self.snap,'not_a_symbol')
 
     def test_fan_agrees_with_hand_counts_and_is_projection_specific(self):
-        from aec.graph import fan, CAVEAT
+        from aec.graph import CAVEAT, fan
         result=fan(self.snap,top=100)
         rows={r['symbol']:r for r in result['nodes']}
         self.assertEqual((rows['region.target']['fan_in'],rows['region.target']['fan_out']),(1,0))

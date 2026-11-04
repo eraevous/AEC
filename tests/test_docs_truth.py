@@ -96,7 +96,7 @@ class TestAnchorOutputTruth(unittest.TestCase):
 
 class TestGraphVisibilityTruth(unittest.TestCase):
     def test_reach_and_fan_render_visibility_denominators_and_exact_caveat(self):
-        from aec.graph import fan, reach, render_query, CAVEAT
+        from aec.graph import CAVEAT, fan, reach, render_query
         snap={'header':{'modules':{'m':'m.py'},'skipped':[]},'edges':[]}
         def omissions(text):
             return [token for token in ('visibility','resolved','total',CAVEAT) if token not in text]

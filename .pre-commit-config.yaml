@@ -1,13 +1,9 @@
+# One tool for linting, import order and formatting (replaces black + isort + ruff v0.5).
+# Settings live in pyproject.toml under [tool.ruff].
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.3.0
-    hooks:
-      - id: black
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.0
+    rev: v0.17.2
     hooks:
-      - id: ruff
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format

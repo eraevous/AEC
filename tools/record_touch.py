@@ -43,7 +43,7 @@ def main(argv=None) -> int:
     ap.add_argument("--base", required=True)
     ap.add_argument("--head", default="HEAD")
     a = ap.parse_args(argv)
-    changed = [l for l in git("diff", "--name-only", f"{a.base}...{a.head}").splitlines() if l]
+    changed = [name for name in git("diff", "--name-only", f"{a.base}...{a.head}").splitlines() if name]
     messages = git("log", "--format=%B%x00", f"{a.base}..{a.head}").split("\x00")
     ok, msg = evaluate(changed, messages)
     print(msg, file=sys.stdout if ok else sys.stderr)

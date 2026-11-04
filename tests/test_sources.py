@@ -12,7 +12,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'src'))
 from aec.__main__ import main
-from aec.records import Record, Store, TYPES, check
+from aec.records import TYPES, Record, Store, check
 from aec.sources import SourceContext
 
 VALID = b'first\nshared needle\nthird\nshared needle\nlast\n'
@@ -239,7 +239,7 @@ class TestSourceSearch(SourceFixture):
         (self.corpus/'internal-cycle').symlink_to(self.corpus,target_is_directory=True)
         (self.corpus/'inside.txt').symlink_to(self.corpus/'valid.txt')
         os.mkfifo(self.corpus/'pipe')
-        from aec.sources import render_search, render_show
+        from aec.sources import render_show
         with patch('socket.socket',side_effect=AssertionError('network')), \
              patch('urllib.request.urlopen',side_effect=AssertionError('network')), \
              patch('subprocess.Popen',side_effect=AssertionError('execution')), \

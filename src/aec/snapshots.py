@@ -4,8 +4,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import sys
 import subprocess
+import sys
 import tempfile
 from pathlib import Path, PureWindowsPath
 
@@ -213,7 +213,7 @@ def annotate_edge(snapshot, edge):
     if result['cross_module']:
         source, target = Path(src_file).parent.parts, Path(dst_file).parent.parts
         common = []
-        for a, b in zip(source, target):
+        for a, b in zip(source, target, strict=False):  # common prefix of unequal paths
             if a != b:
                 break
             common.append(a)
