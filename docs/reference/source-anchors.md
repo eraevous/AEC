@@ -25,7 +25,9 @@ Configure named local roots in .aec/sources.json (an optional machine-local file
 ```
 
 Root paths may be repo-relative or absolute local paths; source contents stay in
-place. No AEC source command writes source files, copies them into this repository,
+place. The owner's relay-kit records are one such root: `records_root` names its alias
+(default `records`) and `$RELAYKIT_RECORDS`, when set, overrides its path; see
+docs/integrations/relay-kit.md. No AEC source command writes source files, copies them into this repository,
 executes them, or accesses the network. Sources can contain private information;
 configuration/access is the caller's responsibility, not a power granted by a hash.
 No remote/URL/UNC providers are supported.

@@ -4,8 +4,8 @@ Telosmith is a local, offline command-line tool. It reads files in the repositor
 writes only to paths you name (or to `.aec/` with `aec init`), and makes no network requests.
 It parses Python source with `ast` and never imports or runs the code it analyses. The only
 subprocess it starts is `git config user.name`, during `aec init`, to name the owner stub.
-`aec source` reads only the source roots configured in `.aec/sources.json` and refuses paths
-outside them.
+`aec source` reads only the source roots configured in `.aec/sources.json` (plus the records root that
+`RELAYKIT_RECORDS` locates, when set) and refuses paths outside them.
 
 ## Supported versions
 
