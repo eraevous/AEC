@@ -15,4 +15,4 @@ Run commands as `python -m aec …`. If `import aec` fails, try `PYTHONPATH="$AE
 1. `python -m aec edges . -o .aec/edges.jsonl`: refresh the structural snapshot of the code (fast, deterministic).
 2. `python -m aec check .aec/records.jsonl --edges .aec/edges.jsonl`
 3. Report the findings verbatim, grouped as errors and warnings. Label the result **structural**: passing does not show the purpose is preserved.
-4. If `.aec/records.jsonl` does not exist, report that AEC records are not set up and point to `docs/reasoning-vocabulary.md` in the AEC repo. Do not create records.
+4. If `.aec/records.jsonl` does not exist, report that Telosmith records are not set up and point to `docs/reasoning-vocabulary.md` in the Telosmith repo. Do not create records.

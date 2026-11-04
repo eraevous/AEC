@@ -91,7 +91,7 @@ dependencies available to pip. See `docs/speckit-log.md` for setup and actual co
 
 ## Built, partial and planned
 
-Built: the twelve commands above (WP1A additions in this source checkout), offline source integrity/retrieval, structured purpose import, provenance-linked
+Built: the twelve commands above (the five WP1A commands first released in 0.5.0), offline source integrity/retrieval, structured purpose import, provenance-linked
 candidate history and doc-truth checks. Partial: semantic reconciliation (declared
 fields and caller comparisons only), evidence adequacy/applicability (narrow
 rules only). Planned: WP1B topology/history analytics, context
