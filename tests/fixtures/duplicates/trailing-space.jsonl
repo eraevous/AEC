@@ -1,0 +1,3 @@
+// C-21 fixture (fix round): the second R-merge@1 line ends in a space; not byte-identical, so still the error `unique`.
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "appended on two branches"}
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "appended on two branches"} 
