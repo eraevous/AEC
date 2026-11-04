@@ -89,13 +89,15 @@ class TestInit(unittest.TestCase):
 
 
 class TestCiSnippetPinned(unittest.TestCase):
-    """v0.4 (Kate's 'proud to entrust' review): the generated CI job installs a pinned release, not main."""
+    """v0.4 (Kate's 'proud to entrust' review): the generated CI job installs a pinned release; unpinned only loudly."""
 
     def test_snippet_pins_this_release(self):
-        from aec import __version__
+        """Fix round of PR #51: the pin is a ref that has the commands the job runs: the installed commit,
+        a release >= v0.5.0, or (neither known) `main` behind a loud warning. Never v0.4.1."""
         from aec.init import CI
-        self.assertNotIn("@main", CI)
-        self.assertIn(f"@v{__version__}\"", CI)
+        self.assertNotIn("@v0.4.1\"", CI)
+        if "@main\"" in CI:
+            self.assertIn("WARNING: UNPINNED", CI)
 
     def test_snippet_names_no_distribution(self):
         """The install line works whether the pinned tag ships as `aec` (<= 0.4.1) or `telosmith` (0.5+):

@@ -262,5 +262,131 @@ class TestExitCode(unittest.TestCase):
             self.assertEqual(main(["code-impact", str(rec), str(old), str(old), "--exit-code"]), 0)  # decoy
 
 
+# DEC-038 fix round (Kate + Claude reviews of PR #51). Written before the fixes.
+FIRST_DELIVERY = (0, 5, 0)  # first release with `aec snapshot`, `code-impact --exit-code`, module/reach logic
+
+
+def _pinned_ref(ci: str) -> str:
+    line = next(x for x in ci.splitlines() if "pip install" in x)
+    return line.split("Telosmith.git@", 1)[1].split('"', 1)[0]
+
+
+class TestFixRoundDelivery(unittest.TestCase):
+    def test_generated_ci_pins_nothing_older_than_exit_code(self):
+        """v0.4.1 has no `snapshot` or `--exit-code`: a snippet pinned to it reports 'skipped' forever."""
+        from aec.init import CI
+        ref = _pinned_ref(CI)
+        self.assertNotEqual(ref, "v0.4.1")
+        if ref.startswith("v"):
+            self.assertGreaterEqual(tuple(int(p) for p in ref[1:].split(".")[:3]), FIRST_DELIVERY)
+
+    def test_old_version_falls_back_to_main_loudly(self):
+        from aec.init import ci_snippet, install_ref
+        ref = install_ref("0.4.1", None)
+        self.assertEqual(ref, "main")
+        ci = ci_snippet(ref)
+        self.assertIn("WARNING", ci)
+        self.assertIn("v0.5.0", ci)
+
+    def test_known_commit_is_pinned(self):
+        from aec.init import ci_snippet, install_ref
+        sha = "0123456789abcdef0123456789abcdef01234567"
+        self.assertEqual(install_ref("0.4.1", sha), sha)
+        self.assertEqual(_pinned_ref(ci_snippet(sha)), sha)
+        self.assertNotIn("WARNING", ci_snippet(sha))
+
+    def test_delivery_release_is_pinned_by_tag(self):
+        from aec.init import install_ref
+        self.assertEqual(install_ref("0.5.0", None), "v0.5.0")
+        self.assertEqual(install_ref("0.5.0.dev1", None), "main")  # not a release
+
+    def test_init_writes_the_resolved_snippet(self):
+        from aec.init import init
+        d = Path(tempfile.mkdtemp())
+        init(d, "t")
+        ci = (d / ".aec" / "snippets" / "aec-ci.yml").read_text()
+        self.assertNotEqual(_pinned_ref(ci), "v0.4.1")
+
+
+class TestFixRoundHook(unittest.TestCase):
+    repo, env, hook = TestDelivery.repo, staticmethod(TestDelivery.env), TestDelivery.hook
+
+    def test_hook_leaves_the_users_baseline_alone(self):  # violating before the fix
+        d = self.repo()
+        mine = d / ".aec" / "before.jsonl"
+        mine.write_text("my hand-kept baseline\n")
+        (d / "pricing.py").write_text(EDITS["limit_100"](BASE))
+        r = self.hook(d)
+        self.assertEqual(r.returncode, 2, r.stderr)
+        self.assertEqual(mine.read_text(), "my hand-kept baseline\n")
+        self.assertTrue((d / ".aec" / "hook-before.jsonl").exists())
+
+    def test_hook_baseline_is_git_ignored(self):
+        from aec.init import GITIGNORE
+        self.assertIn("hook-before.jsonl", GITIGNORE.splitlines())
+
+    def test_hook_says_so_when_the_installed_aec_is_too_old(self):
+        """A v0.4.1 install has no `snapshot`: the hook must not pass silently."""
+        d = self.repo()
+        stub = Path(tempfile.mkdtemp()) / "aec"
+        stub.mkdir()
+        (stub / "__init__.py").write_text("")
+        (stub / "__main__.py").write_text(
+            "import sys\nif 'code-impact' in sys.argv: print('usage: code-impact [--json]'); sys.exit(0)\n")
+        cmd = json.loads((d / ".aec" / "snippets" / "claude-settings.json").read_text())
+        command = cmd["hooks"]["PostToolUse"][0]["hooks"][0]["command"]
+        env = {**self.env(d), "PYTHONPATH": str(stub.parent)}
+        r = subprocess.run(["bash", "-c", command], capture_output=True, text=True, env=env)
+        self.assertEqual(r.returncode, 1, r.stderr)  # non-blocking; shown to the user
+        self.assertIn("v0.5.0", r.stderr)
+
+
+class TestFixRoundWording(unittest.TestCase):
+    def test_pointer_is_a_candidate_not_an_obligation(self):
+        _, findings, _ = run("code:pricing.price", "helper_unbounded")
+        ptr = [f for f in findings if "reaches changed" in f]
+        self.assertEqual(len(ptr), 1)
+        self.assertIn("candidate for attention", ptr[0])
+        self.assertIn("no status change", ptr[0])
+        self.assertNotIn("review whether", ptr[0])
+
+    def test_summary_does_not_call_a_pointed_record_unaffected(self):
+        from aec.__main__ import _print_impact
+        import contextlib
+        import io
+        s = store("code:pricing.price")
+        rep, _ = code_impact(s, E.snapshot(tree(BASE)), E.snapshot(tree(EDITS["helper_unbounded"](BASE))))
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            _print_impact(s, rep, False)
+        last = buf.getvalue().strip().splitlines()[-1]
+        self.assertNotIn("unaffected", last)
+        self.assertIn("no status change", last)
+        self.assertIn("1 pointer", last)
+
+    def test_negative_reach_depth_is_rejected(self):
+        from aec.__main__ import main
+        import contextlib
+        import io
+        d = Path(tempfile.mkdtemp())
+        snap = d / "s.jsonl"
+        snap.write_text(E.dumps(E.snapshot(tree(BASE))))
+        rec = d / "r.jsonl"
+        rec.write_text(json.dumps({"id": "R", "version": 1, "type": "requirement"}) + "\n")
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err), self.assertRaises(SystemExit) as cm:
+            main(["code-impact", str(rec), str(snap), str(snap), "--reach-depth", "-1"])
+        self.assertEqual(cm.exception.code, 2)
+        self.assertIn("reach-depth", err.getvalue())
+
+    def test_docs_never_say_a_pointer_changes_status(self):
+        for rel in ("docs/guide/getting-started.md", "docs/reasoning-vocabulary.md", "CHANGELOG.md",
+                    "docs/evaluations/code-impact-qual-001.md"):
+            text = (ROOT / rel).read_text()
+            self.assertNotIn("review whether", text, rel)
+        from aec.init import HOOK_COMMAND
+        self.assertIn("candidates for attention", HOOK_COMMAND)
+
+
 if __name__ == "__main__":
     unittest.main()

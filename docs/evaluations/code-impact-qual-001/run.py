@@ -3,7 +3,6 @@
 Usage: PYTHONPATH=<tool src> python3 run.py   (prints a Markdown table; standard library only)
 The fixture is Codex's: price(x) = min(LIMIT, helper(x)), LIMIT = 10, helper(x) = max(0, x).
 """
-import sys
 import tempfile
 from pathlib import Path
 

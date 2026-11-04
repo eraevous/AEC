@@ -20,6 +20,10 @@ review would miss. That is the job of the DEC-031 trial and value-001.
 - `mapping-module.jsonl`: the same, linked to `code:pricing`, the form `import-purpose` writes.
 - `run.py`: Codex's fixture, `price(x) = min(LIMIT, helper(x))`, `LIMIT = 10`, `helper(x) = max(0, x)`, and its
   seven edits. Run with `PYTHONPATH=<tool>/src python3 run.py`.
+- Post-freeze change (fix round, DEC-038 reviews): the unused `import sys` was removed from `run.py` (F401), so
+  its hash in `FREEZE.sha256` changed; the runner's behaviour and both outputs are unchanged. The original hash
+  was `497f6963…01cfb8` (commit 486da47). Mappings, run.py and outputs all landed in that one commit, after the
+  code commit, so "frozen before either run" rests on the author's word.
 
 ## Coverage
 
@@ -70,7 +74,7 @@ Each merge was snapshotted at its parent and itself, with the current records, o
 
 | corpus | commits | with definition changes | linked symbols | commits with ≥1 affected record (old → new) | reach pointers, depth 1 (after folding) | depth 2 |
 |---|---|---|---|---|---|---|
-| Telosmith, first-parent merges to 906e8fd | 40 | 16 | 22 functions, 0 modules | 14 → 14 | 22 on 11 merges (56 before folding) | 36 (93 before folding) |
+| Telosmith, 40 first-parent parent/child pairs to 906e8fd (35 of them merges) | 40 | 16 | 22 functions, 0 modules | 14 → 14 | 22 on 11 merges (56 before folding) | 36 (93 before folding) |
 | Data-Guide 51d647a, all commits, links from `import-purpose` | 60 | 25 | 6 modules | 4 → 9 | 0 | 0 |
 
 - On Telosmith the pointers add something on 11 of 16 code-changing merges. That is a review cost; whether any
@@ -98,7 +102,19 @@ Locally, the generated CI step against `origin/main` wrote: `AEC-R6@1` stale and
 
 Limit: "reaches" here means the report lands where the recipient will see it (agent context; the Actions run
 summary). It is not a pull-request comment (a gated adoption item in `docs/architecture.md`), and nothing here
-shows that anyone reads it or acts on it.
+shows that anyone reads it or acts on it. A job summary is not a pull-request comment: a reviewer sees it only by
+opening the run, and whether reviewers read it is unmeasured.
+
+Limit (delivery to other repositories): the last tag, v0.4.1, has no `aec snapshot`, no `code-impact
+--exit-code` and none of this logic. Generated snippets therefore deliver this behaviour only from a release
+>= v0.5.0 or a commit pin. `aec init` now pins the commit it was installed from when it can tell (PEP 610
+metadata), the release tag when it is >= v0.5.0, and otherwise `@main` under a loud `WARNING: UNPINNED` comment;
+the hook reports (exit 1, to the user) when the installed `aec` lacks `--exit-code` instead of passing silently.
+The hook keeps HEAD's snapshot in `.aec/hook-before.jsonl` (git-ignored), not the user's `.aec/before.jsonl`.
+
+Pointer lines are candidates for attention, not required reassessments, and change no record's status; the
+report line, the summary line and the hook's message say so. Noise cost: the hook compares against `HEAD`, so after
+one linked edit every later edit re-reports (exit 2) until the change is committed.
 
 ## Verdict
 

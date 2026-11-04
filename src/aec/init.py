@@ -7,6 +7,7 @@ it. Standard library only.
 from __future__ import annotations
 
 import json
+import re
 import textwrap
 from pathlib import Path
 
@@ -14,6 +15,9 @@ from . import __version__
 from . import edges as E
 
 AEC_SOURCE = "git+https://github.com/eraevous/Telosmith.git"
+# The first release whose `aec` has `snapshot`, `code-impact --exit-code` and module/reach logic, which the
+# generated hook and CI job below call. v0.4.1 (the latest tag when this was written) has none of them.
+FIRST_DELIVERY_RELEASE = (0, 5, 0)
 
 README = """# .aec: purpose and justification records (AEC)
 
@@ -33,15 +37,22 @@ remaining evidence is good enough. That stays a review question.
 """
 
 # After each edit: refresh the snapshot, fail on record errors, then compare against HEAD and tell the agent
-# (stderr, exit 2) when linked code changed or reaches a change. Quiet when nothing linked moved.
+# (stderr, exit 2) when linked code changed or reaches a change. Quiet when nothing linked moved. HEAD's snapshot
+# goes to its own git-ignored file so a baseline the user keeps in `.aec/before.jsonl` is never overwritten.
+# An installed `aec` too old for this (no `--exit-code`) is reported to the user (exit 1, non-blocking).
 HOOK_COMMAND = (
     "cd \"$CLAUDE_PROJECT_DIR\" || exit 0; "
+    "python3 -m aec code-impact --help 2>/dev/null | grep -q -- --exit-code || "
+    "{ echo 'Telosmith hook: the installed aec has no code-impact --exit-code; install a release >= v0.5.0 "
+    "or the commit your CI job pins' >&2; exit 1; }; "
     "python3 -m aec edges . -o .aec/edges.jsonl 2>/dev/null; "
     "python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl >/dev/null || "
     "{ python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl 1>&2; exit 2; }; "
-    "python3 -m aec snapshot . --rev HEAD -o .aec/before.jsonl 2>/dev/null || exit 0; "
-    "out=$(python3 -m aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl --exit-code 2>&1) || "
-    "{ printf '%s\\n' \"$out\" >&2; exit 2; }"
+    "python3 -m aec snapshot . --rev HEAD -o .aec/hook-before.jsonl 2>/dev/null || exit 0; "
+    "out=$(python3 -m aec code-impact .aec/records.jsonl .aec/hook-before.jsonl .aec/edges.jsonl --exit-code 2>&1) || "
+    "{ printf '%s\\n' \"$out\" "
+    "'(Telosmith: stale/needs_review lines are status changes; structural pointer lines are candidates for "
+    "attention and change no status.)' >&2; exit 2; }"
 )
 
 HOOK = {
@@ -68,8 +79,51 @@ printf '%s\\n' "$report"
 exit 0
 """
 
-CI = f"""# Copy into .github/workflows/aec.yml. Pinned to the AEC release that generated it (v{__version__});
-# change the ref only to a release or commit you have reviewed.
+def _release(version: str) -> tuple[int, ...] | None:
+    m = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)", version)
+    return tuple(int(p) for p in m.groups()) if m else None
+
+
+def _installed_commit() -> str | None:
+    """The commit this package was pip-installed from (PEP 610 `direct_url.json`), when that install is the
+    code running now; None for a source checkout, an editable install or a wheel from an index."""
+    try:
+        from importlib import metadata
+        dist = metadata.distribution("telosmith")
+        if Path(str(dist.locate_file("aec"))).resolve() != Path(__file__).resolve().parent:
+            return None
+        sha = json.loads(dist.read_text("direct_url.json") or "{}").get("vcs_info", {}).get("commit_id", "")
+        return sha if re.fullmatch(r"[0-9a-f]{40}", sha) else None
+    except Exception:  # noqa: BLE001 - any metadata problem means "unknown"
+        return None
+
+
+def install_ref(version: str = __version__, commit: str | None = None) -> str:
+    """What the generated CI job installs: the commit this aec was installed from when known; else this
+    version's tag when it is a release that has the delivery commands; else `main` (with a warning)."""
+    if commit:
+        return commit
+    rel = _release(version)
+    if rel is not None and rel >= FIRST_DELIVERY_RELEASE:
+        return f"v{version}"
+    return "main"
+
+
+def ci_snippet(ref: str) -> str:
+    first = "v" + ".".join(map(str, FIRST_DELIVERY_RELEASE))
+    if ref == "main":
+        head = (f"# WARNING: UNPINNED. This aec ({__version__}) was not installed from a known commit, and no release\n"
+                f"# >= {first} (the first with `aec snapshot` and `code-impact --exit-code`, which the last step\n"
+                f"# needs) was known when it was generated. `@main` runs whatever main holds at job time. Replace\n"
+                f"# `main` with a commit SHA you have reviewed, or a release tag >= {first}.")
+    elif ref.startswith("v"):
+        head = (f"# Pinned to the Telosmith release that generated it ({ref}); change the ref only to a release or\n"
+                f"# commit you have reviewed.")
+    else:
+        head = (f"# Pinned to the Telosmith commit that generated it ({ref[:12]}); change the ref only to a release\n"
+                f"# >= {first} or a commit you have reviewed.")
+    return f"""# Copy into .github/workflows/aec.yml.
+{head}
 name: aec
 on: [push, pull_request]
 jobs:
@@ -80,7 +134,7 @@ jobs:
         with: {{ fetch-depth: 0 }}
       - uses: actions/setup-python@v5
         with: {{ python-version: "3.12" }}
-      - run: pip install "{AEC_SOURCE}@v{__version__}"
+      - run: pip install "{AEC_SOURCE}@{ref}"
       - name: Structural snapshot (regenerated, never trusted from the branch)
         run: python3 -m aec edges . -o .aec/edges.jsonl
       - name: Records check (fails on errors, including dangling code references)
@@ -92,10 +146,15 @@ jobs:
 {textwrap.indent(CI_IMPACT, " " * 10)}"""
 
 
+CI = ci_snippet(install_ref(__version__, _installed_commit()))
+
+
 GITIGNORE = """# Generated by `aec edges`; regenerate it instead of committing it (committed copies conflict on
 # every pair of pull requests that touch code). Keep a baseline with: cp .aec/edges.jsonl .aec/before.jsonl
+# hook-before.jsonl is the Claude Code hook's snapshot of HEAD, rewritten on every edit.
 edges.jsonl
 before.jsonl
+hook-before.jsonl
 """
 
 
@@ -131,12 +190,17 @@ def init(root: str | Path, owner: str) -> dict:
     # v0.4.1: the snapshot is generated; committing it makes every pair of code-touching PRs conflict.
     put(".gitignore", lambda: GITIGNORE)
     put("snippets/claude-settings.json", lambda: json.dumps(HOOK, indent=2) + "\n")
-    put("snippets/aec-ci.yml", lambda: CI)
+    ref = install_ref(__version__, _installed_commit())
+    put("snippets/aec-ci.yml", lambda: ci_snippet(ref))
 
     spec_kit = (root / ".specify").is_dir()
     steps = ["Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).",
              "Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).",
-             "Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml.",
+             "Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml"
+             + (" (it pins @main: replace it with a reviewed commit SHA or a release >= v0.5.0)." if ref == "main"
+                else "."),
+             "The hook runs the aec installed in your environment: it needs `code-impact --exit-code` "
+             f"(a release >= v0.5.0, or pip install \"{AEC_SOURCE}@{ref}\").",
              "If the repo has Codex++ purpose files: python3 -m aec import-purpose ."]
     if spec_kit:
         steps.insert(1, "Spec Kit detected. Register the AEC hooks (report-only, removable): "

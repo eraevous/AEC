@@ -76,9 +76,9 @@ def build_parser() -> argparse.ArgumentParser:
     ci.add_argument("old")
     ci.add_argument("new")
     ci.add_argument("--json", action="store_true")
-    ci.add_argument("--reach-depth", type=int, default=1,
+    ci.add_argument("--reach-depth", type=_non_negative, default=1,
                     help="report changed definitions this many resolved calls/references steps from a linked symbol "
-                         "as review pointers, without assigning a status (default: 1; 0 turns it off)")
+                         "as pointers (candidates for attention), without assigning a status (default: 1; 0 turns it off)")
     ci.add_argument("--exit-code", action="store_true",
                     help="exit 1 when anything is affected or reported (for hooks); the default is always 0")
     it = sub.add_parser("init", help="scaffold .aec/ in a repository (never overwrites)")
@@ -297,6 +297,13 @@ def _cmd_impact(a, ap) -> int:
     store = Store.load(a.records)
     _print_impact(store, impact(store, _changes(a.changes)), a.json)
     return 0
+
+
+def _non_negative(text: str) -> int:
+    n = int(text)
+    if n < 0:
+        raise argparse.ArgumentTypeError(f"must be 0 or more, got {n}")
+    return n
 
 
 def _cmd_code_impact(a, ap) -> int:

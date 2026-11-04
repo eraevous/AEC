@@ -19,6 +19,14 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
   reporting to the agent (exit 2) only when something linked moved; the CI job against the merge-base, into
   the job summary, never failing the job. Telosmith's own CI runs the same step on pull requests.
 - Evaluation: `docs/evaluations/code-impact-qual-001.md`, a cheap coverage/delivery qualification, not a value win.
+- Fix round (DEC-038 reviews of PR #51). **Delivery to other repositories needs a release >= 0.5 or a commit
+  pin:** v0.4.1, the last tag, has no `aec snapshot`, no `code-impact --exit-code` and none of the above.
+  `aec init` now pins the generated CI job to the commit it was installed from when it can tell, else to its
+  release tag when >= v0.5.0, else to `@main` under a `WARNING: UNPINNED` comment (never v0.4.1). The hook reports
+  to the user (exit 1) when the installed `aec` lacks `--exit-code`, and keeps HEAD's snapshot in
+  `.aec/hook-before.jsonl` (git-ignored) instead of overwriting the user's `.aec/before.jsonl`. Pointer lines,
+  the summary line (`N conclusions with no status change`, no longer "unaffected") and the hook's message call
+  pointers candidates for attention that change no status. A negative `--reach-depth` is an error.
 ### Added (spec 006, ledger hygiene; authorized by Zach 2026-11-04, C-09 and C-21)
 - Anchors into append-only files. An anchor may carry `prefix_bytes` (the file length when anchored):
   its `sha256` then covers only those leading bytes. `.aec/sources.json` may declare `append_only` files

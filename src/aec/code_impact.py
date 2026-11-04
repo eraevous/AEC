@@ -51,7 +51,7 @@ def events_from_diff(d: dict, referenced: set[str], modules: set[str] = frozense
 
 def reached_changes(store: Store, d: dict, old: dict, new: dict, referenced: set[str], modules: set[str],
                     depth: int = 1, flagged: frozenset = frozenset()) -> list[str]:
-    """Review pointers: linked symbol S reaches changed definition T through resolved calls/references.
+    """Pointers (candidates for attention, not required reassessments; they change no status): linked symbol S reaches changed definition T through resolved calls/references.
     Walks both snapshots' edges (a removed callee is only in the old one). Module links are skipped: their
     own contents already revise them, and walking out of a whole module would flag almost everything.
     Records already in `flagged` (classified by the report) are not repeated; a pointer whose records are
@@ -98,7 +98,7 @@ def reached_changes(store: Store, d: dict, old: dict, new: dict, referenced: set
             if not records:
                 continue
             findings.append(f"structural: {CODE}{sym} reaches changed {CODE}{dst}{via} ({kinds}, depth {len(path)}); "
-                            f"not re-classified, review whether {records} still hold(s)")
+                            f"no status change; candidate for attention: {records}")
     return findings
 
 
