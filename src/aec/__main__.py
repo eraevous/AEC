@@ -32,7 +32,7 @@ def _changes(path: str) -> list[dict]:
 def _print_impact(store, rep, as_json):
     if as_json:
         print(json.dumps({"impacts": [asdict(x) for x in rep.impacts.values()], "findings": rep.findings,
-                          "unaffected": rep.unaffected}, indent=1))
+                          "unaffected": rep.unaffected, "notes": rep.notes}, indent=1))
     else:
         print(render(store, rep))
 
