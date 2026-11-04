@@ -5,6 +5,21 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 
 ## [Unreleased]
 
+### Changed (code-impact coverage and delivery, HO-RK-20261104-DN2X)
+- A link to a module (`code:pkg.mod`, what `import-purpose` writes) is now revised when any definition or
+  statement in that module changes, as a class link is when a method changes. Before, a module link was only
+  retracted when the module was deleted, so it passed `check` but never reported an edit. A package link does
+  not cover its submodules.
+- `code-impact` reports changed definitions one resolved call or reference away from a linked symbol (a helper,
+  a constant) as `structural: ... reaches changed ...` pointers. They assign no status: what a link means is
+  unchanged. `--reach-depth N` widens them, `0` turns them off; pointers to records the report already flags
+  are dropped.
+- `code-impact --exit-code` exits 1 when anything is affected or reported (for hooks).
+- The hook and CI job `aec init` generates now run `code-impact`: the hook against `HEAD` after each edit,
+  reporting to the agent (exit 2) only when something linked moved; the CI job against the merge-base, into
+  the job summary, never failing the job. Telosmith's own CI runs the same step on pull requests.
+- Evaluation: `docs/evaluations/code-impact-qual-001.md`, a cheap coverage/delivery qualification, not a value win.
+
 ### Changed (name)
 - **AEC is now Telosmith** (Zach, 2026-11-02; DEC-036). The distribution is `telosmith`: `aec` and `each`
   are taken on PyPI by unrelated packages, and "AEC" was never expanded and reads as architecture,
