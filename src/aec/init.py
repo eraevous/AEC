@@ -1,4 +1,4 @@
-"""`aec init`: scaffold AEC into an existing repository (feature 002, US1).
+"""`aec init`: scaffold Telosmith (formerly AEC) into an existing repository (feature 002, US1).
 
 Creates only what is absent, never overwrites, and never touches Spec Kit's own files. The purpose
 record it writes is a provisional stub: it cannot authorize or block anything until the owner replaces
@@ -19,7 +19,7 @@ AEC_SOURCE = "git+https://github.com/eraevous/Telosmith.git"
 # generated hook and CI job below call. v0.4.1 (the latest tag when this was written) has none of them.
 FIRST_DELIVERY_RELEASE = (0, 5, 0)
 
-README = """# .aec: purpose and justification records (AEC)
+README = """# .aec: purpose and justification records (Telosmith, formerly AEC)
 
 - `records.jsonl`: append-only reasoning records (purpose, requirements, claims, evidence, decisions,
   authorities). Never edit a line; append a new version. Vocabulary:
@@ -32,7 +32,7 @@ Start by replacing the purpose stub `P0` with a new version stating what this pr
 own words (`"version": 2`, `"epistemic": "provisional"` while you are still discovering it,
 `"committed"` once changes to it should need your authorization).
 
-All AEC results are structural: they show what changed and what relied on it, not whether the
+All Telosmith results are structural: they show what changed and what relied on it, not whether the
 remaining evidence is good enough. That stays a review question.
 """
 
@@ -160,7 +160,7 @@ hook-before.jsonl
 
 def _records(owner: str) -> str:
     rows = [
-        "// AEC records. Append-only: add a new version instead of editing a line.",
+        "// Telosmith records. Append-only: add a new version instead of editing a line.",
         {"id": "AU-owner", "version": 1, "type": "authority", "text": f"{owner}: design intent and acceptance",
          "governs": ["purpose", "design", "acceptance", "code"]},
         {"id": "P0", "version": 1, "type": "purpose", "subject": "purpose", "owner": "AU-owner",
@@ -203,6 +203,6 @@ def init(root: str | Path, owner: str) -> dict:
              f"(a release >= v0.5.0, or pip install \"{AEC_SOURCE}@{ref}\").",
              "If the repo has Codex++ purpose files: python3 -m aec import-purpose ."]
     if spec_kit:
-        steps.insert(1, "Spec Kit detected. Register the AEC hooks (report-only, removable): "
-                        "specify extension add --dev <path-to-AEC-checkout>/extension")
+        steps.insert(1, "Spec Kit detected. Register the Telosmith hooks (report-only, removable): "
+                        "specify extension add --dev <path-to-Telosmith-checkout>/extension")
     return {"created": created, "kept": kept, "spec_kit": spec_kit, "next_steps": "\n".join(steps)}

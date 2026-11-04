@@ -1,9 +1,33 @@
 # Changelog
 
-All notable changes to AEC. Versions follow [semantic versioning](https://semver.org/); before
+All notable changes to Telosmith (formerly AEC). Versions follow [semantic versioning](https://semver.org/); before
 1.0, a minor version may change command output or record fields (see "Stability" in README).
 
-## [Unreleased]
+## [0.5.0] - 2026-11-04
+
+Summary of what 0.5.0 adds over 0.4.1 (details in the sections below, from PRs #31 to #51):
+- The `telosmith` command (same CLI as `aec`, which stays the primary name in the docs) and the
+  `telosmith` distribution name (#39, #40).
+- WP1A commands: `snapshot`, `diff`, `reach`, `fan`, `unresolved` (#31).
+- `code-impact` covers module links, reports one-hop `reaches changed` pointers (`--reach-depth`), and has
+  `--exit-code`; the hook and CI job `init` generates run it (#51).
+- Ledger hygiene: `appended` anchor state for append-only files, duplicate-line warning (#48); the relay-kit
+  records location setting (#49); record types `ambition` and `experiment` (#37); the `implements`
+  deprecation warning and standard-terms vocabulary (#38); extractor resolution of local constructor
+  calls (#32); review-integrity fixes (#33).
+- Project-internal: review protocol (#34), value map (#36), golden-master harness, ruff, CLI handler split and
+  named check rule families (#41 to #44, #46), decisions/owner report experiments (#45, #47).
+
+### Changed (release readiness, from a cold-install report on 2026-11-04)
+- Version 0.5.0 in `pyproject.toml`, `aec.__version__` and `--version`, so `main` is distinguishable from
+  v0.4.1. With no commit known, the CI job `init` generates now pins `@v0.5.0`.
+- `check` warns (`evidence-text`) on an evidence record with no or blank `text`: before, it passed and
+  reports printed an empty line such as `[needs_review] E-1@1: `. A warning, not an error.
+- `init` writes "Telosmith records" (not "AEC records") as the header of `records.jsonl`, and its README
+  stub and Spec Kit hint use the new name. Record ids, types and the `.aec/` folder are unchanged.
+- README and getting-started install `@v0.5.0`; README's stability section describes 0.5.0.
+- `docs/demo.md`: a short end-to-end demo on a toy project, with real output.
+
 
 ### Changed (code-impact coverage and delivery, HO-RK-20261104-DN2X)
 - A link to a module (`code:pkg.mod`, what `import-purpose` writes) is now revised when any definition or

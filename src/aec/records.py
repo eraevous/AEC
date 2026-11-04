@@ -242,7 +242,7 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
     With an edge snapshot, `code:` references must name a symbol the snapshot defines.
 
     Findings come per record, in this order: unique id@version, known type, relations, field shape,
-    source anchors, decision authority, tiers, evidence kinds and outcome sufficiency, revisions."""
+    source anchors, decision authority, tiers, evidence kinds and outcome sufficiency, evidence text, revisions."""
     out: list[Finding] = list(getattr(store, "problems", []))
     symbols = defined_symbols(edges) if edges else None
     seen = set()
@@ -262,6 +262,9 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
         out.extend(_decision_findings(store, r))
         out.extend(_tier_findings(store, r))
         out.extend(_evidence_kind_findings(store, r))
+        if r.type == "evidence" and not (isinstance(r.text, str) and r.text.strip()):
+            out.append(Finding("warning", "evidence-text", r.ref,
+                               "evidence has no text: reports will show it as an empty line; say what was observed"))
         if r.type == "revision" and not r.get("authorized_by"):
             out.append(Finding("warning", "authority", r.ref, "revision without authorized_by: it is a proposal, not yet a revision"))
     return out

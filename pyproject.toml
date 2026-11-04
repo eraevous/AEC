@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "telosmith"
-version = "0.4.1"
+version = "0.5.0"
 description = "Telosmith (formerly AEC): purpose, authority, evidence and change-impact records for AI-assisted development"
 readme = "README.md"
 license = { file = "LICENSE" }
