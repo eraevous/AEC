@@ -279,6 +279,8 @@ def _cmd_check(a, ap) -> int:
         for item in context.inspect_record(record):
             if item.state == "verified":
                 print(render_status(item))
+            elif item.state == "appended":  # spec 006: not a finding, but never shown as verified
+                print(render_status(item) + ": " + item.detail)
     for f in fs:
         print(f"[{f.level.upper()}] {f.rule}: {f.ref}: {f.msg}")
     errors = [f for f in fs if f.level == "error"]

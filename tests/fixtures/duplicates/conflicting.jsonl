@@ -1,0 +1,3 @@
+// C-21 decoy: the same id@version with different content is a reused version, still an error.
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "appended on two branches"}
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "a different statement under the same version"}
