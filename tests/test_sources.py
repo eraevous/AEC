@@ -23,6 +23,10 @@ class SourceFixture(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.base = Path(self.tmp.name)
+        env = patch.dict('os.environ')
+        env.start()
+        self.addCleanup(env.stop)
+        __import__('os').environ.pop('RELAYKIT_RECORDS', None)   # a developer's records location must not leak in
         self.repo = self.base / 'repo'
         self.corpus = self.base / 'corpus'
         (self.repo / '.aec').mkdir(parents=True)

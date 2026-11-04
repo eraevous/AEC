@@ -103,6 +103,23 @@ def render_status(item: Inspection) -> str:
         locator=json.dumps(item.locator, ensure_ascii=False))
 
 
+# The owner's relay-kit records (made with `relay-kit init`) are one named source root.
+# Which alias that is comes from `records_root` in .aec/sources.json (default below); its
+# location comes from $RELAYKIT_RECORDS when set, else from that alias in `roots`. With
+# neither, anchors into the records report `unavailable`.
+RECORDS_ENV = 'RELAYKIT_RECORDS'
+DEFAULT_RECORDS_ROOT = 'records'
+
+
+def _valid_alias(name) -> bool:
+    return isinstance(name, str) and bool(name) and name != '.' and not any(c in name for c in '\x00\r\n')
+
+
+def _valid_local_path(path) -> bool:
+    return (isinstance(path, str) and bool(path) and not any(c in path for c in '\x00\r\n')
+            and '://' not in path and not path.startswith(('//', '\\\\')))
+
+
 class SourceContext:
     def __init__(self, repo):
         self.repo = Path(repo).absolute()
@@ -119,14 +136,24 @@ class SourceContext:
                 raise ValueError('cannot read .aec/sources.json: ' + str(error)) from error
             if not isinstance(data, dict) or not isinstance(data.get('roots'), dict):
                 raise ValueError('.aec/sources.json must contain a roots object')
+            records_root = data.get('records_root', DEFAULT_RECORDS_ROOT)
+            if not _valid_alias(records_root):
+                raise ValueError('records_root must name a root alias (other than .)')
             roots = {}
             for name, path in sorted(data['roots'].items()):
-                if (not isinstance(name, str) or not name or name == '.' or any(c in name for c in '\x00\r\n')
-                        or not isinstance(path, str) or not path or any(c in path for c in '\x00\r\n')
-                        or '://' in path or path.startswith(('//', '\\\\'))):
+                if not _valid_alias(name) or not _valid_local_path(path):
                     raise ValueError('source roots must map aliases (other than .) to local paths')
                 roots[name] = SourceRoot(name, self.repo / path, Path(path).as_posix())
-            self._roots = roots
+            env = os.environ.get(RECORDS_ENV, '').strip()
+            if env:
+                # Same variable relay-kit's tools read; a relative path is from the working directory,
+                # as relay-kit resolves it. An unusable value leaves the root unconfigured (its anchors
+                # report unavailable) rather than failing or falling back to another location.
+                if _valid_local_path(env):
+                    roots[records_root] = SourceRoot(records_root, Path(env).absolute(), Path(env).as_posix())
+                else:
+                    roots.pop(records_root, None)
+            self._roots = {name: roots[name] for name in sorted(roots)}
         return self._roots
 
     def root(self, name=None):
