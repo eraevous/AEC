@@ -237,6 +237,22 @@ def _evidence_kind_findings(store: Store, r: Record) -> list[Finding]:
     return out
 
 
+def _evidence_text_findings(store: Store, r: Record) -> list[Finding]:
+    """Evidence with no text (a warning). Like outcome sufficiency, only the latest version of an id is judged,
+    so appending a corrected version clears it; a superseded textless version still warns while a latest
+    record still points at it."""
+    if r.type != "evidence" or (isinstance(r.text, str) and r.text.strip()):
+        return []
+    msg = "evidence has no text: reports will show it as an empty line; say what was observed"
+    if store.latest.get(r.id) is r:
+        return [Finding("warning", "evidence-text", r.ref, msg)]
+    users = sorted(x.ref for x in store.records if store.latest.get(x.id) is x
+                   and any(e.get("to") == r.ref for e in x.relations))
+    if not users:
+        return []
+    return [Finding("warning", "evidence-text", r.ref, f"{msg} ({r.ref} still referenced by {', '.join(users)})")]
+
+
 def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Finding]:
     """Deterministic cross-record checks. They say nothing about whether evidence is *good*.
     With an edge snapshot, `code:` references must name a symbol the snapshot defines.
@@ -262,9 +278,7 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
         out.extend(_decision_findings(store, r))
         out.extend(_tier_findings(store, r))
         out.extend(_evidence_kind_findings(store, r))
-        if r.type == "evidence" and not (isinstance(r.text, str) and r.text.strip()):
-            out.append(Finding("warning", "evidence-text", r.ref,
-                               "evidence has no text: reports will show it as an empty line; say what was observed"))
+        out.extend(_evidence_text_findings(store, r))
         if r.type == "revision" and not r.get("authorized_by"):
             out.append(Finding("warning", "authority", r.ref, "revision without authorized_by: it is a proposal, not yet a revision"))
     return out

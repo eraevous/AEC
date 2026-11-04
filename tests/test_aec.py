@@ -293,6 +293,32 @@ class TestEvidenceWithoutText(unittest.TestCase):
     def test_evidence_with_text_is_clean(self):  # decoy
         self.assertEqual(self.findings({"text": "the tests pass"}), [])
 
+    def ev_text(self, lines):
+        return [(f.ref, f.msg) for f in check(store_from(lines)) if f.rule == "evidence-text"]
+
+    E1 = {"id": "E-1", "version": 1, "type": "evidence"}
+    E2 = {"id": "E-1", "version": 2, "type": "evidence", "text": "observed"}
+
+    def test_corrected_version_clears_the_warning(self):  # Kate, DEC-038 review of #53: clearable under append-only
+        self.assertEqual(self.ev_text([self.E1, self.E2]), [])
+
+    def test_only_textless_version_warns(self):
+        self.assertEqual([ref for ref, _ in self.ev_text([self.E1])], ["E-1@1"])
+
+    def test_superseded_textless_version_still_referenced_warns(self):
+        c1 = {"id": "C-1", "version": 1, "type": "claim", "text": "c",
+              "relations": [{"rel": "depends_on", "to": "E-1@1"}]}
+        fs = self.ev_text([self.E1, self.E2, c1])
+        self.assertEqual([ref for ref, _ in fs], ["E-1@1"])
+        self.assertIn("E-1@1 still referenced by C-1@1", fs[0][1])
+
+    def test_reference_moved_to_corrected_version_is_silent(self):  # decoy
+        c1 = {"id": "C-1", "version": 1, "type": "claim", "text": "c",
+              "relations": [{"rel": "depends_on", "to": "E-1@1"}]}
+        c2 = {"id": "C-1", "version": 2, "type": "claim", "text": "c",
+              "relations": [{"rel": "depends_on", "to": "E-1@2"}]}
+        self.assertEqual(self.ev_text([self.E1, self.E2, c1, c2]), [])
+
     def test_other_types_without_text_are_not_flagged(self):  # decoy: the rule is about evidence only
         lines = [{"id": "C", "version": 1, "type": "claim"}]
         self.assertEqual([f for f in check(store_from(lines)) if f.rule == "evidence-text"], [])

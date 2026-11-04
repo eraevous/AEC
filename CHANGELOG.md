@@ -28,7 +28,9 @@ Summary of what 0.5.0 adds over 0.4.1 (details in the sections below, from PRs #
 - Version 0.5.0 in `pyproject.toml`, `aec.__version__` and `--version`, so `main` is distinguishable from
   v0.4.1. With no commit known, the CI job `init` generates now pins `@v0.5.0`.
 - `check` warns (`evidence-text`) on an evidence record with no or blank `text`: before, it passed and
-  reports printed an empty line such as `[needs_review] E-1@1: `. A warning, not an error.
+  reports printed an empty line such as `[needs_review] E-1@1: `. A warning, not an error. Only the latest version
+  of an id is judged (appending a version with text clears it), unless a latest record still points at the
+  textless version.
 - `init` writes "Telosmith records" (not "AEC records") as the header of `records.jsonl`, and its README
   stub and Spec Kit hint use the new name. Record ids, types and the `.aec/` folder are unchanged.
 - README, getting-started and the demo install `@main` marked "tag v0.5.0 pending" until the tag exists

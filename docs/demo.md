@@ -3,8 +3,8 @@
 One toy project, end to end: `init`, a purpose, a requirement linked to a function, a claim and its
 evidence, a `check` that catches a typo, an edit to a helper two calls away, the `code-impact` pointer,
 and the Claude Code hook reporting with exit 2. Every command below was run against the 0.5.0 branch (91ddec3, rerun after
-review fixes) on 2026-11-04; the output is pasted as printed, trimmed only where marked. The whole script runs in about
-two seconds.
+review fixes) on 2026-11-04; the output is pasted as printed, trimmed only where marked. The scripted run takes about 2 s;
+a cold user's setup (install plus reading this page) takes about 2 minutes.
 
 You need Python 3.10+, git and bash (the `sed -i.bak` form works with GNU and BSD sed). On a fresh machine,
 set a git identity first (`git config --global user.name "You"` and `user.email`): step 2 commits.
