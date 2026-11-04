@@ -56,10 +56,12 @@ Next steps:
   - Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).
   - Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).
   - Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml.
-  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@v0.5.0").
+  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@ac152533668fefb392ad99e915cd2a5b7c56041f").
   - If the repo has Codex++ purpose files: python3 -m aec import-purpose .
 // Telosmith records. Append-only: add a new version instead of editing a line.
 ```
+
+A git install pins the commit it was installed from (yours will differ); the CI snippet uses the same pin.
 
 ## 2. Purpose, requirement, claim, evidence (with two deliberate mistakes)
 
