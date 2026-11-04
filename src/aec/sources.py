@@ -16,7 +16,10 @@ OUTPUT_TEMPLATES = {
     'heading': '# aec source {mode} (structural)',
     'status': 'record-directed {ref} anchor[{index}] for={field} state={state} source={path} locator={locator}',
     'warning': 'WARNING: {detail}',
+    'note': 'NOTE: {detail}',
     'verified': 'artifact bytes and locator match',
+    'appended': ('file grew after anchoring: it begins with exactly the anchored {anchored} byte(s) and the '
+                 'locator resolves in them; {added} byte(s) appended later are not checked'),
     'missing': 'source file not found in an available root; no inference about earlier existence',
     'mismatch': 'file bytes changed; the earlier observation is not falsified; applicability needs review',
     'locator_invalid': 'locator does not resolve in the matching artifact',
@@ -49,7 +52,37 @@ def anchor_errors(anchor) -> list[str]:
         errors.append('for must be text or rationale')
     if parse_locator(anchor.get('locator')) is None:
         errors.append('locator must be L<n>, L<start>-<end>, or q:<nonempty single-line text>')
+    size = anchor.get('prefix_bytes')
+    if 'prefix_bytes' in anchor and (not isinstance(size, int) or isinstance(size, bool) or size < 1):
+        errors.append('prefix_bytes must be a positive integer (the file length when anchored)')
     return errors
+
+
+def _relative_path_ok(path) -> bool:
+    return not anchor_errors({'path': path, 'sha256': '0' * 64, 'locator': 'L1'})
+
+
+def anchored_prefix(raw: bytes, sha256: str, prefix_bytes=None, append_only=False):
+    """Length of the anchored bytes at the start of raw, or None (spec 006).
+
+    With prefix_bytes, sha256 covers exactly that many leading bytes. For a declared append-only
+    file, the whole file and every newline-ended prefix are tried in one incremental pass."""
+    sha256 = sha256.lower()
+    if prefix_bytes is not None:
+        if len(raw) >= prefix_bytes and hashlib.sha256(raw[:prefix_bytes]).hexdigest() == sha256:
+            return prefix_bytes
+        return None
+    if hashlib.sha256(raw).hexdigest() == sha256:
+        return len(raw)
+    if not append_only:
+        return None
+    digest, position = hashlib.sha256(), 0
+    for line in raw.splitlines(keepends=True):
+        digest.update(line)
+        position += len(line)
+        if line.endswith(b'\n') and position < len(raw) and digest.copy().hexdigest() == sha256:
+            return position
+    return None
 
 
 def parse_locator(locator):
@@ -107,6 +140,7 @@ class SourceContext:
     def __init__(self, repo):
         self.repo = Path(repo).absolute()
         self._roots = None
+        self._append_only = None
         self._inspections = {}
 
     @property
@@ -127,7 +161,26 @@ class SourceContext:
                     raise ValueError('source roots must map aliases (other than .) to local paths')
                 roots[name] = SourceRoot(name, self.repo / path, Path(path).as_posix())
             self._roots = roots
+            self._append_only = self._parse_append_only(data.get('append_only', {}), roots)
         return self._roots
+
+    @staticmethod
+    def _parse_append_only(value, roots):
+        """Spec 006: {alias or '.': [relative path, ...]} naming files that only grow by appending."""
+        if not isinstance(value, dict):
+            raise ValueError('.aec/sources.json append_only must map root aliases to lists of paths')
+        declared = set()
+        for alias, paths in sorted(value.items()):
+            if alias != '.' and alias not in roots:
+                raise ValueError(f'append_only names an unconfigured root: {alias!r}')
+            if not isinstance(paths, list) or not all(isinstance(p, str) and _relative_path_ok(p) for p in paths):
+                raise ValueError(f'append_only[{alias!r}] must be a list of relative file paths without parent traversal')
+            declared.update((alias, Path(p).as_posix()) for p in paths)
+        return frozenset(declared)
+
+    def is_append_only(self, alias, path) -> bool:
+        self.roots
+        return (alias or '.', Path(path).as_posix()) in self._append_only
 
     def root(self, name=None):
         if name is None or name == '.':
@@ -167,15 +220,24 @@ class SourceContext:
             return Inspection(ref, index, 'text', '', '', None, '', errors=tuple(errors))
         root = self.root(anchor.get('root'))
         path = root.label(anchor['path']) if root else anchor['path']
+        append_only = self.is_append_only(anchor.get('root'), anchor['path'])
         state, raw = self.read(root, anchor['path'])
-        lines, span = (), None
+        lines, span, detail = (), None, None
         if raw is not None:
-            lines = tuple(raw.decode('utf-8', errors='replace').splitlines())
-            span = locate(anchor['locator'], lines)
-            state = ('mismatch' if hashlib.sha256(raw).hexdigest() != anchor['sha256'].lower()
-                     else 'locator_invalid' if span is None else 'verified')
+            anchored = anchored_prefix(raw, anchor['sha256'], anchor.get('prefix_bytes'), append_only)
+            if anchored is None:
+                lines = tuple(raw.decode('utf-8', errors='replace').splitlines())
+                span = locate(anchor['locator'], lines)
+                state = 'mismatch'
+            else:
+                # The locator must resolve inside the anchored bytes; line numbers are unchanged by appends.
+                lines = tuple(raw[:anchored].decode('utf-8', errors='replace').splitlines())
+                span = locate(anchor['locator'], lines)
+                state = ('locator_invalid' if span is None else 'verified' if anchored == len(raw) else 'appended')
+                if state == 'appended':
+                    detail = OUTPUT_TEMPLATES['appended'].format(anchored=anchored, added=len(raw) - anchored)
         return Inspection(ref, index, anchor.get('for', 'text'), path, anchor['locator'], state,
-                          OUTPUT_TEMPLATES[state], lines, span)
+                          detail or OUTPUT_TEMPLATES[state], lines, span)
 
 
 def record_findings(record, context: SourceContext):
@@ -184,7 +246,7 @@ def record_findings(record, context: SourceContext):
     for item in context.inspect_record(record):
         for error in item.errors:
             out.append(Finding('error', 'anchor-shape', record.ref, f'anchor[{item.index}]: {error}'))
-        if item.state not in (None, 'verified'):
+        if item.state not in (None, 'verified', 'appended'):
             out.append(Finding('warning', 'anchor-' + item.state, record.ref,
                                render_status(item) + ': ' + item.detail))
     return out
@@ -206,7 +268,9 @@ def render_show(store, ref, sources: SourceContext, *, context=3, max_lines=80, 
         if item.errors:
             raise ValueError(f'{ref} anchor[{item.index}]: ' + '; '.join(item.errors))
         out.append(render_status(item))
-        if item.state != 'verified':
+        if item.state == 'appended':
+            out.append(OUTPUT_TEMPLATES['note'].format(detail=item.detail))
+        elif item.state != 'verified':
             out.append(OUTPUT_TEMPLATES['warning'].format(detail=item.detail))
         if item.state in ('missing', 'unavailable'):
             continue

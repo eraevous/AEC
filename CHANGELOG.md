@@ -5,6 +5,19 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 
 ## [Unreleased]
 
+### Added (spec 006, ledger hygiene; authorized by Zach 2026-11-04, C-09 and C-21)
+- Anchors into append-only files. An anchor may carry `prefix_bytes` (the file length when anchored):
+  its `sha256` then covers only those leading bytes. `.aec/sources.json` may declare `append_only` files
+  per root; whole-file anchors into them also match a newline-ended prefix. A new anchor state,
+  `appended`, means the file grew and begins with exactly the anchored bytes; it is printed distinctly
+  by `check` and `source show` and is not a finding. Whole-file digests stay the default: an undeclared
+  grown file is still `mismatch`. Telosmith's own records declare relay-kit-private's
+  `governance/decisions.jsonl`, and their anchor warnings drop from 13 to the 3 real mismatches.
+- `check` reads a byte-identical duplicate record line (left by merging two branches that appended the
+  same record) as one record, with a `duplicate-line` warning naming both lines, instead of failing with
+  `unique`. Any difference between the lines is still the `unique` error. No command rewrites records;
+  `docs/reference/records-hygiene.md` gives the manual clean-up.
+
 ### Changed (name)
 - **AEC is now Telosmith** (Zach, 2026-11-02; DEC-036). The distribution is `telosmith`: `aec` and `each`
   are taken on PyPI by unrelated packages, and "AEC" was never expanded and reads as architecture,

@@ -71,11 +71,21 @@ class Store:
     @classmethod
     def load(cls, path: str | Path) -> Store:
         recs, problems = [], []
+        first: dict[str, tuple[int, str]] = {}  # id@version -> (line number, text) of its first line
         for n, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
             line = line.strip()
             if not line or line.startswith("//"):
                 continue
             d = json.loads(line)
+            key = f"{d.get('id')}@{d.get('version')!r}"
+            if key in first and first[key][1] == line:
+                # spec 006 (C-21): a merge of two branches that appended the same line leaves an identical
+                # copy. It is the same record, read once; any difference still reaches check's `unique` rule.
+                problems.append(Finding("warning", "duplicate-line", f"{d.get('id')}@{d.get('version')}",
+                                        f"line {n} repeats line {first[key][0]} exactly; read as one record "
+                                        "(see docs/reference/records-hygiene.md to remove the copy)"))
+                continue
+            first.setdefault(key, (n, line))
             known = {"id", "version", "type", "text", "subject", "relations"}
             v = d.get("version")
             if not isinstance(v, int) or isinstance(v, bool) or v < 1:

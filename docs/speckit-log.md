@@ -197,3 +197,14 @@ refused installing that optional dependency under this handoff's stdlib/Git-only
 limits, so no workaround was attempted. All WP1A fixtures run. No Spec Kit agent
 analyze/converge or comparative-benefit evaluation was claimed. Instrumented model
 cost is recorded in the intent; owner attention and token counts are unavailable.
+
+## Feature 006: ledger hygiene (C-09, C-21; 2026-11-04)
+
+claude:aec-hygiene, from origin/main@906e8fd, under Zach's authorization of C-09 and C-21
+(2026-11-04 09:17 CT, DEC-048). Spec 004 is frozen, and features here each get their own folder,
+so the change is spec 006 plus a pointer addendum in `specs/004-source-anchors/`. No `/speckit-*`
+agent commands were run: spec, plan and tasks were written directly from the two candidates and
+Kate's recorded review (prefix-of-original, not a line hash). Fixtures, decoys and
+`tests/test_ledger_hygiene.py` were committed before the implementation (14 of 20 failing).
+On Telosmith's own records the anchor warnings went from 13 to 3, the remaining 3 being real
+edits (a handoff and spec 005). Cost is in the dated intent note.
