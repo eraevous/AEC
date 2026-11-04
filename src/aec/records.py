@@ -22,6 +22,7 @@ DEPRECATED_RELATIONS = {
     "implements": "'implements' is deprecated and impact ignores it: put 'implemented_by' on the requirement "
                   "instead (the requirement is satisfied by the code, SysML <<satisfy>>)",
 }
+HISTORICAL = {"evidence", "decision"}  # their references name what existed when they were made (superseded-reference)
 CODE = "code:"  # unversioned reference to a code symbol; the edge snapshot supplies its current state
 TIERS = {"candidate", "reviewed", "observed", "prospective"}
 
@@ -121,12 +122,12 @@ class Finding:
     msg: str
 
 
-def _near(name: str, symbols: set[str]) -> tuple[list[str], int]:
+def _near(name: str, symbols: set[str], modules: set[str] = frozenset()) -> tuple[list[str], int]:
     """Likely intended names, deterministic, and how many more were left out. First a missing prefix (e.g. a
     source root such as `src.`): known symbols that end with the whole name (up to two). Otherwise a misspelt
     last segment (siblings under the same parent whose last segment is close; shared module prefixes never
     count towards similarity), then the same last segment under another parent, as when a function moved
-    to another module (up to three suggestions in all)."""
+    to another module, module-level definitions before methods (up to three suggestions in all)."""
     import difflib
     pool = sorted(symbols)
     hits = [s for s in pool if s.endswith("." + name)]
@@ -135,7 +136,8 @@ def _near(name: str, symbols: set[str]) -> tuple[list[str], int]:
     parent, _, leaf = name.rpartition(".")
     siblings = {s.rpartition(".")[2]: s for s in pool if s.rpartition(".")[0] == parent}
     typos = [siblings[m] for m in difflib.get_close_matches(leaf, sorted(siblings), n=2, cutoff=0.75)]
-    moved = [s for s in pool if s.rpartition(".")[2] == leaf and s not in typos]
+    moved = sorted((s for s in pool if s.rpartition(".")[2] == leaf and s not in typos),
+                   key=lambda s: (s.rpartition(".")[0] not in modules, s))
     room = 3 - len(typos)
     return typos + moved[:room], max(0, len(moved) - room)
 
@@ -160,7 +162,8 @@ def defined_symbols(edges: dict) -> set[str]:
     return out
 
 
-def _relation_findings(store: Store, r: Record, symbols: set[str] | None) -> list[Finding]:
+def _relation_findings(store: Store, r: Record, symbols: set[str] | None,
+                       modules: set[str] = frozenset()) -> list[Finding]:
     """Relation names are known; `code:` targets exist in the snapshot (when given); other targets resolve."""
     out = []
     for e in r.relations:
@@ -171,7 +174,7 @@ def _relation_findings(store: Store, r: Record, symbols: set[str] | None) -> lis
         to = e.get("to", "")
         if to.startswith(CODE):
             if symbols is not None and to[len(CODE):] not in symbols:
-                near, more = _near(to[len(CODE):], symbols)
+                near, more = _near(to[len(CODE):], symbols, modules)
                 hint = ("; did you mean " + _or([CODE + n for n in near]) + "?"
                         + (f" ({more} more with the same name)" if more else "")) if near else ""
                 out.append(Finding("error", "code-reference", r.ref,
@@ -264,10 +267,12 @@ def _evidence_text_findings(store: Store, r: Record) -> list[Finding]:
 
 
 def _superseded_reference_findings(store: Store, r: Record) -> list[Finding]:
-    """A latest record that points at an older version of another id (a warning: the old version may be meant).
-    As for evidence text, only the latest version of the referring id is judged, so appending a version that
-    moves the reference clears it. `supersedes`, and a record's references to its own id, are history."""
-    if store.latest.get(r.id) is not r:
+    """A latest claim, requirement or other conclusion that points at an older version of another id (a warning:
+    the old version may be meant). As for evidence text, only the latest version of the referring id is judged,
+    so appending a version that moves the reference clears it. History is not flagged: `supersedes`, a record's
+    references to its own id, and evidence and decisions, which are pinned to the version that existed when
+    they were observed or made (re-pointing them would assert support nobody checked)."""
+    if store.latest.get(r.id) is not r or r.type in HISTORICAL:
         return []
     out = []
     for e in r.relations:
@@ -292,6 +297,7 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
     source anchors, decision authority, tiers, evidence kinds and outcome sufficiency, evidence text, superseded references, revisions."""
     out: list[Finding] = list(getattr(store, "problems", []))
     symbols = defined_symbols(edges) if edges else None
+    modules = set(edges["header"].get("modules", {})) if edges else set()
     seen = set()
     for r in store.records:
         if r.ref in seen:
@@ -299,7 +305,7 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
         seen.add(r.ref)
         if r.type not in TYPES:
             out.append(Finding("error", "type", r.ref, f"unknown type {r.type!r}"))
-        out.extend(_relation_findings(store, r, symbols))
+        out.extend(_relation_findings(store, r, symbols, modules))
         out.extend(_shape_findings(r))
         if "anchors" in r.data:
             from .sources import SourceContext, record_findings

@@ -8,17 +8,23 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 ### Changed (lifecycle gaps from a docs builder's no-Spec-Kit run, 2026-11-04)
 - `check` warns `superseded-reference` when the latest version of a record references an older version of
   another record (`C-1@1` depends on `R-1@1` while `R-1@2` exists). A warning, never an error: the old
-  version may be meant. `supersedes`, references to a record's own id and superseded referrers are not judged.
+  version may be meant. `supersedes`, references to a record's own id and superseded referrers are not judged,
+  nor are evidence and decisions: they are history by nature, pinned to the version that existed when they
+  were observed or made.
 - `code-impact` reports such a record as a pointer when the change reaches the newer version
-  (`structural: C-1@1 references superseded R-1@1; R-1@2 changed (stale); no status change`). Before, the
+  (`structural: C-1@1 references superseded R-1@1; R-1@2 changed (stale); no status change`; evidence and
+  decisions excepted). Before, the
   change reached `R-1@2` and stopped. The summary's pointer count now counts every `structural:` line.
-- `code-impact` adds `[note] reach depth 1; N further symbols within depth 2 not examined (use --reach-depth 2)`
-  above the summary when definitions changed and the walk stopped short of something; JSON output has a
+- `code-impact` adds `[note] reach depth 1; N changed symbols at depth 2 not reported (use --reach-depth 2)`
+  above the summary when a changed definition is exactly one step beyond the walk from a linked symbol whose
+  records are not already classified (edits nothing links to still report nothing); JSON output has a
   `notes` list. The default depth (1) is unchanged, and the note is not a finding (`--exit-code` ignores it).
 - A dangling `code:` reference also suggests symbols with the same last name in other modules (a moved
-  function): one if unique, up to three if ambiguous, with a count of the rest. Existing near-miss
+  function): one if unique, up to three if ambiguous (module-level definitions before methods), with a count
+  of the rest. Existing near-miss
   suggestions come first and are unchanged.
-- `init` run from a source checkout (`PYTHONPATH=src` or an editable install) pins the generated CI job to
+- `init` run from a Telosmith source checkout (`PYTHONPATH=src` or an editable install; the checkout's
+  `pyproject.toml` must name `telosmith`) pins the generated CI job to
   the checkout's `HEAD` commit and prints a note, instead of `@v0.5.0`, which may not exist yet. Git installs
   still pin their recorded commit and other installs still pin the version's tag (#51).
 

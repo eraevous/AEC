@@ -129,8 +129,9 @@ aec edges: 5 edges from 2 files (0 skipped) -> .aec/edges.jsonl
 0 affected, 3 conclusions with no status change (1 pointer(s) above: candidates for attention)
 ```
 
-A pointer is a candidate for attention. It changes no record's status. The `[note]` line says where the
-default walk stopped, so a quiet report is not mistaken for "nothing nearby changed".
+A pointer is a candidate for attention. It changes no record's status. The `[note]` line in the first run says a
+changed definition sat just past the default walk, so a quiet report is not mistaken for "nothing nearby
+changed".
 
 ## 4. The Claude Code hook
 

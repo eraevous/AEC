@@ -86,6 +86,19 @@ class TestSupersededReference(unittest.TestCase):
         old = dict(C1, relations=[{"rel": "depends_on", "to": "R-1@1"}])
         self.assertEqual(self.sup([R1, R2, old, C2]), [])
 
+    def test_evidence_on_old_claim_is_history(self):  # decoy (review S1): evidence is pinned to what it observed
+        ev = {"id": "E-1", "version": 1, "type": "evidence", "text": "seen",
+              "relations": [{"rel": "supports", "to": "C-1@1"}]}
+        self.assertEqual(self.sup([C1 | {"relations": []}, C2 | {"relations": [{"rel": "supersedes", "to": "C-1@1"}]}, ev]), [])
+
+    def test_decision_on_old_version_is_history(self):  # decoy (review S1)
+        d = {"id": "D-1", "version": 1, "type": "decision", "text": "adopt",
+             "relations": [{"rel": "depends_on", "to": "R-1@1"}]}
+        self.assertEqual(self.sup([R1, R2, d]), [])
+
+    def test_claim_on_old_requirement_warns(self):  # violating (review S1)
+        self.assertEqual([ref for _, ref, _ in self.sup([R1, R2, C1])], ["C-1@1"])
+
     def test_never_an_error(self):
         self.assertEqual([f for f in check(store_from([R1, R2, C1])) if f.level == "error"], [])
 
@@ -114,24 +127,41 @@ class TestDepthDisclosure(unittest.TestCase):
     store = store_from([R1, C1])
     old, new = shop(), shop(PRICING.replace("return round(x, 2)", "return int(x * 100) / 100"))
 
-    def test_default_depth_discloses_what_it_did_not_examine(self):  # violating before the fix
+    def test_default_depth_discloses_a_changed_symbol_one_step_beyond(self):  # violating before the fix
         rep, _ = code_impact(self.store, self.old, self.new)
         self.assertEqual((rep.impacts, rep.findings), ({}, []))  # the default is unchanged (#51)
         out = render(self.store, rep)
-        self.assertIn("reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)", out)
+        self.assertIn("reach depth 1; 1 changed symbol at depth 2 not reported (use --reach-depth 2)", out)
 
-    def test_depth_2_finds_it_and_discloses_nothing_further(self):  # decoy: nothing exists at depth 3
+    def test_depth_2_finds_it_and_discloses_nothing_further(self):  # decoy: nothing changed at depth 3
         rep, _ = code_impact(self.store, self.old, self.new, reach_depth=2)
         self.assertEqual(len(rep.findings), 1)
-        self.assertNotIn("not examined", render(self.store, rep))
+        self.assertNotIn("not reported", render(self.store, rep))
 
     def test_no_changed_definitions_no_footer(self):  # decoy: nothing changed, nothing to disclose
         rep, _ = code_impact(self.store, self.old, self.old)
-        self.assertNotIn("not examined", render(self.store, rep))
+        self.assertNotIn("not reported", render(self.store, rep))
+
+    def test_unlinked_edit_no_footer(self):  # decoy (review S2): edits nothing links to report nothing
+        extra = "\n\ndef unrelated():\n    return 1\n"
+        old, new = shop(PRICING + extra), shop(PRICING + extra.replace("return 1", "return 2"))
+        rep, _ = code_impact(self.store, old, new)
+        self.assertEqual(render(self.store, rep).count("[note]"), 0)
+
+    def test_unchanged_symbol_at_depth_2_no_footer(self):  # decoy (review S2): clamp changed, round_cents not
+        rep, _ = code_impact(self.store, self.old, shop(PRICING.replace("max(0.0, ", "max(0, ")))
+        self.assertEqual(len(rep.findings), 1)
+        self.assertNotIn("[note]", render(self.store, rep))
+
+    def test_already_flagged_records_no_footer(self):  # decoy: like pointer folding, a stale record needs no note
+        new = shop(PRICING.replace("return round(x, 2)", "return int(x * 100) / 100").replace("pct / 100)", "pct / 100.0)"))
+        rep, _ = code_impact(self.store, self.old, new)
+        self.assertIn("R-1@1", rep.impacts)
+        self.assertNotIn("[note]", render(self.store, rep))
 
     def test_depth_0_discloses_depth_1(self):
-        rep, _ = code_impact(self.store, self.old, self.new, reach_depth=0)
-        self.assertIn("reach depth 0; 1 further symbol within depth 1 not examined (use --reach-depth 1)",
+        rep, _ = code_impact(self.store, self.old, shop(PRICING.replace("max(0.0, ", "max(0, ")), reach_depth=0)
+        self.assertIn("reach depth 0; 1 changed symbol at depth 1 not reported (use --reach-depth 1)",
                       render(self.store, rep))
 
     def test_footer_is_not_a_finding(self):  # the hook stays quiet: --exit-code looks at findings only
@@ -173,6 +203,11 @@ class TestMovedSymbol(unittest.TestCase):
         self.assertNotIn("shop.m3", fs[0])
         self.assertIn("1 more", fs[0])
 
+    def test_module_functions_rank_before_methods(self):  # review nit
+        extra = {"a.py": "class K:\n    def apply_discount(self):\n        return 1\n", "z.py": self.MOVED}
+        fs = self.msgs(LINK, extra)
+        self.assertIn("did you mean code:shop.z.apply_discount or code:shop.a.K.apply_discount?", fs[0])
+
     def test_no_same_name_no_guess(self):  # decoy
         fs = self.msgs(LINK, {"checkout.py": "def total(x):\n    return x\n"})
         self.assertNotIn("did you mean", fs[0])
@@ -202,13 +237,14 @@ class TestInitPinFromSourceCheckout(unittest.TestCase):
                               env={**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
                                    "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}).stdout.strip()
 
-    def checkout(self, track=True):
+    def checkout(self, track=True, name="telosmith"):
         d = Path(tempfile.mkdtemp())
         self.git(d, "init", "-q")
         (d / "aec").mkdir()
         (d / "aec" / "__init__.py").write_text("")
         (d / "README").write_text("x")
-        self.git(d, "add", "aec" if track else "README")
+        (d / "pyproject.toml").write_text(f'[project]\nname = "{name}"\n')
+        self.git(d, "add", "aec" if track else "README", "pyproject.toml")
         self.git(d, "commit", "-qm", "c")
         return d, self.git(d, "rev-parse", "HEAD")
 
@@ -222,6 +258,11 @@ class TestInitPinFromSourceCheckout(unittest.TestCase):
     def test_untracked_package_inside_a_repo_is_not_a_checkout(self):  # decoy: e.g. a venv in a user's repo
         from aec.init import resolve_install_ref
         d, _ = self.checkout(track=False)
+        self.assertEqual(resolve_install_ref("0.5.0", None, d / "aec"), ("v0.5.0", None))
+
+    def test_vendored_package_is_not_a_telosmith_checkout(self):  # decoy (review nit): src/aec copied elsewhere
+        from aec.init import resolve_install_ref
+        d, _ = self.checkout(name="someone-elses-app")
         self.assertEqual(resolve_install_ref("0.5.0", None, d / "aec"), ("v0.5.0", None))
 
     def test_non_git_install_keeps_the_tag_rule(self):  # decoy: #51's tested rule for non-git installs

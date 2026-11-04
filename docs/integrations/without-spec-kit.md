@@ -67,7 +67,9 @@ exit 2                                                         # RATE edited (mo
 
 Limits: it needs `aec` ≥ 0.5.0 on the agent's `PATH`/`python3` (older versions make the hook exit 1 with a
 message, without blocking). It re-reports on every later edit until the change is committed. It reaches one call
-by default, so a `LIMIT` edit (two hops from `apply_discount`) printed `0 affected`.
+by default, so a `LIMIT` edit (two hops from `apply_discount`) is silent in the hook. Run by hand or in CI,
+`code-impact` shows a `[note] reach depth 1; 1 changed symbol at depth 2 not reported (use --reach-depth 2)`
+line for it; the note is not a finding, so it does not make the hook speak.
 
 ## Path 2: plain git hooks (any agent, any editor)
 
@@ -254,7 +256,9 @@ Reading the output:
 - `[ERROR] code-reference ...`: a record points at a name that no longer exists (renamed/moved). Tell the user; do not re-point it yourself unless asked.
 - `[stale] ID@N` / `[needs_review] ID@N` / `[unjustified] ID@N`: your change touched code or records this conclusion rests on. Re-read its text, decide whether it still holds after your change, and say which in your summary ("R-1@1 re-checked: still holds because ..."). The tool does not know whether it holds.
 - `[finding] structural: X reaches changed Y ... candidate for attention: ID@N`: something one call away changed. Look; you are not obliged to act.
-- `0 affected`: nothing linked moved. It does NOT mean the change is safe: unlinked code, dynamic calls and anything two calls away are invisible.
+- `[finding] structural: ID@N references superseded ID@M; ID@K changed ...`: a record still points at an older version of something that changed. Tell the user; re-point it only if asked.
+- `[note] reach depth 1; N changed symbols at depth 2 not reported`: a change sits two calls from linked code. Rerun with `--reach-depth 2` to see it.
+- `0 affected`: nothing linked moved. It does NOT mean the change is safe: unlinked code and dynamic calls are invisible, and anything two calls away shows only as a `[note]`.
 
 Never edit or delete an existing line in `.aec/records.jsonl`. To change a record, append the same `id` with the next `version`, and re-pin records that depended on the old version. Do not mark a decision accepted; only the authority named in the records can.
 ```

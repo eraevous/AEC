@@ -112,12 +112,18 @@ def install_ref(version: str = __version__, commit: str | None = None) -> str:
 
 def _checkout_commit(pkg_dir: Path) -> tuple[str, bool] | None:
     """(HEAD, dirty) when pkg_dir is tracked in a git checkout (run with PYTHONPATH=src, or an editable
-    install); None otherwise, including a package that only sits untracked inside some repo (a venv)."""
+    install of Telosmith, whose pyproject names it); None otherwise, including a package that only sits
+    untracked inside some repo (a venv) or a copy vendored into another project."""
     def git(*args):
         return subprocess.run(["git", "-C", str(pkg_dir), *args], capture_output=True, text=True, timeout=10)
     try:
         if git("ls-files", "--error-unmatch", "__init__.py").returncode:
             return None
+        top = git("rev-parse", "--show-toplevel").stdout.strip()
+        pyproject = Path(top) / "pyproject.toml" if top else None
+        if not (pyproject and pyproject.is_file()
+                and re.search(r'^name\s*=\s*"telosmith"', pyproject.read_text(encoding="utf-8"), re.M)):
+            return None  # src/aec vendored into some other project: its HEAD is not a Telosmith commit
         head = git("rev-parse", "HEAD")
         sha = head.stdout.strip()
         if head.returncode or not re.fullmatch(r"[0-9a-f]{40}", sha):
