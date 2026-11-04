@@ -4,7 +4,7 @@
 
 ## Direction update, 2026-10-31 (adopted by Zach: DEC-016 to DEC-022)
 
-Source: drift round 2 with Kate (`relay-kit-private/aec-drift/round-2/synthesis.md`). Canonical decisions: `relay-kit-private/governance/decisions.jsonl`. Zach, 18:12 CT: "Yes, pretty good counts as approval."
+Source: drift round 2 with Kate (`aec-drift/round-2/synthesis.md` in Zach's records, relay-kit-private). Canonical decisions: `governance/decisions.jsonl` in the owner's relay-kit records (made with `relay-kit init`); Zach's instance is his relay-kit-private repository. Zach, 18:12 CT: "Yes, pretty good counts as approval."
 
 - **Foundation and augmentation (DEC-016).** AEC's core is four guarantees: **recover** sources, **establish authority**, **check applicability**, **verify claims**. Better agent judgment (inquiry, unknowns, ontological awareness, mathetics) is an *experimental* augmentation layer and is developed by evidence. Every new component must say which guarantee it serves, or what it adds to agent judgment.
 - **Safeguards to build now (DEC-017).** One small work package after WP1A:
@@ -14,7 +14,7 @@ Source: drift round 2 with Kate (`relay-kit-private/aec-drift/round-2/synthesis.
 - **Ownership (DEC-018).**
   - **relay-kit:** coordination mechanics (handoffs, delivery, versions, IDs, the thread index).
   - **AEC:** development semantics (purpose, obligations, evidence, premises).
-  - **Decisions:** one canonical decision record, kept in relay-kit-private. AEC references it rather than duplicating it.
+  - **Decisions:** one canonical decision record, kept in the owner's relay-kit records (made with `relay-kit init`; Zach's instance is relay-kit-private). AEC references it rather than duplicating it. Where Telosmith finds those records is a setting: see `docs/integrations/relay-kit.md`.
   - **WP4 narrows** to semantic premise checks, reusing relay-kit's mechanics.
 - **Drift and run (DEC-019).** Information crosses freely between them; authority never crosses implicitly. Drift includes pilots and feasibility tests, and drift threads are scoped to their round.
 - **Planning (DEC-020).** A decision queue kept by agents, separating candidates from commitments, with checkpoints triggered by events. No sprints. This is a one-month trial.
