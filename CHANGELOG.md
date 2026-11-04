@@ -18,6 +18,12 @@ Summary of what 0.5.0 adds over 0.4.1 (details in the sections below, from PRs #
 - Project-internal: review protocol (#34), value map (#36), golden-master harness, ruff, CLI handler split and
   named check rule families (#41 to #44, #46), decisions/owner report experiments (#45, #47).
 
+### Upgrading from 0.4.1
+- Regenerate any stored snapshot (for example `.aec/before.jsonl`) after upgrading. A 0.4.1 snapshot
+  (extractor tool_version 0.3.0) compared with a 0.5.0 one stops with `method mismatch: legacy/unknown
+  method` (checked 2026-11-04). Rebuild the baseline with `aec edges` (or `aec snapshot --rev`) at the
+  older commit.
+
 ### Changed (release readiness, from a cold-install report on 2026-11-04)
 - Version 0.5.0 in `pyproject.toml`, `aec.__version__` and `--version`, so `main` is distinguishable from
   v0.4.1. With no commit known, the CI job `init` generates now pins `@v0.5.0`.
@@ -25,7 +31,8 @@ Summary of what 0.5.0 adds over 0.4.1 (details in the sections below, from PRs #
   reports printed an empty line such as `[needs_review] E-1@1: `. A warning, not an error.
 - `init` writes "Telosmith records" (not "AEC records") as the header of `records.jsonl`, and its README
   stub and Spec Kit hint use the new name. Record ids, types and the `.aec/` folder are unchanged.
-- README and getting-started install `@v0.5.0`; README's stability section describes 0.5.0.
+- README, getting-started and the demo install `@main` marked "tag v0.5.0 pending" until the tag exists
+  (`docs/RELEASING.md` lists the flip); README's stability section describes 0.5.0.
 - `docs/demo.md`: a short end-to-end demo on a toy project, with real output.
 
 

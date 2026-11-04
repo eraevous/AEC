@@ -2,16 +2,17 @@
 
 One toy project, end to end: `init`, a purpose, a requirement linked to a function, a claim and its
 evidence, a `check` that catches a typo, an edit to a helper two calls away, the `code-impact` pointer,
-and the Claude Code hook reporting with exit 2. Every command below was run against release 0.5.0 on
-2026-11-04; the output is pasted as printed, trimmed only where marked. The whole script runs in about
+and the Claude Code hook reporting with exit 2. Every command below was run against the 0.5.0 branch (91ddec3, rerun after
+review fixes) on 2026-11-04; the output is pasted as printed, trimmed only where marked. The whole script runs in about
 two seconds.
 
-You need Python 3.10+, git and bash (the `sed -i.bak` form works with GNU and BSD sed).
+You need Python 3.10+, git and bash (the `sed -i.bak` form works with GNU and BSD sed). On a fresh machine,
+set a git identity first (`git config --global user.name "You"` and `user.email`): step 2 commits.
 
 ## 0. Install
 
 ```bash
-pip install "git+https://github.com/eraevous/Telosmith.git@v0.5.0"   # until the tag exists, use @main
+pip install "git+https://github.com/eraevous/Telosmith.git@main"   # 0.5.0 on main; tag v0.5.0 pending
 aec --version; telosmith --version
 ```
 

@@ -7,7 +7,7 @@ repositories that already have Codex++ purpose files. For what the results mean,
 ## Install
 
 ```bash
-pip install "git+https://github.com/eraevous/Telosmith.git@v0.5.0"   # until the tag exists, use @main
+pip install "git+https://github.com/eraevous/Telosmith.git@main"   # 0.5.0 on main; tag v0.5.0 pending
 aec --version
 ```
 

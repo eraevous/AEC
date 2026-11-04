@@ -23,7 +23,7 @@ classifiers = [
 
 [project.scripts]
 telosmith = "aec.__main__:main"
-aec = "aec.__main__:main"          # the pre-0.5 name, kept as an alias
+aec = "aec.__main__:main"          # the primary name (every release has it); telosmith is the same CLI
 
 [project.urls]
 Homepage = "https://github.com/eraevous/Telosmith"

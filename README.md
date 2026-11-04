@@ -33,11 +33,9 @@ static-analysis snapshot of what defines, calls and imports what.
 ## Install
 
 ```bash
-pip install "git+https://github.com/eraevous/Telosmith.git@v0.5.0"
+pip install "git+https://github.com/eraevous/Telosmith.git@main"   # 0.5.0 on main; tag v0.5.0 pending
 aec --version        # aec 0.5.0 (telosmith --version works too)
 ```
-
-Until the v0.5.0 tag exists, use `@main`.
 
 Python 3.10 or newer; no other dependencies.
 
