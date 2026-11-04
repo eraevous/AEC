@@ -139,9 +139,98 @@ def defined_symbols(edges: dict) -> set[str]:
     return out
 
 
+def _relation_findings(store: Store, r: Record, symbols: set[str] | None) -> list[Finding]:
+    """Relation names are known; `code:` targets exist in the snapshot (when given); other targets resolve."""
+    out = []
+    for e in r.relations:
+        if e.get("rel") not in RELATIONS:
+            out.append(Finding("error", "relation", r.ref, f"unknown relation {e.get('rel')!r}"))
+        elif e.get("rel") in DEPRECATED_RELATIONS:
+            out.append(Finding("warning", "deprecated-relation", r.ref, DEPRECATED_RELATIONS[e["rel"]]))
+        to = e.get("to", "")
+        if to.startswith(CODE):
+            if symbols is not None and to[len(CODE):] not in symbols:
+                near = _near(to[len(CODE):], symbols)
+                hint = ("; did you mean " + " or ".join(CODE + n for n in near) + "?") if near else ""
+                out.append(Finding("error", "code-reference", r.ref,
+                                   f"{e.get('rel')} -> {to}: no such symbol in the edge snapshot (renamed or deleted?){hint}"))
+            continue
+        try:
+            split_ref(to)
+        except ValueError as ex:
+            out.append(Finding("error", "reference", r.ref, str(ex)))
+            continue
+        if to not in store.by_ref:
+            out.append(Finding("error", "reference", r.ref, f"{e.get('rel')} -> {to} does not resolve"))
+    return out
+
+
+def _shape_findings(r: Record) -> list[Finding]:
+    """Fields that look like relations but sit at the top level; a non-string rationale."""
+    out = []
+    misplaced = sorted(k for k in RELATIONS & set(r.data) if _ref_shaped(r.data[k]))
+    if misplaced:
+        out.append(Finding("warning", "relation-shape", r.ref,
+                           f"top-level field(s) {', '.join(misplaced)} look like relations but are not checked or "
+                           "propagated; write them as \"relations\": [{\"rel\": ..., \"to\": ...}]"))
+    if "rationale" in r.data and not isinstance(r.get("rationale"), str):
+        out.append(Finding("error", "rationale-shape", r.ref, "rationale must be a string"))
+    return out
+
+
+def _decision_findings(store: Store, r: Record) -> list[Finding]:
+    """Rule 1: an accepted decision needs an authority that governs its subject."""
+    if r.type == "decision" and r.get("status") == "accepted" and not store.governs(r.get("decided_by"), r.subject):
+        return [Finding("error", "authority", r.ref,
+                        f"accepted, but decided_by={r.get('decided_by')!r} does not govern subject {r.subject!r}")]
+    return []
+
+
+def _tier_findings(store: Store, r: Record) -> list[Finding]:
+    """Rule 2: evidence tiers need their backing (observed: produced evidence; prospective: a freeze digest)."""
+    if r.type not in {"claim", "evidence"}:
+        return []
+    out = []
+    tier = r.get("tier")
+    if tier is not None and tier not in TIERS:
+        out.append(Finding("error", "tier", r.ref, f"unknown tier {tier!r}"))
+    if r.type == "claim" and tier == "observed":
+        backed = any(store.in_edges(ev.ref, "produced")
+                     for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence")
+        if not backed:
+            out.append(Finding("error", "tier", r.ref,
+                               "tier 'observed' but no supporting evidence was produced by an evaluation"))
+    digest = r.get("frozen_sha256")
+    if tier == "prospective" and not (isinstance(digest, str) and SHA256_RE.fullmatch(digest)):
+        out.append(Finding("error", "tier", r.ref, "tier 'prospective' needs frozen_sha256, a 64-character "
+                           "lowercase hex SHA-256 of the frozen source (freeze before the outcome)"))
+    return out
+
+
+def _evidence_kind_findings(store: Store, r: Record) -> list[Finding]:
+    """Known evidence kinds and claim categories; rule 5, outcome sufficiency (a warning)."""
+    out = []
+    kind, cat = r.get("evidence_kind"), r.get("claim_category")
+    if kind is not None and kind not in EVIDENCE_KINDS:
+        out.append(Finding("error", "evidence-kind", r.ref, f"unknown evidence_kind {kind!r}"))
+    if cat is not None and cat not in CLAIM_CATEGORIES:
+        out.append(Finding("error", "claim-category", r.ref, f"unknown claim_category {cat!r}"))
+    if r.type == "claim" and cat == "purpose_outcome" and store.latest.get(r.id) is r:
+        sup = [ev for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence"]
+        if sup and all(ev.get("evidence_kind") == "contract_conformance" for ev in sup):
+            out.append(Finding("warning", "outcome-sufficiency", r.ref,
+                               "purpose-outcome claim is supported only by contract-conformance evidence ("
+                               + ", ".join(ev.ref for ev in sup) + "): an unsupported inference, not a "
+                               "finding that the outcome failed. Add an outcome observation or narrow the claim."))
+    return out
+
+
 def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Finding]:
     """Deterministic cross-record checks. They say nothing about whether evidence is *good*.
-    With an edge snapshot, `code:` references must name a symbol the snapshot defines."""
+    With an edge snapshot, `code:` references must name a symbol the snapshot defines.
+
+    Findings come per record, in this order: unique id@version, known type, relations, field shape,
+    source anchors, decision authority, tiers, evidence kinds and outcome sufficiency, revisions."""
     out: list[Finding] = list(getattr(store, "problems", []))
     symbols = defined_symbols(edges) if edges else None
     seen = set()
@@ -151,69 +240,16 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
         seen.add(r.ref)
         if r.type not in TYPES:
             out.append(Finding("error", "type", r.ref, f"unknown type {r.type!r}"))
-        for e in r.relations:
-            if e.get("rel") not in RELATIONS:
-                out.append(Finding("error", "relation", r.ref, f"unknown relation {e.get('rel')!r}"))
-            elif e.get("rel") in DEPRECATED_RELATIONS:
-                out.append(Finding("warning", "deprecated-relation", r.ref, DEPRECATED_RELATIONS[e["rel"]]))
-            to = e.get("to", "")
-            if to.startswith(CODE):
-                if symbols is not None and to[len(CODE):] not in symbols:
-                    near = _near(to[len(CODE):], symbols)
-                    hint = ("; did you mean " + " or ".join(CODE + n for n in near) + "?") if near else ""
-                    out.append(Finding("error", "code-reference", r.ref,
-                                       f"{e.get('rel')} -> {to}: no such symbol in the edge snapshot (renamed or deleted?){hint}"))
-                continue
-            try:
-                split_ref(to)
-            except ValueError as ex:
-                out.append(Finding("error", "reference", r.ref, str(ex)))
-                continue
-            if to not in store.by_ref:
-                out.append(Finding("error", "reference", r.ref, f"{e.get('rel')} -> {to} does not resolve"))
-        misplaced = sorted(k for k in RELATIONS & set(r.data) if _ref_shaped(r.data[k]))
-        if misplaced:
-            out.append(Finding("warning", "relation-shape", r.ref,
-                               f"top-level field(s) {', '.join(misplaced)} look like relations but are not checked or "
-                               "propagated; write them as \"relations\": [{\"rel\": ..., \"to\": ...}]"))
-        if "rationale" in r.data and not isinstance(r.get("rationale"), str):
-            out.append(Finding("error", "rationale-shape", r.ref, "rationale must be a string"))
+        out.extend(_relation_findings(store, r, symbols))
+        out.extend(_shape_findings(r))
         if "anchors" in r.data:
             from .sources import SourceContext, record_findings
             if sources is None:
                 sources = SourceContext(Path.cwd())
             out.extend(record_findings(r, sources))
-        # rule 1: accepted decisions need a governing authority
-        if r.type == "decision" and r.get("status") == "accepted" and not store.governs(r.get("decided_by"), r.subject):
-            out.append(Finding("error", "authority", r.ref,
-                               f"accepted, but decided_by={r.get('decided_by')!r} does not govern subject {r.subject!r}"))
-        # rule 2: evidence tiers need their backing
-        if r.type in {"claim", "evidence"}:
-            tier = r.get("tier")
-            if tier is not None and tier not in TIERS:
-                out.append(Finding("error", "tier", r.ref, f"unknown tier {tier!r}"))
-            if r.type == "claim" and tier == "observed":
-                backed = any(store.in_edges(ev.ref, "produced")
-                             for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence")
-                if not backed:
-                    out.append(Finding("error", "tier", r.ref,
-                                       "tier 'observed' but no supporting evidence was produced by an evaluation"))
-            digest = r.get("frozen_sha256")
-            if tier == "prospective" and not (isinstance(digest, str) and SHA256_RE.fullmatch(digest)):
-                out.append(Finding("error", "tier", r.ref, "tier 'prospective' needs frozen_sha256, a 64-character "
-                                   "lowercase hex SHA-256 of the frozen source (freeze before the outcome)"))
-        kind, cat = r.get("evidence_kind"), r.get("claim_category")
-        if kind is not None and kind not in EVIDENCE_KINDS:
-            out.append(Finding("error", "evidence-kind", r.ref, f"unknown evidence_kind {kind!r}"))
-        if cat is not None and cat not in CLAIM_CATEGORIES:
-            out.append(Finding("error", "claim-category", r.ref, f"unknown claim_category {cat!r}"))
-        if r.type == "claim" and cat == "purpose_outcome" and store.latest.get(r.id) is r:
-            sup = [ev for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence"]
-            if sup and all(ev.get("evidence_kind") == "contract_conformance" for ev in sup):
-                out.append(Finding("warning", "outcome-sufficiency", r.ref,
-                                   "purpose-outcome claim is supported only by contract-conformance evidence ("
-                                   + ", ".join(ev.ref for ev in sup) + "): an unsupported inference, not a "
-                                   "finding that the outcome failed. Add an outcome observation or narrow the claim."))
+        out.extend(_decision_findings(store, r))
+        out.extend(_tier_findings(store, r))
+        out.extend(_evidence_kind_findings(store, r))
         if r.type == "revision" and not r.get("authorized_by"):
             out.append(Finding("warning", "authority", r.ref, "revision without authorized_by: it is a proposal, not yet a revision"))
     return out
