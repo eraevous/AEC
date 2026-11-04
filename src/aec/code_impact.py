@@ -9,13 +9,19 @@ produce no events (Constitution IV: structural only; nothing here judges whether
 
 Separately, a changed definition that a linked symbol reaches through resolved `calls` or `references`
 edges (default: one step) is reported as a review pointer. It assigns no status: a changed callee does not
-make the caller's rationale stale (A5RR; what a link means is unchanged).
+make the caller's rationale stale (A5RR; what a link means is unchanged). The report also notes how many
+changed definitions lie exactly one step beyond the depth it walked from a linked symbol whose records are
+not already classified, so a quiet report discloses a change it stopped just short of.
+
+A latest record that still references an older version of a record the change reached (C-1@1 depends_on
+R-1@1 while R-1@2 changed) is reported as a pointer too (evidence and decisions excepted: they are history): only latest versions take a status, so without
+it the change would never reach that record. `check` warns about the same reference (superseded-reference).
 """
 from __future__ import annotations
 
 from . import edges as E
 from .impact import ImpactReport, impact
-from .records import CODE, Record, Store
+from .records import CODE, HISTORICAL, Record, Store
 
 REACH_KINDS = ("calls", "references")
 
@@ -49,6 +55,35 @@ def events_from_diff(d: dict, referenced: set[str], modules: set[str] = frozense
     return events
 
 
+def _reach_edges(old: dict, new: dict) -> dict[str, set[tuple[str, str]]]:
+    """Resolved calls/references from both snapshots (a removed callee is only in the old one)."""
+    out_edges: dict[str, set[tuple[str, str]]] = {}
+    for snap in (old, new):
+        for e in snap["edges"]:
+            if e["kind"] in REACH_KINDS and e.get("resolved", True):
+                out_edges.setdefault(e["src"], set()).add((e["dst"], e["kind"]))
+    return out_edges
+
+
+def _walk(sym: str, out_edges: dict, modules: set[str], depth: int) -> tuple[dict, set[str], list]:
+    """Breadth-first from all of sym's own body (nested defs, methods; covered by its hash) for `depth` steps.
+    Returns the first path to each reached symbol, everything seen, and the last frontier."""
+    inside = {s for s in out_edges if s == sym or (s.startswith(sym + ".") and _owner(s, modules) == _owner(sym, modules))}
+    seen, frontier, paths = set(inside), [(s, []) for s in sorted(inside)], {}
+    for _ in range(depth):
+        nxt = []
+        for s, path in frontier:
+            for dst, kind in sorted(out_edges.get(s, ())):
+                if dst in seen:
+                    continue
+                seen.add(dst)
+                step = path + [(dst, kind)]
+                paths[dst] = step
+                nxt.append((dst, step))
+        frontier = nxt
+    return paths, seen, frontier
+
+
 def reached_changes(store: Store, d: dict, old: dict, new: dict, referenced: set[str], modules: set[str],
                     depth: int = 1, flagged: frozenset = frozenset()) -> list[str]:
     """Pointers (candidates for attention, not required reassessments; they change no status): linked symbol S reaches changed definition T through resolved calls/references.
@@ -61,12 +96,7 @@ def reached_changes(store: Store, d: dict, old: dict, new: dict, referenced: set
     changed = set(d["defs_changed"]) | set(d["defs_removed"])
     if not changed:
         return []
-    out_edges: dict[str, set[tuple[str, str]]] = {}
-    for snap in (old, new):
-        for e in snap["edges"]:
-            if e["kind"] in REACH_KINDS and e.get("resolved", True):
-                out_edges.setdefault(e["src"], set()).add((e["dst"], e["kind"]))
-    srcs = sorted(out_edges)
+    out_edges = _reach_edges(old, new)
     linked_by: dict[str, list[str]] = {}
     for r in store.records:
         for e in r.relations:
@@ -75,21 +105,8 @@ def reached_changes(store: Store, d: dict, old: dict, new: dict, referenced: set
                 linked_by.setdefault(to[len(CODE):], []).append(r.ref)
     findings = []
     for sym in sorted(referenced - modules):
-        # a symbol's own body (nested defs, methods) is covered by its hash: start from all of it
-        inside = {s for s in srcs if s == sym or (s.startswith(sym + ".") and _owner(s, modules) == _owner(sym, modules))}
-        seen, frontier, hits = set(inside), [(s, []) for s in sorted(inside)], {}
-        for _ in range(depth):
-            nxt = []
-            for s, path in frontier:
-                for dst, kind in sorted(out_edges.get(s, ())):
-                    if dst in seen:
-                        continue
-                    seen.add(dst)
-                    step = path + [(dst, kind)]
-                    if dst in changed:
-                        hits.setdefault(dst, step)
-                    nxt.append((dst, step))
-            frontier = nxt
+        paths, _, _ = _walk(sym, out_edges, modules, depth)
+        hits = {dst: p for dst, p in paths.items() if dst in changed}
         for dst in sorted(hits):
             path = hits[dst]
             via = "".join(f" via {CODE}{p}" for p, _ in path[:-1])
@@ -102,6 +119,52 @@ def reached_changes(store: Store, d: dict, old: dict, new: dict, referenced: set
     return findings
 
 
+def unexamined_beyond(store: Store, d: dict, old: dict, new: dict, referenced: set[str], modules: set[str],
+                      depth: int, flagged: frozenset = frozenset()) -> str | None:
+    """A note counting changed definitions reachable from a linked symbol in exactly depth+1 steps but not
+    within `depth` (one more breadth-first layer). Linked symbols whose records are all already classified
+    are skipped, as pointers are folded. None when there are none: edits nothing links to report nothing."""
+    changed = set(d["defs_changed"]) | set(d["defs_removed"])
+    if not changed:
+        return None
+    out_edges = _reach_edges(old, new)
+    linked_by: dict[str, set[str]] = {}
+    for r in store.records:
+        for e in r.relations:
+            to = str(e.get("to", ""))
+            if to.startswith(CODE):
+                linked_by.setdefault(to[len(CODE):], set()).add(r.ref)
+    within, beyond = set(), set()
+    for sym in sorted(referenced - modules):
+        if not linked_by.get(sym, set()) - set(flagged):
+            continue
+        _, seen, frontier = _walk(sym, out_edges, modules, depth)
+        within |= seen & changed
+        beyond |= {dst for s, _ in frontier for dst, _ in out_edges.get(s, ()) if dst not in seen and dst in changed}
+    n = len(beyond - within)
+    if not n:
+        return None
+    return (f"reach depth {depth}; {n} changed symbol{'s' if n != 1 else ''} at depth {depth + 1} "
+            f"not reported (use --reach-depth {depth + 1})")
+
+
+def superseded_pointers(store: Store, impacts: dict) -> list[str]:
+    """Latest records that reference an older version of a record the change reached, and so take no status."""
+    out = []
+    for r in sorted((x for x in store.latest.values() if x.ref not in impacts and x.type not in HISTORICAL),
+                    key=lambda x: x.ref):
+        for e in r.relations:
+            to = str(e.get("to", ""))
+            if e.get("rel") == "supersedes" or to.startswith(CODE) or to not in store.by_ref:
+                continue
+            rid = store.by_ref[to].id
+            newest = store.latest[rid]
+            if rid != r.id and newest is not store.by_ref[to] and newest.ref in impacts:
+                out.append(f"structural: {r.ref} references superseded {to}; {newest.ref} changed "
+                           f"({impacts[newest.ref].status}); no status change; candidate for attention: {r.ref}")
+    return out
+
+
 def code_impact(store: Store, old: dict, new: dict, *, reach_depth: int = 1) -> tuple[ImpactReport, list[dict]]:
     d = E.diff(old, new)
     modules = set(old["header"].get("modules", {})) | set(new["header"].get("modules", {}))
@@ -111,4 +174,8 @@ def code_impact(store: Store, old: dict, new: dict, *, reach_depth: int = 1) -> 
               for s in sorted(referenced)]
     rep = impact(Store(store.records + pseudo), events)
     rep.findings.extend(reached_changes(store, d, old, new, referenced, modules, reach_depth, frozenset(rep.impacts)))
+    rep.findings.extend(superseded_pointers(store, rep.impacts))
+    footer = unexamined_beyond(store, d, old, new, referenced, modules, reach_depth, frozenset(rep.impacts))
+    if footer:
+        rep.notes.append(footer)
     return rep, events

@@ -160,5 +160,6 @@ Everything else is reported as unaffected. Over-flagging is a failure too.
 4. A committed criterion or purpose changed without an authorized revision is flagged. A provisional one is not.
 
 5. A `purpose_outcome` claim supported only by `contract_conformance` evidence is warned about (`outcome-sufficiency`).
+6. The latest version of a claim, requirement or other conclusion that references an older version of another record (other than through `supersedes`) is warned about (`superseded-reference`): only latest versions take an impact status, so `code-impact` reaches it only as a `structural: ... references superseded ...` pointer. The old version may be meant; a warning, never an error. Evidence and decisions are history by nature, pinned to the version that existed when they were observed or made, so they are never flagged: re-pointing them would assert support nobody checked.
 
-`aec check` covers rules 0–3 and 5; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.
+`aec check` covers rules 0–3, 5 and 6; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.
