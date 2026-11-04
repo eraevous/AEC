@@ -11,5 +11,6 @@ What AEC has been measured on, including results that didn't favour it. Each ent
 | [walkthrough-001](walkthrough-001.md) | Can a newcomer go from the README to a `stale` report? (v0.4.0 README) | Not from the README alone. It led to the install and quickstart sections. |
 | [walkthrough-002](walkthrough-002.md) | The same question for the reorganised README. | Yes for the commands. It found gaps in record guidance and the worked-example command, both fixed. |
 | [MtG pilot](mtg-pilot.md) | Do the change-impact dispositions reproduce what reviewers concluded by hand? (v0, 2026-10-26) | Yes on six scenarios, but they were encoded after the fact by the session that wrote the tool. |
+| [eval-design-framework-comparison](eval-design-framework-comparison.md) | Does Telosmith's change report enhance an agentic framework without Spec Kit, under a tight compute budget? | **Draft design only**: not frozen, not run. |
 
 Walkthroughs were done by AI agents, not human strangers.

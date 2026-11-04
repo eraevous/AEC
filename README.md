@@ -136,7 +136,9 @@ legacy/unknown methods; an explicit override labels a method comparison.
 | understand the edge snapshot | [docs/reference/edges.md](docs/reference/edges.md) |
 | anchor records to source passages | [docs/reference/source-anchors.md](docs/reference/source-anchors.md) |
 | clean up a duplicate record line after a merge | [docs/reference/records-hygiene.md](docs/reference/records-hygiene.md) |
+| see what Telosmith is for, ranked by evidence | [docs/use-cases.md](docs/use-cases.md) |
 | use Telosmith inside Spec Kit | [docs/integrations/spec-kit.md](docs/integrations/spec-kit.md) |
+| use Telosmith without Spec Kit (hook, git hooks, CI, rules file) | [docs/integrations/without-spec-kit.md](docs/integrations/without-spec-kit.md) |
 | point Telosmith at your relay-kit records | [docs/integrations/relay-kit.md](docs/integrations/relay-kit.md) |
 | see where Telosmith is going | [docs/architecture.md](docs/architecture.md) and [docs/history/about.md](docs/history/about.md) |
 | check the evidence | [docs/evaluations/](docs/evaluations/README.md) |
