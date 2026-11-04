@@ -1,0 +1,5 @@
+// C-21 fixture: a merge of two branches that both appended R-merge@1 leaves a byte-identical second copy.
+{"id": "AU-o", "version": 1, "type": "authority", "text": "owner", "governs": ["s"]}
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "appended on two branches"}
+{"id": "C-other", "version": 1, "type": "claim", "text": "appended on main in between", "relations": [{"rel": "depends_on", "to": "R-merge@1"}]}
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "appended on two branches"}

@@ -1,1 +1,1 @@
-{"roots": {"relay-kit-private": "../relay-kit-private"}, "records_root": "relay-kit-private"}
+{"roots": {"relay-kit-private": "../relay-kit-private"}, "records_root": "relay-kit-private", "append_only": {"relay-kit-private": ["governance/decisions.jsonl"]}}
