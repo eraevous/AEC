@@ -9,17 +9,9 @@ Use cases for Telosmith are also required."* For the setup without Spec Kit, see
 [integrations/without-spec-kit.md](integrations/without-spec-kit.md). For the planned comparison, see
 [evaluations/eval-design-framework-comparison.md](evaluations/eval-design-framework-comparison.md).
 
-## How to read the tiers
-
-| Tier | Meaning |
-|---|---|
-| **Demonstrated** | The mechanism was run end to end on 2026-11-04 (in `docs/demo.md`, or in the scratch project for this page), and the output is pasted. It shows that the mechanism works, **not that it helps**. |
-| **Qualified** | An entry in `docs/evaluations/` measured coverage, delivery or noise. Still not an outcome result. |
-| **Plausible, untested** | The commands exist and run, but no one has used this for its stated purpose. |
-
 **No use case below has outcome evidence.** The evidence that exists points the other way, or is null:
 
-- [probe-001](evaluations/probe-001-results.md): agents found hidden dependants without Telosmith (18/18 trials
+- [probe-001](evaluations/probe-001-results.md): agents found hidden dependants without Telosmith (18 trials, 6/6
   in every condition), and briefings raised token use on 2 of 3 tasks.
 - fathom-002 (run 2026-11-04; materials in the private relay-kit repository, see
   [governance.md](governance.md)): a first build with Spec Kit and Telosmith scored 39 against 44 and 45 for
@@ -33,6 +25,17 @@ Use cases for Telosmith are also required."* For the setup without Spec Kit, see
 The claim still untested, and the one the use cases rest on, is **better change review**: a change that
 endangers a recorded reason gets noticed. Use case 1 is how that is supposed to happen.
 
+## How to read the tiers
+
+| Tier | Meaning |
+|---|---|
+| **Demonstrated** | The mechanism was run end to end on 2026-11-04 (in `docs/demo.md`, or in the scratch project for this page), and the output is pasted. It shows that the mechanism works, **not that it helps**. |
+| **Qualified** | An entry in `docs/evaluations/` measured coverage, delivery or noise. Still not an outcome result. |
+| **Plausible, untested** | The commands exist and run, but no one has used this for its stated purpose. |
+
+The scratch project behind every pasted output on this page (except use cases 6 and 7, whose records are shown
+inline) is in [`examples/without-spec-kit/`](../examples/without-spec-kit/). Its `run.sh` reproduces the outputs.
+
 ## Summary
 
 | # | Use case | Tier | Runs | LLM tokens |
@@ -42,7 +45,7 @@ endangers a recorded reason gets noticed. Use case 1 is how that is supposed to 
 | 3 | Refactor safety: module links and reach pointers | Demonstrated + qualified (noise measured) | same as 1 and 2 | none |
 | 4 | "Why does this code exist?" lookup | Demonstrated (mechanics only; no dedicated command) | on demand | none |
 | 5 | Audit trail: claims → evidence → decisions, append-only, authority-checked | Mechanics demonstrated; use untested | on demand, CI | none |
-| 6 | Experiment registry for data-science work | Mechanics demonstrated; used in Telosmith's own records; use untested | on demand | none |
+| 6 | Experiment registry for data-science work | Mechanics demonstrated; one experiment in Telosmith's own records on main; use untested | on demand | none |
 | 7 | Knowledge artifacts beyond code (definitions, assumptions) | **Exploratory**: one after-the-fact pilot + anchor check | on demand | none |
 
 Considered, not kept: **onboarding** ("a newcomer reads the records before the code"). Nothing does this
@@ -218,11 +221,14 @@ invisible, and `reach` prints a caveat saying so.
 ## 5. Audit trail for compliance-minded teams
 
 **Tier: mechanics demonstrated; use untested.** `docs/reasoning-vocabulary.md` (the ADR, change-request and
-rebaselining mappings, and the `revise` authorization rule); the MtG pilot, scenarios 3 and 4
-([mtg-pilot.md](evaluations/mtg-pilot.md)).
+rebaselining mappings, and the `revise` authorization rule); the MtG pilot's P-01 amendment
+([mtg-pilot.md](evaluations/mtg-pilot.md): "stale and reported until Zach authorizes it, and rebaseline once he
+does"), in `examples/mtg-pilot/scenario3_p01_amendment_unauthorized.jsonl` and `scenario4_p01_amendment_authorized.jsonl`.
+Rerun on 2026-11-04, the first prints `[stale] CL-boundary-rule@1` with "unauthorized revision of committed requirement
+P-01@1: by='kate', authorized_by=None ...", and the second prints `[rebaseline] CL-boundary-rule@1`.
 
 **Situation.** Someone has to answer, later, "what was concluded, on what evidence, who decided, and did the
-basis change afterwards?". That is a controls-review question, and Zach's background is audit and compliance.
+basis change afterwards?".
 
 **What Telosmith does.**
 - Chains `evidence -supports-> claim -depends_on-> decision`, pinned by `id@version`.
@@ -254,8 +260,8 @@ not a records-only figure.
 ## 6. Experiment registry for data-science work
 
 **Tier: mechanics demonstrated; used in Telosmith's own ledger; use untested.** DEC-033 (types defined,
-`docs/reasoning-vocabulary.md`); `EXP-owner-report@1` in `.aec/records.jsonl`; `EXP-dec021-fathom-replay@2`
-(PR #50).
+`docs/reasoning-vocabulary.md`); `EXP-owner-report@1` in `.aec/records.jsonl`. (`EXP-dec021-fathom-replay@2` is pending: it is on PR #50
+and not yet on main.)
 
 **Situation.** An analyst tries two feature sets, keeps one, and ships a model decision on the result. Later
 the holdout turns out to have leaked.

@@ -11,7 +11,13 @@ files; `edges.py` lists `.specify` only as a directory to skip. Details are [at 
 
 ## The scratch project
 
-The scratch project is a `shop` package with two files. `apply_discount` calls `clamp`, which calls `round_cents`
+It ships in [`examples/without-spec-kit/`](../../examples/without-spec-kit/): the two source files,
+`docs/pricing.md`, the full `.aec/records.jsonl` (its anchor carries the real sha256, and the decision has
+`subject: design`, both of which `check` requires), the three scripts below, and `run.sh`, which runs every path on
+this page in a temporary repo in about 6 s (`PYTHONPATH=src examples/without-spec-kit/run.sh` from a checkout).
+Hashes and short SHAs in `run.sh`'s output differ from those pasted here.
+
+It is a `shop` package with two files. `apply_discount` calls `clamp`, which calls `round_cents`
 and reads `LIMIT`; `shop/tax.py` holds `RATE`, `add_tax` and `label`. After `aec init . --owner "Ada"`, these
 records were appended (the full lines follow the README's quickstart shape):
 

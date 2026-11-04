@@ -140,20 +140,28 @@ judgment the first marks ambiguous.
 
 ## Budget per trial
 
-Target: **under 50k tokens per trial per arm**, as Zach asked.
+Target: **under 50k tokens per trial per arm.** The number is this design's (the coordinator's brief for this
+draft), not Zach's. Zach's constraint is qualitative: his company "might balk at the compute budget I've gotten
+used to". He sets the real cap ([Decisions for Zach](#decisions-for-zach)).
 
 Prior measurement says this is **not** achievable inside a full Claude Code session if cache reads count. probe-001
 trials used 0.55–1.54 M total tokens each, with 88–97% of that cache reads, on a 3,200-line repository with 4–14
 tool calls. Its harness context is re-read on every turn. So the design fixes the metric and the harness first:
 
+The two cheap rows assume a **proposed minimal harness** (a direct API loop with a small system prompt and the
+repository's tools) that **does not exist yet** and would have to be built and frozen. It is **not** the default X
+(Claude Code + `CLAUDE.md` + hook). In it, the hook does not fire by itself: the harness would inject the
+report after an edit. So the minimal harness **does not test hook delivery**, only whether a delivered report
+changes the review. Testing delivery in the default X means the third row's cost.
+
 | Setting | Estimate per trial | Basis (all inference unless noted) |
 |---|---|---|
-| Review mode, minimal harness (direct API loop, ~2k system prompt, 8-call cap) | **~15–25k total tokens** in A; B adds the summary (~0.2–0.7k) re-read on later turns, **+~1–3k** | Diff ~1k; 2–4 file reads of ~2k each; context grows to ~10k by the last turn; ~5 turns. The 695-character report measured here is ~175 tokens. |
-| Implement mode, minimal harness (12-call cap) | **~35–45k** in A; B **+~2–5k** (1–3 hook firings, each re-read on later turns; the hook re-reports until commit) | ~6–8 turns averaging ~5–6k context, plus ~3k output |
+| Review mode, proposed minimal harness (direct API loop, ~2k system prompt, 8-call cap) | **~15–25k total tokens** in A; B adds the summary (~0.2–0.7k) re-read on later turns, **+~1–3k** | Diff ~1k; 2–4 file reads of ~2k each; context grows to ~10k by the last turn; ~5 turns. The 695-character report measured here is ~175 tokens. |
+| Implement mode, proposed minimal harness (12-call cap; report injected, not hook-delivered) | **~35–45k** in A; B **+~2–5k** (1–3 hook firings, each re-read on later turns; the hook re-reports until commit) | ~6–8 turns averaging ~5–6k context, plus ~3k output |
 | Implement mode inside Claude Code, counting cache reads | **~0.5–1.5 M** (measured in probe-001) | Over budget by 10–30×. Count **uncached input + output** instead (probe-001 output alone was 2–9k per trial), or use the minimal harness. |
 
 Telosmith's own commands add **zero model tokens**: about 0.4 s per hook firing on a toy repo, and about 2 s on a
-63-file repo (measured 2026-11-04, [use-cases.md](../use-cases.md)). Whole run, review mode, minimal harness:
+63-file repo (measured 2026-11-04, [use-cases.md](../use-cases.md)). Whole run, review mode, proposed minimal harness:
 32 trials × ~25k ≈ **0.8 M tokens**. Implement mode: 32 × ~45k ≈ **1.4 M**. Both are under the 8 M cap DEC-021
 kept, and both are an order of magnitude below one probe-001 condition. **A stop-at-cap rule is still needed:**
 pick the cap at the freeze, and stop at the end of an interleaved block.
@@ -164,21 +172,37 @@ hook fires before a commit. The experiment measures this; the estimate is not a 
 
 ## Sample-size honesty
 
-This is a **diagnostic**, not a superiority test. That is Kate's point on PR #50, reproduced in
-`dec-021-protocol.md` ("How many trials, and what the counts can show"). The arithmetic from her review, with a "B
-ahead by ≥ 2 catches at equal n" heuristic and n = 4 per arm:
+This is a **diagnostic**, not a superiority test, as Kate's review of PR #50 insists (`dec-021-protocol.md`,
+"How many trials, and what the counts can show"). That protocol's error rates for a "B ahead by ≥ 2 at equal n"
+heuristic at n = 4 per arm combine two reviewers' figures:
 
-- With no effect (p = 0.5), B comes out "ahead" by chance **14.5%** of the time.
-- With a real effect from 0.3 to 0.6, the heuristic **misses it 57%** of the time.
+- **Kate's:** with no effect (p = 0.5), a false "B ahead" happens **14.5%** of the time. With a true effect from
+  0.3 to 0.7, the heuristic misses it **44.8%** of the time.
+- **The cold Claude reviewer's:** with a true effect from 0.3 to 0.6, it misses **57.3%** of the time.
 
-Here each arm has 4 endangering items × r = 2 = **8 catch opportunities**, and they are correlated within an item
-(the same change, the same model). The effective n is closer to 4 items than to 8 independent trials. So:
+This design's rules count more than 4 per arm, so the rates must be stated at the n each rule uses. Recomputed
+2026-11-04 (two independent binomials, margin ≥ 2; reproduces `dec-021-power.py` at n = 4; illustrative, because
+within-item correlation makes every row worse):
 
-- A null result is **weak** evidence against even a moderate advantage. It is reported as "inconclusive at n = 4
-  items", and it never reads as "Telosmith does not help".
+| n per arm | Used by | P(false "B ahead"), p = 0.5 | p = 0.3 | Miss, 0.3 → 0.6 | Miss, 0.3 → 0.7 |
+|---|---|---|---|---|---|
+| 4 | (DEC-021 reference) | 0.145 | 0.120 | 0.573 | 0.448 |
+| **6** | **primary rule**: E1–E3 × r = 2 | 0.194 | 0.170 | 0.416 | 0.276 |
+| **8** | all endangering items, E1–E4 × r = 2 (descriptive) | **0.227** | 0.205 | **0.311** | 0.175 |
+
+At a fixed margin of 2, a larger n buys power by raising the false-favour rate. The margin should scale with n.
+Choosing it is a [freeze](#freeze) decision, and the table is re-run with `dec-021-power.py` at that point.
+
+The ceiling rule (A catches ≥ 5 of 6) is met by chance with probability 0.11 if A's true rate is 0.5, 0.42 at 0.7,
+and 0.89 at 0.9.
+
+The 6 or 8 trials per arm are **not independent**. They come from 3 or 4 items, each run twice with the same model,
+so the effective n is nearer the item count. Therefore:
+
+- A null result is **weak** evidence against even a moderate advantage. It is reported as "inconclusive at
+  3–4 items", and never as "Telosmith does not help".
 - A B-ahead result is reported as "signal on this repository and model; replicate", never as "outperforms X".
 - Results are reported **per item** as well as summed, because one item can carry the whole difference.
-- Before the freeze, `dec-021-power.py` is re-run with this design's n and margin, and the table goes here.
 
 ## Decision rules
 
@@ -266,3 +290,7 @@ the precondition table, the re-run power table, the budget cap and the token met
 ## Change log
 
 - 2026-11-04, claude:aec#usecases: first draft.
+- 2026-11-04, claude:aec#usecases, after a fresh-context review of PR #54:
+  - the 50k target is attributed to this design, not to Zach;
+  - the minimal harness is labelled as proposed, and as not testing hook delivery;
+  - the power figures are attributed to each reviewer and recomputed at n = 6 and n = 8.
