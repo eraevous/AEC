@@ -22,6 +22,23 @@ jobs:
         run: PYTHONPATH=src python3 -m aec edges . -o .aec/edges.jsonl
       - name: Records check against the snapshot (fails on dangling code references)
         run: PYTHONPATH=src python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl
+      - name: Code impact against the PR base (report-only; see the job summary)
+        if: github.event_name == 'pull_request' && matrix.python-version == '3.12'
+        env:
+          PYTHONPATH: src
+          AEC_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base=$(git merge-base "$AEC_BASE" HEAD 2>/dev/null) || base=""
+          if [ -z "$base" ]; then
+            echo "code-impact skipped: no base revision for this event" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          python3 -m aec snapshot . --rev "$base" -o .aec/before.jsonl || {
+            echo "code-impact skipped: could not snapshot $base" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0; }
+          report=$(python3 -m aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl 2>&1) || true
+          printf '%s\n' "$report"
+          { echo "## Telosmith code-impact (structural, report-only) vs $base"; echo '```'
+            printf '%s\n' "$report"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
       - name: WP1A structural diff (artifact, no comments)
         if: github.event_name == 'pull_request' && matrix.python-version == '3.12'
         env:
