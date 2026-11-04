@@ -188,5 +188,7 @@ def render(store: Store, rep: ImpactReport) -> str:
             lines.append(f"    via {' -> '.join(i.because)}")
     for f in rep.findings:
         lines.append(f"[finding] {f}")
-    lines.append(f"\n{len(rep.impacts)} affected, {rep.unaffected} conclusions unaffected")
+    pointers = sum(1 for f in rep.findings if " reaches changed " in f)
+    lines.append(f"\n{len(rep.impacts)} affected, {rep.unaffected} conclusions with no status change"
+                 + (f" ({pointers} pointer(s) above: candidates for attention)" if pointers else ""))
     return "\n".join(lines)
