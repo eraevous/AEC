@@ -101,6 +101,35 @@ def pull_requests(repos: list[str]) -> list[dict]:
     return items
 
 
+def stranded_merges(repos: list[str], days: float = 14) -> list[dict]:
+    """Merged PRs whose base was another branch that never reached the default branch.
+
+    A stacked PR merges into its base branch. If that base isn't retargeted to the default branch (for
+    example, it wasn't deleted when its own PR merged), the work sits merged but unreleased."""
+    items = []
+    for repo in repos:
+        info = gh(f"repos/{repo}") or {}
+        default = info.get("default_branch", "main")
+        closed = gh(f"repos/{repo}/pulls?state=closed&per_page=50") or []
+        bases = {}
+        for p in closed:
+            merged = when(p.get("merged_at"))
+            if merged and p["base"]["ref"] != default and (NOW - merged).days <= days:
+                bases.setdefault(p["base"]["ref"], []).append(p["number"])
+        open_heads = {p["head"]["ref"] for p in (gh(f"repos/{repo}/pulls?state=open&per_page=50") or [])}
+        for base, numbers in sorted(bases.items()):
+            cmp = gh(f"repos/{repo}/compare/{default}...{base}")
+            if not cmp or cmp.get("ahead_by", 0) == 0 or base in open_heads:
+                continue  # already landed, branch gone, or a PR to land it is open
+            prs = ", ".join(f"#{n}" for n in sorted(numbers))
+            items.append({"lever": "land", "where": f"{repo.split('/')[1]}:{base}",
+                          "what": f"{prs} merged into `{base}`, which is {cmp['ahead_by']} commit(s) ahead of {default}",
+                          "choice": f"open or merge a PR from `{base}` into {default}",
+                          "default": f"the work stays off {default}: merged, but not released or used",
+                          "age": "-", "blocks": 0})
+    return items
+
+
 def relay_decisions(relay: Path) -> tuple[list[dict], list[dict]]:
     rows = jsonl(relay / "governance" / "decisions.jsonl")
     superseded = set()
@@ -196,7 +225,7 @@ def main(argv=None) -> int:
     ap.add_argument("-o", "--output", type=Path)
     a = ap.parse_args(argv)
 
-    levers = pull_requests(a.repo)
+    levers = pull_requests(a.repo) + stranded_merges(a.repo)
     notes = [x for x in levers if x["lever"] == "note"]
     levers = [x for x in levers if x["lever"] != "note"]
     decisions: list[dict] = []
@@ -205,7 +234,7 @@ def main(argv=None) -> int:
         levers += open_decisions + handoffs(a.relay) + owner_held(a.relay)
     record_items, ambitions = telosmith_records(a.telosmith)
     levers += record_items
-    order = {"merge": 0, "route": 1, "decide": 2, "authorise": 3, "confirm": 4, "investigate": 5, "wait": 6}
+    order = {"land": -1, "merge": 0, "route": 1, "decide": 2, "authorise": 3, "confirm": 4, "investigate": 5, "wait": 6}
     # Merges first, each repository's stack from its base; then routing, decisions and the rest.
     levers.sort(key=lambda x: (order.get(x["lever"], 9), x.get("stack", ("", 0, 0)), x.get("where", "")))
     actionable = [x for x in levers if x["lever"] != "wait"]
