@@ -19,7 +19,8 @@ OUTPUT_TEMPLATES = {
     'note': 'NOTE: {detail}',
     'verified': 'artifact bytes and locator match',
     'appended': ('file grew after anchoring: it begins with exactly the anchored {anchored} byte(s) and the '
-                 'locator resolves in them; {added} byte(s) appended later are not checked'),
+                 'locator resolves in them; {added} byte(s) appended later are not checked, and a later entry '
+                 'may supersede the anchored one'),
     'missing': 'source file not found in an available root; no inference about earlier existence',
     'mismatch': 'file bytes changed; the earlier observation is not falsified; applicability needs review',
     'locator_invalid': 'locator does not resolve in the matching artifact',
@@ -66,11 +67,14 @@ def anchored_prefix(raw: bytes, sha256: str, prefix_bytes=None, append_only=Fals
     """Length of the anchored bytes at the start of raw, or None (spec 006).
 
     With prefix_bytes, sha256 covers exactly that many leading bytes. For a declared append-only
-    file, the whole file and every newline-ended prefix are tried in one incremental pass."""
+    file, the whole file and every newline-ended prefix are tried in one incremental pass.
+    Either way a proper prefix must end at a line boundary: locators are line-oriented, and bytes
+    appended after a mid-line prefix would extend (change) its final line."""
     sha256 = sha256.lower()
     if prefix_bytes is not None:
         if len(raw) >= prefix_bytes and hashlib.sha256(raw[:prefix_bytes]).hexdigest() == sha256:
-            return prefix_bytes
+            if prefix_bytes == len(raw) or raw[prefix_bytes - 1:prefix_bytes] == b'\n':
+                return prefix_bytes
         return None
     if hashlib.sha256(raw).hexdigest() == sha256:
         return len(raw)

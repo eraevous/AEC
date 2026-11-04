@@ -16,7 +16,11 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
 - `check` reads a byte-identical duplicate record line (left by merging two branches that appended the
   same record) as one record, with a `duplicate-line` warning naming both lines, instead of failing with
   `unique`. Any difference between the lines is still the `unique` error. No command rewrites records;
-  `docs/reference/records-hygiene.md` gives the manual clean-up.
+  `docs/reference/records-hygiene.md` gives the manual clean-up, which is the owner's call.
+- Fix round (DEC-038 reviews of PR #48): duplicate lines are compared as written, so a copy differing
+  only in surrounding whitespace or CRLF is the `unique` error, not the warning; an anchor whose
+  `prefix_bytes` ends mid-line is `mismatch` once the file grows (appended bytes would extend that line);
+  the `appended` note says a later entry may supersede the anchored one; `append_only` is per root alias.
 
 ### Changed (name)
 - **AEC is now Telosmith** (Zach, 2026-11-02; DEC-036). The distribution is `telosmith`: `aec` and `each`

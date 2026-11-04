@@ -8,3 +8,4 @@
 - [X] T006 Declare relay-kit-private `governance/decisions.jsonl` append-only in `.aec/sources.json`; re-run own check (SC-3).
 - [X] T007 Docs: `docs/reference/source-anchors.md`, `docs/reference/records-hygiene.md`, CHANGELOG Unreleased, speckit log.
 - [X] T008 Append requirement/claim/evidence records; regenerate edges; `check --edges`; full suite.
+- [X] T009 Fix round after the DEC-038 reviews (Kate; review:claude-fresh; `addendum-fix-round.md`): exact-line duplicate comparison; line boundary for `prefix_bytes` growth; supersession wording in the `appended` note; owner-only manual deletion; `append_only` per alias. Tests first (a53618c).

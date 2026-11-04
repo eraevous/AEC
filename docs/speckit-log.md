@@ -208,3 +208,9 @@ Kate's recorded review (prefix-of-original, not a line hash). Fixtures, decoys a
 `tests/test_ledger_hygiene.py` were committed before the implementation (14 of 20 failing).
 On Telosmith's own records the anchor warnings went from 13 to 3, the remaining 3 being real
 edits (a handoff and spec 005). Cost is in the dated intent note.
+
+Fix round (same day, after the DEC-038 reviews by Kate and review:claude-fresh on PR #48): tests first
+(a53618c, 6 failing), then exact-line duplicate comparison, a line boundary for grown `prefix_bytes`
+prefixes, supersession wording in the `appended` note, owner-only manual deletion and per-alias
+`append_only` docs. Spec changes are in `specs/006-ledger-hygiene/addendum-fix-round.md`, since
+AEC-R11@1 anchors `spec.md` whole.

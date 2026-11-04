@@ -48,7 +48,7 @@ are warning findings and do not fail the command:
 | mismatch | Bytes differ; the earlier observation is not falsified, but applicability needs review |
 | locator_invalid | Bytes match, but the range/quote does not resolve |
 | unavailable | Root unconfigured/absent, file unreadable, or symlink escapes the read boundary; cannot check here |
-| appended | (spec 006) The file grew: it begins with exactly the anchored bytes and the locator resolves in them; later bytes are not checked |
+| appended | (spec 006) The file grew: it begins with exactly the anchored bytes, ending at a line boundary, and the locator resolves in them; later bytes are not checked and may supersede the anchored entry |
 
 ### Append-only files (spec 006)
 
@@ -58,16 +58,21 @@ grown file is still `mismatch` for any other anchor.
 
 - `prefix_bytes` on an anchor (a positive integer, the file's length when anchored): `sha256` is
   then the digest of the file's first `prefix_bytes` bytes. Write this on new anchors into logs.
+  If the file has grown, those bytes must end with a newline: a prefix that ends mid-line, followed
+  by more bytes, would let the appended bytes extend (change) its last line, so it is `mismatch`.
+  An unchanged file whose last line has no newline is still `verified`.
 - `append_only` in `.aec/sources.json` declares files that only grow, by root alias (`.` for the
   repository): `{"roots":{"rk":"../relay-kit-private"},"append_only":{"rk":["governance/decisions.jsonl"]}}`.
   A whole-file anchor into a declared file also matches any prefix of it that ends just after a
   newline. This lets existing anchors be read as prefixes without rewriting their records.
+  The declaration applies per root alias: it covers anchors whose `root` is that alias, and the
+  same file reached through another alias (even one pointing at the same directory) is still checked whole.
 
 When the anchored bytes are the whole current file the state is `verified`; when they are a proper
 prefix it is `appended`, printed by `check` (with the byte counts) and by `source show` (with a
 `NOTE:`), and not a finding. The locator must resolve inside the anchored bytes. An edited or
 truncated prefix is `mismatch`. `appended` says nothing about what the later bytes say: a later
-entry may supersede the anchored one, and only a reader can tell. `source search` lists an
+entry may supersede the anchored one, and only a reader can tell. The printed note says so. `source search` lists an
 `appended` anchor under `records_path_only`, since its digest is not the current file's.
 
 Malformed records still fail `check`, as do its pre-existing errors. A digest

@@ -27,3 +27,14 @@
 ## Cost
 
 About 45 minutes of agent wall time from reading to PR; token count not instrumented. Owner time: none (authorization only).
+
+## Fix round (2026-11-04, after the DEC-038 reviews)
+
+Kate and review:claude-fresh reviewed dab05ee. Changes, tests first (a53618c: 6 failing, 11 passing in the hygiene file):
+
+1. Interpretation 4's "after stripping surrounding whitespace" is withdrawn: FR-8 says any difference, and both reviewers flagged it. Lines are now split on LF and compared as written; whitespace or CRLF variants are `unique` errors.
+2. An explicit `prefix_bytes` prefix must end with a newline once the file has grown (Kate); declared files already required it.
+3. The `appended` note says a later entry may supersede the anchored one. Scanning appended bytes for supersession is proposed as a candidate in the PR body, not built.
+4. records-hygiene.md: the manual deletion is the owner's call, not an authorization. `append_only` per alias documented.
+
+Spec changes went into `specs/006-ledger-hygiene/addendum-fix-round.md`: editing `spec.md` turned AEC-R11@1's two whole-file anchors into mismatches. Appended EV-R11-hygiene-tests@2 (supersedes @1). Suite 182 -> 185 passed (1 skipped); own check 0 errors, 3 warnings. Cost: about 25 minutes of agent wall time; tokens not instrumented; owner time none.
