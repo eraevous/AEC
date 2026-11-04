@@ -129,7 +129,7 @@ class RecordsLocation(unittest.TestCase):
     def test_malformed_records_root_is_a_config_error_like_other_roots(self):
         self.config(roots={}, records_root=['not', 'a', 'name'])
         with self.assertRaises(ValueError):
-            SourceContext(self.repo).roots
+            _ = SourceContext(self.repo).roots
 
 
 class RepositoryDefaults(unittest.TestCase):
