@@ -4,7 +4,7 @@
   python -m aec edges --diff OLD NEW [--json]                 structural diff of two snapshots
   python -m aec check RECORDS [--edges SNAPSHOT]              cross-record checks (+ dangling code: refs)
   python -m aec impact RECORDS CHANGES [--json]               which conclusions a change affects
-  python -m aec code-impact RECORDS OLD NEW [--json]          code change -> affected conclusions
+  python -m aec code-impact RECORDS OLD NEW [--json] [--reach-depth N] [--exit-code]  code change -> affected conclusions
   python -m aec init [ROOT] [--owner NAME]                    scaffold .aec/ (never overwrites)
   python -m aec import-purpose [ROOT] [--dir D] [--dry-run]   Codex++ .purpose.md -> provisional records
   python -m aec source show REF [--context N]                read anchored passages (offline)
@@ -76,6 +76,11 @@ def build_parser() -> argparse.ArgumentParser:
     ci.add_argument("old")
     ci.add_argument("new")
     ci.add_argument("--json", action="store_true")
+    ci.add_argument("--reach-depth", type=int, default=1,
+                    help="report changed definitions this many resolved calls/references steps from a linked symbol "
+                         "as review pointers, without assigning a status (default: 1; 0 turns it off)")
+    ci.add_argument("--exit-code", action="store_true",
+                    help="exit 1 when anything is affected or reported (for hooks); the default is always 0")
     it = sub.add_parser("init", help="scaffold .aec/ in a repository (never overwrites)")
     it.add_argument("root", nargs="?", default=".")
     it.add_argument("--owner", help="name for the authority stub (default: git user.name, else 'owner')")
@@ -296,13 +301,13 @@ def _cmd_code_impact(a, ap) -> int:
     store = Store.load(a.records)
     from .code_impact import code_impact
     try:
-        rep, events = code_impact(store, E.load(a.old), E.load(a.new))
+        rep, events = code_impact(store, E.load(a.old), E.load(a.new), reach_depth=a.reach_depth)
     except ValueError as error:
         ap.error(str(error))
     if not a.json:
         print(f"# derived {len(events)} change event(s) from the structural diff")
     _print_impact(store, rep, a.json)
-    return 0
+    return 1 if a.exit_code and (rep.impacts or rep.findings) else 0
 
 
 HANDLERS = {

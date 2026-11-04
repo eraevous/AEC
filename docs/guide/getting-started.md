@@ -57,6 +57,20 @@ the baseline from a worktree:
 git worktree add /tmp/aec-base main && aec edges /tmp/aec-base -o .aec/before.jsonl && git worktree remove /tmp/aec-base
 ```
 
+## Getting the report to someone
+
+`code-impact` reports nothing unless it runs. The snippets `aec init` writes run it for you once copied into place:
+
+- **Claude Code hook** (`.aec/snippets/claude-settings.json`): after each edit it refreshes the snapshot, fails on
+  record errors, then compares the working tree with `HEAD`. When linked code changed, or reaches a change, the
+  report goes to the agent (stderr, exit 2). Nothing is printed otherwise.
+- **CI job** (`.aec/snippets/aec-ci.yml`): compares the merge-base with the checkout and writes the report to the
+  job summary on the run page. It never fails the job and posts no pull-request comment.
+
+A link to a module covers every definition in it; a link to a function covers its body, and changes one step
+away (a helper it calls, a constant it reads) appear as `structural: ... reaches changed ...` pointers that
+change no status. See [`docs/evaluations/code-impact-qual-001.md`](../evaluations/code-impact-qual-001.md).
+
 ## Repositories that already use Codex++ purpose files
 
 ```bash
