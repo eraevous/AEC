@@ -2,8 +2,8 @@
 
 One toy project, end to end: `init`, a purpose, a requirement linked to a function, a claim and its
 evidence, a `check` that catches a typo, an edit to a helper two calls away, the `code-impact` pointer,
-and the Claude Code hook reporting with exit 2. Every command below was run against the 0.5.0 branch (91ddec3, rerun after
-review fixes) on 2026-11-04; the output is pasted as printed, trimmed only where marked. The scripted run takes about 2 s;
+and the Claude Code hook reporting with exit 2. Every command below was run against a git install of the fix/lifecycle-gaps branch (94eac7f) on
+2026-11-04; the output is pasted as printed, trimmed only where marked. The scripted run takes about 2 s;
 a cold user's setup (install plus reading this page) takes about 2 minutes.
 
 You need Python 3.10+, git and bash (the `sed -i.bak` form works with GNU and BSD sed). On a fresh machine,
@@ -56,7 +56,7 @@ Next steps:
   - Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).
   - Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).
   - Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml.
-  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@ac152533668fefb392ad99e915cd2a5b7c56041f").
+  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@94eac7f1f39932e1c71e287a4bbb65b034c83c38").
   - If the repo has Codex++ purpose files: python3 -m aec import-purpose .
 // Telosmith records. Append-only: add a new version instead of editing a line.
 ```
@@ -118,6 +118,8 @@ aec edges: 5 edges from 2 files (0 skipped) -> .aec/edges.jsonl
 # derived 0 change event(s) from the structural diff
 # aec impact
 
+[note] reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)
+
 0 affected, 3 conclusions with no status change
 # derived 0 change event(s) from the structural diff
 # aec impact
@@ -127,14 +129,15 @@ aec edges: 5 edges from 2 files (0 skipped) -> .aec/edges.jsonl
 0 affected, 3 conclusions with no status change (1 pointer(s) above: candidates for attention)
 ```
 
-A pointer is a candidate for attention. It changes no record's status.
+A pointer is a candidate for attention. It changes no record's status. The `[note]` line says where the
+default walk stopped, so a quiet report is not mistaken for "nothing nearby changed".
 
 ## 4. The Claude Code hook
 
 Claude Code runs the hook command from `.aec/snippets/claude-settings.json` after each Edit or Write,
 once you copy it into `.claude/settings.json`. Here it is run by hand, the same way, three times.
 It compares the working tree with `HEAD` at the default depth of one call, so the two-hop edit above
-stays quiet.
+stays quiet: the depth note is not a finding, so it alone does not make the hook speak.
 
 ```bash
 HOOK=$(python3 -c "import json; print(json.load(open('.aec/snippets/claude-settings.json'))['hooks']['PostToolUse'][0]['hooks'][0]['command'])")
@@ -151,6 +154,7 @@ exit 0
 # aec impact
 
 [finding] structural: code:shop.pricing.apply_discount reaches changed code:shop.pricing.clamp (calls, depth 1); no status change; candidate for attention: R-1@1
+[note] reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)
 
 0 affected, 3 conclusions with no status change (1 pointer(s) above: candidates for attention)
 (Telosmith: stale/needs_review lines are status changes; structural pointer lines are candidates for attention and change no status.)
@@ -164,6 +168,7 @@ exit 2
     via code:shop.pricing.apply_discount -> R-1@1
 [needs_review] C-1@1: Checkout totals are never negative.
     via code:shop.pricing.apply_discount -> R-1@1 -> C-1@1
+[note] reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)
 
 2 affected, 1 conclusions with no status change
 (Telosmith: stale/needs_review lines are status changes; structural pointer lines are candidates for attention and change no status.)

@@ -135,9 +135,10 @@ class TestDepthDisclosure(unittest.TestCase):
                       render(self.store, rep))
 
     def test_footer_is_not_a_finding(self):  # the hook stays quiet: --exit-code looks at findings only
-        from aec.__main__ import main
         import contextlib
         import io
+
+        from aec.__main__ import main
         d = Path(tempfile.mkdtemp())
         (d / "o.jsonl").write_text(E.dumps(self.old))
         (d / "n.jsonl").write_text(E.dumps(self.new))
