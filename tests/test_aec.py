@@ -159,6 +159,7 @@ class TestOutcomeSufficiency(unittest.TestCase):  # feature 002 US3 / FR-008, FR
     def test_requirement_satisfaction_on_conformance_is_fine(self):  # decoy
         lines = [{"id": "C", "version": 1, "type": "claim", "claim_category": "requirement_satisfaction"},
                  {"id": "T", "version": 1, "type": "evidence", "evidence_kind": "contract_conformance",
+                  "text": "tests pass",  # v0.5: textless evidence warns (evidence-text)
                   "relations": [{"rel": "supports", "to": "C@1"}]}]
         self.assertEqual([f for f in check(store_from(lines)) if f.level in ("warning", "error")], [])
 
@@ -271,6 +272,57 @@ class TestAmbitionAndExperimentTypes(unittest.TestCase):
         rep = impact(store_from(self.LINES), [{"change": "retract", "target": "AMB-1@1"}])
         flagged = set(rep.impacts)
         self.assertFalse({"AMB-1@1", "EXP-1@1"} & flagged, flagged)
+
+
+class TestEvidenceWithoutText(unittest.TestCase):
+    """v0.5 (cold-user report, 2026-11-04): evidence with no `text` passed `check`, so reports printed an
+    empty line such as `[needs_review] E-1@1: `. It is a warning naming the record, never an error."""
+
+    def findings(self, ev):
+        lines = [{"id": "C", "version": 1, "type": "claim", "text": "c"},
+                 dict({"id": "E", "version": 1, "type": "evidence",
+                       "relations": [{"rel": "supports", "to": "C@1"}]}, **ev)]
+        return [(f.level, f.rule, f.ref) for f in check(store_from(lines)) if f.rule == "evidence-text"]
+
+    def test_missing_text_warns(self):
+        self.assertEqual(self.findings({}), [("warning", "evidence-text", "E@1")])
+
+    def test_blank_text_warns(self):
+        self.assertEqual(self.findings({"text": "   "}), [("warning", "evidence-text", "E@1")])
+
+    def test_evidence_with_text_is_clean(self):  # decoy
+        self.assertEqual(self.findings({"text": "the tests pass"}), [])
+
+    def ev_text(self, lines):
+        return [(f.ref, f.msg) for f in check(store_from(lines)) if f.rule == "evidence-text"]
+
+    E1 = {"id": "E-1", "version": 1, "type": "evidence"}
+    E2 = {"id": "E-1", "version": 2, "type": "evidence", "text": "observed"}
+
+    def test_corrected_version_clears_the_warning(self):  # Kate, DEC-038 review of #53: clearable under append-only
+        self.assertEqual(self.ev_text([self.E1, self.E2]), [])
+
+    def test_only_textless_version_warns(self):
+        self.assertEqual([ref for ref, _ in self.ev_text([self.E1])], ["E-1@1"])
+
+    def test_superseded_textless_version_still_referenced_warns(self):
+        c1 = {"id": "C-1", "version": 1, "type": "claim", "text": "c",
+              "relations": [{"rel": "depends_on", "to": "E-1@1"}]}
+        fs = self.ev_text([self.E1, self.E2, c1])
+        self.assertEqual([ref for ref, _ in fs], ["E-1@1"])
+        self.assertIn("E-1@1 still referenced by C-1@1", fs[0][1])
+
+    def test_reference_moved_to_corrected_version_is_silent(self):  # decoy
+        c1 = {"id": "C-1", "version": 1, "type": "claim", "text": "c",
+              "relations": [{"rel": "depends_on", "to": "E-1@1"}]}
+        c2 = {"id": "C-1", "version": 2, "type": "claim", "text": "c",
+              "relations": [{"rel": "depends_on", "to": "E-1@2"}]}
+        self.assertEqual(self.ev_text([self.E1, self.E2, c1, c2]), [])
+
+    def test_other_types_without_text_are_not_flagged(self):  # decoy: the rule is about evidence only
+        lines = [{"id": "C", "version": 1, "type": "claim"}]
+        self.assertEqual([f for f in check(store_from(lines)) if f.rule == "evidence-text"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
