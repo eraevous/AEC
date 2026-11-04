@@ -2,7 +2,7 @@
 
 One toy project, end to end: `init`, a purpose, a requirement linked to a function, a claim and its
 evidence, a `check` that catches a typo, an edit to a helper two calls away, the `code-impact` pointer,
-and the Claude Code hook reporting with exit 2. Every command below was run against a git install of the fix/lifecycle-gaps branch (94eac7f) on
+and the Claude Code hook reporting with exit 2. Every command below was run against a git install of the fix/lifecycle-gaps branch (1fca329) on
 2026-11-04; the output is pasted as printed, trimmed only where marked. The scripted run takes about 2 s;
 a cold user's setup (install plus reading this page) takes about 2 minutes.
 
@@ -56,7 +56,7 @@ Next steps:
   - Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).
   - Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).
   - Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml.
-  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@94eac7f1f39932e1c71e287a4bbb65b034c83c38").
+  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@1fca32989ef79ba44cc08ee873bddf64175b50b1").
   - If the repo has Codex++ purpose files: python3 -m aec import-purpose .
 // Telosmith records. Append-only: add a new version instead of editing a line.
 ```
@@ -118,7 +118,7 @@ aec edges: 5 edges from 2 files (0 skipped) -> .aec/edges.jsonl
 # derived 0 change event(s) from the structural diff
 # aec impact
 
-[note] reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)
+[note] reach depth 1; 1 changed symbol at depth 2 not reported (use --reach-depth 2)
 
 0 affected, 3 conclusions with no status change
 # derived 0 change event(s) from the structural diff
@@ -155,7 +155,7 @@ exit 0
 # aec impact
 
 [finding] structural: code:shop.pricing.apply_discount reaches changed code:shop.pricing.clamp (calls, depth 1); no status change; candidate for attention: R-1@1
-[note] reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)
+[note] reach depth 1; 1 changed symbol at depth 2 not reported (use --reach-depth 2)
 
 0 affected, 3 conclusions with no status change (1 pointer(s) above: candidates for attention)
 (Telosmith: stale/needs_review lines are status changes; structural pointer lines are candidates for attention and change no status.)
@@ -169,7 +169,6 @@ exit 2
     via code:shop.pricing.apply_discount -> R-1@1
 [needs_review] C-1@1: Checkout totals are never negative.
     via code:shop.pricing.apply_discount -> R-1@1 -> C-1@1
-[note] reach depth 1; 1 further symbol within depth 2 not examined (use --reach-depth 2)
 
 2 affected, 1 conclusions with no status change
 (Telosmith: stale/needs_review lines are status changes; structural pointer lines are candidates for attention and change no status.)
