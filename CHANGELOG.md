@@ -19,6 +19,30 @@ All notable changes to AEC. Versions follow [semantic versioning](https://semver
   reporting to the agent (exit 2) only when something linked moved; the CI job against the merge-base, into
   the job summary, never failing the job. Telosmith's own CI runs the same step on pull requests.
 - Evaluation: `docs/evaluations/code-impact-qual-001.md`, a cheap coverage/delivery qualification, not a value win.
+### Added (spec 006, ledger hygiene; authorized by Zach 2026-11-04, C-09 and C-21)
+- Anchors into append-only files. An anchor may carry `prefix_bytes` (the file length when anchored):
+  its `sha256` then covers only those leading bytes. `.aec/sources.json` may declare `append_only` files
+  per root; whole-file anchors into them also match a newline-ended prefix. A new anchor state,
+  `appended`, means the file grew and begins with exactly the anchored bytes; it is printed distinctly
+  by `check` and `source show` and is not a finding. Whole-file digests stay the default: an undeclared
+  grown file is still `mismatch`. Telosmith's own records declare relay-kit-private's
+  `governance/decisions.jsonl`, and their anchor warnings drop from 13 to the 3 real mismatches.
+- `check` reads a byte-identical duplicate record line (left by merging two branches that appended the
+  same record) as one record, with a `duplicate-line` warning naming both lines, instead of failing with
+  `unique`. Any difference between the lines is still the `unique` error. No command rewrites records;
+  `docs/reference/records-hygiene.md` gives the manual clean-up, which is the owner's call.
+- Fix round (DEC-038 reviews of PR #48): duplicate lines are compared as written, so a copy differing
+  only in surrounding whitespace or CRLF is the `unique` error, not the warning; an anchor whose
+  `prefix_bytes` ends mid-line is `mismatch` once the file grows (appended bytes would extend that line);
+  the `appended` note says a later entry may supersede the anchored one; `append_only` is per root alias.
+### Added (relay-kit records location, HO-RK-20261103-5J0W)
+- Where Telosmith finds the owner's relay-kit records is a setting. `records_root` in `.aec/sources.json`
+  names the alias (default `records`); `$RELAYKIT_RECORDS`, the variable relay-kit's tools read, overrides
+  that root's path over the configured one. Unset, absent or unusable locations leave its anchors
+  `unavailable`, as before. This repository keeps Zach's sibling `../relay-kit-private` as its default.
+- `docs/integrations/relay-kit.md`: install relay-kit pinned to commit `a7fa03a` (0.1.0; `@v0.1.0` once
+  the tag exists) and configure the records location. `docs/architecture.md` describes the decision
+  record as the owner's relay-kit records, with relay-kit-private as Zach's instance.
 
 ### Changed (name)
 - **AEC is now Telosmith** (Zach, 2026-11-02; DEC-036). The distribution is `telosmith`: `aec` and `each`

@@ -1,0 +1,3 @@
+// C-21 decoy: equal JSON written with different bytes is not a byte-identical copy; still an error.
+{"id": "R-merge", "version": 1, "type": "requirement", "subject": "s", "text": "appended on two branches"}
+{"id":"R-merge","version":1,"type":"requirement","subject":"s","text":"appended on two branches"}
