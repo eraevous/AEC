@@ -9,6 +9,7 @@ What AEC has been measured on, including results that didn't favour it. Each ent
 | [review-001](review-001.md) ([protocol](review-protocol.md)) | What does an independent model find when it audits the architecture, implementation and code? (GitHub Copilot) | Four findings, three of them reproducible defects, all fixed in PR #33. The fourth: AEC's value over its cost is unproven. |
 | [walkthrough-001](walkthrough-001.md) | Can a newcomer go from the README to a `stale` report? (v0.4.0 README) | Not from the README alone. It led to the install and quickstart sections. |
 | [walkthrough-002](walkthrough-002.md) | The same question for the reorganised README. | Yes for the commands. It found gaps in record guidance and the worked-example command, both fixed. |
+| [DEC-021 replay](dec-021-protocol.md) ([ontology audit](dec-021-ontology-audit.md)) | Do recorded obligations plus Telosmith's change report surface a consequential defect that the same facts as notes plus a path reminder miss? (Fathom PR #15, frozen at `68890bf`) | Pre-registered 2026-11-04, not frozen, not run. |
 | [MtG pilot](mtg-pilot.md) | Do the change-impact dispositions reproduce what reviewers concluded by hand? (v0, 2026-10-26) | Yes on six scenarios, but they were encoded after the fact by the session that wrote the tool. |
 
 Walkthroughs were done by AI agents, not human strangers.
