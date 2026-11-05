@@ -8,7 +8,8 @@ Only Zach pushes release tags. Checklist for v0.5.0 (adapt the numbers for later
 3. Flip the install lines from `@main   # 0.5.0 on main; tag v0.5.0 pending` to `@v0.5.0` in
    `README.md`, `docs/guide/getting-started.md` and `docs/demo.md`, and drop the "pending" notes.
 4. Check the CI pin. `aec init` pins the generated CI job to the installed commit SHA for git installs
-   (#51). For an install with no known commit (a local directory or a wheel) it pins `@v0.5.0`, because it
-   cannot tell offline whether that tag exists. That pin only works once step 2 is done.
+   (#51), and to `HEAD` when it runs from a source checkout (`PYTHONPATH=src` or an editable install). For an
+   install with no known commit (a local directory or a wheel) it pins `@v0.5.0`, because it cannot tell
+   offline whether that tag exists. That pin only works once step 2 is done.
 5. Move other pins (this repo's docs, relay-kit, adopters' CI) from a commit or `@main` to the tag where
    wanted.
