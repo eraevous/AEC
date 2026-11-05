@@ -1,0 +1,414 @@
+kind	from	rel	to	A_prose	B_prose	B_jsonl	C_prose	C_jsonl
+record	AU-owner@1	authority		1	1	1	1	1
+record	P0@1	purpose		1	1	0	1	1
+record	P0@2	purpose		1	1	0	1	1
+relation	P0@2	supersedes	P0@1	1	1	0	1	1
+record	DG-RA@1	requirement		1	1	1	1	1
+relation	DG-RA@1	serves	P0@2	1	1	0	1	1
+record	DG-RB@1	requirement		1	1	1	1	1
+relation	DG-RB@1	serves	P0@2	1	1	0	1	1
+record	DG-RC@1	requirement		1	1	1	1	1
+relation	DG-RC@1	serves	P0@2	1	1	0	1	1
+record	DG-RD@1	requirement		1	1	1	1	1
+relation	DG-RD@1	serves	P0@2	1	1	0	1	1
+record	DG-RE@1	requirement		1	1	1	1	1
+relation	DG-RE@1	serves	P0@2	1	1	0	1	1
+record	DG-RF@1	requirement		1	1	1	1	1
+relation	DG-RF@1	serves	P0@2	1	1	0	1	1
+record	DG-D1@1	decision		1	1	1	1	1
+record	DG-A1@1	assumption		1	1	0	1	1
+record	DG-A2@1	assumption		1	1	0	1	1
+record	DG-A3@1	assumption		1	1	0	1	1
+record	DG-A4@1	assumption		1	1	0	1	1
+record	DG-D2@1	decision		1	1	1	1	1
+record	DG-D3@1	decision		1	1	1	1	1
+record	DG-D4@1	decision		1	1	1	1	1
+record	FT-R1@1	requirement		1	1	1	1	1
+relation	FT-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-R1@1	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R1@1	serves	DG-RB@1	1	1	0	1	1
+relation	FT-R1@1	serves	DG-RC@1	1	1	0	1	1
+relation	FT-R1@1	serves	DG-RD@1	1	1	0	1	1
+relation	FT-R1@1	serves	DG-RE@1	1	1	0	1	1
+relation	FT-R1@1	serves	DG-RF@1	1	1	0	1	1
+record	FT-R1@2	requirement		1	1	1	1	1
+relation	FT-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-R1@2	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R1@2	serves	DG-RB@1	1	1	0	1	1
+relation	FT-R1@2	serves	DG-RC@1	1	1	0	1	1
+relation	FT-R1@2	serves	DG-RD@1	1	1	0	1	1
+relation	FT-R1@2	serves	DG-RE@1	1	1	0	1	1
+relation	FT-R1@2	serves	DG-RF@1	1	1	0	1	1
+relation	FT-R1@2	supersedes	FT-R1@1	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.connectors.CSVConnector.load	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.profiler.profile	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.profiler.select_pairs	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.profiler.compare	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.renderers.render_markdown	1	1	1	1	1
+relation	FT-R1@2	implemented_by	code:src.fathom.cli.main	1	1	1	1	1
+record	FT-C1@1	claim		1	1	1	1	1
+relation	FT-C1@1	implements	FT-R1@2	1	1	0	1	1
+record	FT-V1@1	evaluation		1	1	0	1	1
+relation	FT-V1@1	tests	FT-C1@1	1	1	0	1	1
+relation	FT-V1@1	produced	FT-E1@1	1	1	0	1	1
+record	FT-E1@1	evidence		1	1	1	1	1
+relation	FT-E1@1	supports	FT-C1@1	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:src.fathom.profiler.profile	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:src.fathom.profiler.select_pairs	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:src.fathom.profiler.compare	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:src.fathom.renderers.render_markdown	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:src.fathom.cli.main	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:tests.test_understanding.test_review_actions_and_clean_decoy	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:tests.test_cli.test_cli_roundtrip_compare_validate_and_reproducibility	1	1	1	1	1
+relation	FT-E1@1	observed_on	code:tests.test_pairs.test_missing_optional_dependency_degrades	1	1	1	1	1
+record	FT-R2@1	requirement		1	1	1	1	1
+relation	FT-R2@1	serves	P0@2	1	1	0	1	1
+relation	FT-R2@1	serves	DG-RA@1	1	1	0	1	1
+record	FT-R3@1	requirement		1	1	1	1	1
+relation	FT-R3@1	serves	DG-RC@1	1	1	0	1	1
+record	FT-R4@1	requirement		1	1	1	1	1
+relation	FT-R4@1	serves	P0@2	1	1	0	1	1
+relation	FT-R4@1	serves	DG-A1@1	1	1	0	1	1
+record	FT-R2@2	requirement		1	1	1	1	1
+relation	FT-R2@2	serves	P0@2	1	1	0	1	1
+relation	FT-R2@2	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R2@2	supersedes	FT-R2@1	1	1	1	1	1
+record	FT-R3@2	requirement		1	1	1	1	1
+relation	FT-R3@2	serves	DG-RC@1	1	1	0	1	1
+relation	FT-R3@2	supersedes	FT-R3@1	1	1	1	1	1
+record	FT-R4@2	requirement		1	1	1	1	1
+relation	FT-R4@2	serves	P0@2	1	1	0	1	1
+relation	FT-R4@2	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R4@2	supersedes	FT-R4@1	1	1	1	1	1
+record	FT-R5@1	requirement		1	1	1	1	1
+relation	FT-R5@1	serves	P0@2	1	1	0	1	1
+relation	FT-R5@1	serves	DG-A1@1	1	1	0	1	1
+record	FT-R6@1	requirement		1	1	1	1	1
+relation	FT-R6@1	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R6@1	serves	DG-RA@1	1	1	0	1	1
+record	DG-D5@1	decision		1	1	1	1	1
+record	FT-R6@2	requirement		1	1	1	1	1
+relation	FT-R6@2	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R6@2	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R6@2	supersedes	FT-R6@1	1	1	1	1	1
+record	FT-R7@1	requirement		1	1	1	1	1
+relation	FT-R7@1	serves	P0@2	1	1	0	1	1
+relation	FT-R7@1	serves	DG-RC@1	1	1	0	1	1
+record	FT-R8@1	requirement		1	1	1	1	1
+relation	FT-R8@1	serves	DG-RC@1	1	1	0	1	1
+relation	FT-R8@1	serves	DG-A1@1	1	1	0	1	1
+record	DG-D5@2	decision		1	1	1	1	1
+relation	DG-D5@2	supersedes	DG-D5@1	1	1	1	1	1
+record	FT-DQ-R1@1	requirement		1	1	1	1	1
+relation	FT-DQ-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-DQ-R1@1	implements	FT-R2@2	1	1	0	1	1
+relation	FT-DQ-R1@1	implements	FT-R3@2	1	1	0	1	1
+relation	FT-DQ-R1@1	implements	FT-R4@2	1	1	0	1	1
+relation	FT-DQ-R1@1	implements	FT-R5@1	1	1	0	1	1
+relation	FT-DQ-R1@1	implements	FT-R6@2	1	1	0	1	1
+record	FT-DQ-R1@2	requirement		1	1	1	1	1
+relation	FT-DQ-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-DQ-R1@2	implements	FT-R2@2	1	1	0	1	1
+relation	FT-DQ-R1@2	implements	FT-R3@2	1	1	0	1	1
+relation	FT-DQ-R1@2	implements	FT-R4@2	1	1	0	1	1
+relation	FT-DQ-R1@2	implements	FT-R5@1	1	1	0	1	1
+relation	FT-DQ-R1@2	implements	FT-R6@2	1	1	0	1	1
+relation	FT-DQ-R1@2	supersedes	FT-DQ-R1@1	1	1	1	1	1
+relation	FT-DQ-R1@2	implemented_by	code:src.fathom.quality.quality_profile	1	1	1	1	1
+relation	FT-DQ-R1@2	implemented_by	code:src.fathom.profiler.profile	1	1	1	1	1
+relation	FT-DQ-R1@2	implemented_by	code:src.fathom.profiler.rank_pairs	1	1	1	1	1
+relation	FT-DQ-R1@2	implemented_by	code:src.fathom.models.validate_document	1	1	1	1	1
+relation	FT-DQ-R1@2	implemented_by	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-DQ-R1@2	implemented_by	code:src.fathom.renderers.render_markdown	1	1	1	1	1
+record	FT-DQ-C1@1	claim		1	1	1	1	1
+relation	FT-DQ-C1@1	implements	FT-R2@2	1	1	0	1	1
+relation	FT-DQ-C1@1	implements	FT-R3@2	1	1	0	1	1
+relation	FT-DQ-C1@1	implements	FT-R4@2	1	1	0	1	1
+relation	FT-DQ-C1@1	implements	FT-R5@1	1	1	0	1	1
+relation	FT-DQ-C1@1	implements	FT-R6@2	1	1	0	1	1
+relation	FT-DQ-C1@1	implements	FT-DQ-R1@2	1	1	0	1	1
+record	FT-DQ-V1@1	evaluation		1	1	0	1	1
+relation	FT-DQ-V1@1	tests	FT-DQ-C1@1	1	1	0	1	1
+relation	FT-DQ-V1@1	produced	FT-DQ-E1@1	1	1	0	1	1
+relation	FT-DQ-V1@1	produced	FT-DQ-E2@1	1	1	0	1	1
+record	FT-DQ-E1@1	evidence		1	1	1	1	1
+relation	FT-DQ-E1@1	supports	FT-DQ-C1@1	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:src.fathom.quality.quality_profile	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:src.fathom.profiler.rank_pairs	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:src.fathom.renderers.render_markdown	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:tests.test_quality.test_workshop_report_finds_planted_families_and_clean_decoy	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:tests.test_readability.test_summary_links_and_artifact_only_roundtrip	1	1	1	1	1
+relation	FT-DQ-E1@1	observed_on	code:tests.test_cli.test_cli_roundtrip_compare_validate_and_reproducibility	1	1	1	1	1
+record	FT-DQ-E2@1	evidence		1	1	1	1	1
+relation	FT-DQ-E2@1	supports	FT-DQ-C1@1	1	1	1	1	1
+relation	FT-DQ-E2@1	observed_on	code:src.fathom.quality.quality_profile	1	1	1	1	1
+relation	FT-DQ-E2@1	observed_on	code:tests.test_quality.test_later_builder_holdout_report_evidence	1	1	1	1	1
+record	FT-DQ-V1@2	evaluation		1	1	0	1	1
+relation	FT-DQ-V1@2	tests	FT-DQ-C1@1	1	1	0	1	1
+relation	FT-DQ-V1@2	produced	FT-DQ-E1@2	1	1	0	1	1
+relation	FT-DQ-V1@2	produced	FT-DQ-E2@2	1	1	0	1	1
+relation	FT-DQ-V1@2	supersedes	FT-DQ-V1@1	1	1	0	1	1
+record	FT-DQ-E1@2	evidence		1	1	1	1	1
+relation	FT-DQ-E1@2	supports	FT-DQ-C1@1	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:src.fathom.quality.quality_profile	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:src.fathom.profiler.rank_pairs	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:src.fathom.renderers.render_markdown	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:tests.test_quality.test_workshop_report_finds_planted_families_and_clean_decoy	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:tests.test_readability.test_summary_links_and_artifact_only_roundtrip	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:tests.test_cli.test_cli_roundtrip_compare_validate_and_reproducibility	1	1	1	1	1
+relation	FT-DQ-E1@2	supersedes	FT-DQ-E1@1	1	1	1	1	1
+relation	FT-DQ-E1@2	observed_on	code:tests.test_quality.test_shared_absence_is_not_near_copy_evidence	1	1	1	1	1
+record	FT-DQ-E2@2	evidence		1	1	1	1	1
+relation	FT-DQ-E2@2	supports	FT-DQ-C1@1	1	1	1	1	1
+relation	FT-DQ-E2@2	observed_on	code:src.fathom.quality.quality_profile	1	1	1	1	1
+relation	FT-DQ-E2@2	observed_on	code:tests.test_quality.test_later_builder_holdout_report_evidence	1	1	1	1	1
+relation	FT-DQ-E2@2	supersedes	FT-DQ-E2@1	1	1	1	1	1
+relation	FT-DQ-E2@2	observed_on	code:tests.test_quality.test_shared_absence_is_not_near_copy_evidence	1	1	1	1	1
+record	FT-R6@3	requirement		1	1	1	1	1
+relation	FT-R6@3	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R6@3	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R6@3	supersedes	FT-R6@2	1	1	1	1	1
+record	FT-R9@1	requirement		1	1	1	1	1
+relation	FT-R9@1	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R9@1	serves	P0@2	1	1	0	1	1
+record	FT-R10@1	requirement		1	1	1	1	1
+relation	FT-R10@1	serves	DG-A1@1	1	1	0	1	1
+record	FT-R11@1	requirement		1	1	1	1	1
+relation	FT-R11@1	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R11@1	serves	DG-RB@1	1	1	0	1	1
+record	FT-R12@1	requirement		1	1	1	1	1
+relation	FT-R12@1	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R12@1	serves	P0@2	1	1	0	1	1
+record	FT-R13@1	requirement		1	1	1	1	1
+relation	FT-R13@1	serves	DG-RE@1	1	1	0	1	1
+relation	FT-R13@1	serves	DG-A1@1	1	1	0	1	1
+record	DG-D6@1	decision		1	1	1	1	1
+record	FT-R14@1	requirement		1	1	1	1	1
+relation	FT-R14@1	serves	DG-RA@1	1	1	0	1	1
+relation	FT-R14@1	serves	P0@2	1	1	0	1	1
+record	FT-UNI-R1@1	requirement		1	1	1	1	1
+relation	FT-UNI-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-UNI-R1@1	implements	FT-R6@3	1	1	0	1	1
+relation	FT-UNI-R1@1	implements	FT-R9@1	1	1	0	1	1
+relation	FT-UNI-R1@1	implements	FT-R10@1	1	1	0	1	1
+relation	FT-UNI-R1@1	implements	FT-R11@1	1	1	0	1	1
+relation	FT-UNI-R1@1	implements	FT-R14@1	1	1	0	1	1
+record	FT-UNI-R1@2	requirement		1	1	1	1	1
+relation	FT-UNI-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-UNI-R1@2	implements	FT-R6@3	1	1	0	1	1
+relation	FT-UNI-R1@2	implements	FT-R9@1	1	1	0	1	1
+relation	FT-UNI-R1@2	implements	FT-R10@1	1	1	0	1	1
+relation	FT-UNI-R1@2	implements	FT-R11@1	1	1	0	1	1
+relation	FT-UNI-R1@2	implements	FT-R14@1	1	1	0	1	1
+relation	FT-UNI-R1@2	supersedes	FT-UNI-R1@1	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.parsing.parse_date	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.parsing.finite_number	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.univariate.identity_and_samples	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.univariate.enrich_columns	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-UNI-R1@2	implemented_by	code:src.fathom.renderers.render_markdown	1	1	1	1	1
+record	FT-UNI-C1@1	claim		1	1	1	1	1
+relation	FT-UNI-C1@1	implements	FT-UNI-R1@2	1	1	0	1	1
+record	FT-UNI-V1@1	evaluation		1	1	0	1	1
+relation	FT-UNI-V1@1	tests	FT-UNI-C1@1	1	1	0	1	1
+relation	FT-UNI-V1@1	produced	FT-UNI-E1@1	1	1	0	1	1
+relation	FT-UNI-V1@1	produced	FT-UNI-E2@1	1	1	0	1	1
+record	FT-UNI-E1@1	evidence		1	1	1	1	1
+relation	FT-UNI-E1@1	supports	FT-UNI-C1@1	1	1	1	1	1
+relation	FT-UNI-E1@1	observed_on	code:src.fathom.univariate.enrich_columns	1	1	1	1	1
+relation	FT-UNI-E1@1	observed_on	code:src.fathom.univariate.identity_and_samples	1	1	1	1	1
+relation	FT-UNI-E1@1	observed_on	code:src.fathom.parsing.parse_date	1	1	1	1	1
+relation	FT-UNI-E1@1	observed_on	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-UNI-E1@1	observed_on	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-UNI-E1@1	observed_on	code:tests.test_univariate.test_builder_film_clean_and_late_tables	1	1	1	1	1
+record	FT-UNI-E2@1	evidence		1	1	1	1	1
+relation	FT-UNI-E2@1	supports	FT-UNI-C1@1	1	1	1	1	1
+relation	FT-UNI-E2@1	observed_on	code:src.fathom.univariate.enrich_columns	1	1	1	1	1
+record	FT-SX-R1@1	requirement		1	1	1	1	1
+relation	FT-SX-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-SX-R1@1	implements	FT-R12@1	1	1	0	1	1
+relation	FT-SX-R1@1	implements	FT-R13@1	1	1	0	1	1
+record	FT-SX-R1@2	requirement		1	1	1	1	1
+relation	FT-SX-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-SX-R1@2	implements	FT-R12@1	1	1	0	1	1
+relation	FT-SX-R1@2	implements	FT-R13@1	1	1	0	1	1
+relation	FT-SX-R1@2	supersedes	FT-SX-R1@1	1	1	1	1	1
+relation	FT-SX-R1@2	implemented_by	code:src.fathom.special.infer_special	1	1	1	1	1
+relation	FT-SX-R1@2	implemented_by	code:src.fathom.special.enrich_special	1	1	1	1	1
+relation	FT-SX-R1@2	implemented_by	code:src.fathom.exports.export_bundle	1	1	1	1	1
+relation	FT-SX-R1@2	implemented_by	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-SX-R1@2	implemented_by	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+relation	FT-SX-R1@2	implemented_by	code:src.fathom.cli.main	1	1	1	1	1
+record	FT-SX-C1@1	claim		1	1	1	1	1
+relation	FT-SX-C1@1	implements	FT-SX-R1@2	1	1	0	1	1
+record	FT-SX-V1@1	evaluation		1	1	0	1	1
+relation	FT-SX-V1@1	tests	FT-SX-C1@1	1	1	0	1	1
+relation	FT-SX-V1@1	produced	FT-SX-E1@1	1	1	0	1	1
+relation	FT-SX-V1@1	produced	FT-SX-E2@1	1	1	0	1	1
+record	FT-SX-E1@1	evidence		1	1	1	1	1
+relation	FT-SX-E1@1	supports	FT-SX-C1@1	1	1	1	1	1
+relation	FT-SX-E1@1	observed_on	code:src.fathom.special.enrich_special	1	1	1	1	1
+relation	FT-SX-E1@1	observed_on	code:src.fathom.exports.export_bundle	1	1	1	1	1
+relation	FT-SX-E1@1	observed_on	code:src.fathom.exports.normalized_zip	1	1	1	1	1
+relation	FT-SX-E1@1	observed_on	code:tests.test_special_types.test_builder_acceptance_tables	1	1	1	1	1
+relation	FT-SX-E1@1	observed_on	code:tests.test_exports.test_cli_export_fresh_process_bytes	1	1	1	1	1
+record	FT-SX-E2@1	evidence		1	1	1	1	1
+relation	FT-SX-E2@1	supports	FT-SX-C1@1	1	1	1	1	1
+relation	FT-SX-E2@1	observed_on	code:src.fathom.special.enrich_special	1	1	1	1	1
+record	FT-R15@1	requirement		1	1	1	1	1
+relation	FT-R15@1	serves	DG-A1@1	1	1	0	1	1
+relation	FT-R15@1	serves	P0@2	1	1	0	1	1
+record	FT-R16@1	requirement		1	1	1	1	1
+relation	FT-R16@1	serves	DG-A1@1	1	1	0	1	1
+record	DG-D7@1	decision		1	1	1	1	1
+record	FT-R7@2	requirement		1	1	1	1	1
+relation	FT-R7@2	serves	P0@2	1	1	0	1	1
+relation	FT-R7@2	serves	DG-RC@1	1	1	0	1	1
+relation	FT-R7@2	supersedes	FT-R7@1	1	1	1	1	1
+record	FT-R17@1	requirement		1	1	1	1	1
+relation	FT-R17@1	serves	FT-R16@1	1	1	0	1	1
+relation	FT-R17@1	serves	DG-A1@1	1	1	0	1	1
+record	FT-R18@1	requirement		1	1	1	1	1
+relation	FT-R18@1	serves	FT-R16@1	1	1	0	1	1
+relation	FT-R18@1	serves	FT-R17@1	1	1	0	1	1
+record	FT-PL-R1@1	requirement		1	1	1	1	1
+relation	FT-PL-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-PL-R1@1	implements	FT-R15@1	1	1	0	1	1
+relation	FT-PL-R1@1	implements	FT-R16@1	1	1	0	1	1
+relation	FT-PL-R1@1	implements	FT-R17@1	1	1	0	1	1
+record	FT-PL-R1@2	requirement		1	1	1	1	1
+relation	FT-PL-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-PL-R1@2	implements	FT-R15@1	1	1	0	1	1
+relation	FT-PL-R1@2	implements	FT-R16@1	1	1	0	1	1
+relation	FT-PL-R1@2	implements	FT-R17@1	1	1	0	1	1
+relation	FT-PL-R1@2	supersedes	FT-PL-R1@1	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.univariate.numeric_profile	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.univariate.text_profile	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.univariate.temporal_profile	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.univariate.missingness_patterns	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.presentation.column_tables	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.renderers.dictionary_and_provenance_html	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-PL-R1@2	implemented_by	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+record	FT-PL-C1@1	claim		1	1	1	1	1
+relation	FT-PL-C1@1	implements	FT-PL-R1@2	1	1	0	1	1
+record	FT-PL-V1@1	evaluation		1	1	0	1	1
+relation	FT-PL-V1@1	tests	FT-PL-C1@1	1	1	0	1	1
+relation	FT-PL-V1@1	produced	FT-PL-E1@1	1	1	0	1	1
+relation	FT-PL-V1@1	produced	FT-PL-E2@1	1	1	0	1	1
+relation	FT-PL-V1@1	produced	FT-PL-E3@1	1	1	0	1	1
+record	FT-PL-E1@1	evidence		1	1	1	1	1
+relation	FT-PL-E1@1	supports	FT-PL-C1@1	1	1	1	1	1
+relation	FT-PL-E1@1	observed_on	code:src.fathom.univariate.missingness_patterns	1	1	1	1	1
+relation	FT-PL-E1@1	observed_on	code:src.fathom.presentation.column_tables	1	1	1	1	1
+relation	FT-PL-E1@1	observed_on	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-PL-E1@1	observed_on	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+relation	FT-PL-E1@1	observed_on	code:tests.test_plots_layout.test_export_new_chart_kinds_use_numeric_xy_and_pdf	1	1	1	1	1
+record	FT-PL-E2@1	evidence		1	1	1	1	1
+relation	FT-PL-E2@1	supports	FT-PL-C1@1	1	1	1	1	1
+relation	FT-PL-E2@1	observed_on	code:src.fathom.univariate.missingness_patterns	1	1	1	1	1
+record	FT-PL-E3@1	evidence		1	1	1	1	1
+relation	FT-PL-E3@1	supports	FT-PL-C1@1	1	1	1	1	1
+relation	FT-PL-E3@1	observed_on	code:src.fathom.renderers.dictionary_and_provenance_html	1	1	1	1	1
+relation	FT-PL-E3@1	observed_on	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-PL-E3@1	observed_on	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+record	FT-PO-R1@1	requirement		1	1	1	1	1
+relation	FT-PO-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-PO-R1@1	implements	FT-R18@1	1	1	0	1	1
+record	FT-PO-R1@2	requirement		1	1	1	1	1
+relation	FT-PO-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-PO-R1@2	implements	FT-R18@1	1	1	0	1	1
+relation	FT-PO-R1@2	supersedes	FT-PO-R1@1	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.presentation.column_tables	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.presentation.formatted_examples	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.univariate.numeric_profile	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.univariate.enrich_columns	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.renderers.dictionary_and_provenance_html	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-PO-R1@2	implemented_by	code:src.fathom.cli.main	1	1	1	1	1
+record	FT-PO-C1@1	claim		1	1	1	1	1
+relation	FT-PO-C1@1	implements	FT-PO-R1@2	1	1	0	1	1
+record	FT-PO-V1@1	evaluation		1	1	0	1	1
+relation	FT-PO-V1@1	tests	FT-PO-C1@1	1	1	0	1	1
+relation	FT-PO-V1@1	produced	FT-PO-E1@1	1	1	0	1	1
+relation	FT-PO-V1@1	produced	FT-PO-E2@1	1	1	0	1	1
+relation	FT-PO-V1@1	produced	FT-PO-E3@1	1	1	0	1	1
+record	FT-PO-E1@1	evidence		1	1	1	1	1
+relation	FT-PO-E1@1	supports	FT-PO-C1@1	1	1	1	1	1
+relation	FT-PO-E1@1	observed_on	code:tests.test_polish.test_log_positive_subset_and_zero_negative_counts	1	1	1	1	1
+relation	FT-PO-E1@1	observed_on	code:tests.test_polish.test_summary_full_deck_budget_scope_and_bytes	1	1	1	1	1
+relation	FT-PO-E1@1	observed_on	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-PO-E1@1	observed_on	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+record	FT-PO-E2@1	evidence		1	1	1	1	1
+relation	FT-PO-E2@1	supports	FT-PO-C1@1	1	1	1	1	1
+relation	FT-PO-E2@1	observed_on	code:src.fathom.univariate.enrich_columns	1	1	1	1	1
+record	FT-PO-E3@1	evidence		1	1	1	1	1
+relation	FT-PO-E3@1	supports	FT-PO-C1@1	1	1	1	1	1
+relation	FT-PO-E3@1	observed_on	code:src.fathom.renderers.dictionary_and_provenance_html	1	1	1	1	1
+relation	FT-PO-E3@1	observed_on	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-PO-E3@1	observed_on	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+record	FT-R19@1	requirement		1	1	1	1	1
+relation	FT-R19@1	serves	FT-R16@1	1	1	0	1	1
+relation	FT-R19@1	serves	FT-R17@1	1	1	0	1	1
+record	FT-TA-R1@1	requirement		1	1	1	1	1
+relation	FT-TA-R1@1	serves	P0@2	1	1	0	1	1
+relation	FT-TA-R1@1	implements	FT-R7@2	1	1	0	1	1
+relation	FT-TA-R1@1	implements	FT-R19@1	1	1	0	1	1
+record	FT-TA-R1@2	requirement		1	1	1	1	1
+relation	FT-TA-R1@2	serves	P0@2	1	1	0	1	1
+relation	FT-TA-R1@2	implements	FT-R7@2	1	1	0	1	1
+relation	FT-TA-R1@2	implements	FT-R19@1	1	1	0	1	1
+relation	FT-TA-R1@2	supersedes	FT-TA-R1@1	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.target.association	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.target.target_candidates	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.target.summarize_groups	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.target.build_target_analysis	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.target.relationship_chart	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.target_marks.plot_marks	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.profiler.rank_pairs	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.config.validate_config	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.univariate.numeric_profile	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.renderers.render_html	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-TA-R1@2	implemented_by	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+record	FT-TA-C1@1	claim		1	1	1	1	1
+relation	FT-TA-C1@1	implements	FT-TA-R1@2	1	1	0	1	1
+record	FT-TA-V1@1	evaluation		1	1	0	1	1
+relation	FT-TA-V1@1	tests	FT-TA-C1@1	1	1	0	1	1
+relation	FT-TA-V1@1	produced	FT-TA-E1@1	1	1	0	1	1
+relation	FT-TA-V1@1	produced	FT-TA-E2@1	1	1	0	1	1
+relation	FT-TA-V1@1	produced	FT-TA-E3@1	1	1	0	1	1
+record	FT-TA-E1@1	evidence		1	1	1	1	1
+relation	FT-TA-E1@1	supports	FT-TA-C1@1	1	1	1	1	1
+relation	FT-TA-E1@1	observed_on	code:tests.test_target.test_hand_computed_measures_and_clean_decoys	1	1	1	1	1
+relation	FT-TA-E1@1	observed_on	code:tests.test_target.test_small_group_counts_missing_and_contrasts	1	1	1	1	1
+relation	FT-TA-E1@1	observed_on	code:tests.test_target.test_scatter_sampling_log_coverage_and_native_log_ecdf	1	1	1	1	1
+relation	FT-TA-E1@1	observed_on	code:src.fathom.target.association	1	1	1	1	1
+relation	FT-TA-E1@1	observed_on	code:src.fathom.profiler.rank_pairs	1	1	1	1	1
+record	FT-TA-E2@1	evidence		1	1	1	1	1
+relation	FT-TA-E2@1	supports	FT-TA-C1@1	1	1	1	1	1
+relation	FT-TA-E2@1	observed_on	code:src.fathom.target.build_target_analysis	1	1	1	1	1
+relation	FT-TA-E2@1	observed_on	code:src.fathom.target.summarize_groups	1	1	1	1	1
+record	FT-TA-E3@1	evidence		1	1	1	1	1
+relation	FT-TA-E3@1	supports	FT-TA-C1@1	1	1	1	1	1
+relation	FT-TA-E3@1	observed_on	code:src.fathom.charts.svg_chart	1	1	1	1	1
+relation	FT-TA-E3@1	observed_on	code:src.fathom.target_marks.plot_marks	1	1	1	1	1
+relation	FT-TA-E3@1	observed_on	code:src.fathom.exports.pdf_bytes	1	1	1	1	1
+relation	FT-TA-E3@1	observed_on	code:src.fathom.exports.pptx_bytes	1	1	1	1	1
+guidance	path-reminder (file-level obligations whose linked files are in the diff)			1	0	0	0	0
+guidance	aec edges, base and head, one pinned method			0	0	1	0	1
+guidance	aec check --edges			0	0	1	0	1
+guidance	aec code-impact base..head with visibility figure			0	0	1	0	1
+guidance	aec diff			0	0	0	0	1
+guidance	aec reach/fan/unresolved for every changed symbol			0	0	0	0	1
+guidance	aec source show for every record code-impact names			0	0	0	0	1
+guidance	free use of any aec command during the trial			0	0	0	0	1
