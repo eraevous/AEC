@@ -41,6 +41,8 @@ extend-exclude = [
   "src/core",                   # legacy, not shipped
   "tests/fixtures",             # deliberately odd code: syntax errors, star imports
   "docs/evaluations/probe-001", # frozen experiment materials
+  "docs/evaluations/dec-021-power.py",       # DEC-021 pre-registration artifacts: kept as run, not restyled
+  "docs/evaluations/dec-021-precondition",
   "build",
 ]
 
