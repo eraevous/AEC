@@ -3,8 +3,8 @@
 **Telosmith keeps the recorded reasons for code attached to the code, and tells you which requirements, claims and decisions need reassessing when something they depend on changes.**
 
 *Formerly AEC, renamed in November 2026. The `aec` command, the Python package `aec` and the `.aec/`
-folder keep working. The examples below use `aec`, which every release has; v0.5 adds the `telosmith`
-command.*
+folder keep working. Since v0.5 the same command is also installed as `telosmith`; the examples use `aec`,
+which every release has and which stays the primary name.*
 
 It reports structure, not truth: "this conclusion's recorded support changed", never "this
 conclusion is false". It is a standard-library Python command-line tool, works with or without
@@ -33,8 +33,8 @@ static-analysis snapshot of what defines, calls and imports what.
 ## Install
 
 ```bash
-pip install "git+https://github.com/eraevous/Telosmith.git@v0.4.1"
-aec --version
+pip install "git+https://github.com/eraevous/Telosmith.git@main"   # 0.5.0 on main; tag v0.5.0 pending
+aec --version        # aec 0.5.0 (telosmith --version works too)
 ```
 
 Python 3.10 or newer; no other dependencies.
@@ -120,24 +120,25 @@ what to look for wrote the requirement down, so it demonstrates the mechanism, n
 
 ## Stability
 
-Telosmith is alpha (v0.4). The current source checkout adds WP1A snapshot, diff, reach,
-fan and unresolved commands to the seven released commands; see
-[the structural reference](docs/reference/edges.md). These additions are not in the
-v0.4.1 installation example yet. A minor version before 1.0 may change output
-formats or record fields; every change is
-listed in [CHANGELOG.md](CHANGELOG.md). Extractor tool_version is now 0.4.0, separate
-from package version. Snapshot comparison refuses mismatched methods, including
+Telosmith is alpha (v0.5). v0.5 adds the snapshot, diff, reach, fan and unresolved commands
+to the seven commands of v0.4; see [the structural reference](docs/reference/edges.md). A minor
+version before 1.0 may change output formats or record fields; every change is
+listed in [CHANGELOG.md](CHANGELOG.md). The extractor's tool_version (0.4.1) is separate
+from the package version. Snapshot comparison refuses mismatched methods, including
 legacy/unknown methods; an explicit override labels a method comparison.
 
 ## Documentation
 
 | If you want to… | Read |
 |---|---|
+| see the whole loop in 90 seconds | [docs/demo.md](docs/demo.md) |
 | set Telosmith up in a real repository | [Getting started](docs/guide/getting-started.md) |
 | understand the edge snapshot | [docs/reference/edges.md](docs/reference/edges.md) |
 | anchor records to source passages | [docs/reference/source-anchors.md](docs/reference/source-anchors.md) |
 | clean up a duplicate record line after a merge | [docs/reference/records-hygiene.md](docs/reference/records-hygiene.md) |
+| see what Telosmith is for, ranked by evidence | [docs/use-cases.md](docs/use-cases.md) |
 | use Telosmith inside Spec Kit | [docs/integrations/spec-kit.md](docs/integrations/spec-kit.md) |
+| use Telosmith without Spec Kit (hook, git hooks, CI, rules file) | [docs/integrations/without-spec-kit.md](docs/integrations/without-spec-kit.md) |
 | point Telosmith at your relay-kit records | [docs/integrations/relay-kit.md](docs/integrations/relay-kit.md) |
 | see where Telosmith is going | [docs/architecture.md](docs/architecture.md) and [docs/history/about.md](docs/history/about.md) |
 | check the evidence | [docs/evaluations/](docs/evaluations/README.md) |

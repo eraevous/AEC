@@ -1,10 +1,90 @@
 # Changelog
 
-All notable changes to AEC. Versions follow [semantic versioning](https://semver.org/); before
+All notable changes to Telosmith (formerly AEC). Versions follow [semantic versioning](https://semver.org/); before
 1.0, a minor version may change command output or record fields (see "Stability" in README).
 
 ## [Unreleased]
 
+### Changed (lifecycle gaps from a docs builder's no-Spec-Kit run, 2026-11-04)
+- `check` warns `superseded-reference` when the latest version of a record references an older version of
+  another record (`C-1@1` depends on `R-1@1` while `R-1@2` exists). A warning, never an error: the old
+  version may be meant. `supersedes`, references to a record's own id and superseded referrers are not judged,
+  nor are evidence and decisions: they are history by nature, pinned to the version that existed when they
+  were observed or made.
+- `code-impact` reports such a record as a pointer when the change reaches the newer version
+  (`structural: C-1@1 references superseded R-1@1; R-1@2 changed (stale); no status change`; evidence and
+  decisions excepted). Before, the
+  change reached `R-1@2` and stopped. The summary's pointer count now counts every `structural:` line.
+- `code-impact` adds `[note] reach depth 1; N changed symbols at depth 2 not reported (use --reach-depth 2)`
+  above the summary when a changed definition is exactly one step beyond the walk from a linked symbol whose
+  records are not already classified (edits nothing links to still report nothing); JSON output has a
+  `notes` list. The default depth (1) is unchanged, and the note is not a finding (`--exit-code` ignores it).
+- A dangling `code:` reference also suggests symbols with the same last name in other modules (a moved
+  function): one if unique, up to three if ambiguous (module-level definitions before methods), with a count
+  of the rest. Existing near-miss
+  suggestions come first and are unchanged.
+- `init` run from a Telosmith source checkout (`PYTHONPATH=src` or an editable install; the checkout's
+  `pyproject.toml` must name `telosmith`) pins the generated CI job to
+  the checkout's `HEAD` commit and prints a note, instead of `@v0.5.0`, which may not exist yet. Git installs
+  still pin their recorded commit and other installs still pin the version's tag (#51).
+
+## [0.5.0] - 2026-11-04
+
+Summary of what 0.5.0 adds over 0.4.1 (details in the sections below, from PRs #31 to #51):
+- The `telosmith` command (same CLI as `aec`, which stays the primary name in the docs) and the
+  `telosmith` distribution name (#39, #40).
+- WP1A commands: `snapshot`, `diff`, `reach`, `fan`, `unresolved` (#31).
+- `code-impact` covers module links, reports one-hop `reaches changed` pointers (`--reach-depth`), and has
+  `--exit-code`; the hook and CI job `init` generates run it (#51).
+- Ledger hygiene: `appended` anchor state for append-only files, duplicate-line warning (#48); the relay-kit
+  records location setting (#49); record types `ambition` and `experiment` (#37); the `implements`
+  deprecation warning and standard-terms vocabulary (#38); extractor resolution of local constructor
+  calls (#32); review-integrity fixes (#33).
+- Project-internal: review protocol (#34), value map (#36), golden-master harness, ruff, CLI handler split and
+  named check rule families (#41 to #44, #46), decisions/owner report experiments (#45, #47).
+
+### Upgrading from 0.4.1
+- Regenerate any stored snapshot (for example `.aec/before.jsonl`) after upgrading. A 0.4.1 snapshot
+  (extractor tool_version 0.3.0) compared with a 0.5.0 one stops with `method mismatch: legacy/unknown
+  method` (checked 2026-11-04). Rebuild the baseline with `aec edges` (or `aec snapshot --rev`) at the
+  older commit.
+
+### Changed (release readiness, from a cold-install report on 2026-11-04)
+- Version 0.5.0 in `pyproject.toml`, `aec.__version__` and `--version`, so `main` is distinguishable from
+  v0.4.1. With no commit known, the CI job `init` generates now pins `@v0.5.0`.
+- `check` warns (`evidence-text`) on an evidence record with no or blank `text`: before, it passed and
+  reports printed an empty line such as `[needs_review] E-1@1: `. A warning, not an error. Only the latest version
+  of an id is judged (appending a version with text clears it), unless a latest record still points at the
+  textless version.
+- `init` writes "Telosmith records" (not "AEC records") as the header of `records.jsonl`, and its README
+  stub and Spec Kit hint use the new name. Record ids, types and the `.aec/` folder are unchanged.
+- README, getting-started and the demo install `@main` marked "tag v0.5.0 pending" until the tag exists
+  (`docs/RELEASING.md` lists the flip); README's stability section describes 0.5.0.
+- `docs/demo.md`: a short end-to-end demo on a toy project, with real output.
+
+
+### Changed (code-impact coverage and delivery, HO-RK-20261104-DN2X)
+- A link to a module (`code:pkg.mod`, what `import-purpose` writes) is now revised when any definition or
+  statement in that module changes, as a class link is when a method changes. Before, a module link was only
+  retracted when the module was deleted, so it passed `check` but never reported an edit. A package link does
+  not cover its submodules.
+- `code-impact` reports changed definitions one resolved call or reference away from a linked symbol (a helper,
+  a constant) as `structural: ... reaches changed ...` pointers. They assign no status: what a link means is
+  unchanged. `--reach-depth N` widens them, `0` turns them off; pointers to records the report already flags
+  are dropped.
+- `code-impact --exit-code` exits 1 when anything is affected or reported (for hooks).
+- The hook and CI job `aec init` generates now run `code-impact`: the hook against `HEAD` after each edit,
+  reporting to the agent (exit 2) only when something linked moved; the CI job against the merge-base, into
+  the job summary, never failing the job. Telosmith's own CI runs the same step on pull requests.
+- Evaluation: `docs/evaluations/code-impact-qual-001.md`, a cheap coverage/delivery qualification, not a value win.
+- Fix round (DEC-038 reviews of PR #51). **Delivery to other repositories needs a release >= 0.5 or a commit
+  pin:** v0.4.1, the last tag, has no `aec snapshot`, no `code-impact --exit-code` and none of the above.
+  `aec init` now pins the generated CI job to the commit it was installed from when it can tell, else to its
+  release tag when >= v0.5.0, else to `@main` under a `WARNING: UNPINNED` comment (never v0.4.1). The hook reports
+  to the user (exit 1) when the installed `aec` lacks `--exit-code`, and keeps HEAD's snapshot in
+  `.aec/hook-before.jsonl` (git-ignored) instead of overwriting the user's `.aec/before.jsonl`. Pointer lines,
+  the summary line (`N conclusions with no status change`, no longer "unaffected") and the hook's message call
+  pointers candidates for attention that change no status. A negative `--reach-depth` is an error.
 ### Added (spec 006, ledger hygiene; authorized by Zach 2026-11-04, C-09 and C-21)
 - Anchors into append-only files. An anchor may carry `prefix_bytes` (the file length when anchored):
   its `sha256` then covers only those leading bytes. `.aec/sources.json` may declare `append_only` files

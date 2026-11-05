@@ -7,7 +7,7 @@ repositories that already have Codex++ purpose files. For what the results mean,
 ## Install
 
 ```bash
-pip install "git+https://github.com/eraevous/Telosmith.git@v0.4.1"   # or @main for unreleased changes
+pip install "git+https://github.com/eraevous/Telosmith.git@main"   # 0.5.0 on main; tag v0.5.0 pending
 aec --version
 ```
 
@@ -46,7 +46,13 @@ aec code-impact .aec/records.jsonl .aec/before.jsonl .aec/edges.jsonl
 
 `code-impact` marks `R-1@1` as `stale` (the code it rests on changed) and `C-1@1` as
 `needs_review` (it rests on something stale). Both mean: look at this again. Edits to code no record points at report nothing. Records are append-only: to change
-one, append the same `id` with `"version": 2`. The full vocabulary of types and relations is in
+one, append the same `id` with `"version": 2`. A claim or requirement that still points at the old version
+(`C-1@1` depends on `R-1@1` after `R-1@2` exists) gets a `superseded-reference` warning from `check`, and when a change
+reaches `R-1@2`, `code-impact` names it in a `structural: C-1@1 references superseded R-1@1` pointer
+instead of giving it a status: append a version of it that references `R-1@2` if that is what you mean.
+Evidence and decisions are not flagged: they record what existed when they were made.
+When a linked function moves to another module, `check` reports the dangling reference and suggests
+the same name elsewhere (up to three). The full vocabulary of types and relations is in
 [`docs/reasoning-vocabulary.md`](../../docs/reasoning-vocabulary.md).
 
 `.aec/edges.jsonl` is generated, and `aec init` git-ignores it: committed copies conflict on every pair
@@ -56,6 +62,29 @@ the baseline from a worktree:
 ```bash
 git worktree add /tmp/aec-base main && aec edges /tmp/aec-base -o .aec/before.jsonl && git worktree remove /tmp/aec-base
 ```
+
+## Getting the report to someone
+
+`code-impact` reports nothing unless it runs. The snippets `aec init` writes run it for you once copied into place:
+
+- **Claude Code hook** (`.aec/snippets/claude-settings.json`): after each edit it refreshes the snapshot, fails on
+  record errors, then compares the working tree with `HEAD` (snapshotted to `.aec/hook-before.jsonl`, so your own
+  `.aec/before.jsonl` is left alone). When linked code changed, or reaches a change, the report goes to the agent
+  (stderr, exit 2). Nothing is printed otherwise. It runs the `aec` installed in your environment, which needs
+  `code-impact --exit-code`: a release >= v0.5.0 or a commit pin (v0.4.1 lacks it; the hook says so).
+- **CI job** (`.aec/snippets/aec-ci.yml`): compares the merge-base with the checkout and writes the report to the
+  job summary on the run page. It never fails the job and posts no pull-request comment. It installs the commit
+  `aec init` was installed from when known (a git install, or the `HEAD` of a source checkout run with
+  `PYTHONPATH=src` or installed editable, with a note: push that commit), a release >= v0.5.0, or else `@main`
+  under a `WARNING: UNPINNED` comment: replace that with a commit you have reviewed.
+
+A link to a module covers every definition in it; a link to a function covers its body, and changes one step
+away (a helper it calls, a constant it reads) appear as `structural: ... reaches changed ...` pointers. A
+pointer is a candidate for attention, not a required reassessment, and changes no record's status.
+`--reach-depth N` widens the walk. When a changed definition sits exactly one step beyond it from a linked
+symbol, the report adds `[note] reach depth 1; N changed symbols at depth 2 not reported`, so a quiet report
+says what it stopped short of; edits nothing links to still report nothing. The note is not a finding: the
+hook stays quiet on it. See [`docs/evaluations/code-impact-qual-001.md`](../evaluations/code-impact-qual-001.md).
 
 ## Repositories that already use Codex++ purpose files
 

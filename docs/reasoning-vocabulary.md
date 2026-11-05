@@ -36,7 +36,7 @@ This is deliberately not a graph platform. Records are plain JSON lines, version
 - Nothing yet checks whether a commitment forecloses an ambition. That review question is the reason
   the type exists. How to mechanise it is undecided and would itself start as an experiment.
 
-**Code references** (v0.2): a relation target `code:<dotted.symbol>` points at code. It is unversioned; the edge snapshot (`aec edges`) supplies its current state, `aec check --edges` reports dangling ones, and `aec code-impact` turns code changes into change events.
+**Code references** (v0.2): a relation target `code:<dotted.symbol>` points at code. It is unversioned; the edge snapshot (`aec edges`) supplies its current state, `aec check --edges` reports dangling ones, and `aec code-impact` turns code changes into change events. A module link now means "flag dependents stale when anything inside the module changes", where before it only reported the module's deletion. Link granularity matters: a link to a function or class is revised when its own body changes (nested definitions and methods included); a link to a module (`code:pkg.mod`, what `import-purpose` writes) is revised when any definition or statement in that module changes, not when a submodule does. A changed definition that a linked symbol reaches through resolved calls or references (one step by default, `--reach-depth`) is reported as a pointer, a candidate for attention rather than a required reassessment, and assigns no status: a changed callee does not make the caller's rationale stale. Behaviour-preserving rewrites (reordered arguments) still revise; comments do not.
 
 Every record has `id`, `version` (a positive JSON integer: `1.9`, `"1"` and `true` are errors, never coerced), `type`, `text`, optional `subject` (what it is about, for authority checks) and `relations`. A reference is `id@version`. Pinning the version is what lets a later change be detected.
 
@@ -160,5 +160,6 @@ Everything else is reported as unaffected. Over-flagging is a failure too.
 4. A committed criterion or purpose changed without an authorized revision is flagged. A provisional one is not.
 
 5. A `purpose_outcome` claim supported only by `contract_conformance` evidence is warned about (`outcome-sufficiency`).
+6. The latest version of a claim, requirement or other conclusion that references an older version of another record (other than through `supersedes`) is warned about (`superseded-reference`): only latest versions take an impact status, so `code-impact` reaches it only as a `structural: ... references superseded ...` pointer. The old version may be meant; a warning, never an error. Evidence and decisions are history by nature, pinned to the version that existed when they were observed or made, so they are never flagged: re-pointing them would assert support nobody checked.
 
-`aec check` covers rules 0–3 and 5; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.
+`aec check` covers rules 0–3, 5 and 6; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.

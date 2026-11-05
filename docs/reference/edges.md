@@ -1,8 +1,7 @@
 # Snapshots and structural queries (WP1A)
 
-The extractor is **tool_version 0.4.1**, distinct from the package version. WP1A
-commands below are additions in the current source checkout; the release install
-example for v0.4.1 does not include them until a subsequent release. The generated
+The extractor is **tool_version 0.4.1**, distinct from the package version. The WP1A
+commands below were added in release 0.5.0 (v0.4.1 does not have them). The generated
 `.aec/edges.jsonl` stays git-ignored: regenerate, do not commit it.
 
 ```bash

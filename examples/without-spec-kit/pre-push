@@ -1,0 +1,18 @@
+#!/bin/sh
+# Telosmith pre-push: report what the pushed commits put up for review, against the merge-base with the
+# remote's default branch. Report-only by default; TELOSMITH_BLOCK=1 refuses the push when anything is affected.
+cd "$(git rev-parse --show-toplevel)" || exit 0
+[ -f .aec/records.jsonl ] || exit 0
+python3 -m aec code-impact --help 2>/dev/null | grep -q -- --exit-code || exit 0
+base_ref=${TELOSMITH_BASE:-$(git symbolic-ref -q --short "refs/remotes/$1/HEAD" 2>/dev/null || echo "$1/main")}
+base=$(git merge-base "$base_ref" HEAD 2>/dev/null) || { echo "telosmith pre-push: no merge-base with $base_ref; skipping" >&2; exit 0; }
+tmp=$(mktemp -d) || exit 0
+trap 'rm -rf "$tmp"' EXIT
+python3 -m aec snapshot . --rev "$base" -o "$tmp/base.jsonl" >/dev/null 2>&1 || exit 0
+python3 -m aec snapshot . --rev HEAD -o "$tmp/head.jsonl" >/dev/null 2>&1 || exit 0
+git show HEAD:.aec/records.jsonl > "$tmp/records.jsonl" 2>/dev/null || exit 0       # the records being pushed
+out=$(python3 -m aec code-impact "$tmp/records.jsonl" "$tmp/base.jsonl" "$tmp/head.jsonl" --exit-code 2>&1) && exit 0
+echo "telosmith pre-push: vs $base_ref ($(echo "$base" | cut -c1-8))" >&2
+printf '%s\n' "$out" >&2
+[ "${TELOSMITH_BLOCK:-0}" = 1 ] && exit 1
+exit 0

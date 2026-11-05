@@ -32,6 +32,7 @@ class ImpactReport:
     impacts: dict[str, Impact]
     findings: list[str]
     unaffected: int
+    notes: list[str] = field(default_factory=list)  # what the report did not look at; not findings
 
     def by_status(self) -> dict[str, list[Impact]]:
         out: dict[str, list[Impact]] = {s: [] for s in reversed(SEVERITY)}
@@ -188,5 +189,9 @@ def render(store: Store, rep: ImpactReport) -> str:
             lines.append(f"    via {' -> '.join(i.because)}")
     for f in rep.findings:
         lines.append(f"[finding] {f}")
-    lines.append(f"\n{len(rep.impacts)} affected, {rep.unaffected} conclusions unaffected")
+    for n in rep.notes:  # above the summary, which stays the last line
+        lines.append(f"[note] {n}")
+    pointers = sum(1 for f in rep.findings if f.startswith("structural: "))
+    lines.append(f"\n{len(rep.impacts)} affected, {rep.unaffected} conclusions with no status change"
+                 + (f" ({pointers} pointer(s) above: candidates for attention)" if pointers else ""))
     return "\n".join(lines)

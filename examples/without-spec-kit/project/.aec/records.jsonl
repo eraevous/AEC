@@ -1,0 +1,10 @@
+// Telosmith records. Append-only: add a new version instead of editing a line.
+{"id": "AU-owner", "version": 1, "type": "authority", "text": "Ada: design intent and acceptance", "governs": ["purpose", "design", "acceptance", "code"]}
+{"id": "P0", "version": 1, "type": "purpose", "subject": "purpose", "owner": "AU-owner", "epistemic": "provisional", "text": "TODO: the owner states what this project is for (stub from aec init)"}
+{"id": "P0", "version": 2, "type": "purpose", "subject": "purpose", "owner": "AU-owner", "epistemic": "provisional", "text": "A tiny shop whose checkout never charges a negative amount."}
+{"id": "R-1", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Discounts never make a price negative.", "rationale": "Refunds are separate negative line items.", "anchors": [{"path": "docs/pricing.md", "sha256": "be5a12284515a8d6f3746d5fa0eadc4432921a6e42d73c248373f8774513dea1", "locator": "L3-4", "for": "rationale"}], "relations": [{"rel": "implemented_by", "to": "code:shop.pricing.apply_discount"}, {"rel": "serves", "to": "P0@2"}]}
+{"id": "R-2", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Tax is computed at the published 8% rate.", "relations": [{"rel": "implemented_by", "to": "code:shop.tax"}, {"rel": "serves", "to": "P0@2"}]}
+{"id": "C-1", "version": 1, "type": "claim", "tier": "candidate", "text": "Checkout totals are never negative.", "relations": [{"rel": "depends_on", "to": "R-1@1"}]}
+{"id": "E-1", "version": 1, "type": "evidence", "text": "apply_discount(10, 150) returned 0.0 by hand.", "relations": [{"rel": "supports", "to": "C-1@1"}]}
+{"id": "D-1", "version": 1, "type": "decision", "subject": "design", "decided_by": "AU-owner", "status": "accepted", "text": "Ship the checkout with the never-negative guarantee.", "relations": [{"rel": "depends_on", "to": "C-1@1"}]}
+{"id": "EXP-rounding", "version": 1, "type": "experiment", "text": "Try half-up Decimal rounding against round() for cents.", "status": "open", "variants": ["round", "decimal"]}
