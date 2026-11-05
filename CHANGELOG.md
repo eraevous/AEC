@@ -15,6 +15,11 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
   `[ALIAS=]PATH#LOCATOR` hash the file, check the locator resolves, and add `prefix_bytes` for files declared
   append-only. It refuses (exit 1, nothing written) an `id@version` that exists or a record that adds a `check`
   error; it never edits a line and repairs a missing final newline instead of joining lines.
+- `aec anchor [ALIAS=]PATH#LOCATOR [--rationale]` prints a checked anchor as JSON, for records written by hand.
+- `aec init --ci-name NAME` names the CI workflow, its job and its file (`.aec/snippets/NAME-ci.yml`, to copy to
+  `.github/workflows/NAME.yml`); the default stays `aec`.
+- docs/reference/source-anchors.md: in a repository others clone, cite an outside decision (such as a private
+  ledger) as text only, not as a hashed anchor.
 
 ### Changed (lifecycle gaps from a docs builder's no-Spec-Kit run, 2026-11-04)
 - `check` warns `superseded-reference` when the latest version of a record references an older version of

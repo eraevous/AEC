@@ -157,7 +157,7 @@ def __getattr__(name):  # CI is resolved on first use, not at import (resolving 
     raise AttributeError(name)
 
 
-def ci_snippet(ref: str) -> str:
+def ci_snippet(ref: str, name: str = "aec") -> str:
     first = "v" + ".".join(map(str, FIRST_DELIVERY_RELEASE))
     if ref == "main":
         head = (f"# WARNING: UNPINNED. This aec ({__version__}) was not installed from a known commit, and no release\n"
@@ -170,12 +170,12 @@ def ci_snippet(ref: str) -> str:
     else:
         head = (f"# Pinned to the Telosmith commit that generated it ({ref[:12]}); change the ref only to a release\n"
                 f"# >= {first} or a commit you have reviewed.")
-    return f"""# Copy into .github/workflows/aec.yml.
+    return f"""# Copy into .github/workflows/{name}.yml.
 {head}
-name: aec
+name: {name}
 on: [push, pull_request]
 jobs:
-  aec:
+  {name}:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -221,16 +221,19 @@ def _records(owner: str, purpose: str | None = None, anchor: dict | None = None)
 
 
 def init(root: str | Path, owner: str, *, purpose: str | None = None, purpose_anchor: str | None = None,
-         hooks: bool | None = None) -> dict:
+         hooks: bool | None = None, ci_name: str = "aec") -> dict:
     """Scaffold .aec/ without overwriting anything.
 
     purpose: the text of P0@1 instead of the stub (still provisional: the owner commits it by appending P0@2).
     purpose_anchor: `PATH#LOCATOR` in ROOT that the purpose cites; hashed and checked now (DEC-095).
     hooks: write the Claude Code hook and CI snippets. None (default) writes them only when ROOT has Python
-    code, since code-impact has nothing to report in a repository without it."""
+    code, since code-impact has nothing to report in a repository without it.
+    ci_name: the CI workflow's name, job id and file name (default `aec`)."""
     root = Path(root)
     aec = root / ".aec"
     created, kept = [], []
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", ci_name or ""):
+        raise ValueError(f"--ci-name {ci_name!r}: use letters, digits, - and _ (it names a workflow file and a job)")
     if purpose_anchor and not purpose:
         raise ValueError("--purpose-anchor needs --purpose: an anchor cites the text of a stated purpose")
     anchor = None
@@ -261,7 +264,7 @@ def init(root: str | Path, owner: str, *, purpose: str | None = None, purpose_an
     if hooks:
         put("snippets/claude-settings.json", lambda: json.dumps(HOOK, indent=2) + "\n")
         ref, note = resolve_install_ref(__version__, _installed_commit())
-        put("snippets/aec-ci.yml", lambda: ci_snippet(ref))
+        put(f"snippets/{ci_name}-ci.yml", lambda: ci_snippet(ref, ci_name))
 
     spec_kit = (root / ".specify").is_dir()
     steps = []
@@ -272,7 +275,7 @@ def init(root: str | Path, owner: str, *, purpose: str | None = None, purpose_an
         steps.append("Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).")
     if hooks:
         steps += ["Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).",
-                  "Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml"
+                  f"Copy .aec/snippets/{ci_name}-ci.yml into .github/workflows/{ci_name}.yml"
                   + (" (it pins @main: replace it with a reviewed commit SHA or a release >= v0.5.0)."
                      if ref == "main" else "."),
                   "The hook runs the aec installed in your environment: it needs `code-impact --exit-code` "
@@ -287,6 +290,6 @@ def init(root: str | Path, owner: str, *, purpose: str | None = None, purpose_an
     if spec_kit:
         steps.insert(1, "Spec Kit detected. Register the Telosmith hooks (report-only, removable): "
                         "specify extension add --dev <path-to-Telosmith-checkout>/extension")
-    if note and ".aec/snippets/aec-ci.yml" in created:
+    if note and f".aec/snippets/{ci_name}-ci.yml" in created:
         steps.insert(0, "Note: " + note)
     return {"created": created, "kept": kept, "spec_kit": spec_kit, "next_steps": "\n".join(steps)}
