@@ -161,7 +161,8 @@ Everything else is reported as unaffected. Over-flagging is a failure too.
 
 5. A `purpose_outcome` claim supported only by `contract_conformance` evidence is warned about (`outcome-sufficiency`).
 6. The latest version of a claim, requirement or other conclusion that references an older version of another record (other than through `supersedes`) is warned about (`superseded-reference`): only latest versions take an impact status, so `code-impact` reaches it only as a `structural: ... references superseded ...` pointer. The old version may be meant; a warning, never an error. Evidence and decisions are history by nature, pinned to the version that existed when they were observed or made, so they are never flagged: re-pointing them would assert support nobody checked.
+7. Authority does not compose. An authority governs only the subjects in its own latest record's `governs`; an authority record that cites another (through `authorized_by` or a relation) gains none of that one's scope, so a chain of grants (owner → coordinator → builder) is never an authority path. A sub-grant exists only as its own authority record with its own `governs`, written where the upstream decision says sub-delegation is allowed. Rules 1 and 4 apply this; `tests/test_no_transitive_authority.py` pins it.
 
-`aec check` covers rules 0–3, 5 and 6; `aec impact` covers rule 4 and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.
+`aec check` covers rules 0–3, 5, 6 and 7 (through rule 1); `aec impact` covers rule 4 (and 7 through it) and change propagation. Both are deterministic. Neither decides whether evidence is *good*. That remains review.
 
 When a finding's verdict turns on a threshold (rules 2, 5 and 6), `check` ends the line with what the threshold is and what it measured, for example `[threshold: referenced version is the latest; measured: @1; latest @2]`.

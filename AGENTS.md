@@ -10,7 +10,8 @@ plan and tasks before implementing. No runtime dependencies beyond Python 3.10+.
 
 ## Which source governs which question
 
-- `.aec/records.jsonl` governs purpose and authority: `AEC-P0@1` is the purpose;
+- `.aec/records.jsonl` governs purpose and authority: `AEC-P0@3` is the purpose
+  (the latest version; earlier versions stay in the history);
   `AU-zach@1` governs Telosmith design intent and acceptance, by recorded subject.
 - `.specify/memory/constitution.md` governs engineering principles; `CHARTER.md`
   states their practical application. A conflict goes to the constitution.
@@ -43,6 +44,9 @@ append-only records. Each new check/classifier needs a violating fixture and a
 clean decoy, written before implementation. Never edit existing record lines,
 accept a reconstructed decision, or treat a passing test as owner approval.
 Purpose files change only in their authorized task scope; log discrepancies.
+Before opening a pull request or marking one ready, run `python3 tools/preflight.py` and open it only when
+it passes. It runs what CI gates on (unit tests, record touch, the records check, the example and adoption
+checks, plus ruff when installed); say in the PR body that it passed.
 
 ## Built commands
 

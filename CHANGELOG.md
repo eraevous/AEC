@@ -10,6 +10,20 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
   (observed and prospective tiers, outcome sufficiency, superseded references). The rest of the line is unchanged;
   findings with no threshold look as before.
 
+### Added (development)
+- `tools/preflight.py` runs locally what CI gates on (unit tests, record touch, the records check, example and
+  adoption checks, ruff when installed) and summarises; AGENTS.md asks agents to pass it before opening or marking a
+  pull request ready.
+### Documentation
+- `docs/review-vocabulary.md`: five names reviewers tag findings with (ghost-tool, reflexive-fabrication,
+  metaphor-literal-swap, simulated-precision, clean-lie), with no scores, used only on PRs that touch a contract, a
+  check or authority.
+- Rule 7 in `docs/reasoning-vocabulary.md`: authority does not compose; an authority record that cites another gains
+  none of its scope. Already true of `check` and `impact`; `tests/test_no_transitive_authority.py` pins it.
+- `docs/gates.md`: a register of every state transition and pass/fail point (evaluator, threshold, what it
+  protects, reversibility), with four findings it surfaced, among them that a committed record can be changed by a
+  plain append without `check` noticing (F1). Nothing in the code changes.
+
 ### Added (adoption friction from the DEC-095 pilots, 2026-11-05)
 - `aec init --purpose TEXT` writes the purpose `P0@1` with your text instead of the TODO stub (still
   provisional), and `--purpose-anchor PATH#LOCATOR` cites a file in the repository for it: hashed and checked
