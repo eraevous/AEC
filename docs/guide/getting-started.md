@@ -18,7 +18,9 @@ Python 3.10 or newer; no other dependencies. From a clone, `pip install -e .` wo
 
 ```bash
 cd your-project
-aec init . --owner "Your Name"          # creates .aec/: records, an edge snapshot, CI/hook snippets
+aec init . --owner "Your Name"          # creates .aec/: records, an edge snapshot, CI/hook snippets (when there is Python code)
+# or state the purpose now, citing where it is written:
+#   aec init . --owner "Your Name" --purpose "What this is for" --purpose-anchor "README.md#q:what it is for"
 ```
 
 Find the name Telosmith uses for a function you care about. Names come from the snapshot and include any
@@ -34,6 +36,13 @@ Append a requirement that points at it, and a claim that rests on the requiremen
 ```json
 {"id": "R-1", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Discounts never make a price negative.", "relations": [{"rel": "implemented_by", "to": "code:src.mypkg.pricing.apply_discount"}]}
 {"id": "C-1", "version": 1, "type": "claim", "tier": "candidate", "text": "Checkout totals are never negative.", "relations": [{"rel": "depends_on", "to": "R-1@1"}]}
+```
+
+Or let `aec append` add them: it refuses an `id@version` that already exists or a record `check` would reject,
+and computes anchors for you (`--anchor PATH#LOCATOR` hashes the file and checks the locator):
+
+```bash
+aec append .aec/records.jsonl '{"id": "R-1", "version": 1, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Discounts never make a price negative.", "relations": [{"rel": "implemented_by", "to": "code:src.mypkg.pricing.apply_discount"}]}' --anchor "docs/pricing.md#q:never negative"
 ```
 
 ```bash

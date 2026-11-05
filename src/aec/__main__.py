@@ -5,7 +5,10 @@
   python -m aec check RECORDS [--edges SNAPSHOT]              cross-record checks (+ dangling code: refs)
   python -m aec impact RECORDS CHANGES [--json]               which conclusions a change affects
   python -m aec code-impact RECORDS OLD NEW [--json] [--reach-depth N] [--exit-code]  code change -> affected conclusions
-  python -m aec init [ROOT] [--owner NAME]                    scaffold .aec/ (never overwrites)
+  python -m aec init [ROOT] [--owner NAME] [--purpose TEXT [--purpose-anchor PATH#LOC]] [--hooks|--no-hooks]
+                                                              scaffold .aec/ (never overwrites)
+  python -m aec anchor [A=]PATH#LOC [--rationale]                      print a checked anchor
+  python -m aec append RECORDS JSON|- [--anchor [A=]PATH#LOC] [--rationale-anchor ...]  append one record
   python -m aec import-purpose [ROOT] [--dir D] [--dry-run]   Codex++ .purpose.md -> provisional records
   python -m aec source show REF [--context N]                read anchored passages (offline)
   python -m aec source search PATTERN [--root R] [--regex]   direct fallback source search (offline)
@@ -84,6 +87,28 @@ def build_parser() -> argparse.ArgumentParser:
     it = sub.add_parser("init", help="scaffold .aec/ in a repository (never overwrites)")
     it.add_argument("root", nargs="?", default=".")
     it.add_argument("--owner", help="name for the authority stub (default: git user.name, else 'owner')")
+    it.add_argument("--purpose", help="text of the purpose P0@1 instead of the TODO stub (stays provisional)")
+    it.add_argument("--purpose-anchor", metavar="PATH#LOCATOR",
+                    help="a file in ROOT the purpose cites, e.g. README.md#q:what it is for (hashed now)")
+    hk = it.add_mutually_exclusive_group()
+    hk.add_argument("--hooks", dest="hooks", action="store_const", const=True, default=None,
+                    help="write the Claude Code hook and CI snippets even without Python code")
+    hk.add_argument("--no-hooks", dest="hooks", action="store_const", const=False,
+                    help="do not write them (default: written only when ROOT has Python code)")
+    it.add_argument("--ci-name", default="aec", help="CI workflow, job and file name (default: aec)")
+    anc = sub.add_parser("anchor", help="print a checked anchor (sha256 + locator) for a passage, as JSON")
+    anc.add_argument("spec", metavar="[ALIAS=]PATH#LOCATOR")
+    anc.add_argument("--rationale", action="store_true", help='for: "rationale" (default: "text")')
+    anc.add_argument("--repo", default=".", help="repository holding .aec/sources.json (default: .)")
+    apd = sub.add_parser("append", help="append one record, computing its anchor hashes (never edits a line)")
+    apd.add_argument("records")
+    apd.add_argument("record", help="the record as JSON, or - to read it from stdin")
+    apd.add_argument("--anchor", action="append", default=[], metavar="[ALIAS=]PATH#LOCATOR",
+                     help="cite a passage for the record's text (repeatable)")
+    apd.add_argument("--rationale-anchor", action="append", default=[], metavar="[ALIAS=]PATH#LOCATOR",
+                     help="cite a passage for why it holds (repeatable)")
+    apd.add_argument("--repo", help="repository holding .aec/sources.json (default: the records' repository)")
+    apd.add_argument("--dry-run", action="store_true", help="print the line; append nothing")
     ip = sub.add_parser("import-purpose", help="import Codex++ purpose files as provisional, source-linked records")
     ip.add_argument("root", nargs="?", default=".")
     ip.add_argument("--dir", default="codex_++/purpose_files", help="purpose-file directory, relative to ROOT")
@@ -216,12 +241,55 @@ def _cmd_source(a, ap) -> int:
 
 def _cmd_init(a, ap) -> int:
     from .init import init
-    rep = init(a.root, owner=a.owner or _git_user(a.root) or "owner")
+    try:
+        rep = init(a.root, owner=a.owner or _git_user(a.root) or "owner", purpose=a.purpose,
+                   purpose_anchor=a.purpose_anchor, hooks=a.hooks, ci_name=a.ci_name)
+    except ValueError as error:
+        ap.error(str(error))
     for f in rep["created"]:
         print(f"created {f}")
     for f in rep["kept"]:
         print(f"kept    {f} (exists; not overwritten)")
     print("\nNext steps:\n" + "\n".join(f"  - {x}" for x in rep["next_steps"].splitlines()))
+    return 0
+
+
+def _cmd_anchor(a, ap) -> int:
+    from .append import make_anchor
+    from .sources import SourceContext
+    try:
+        anchor = make_anchor(SourceContext(Path(a.repo)), a.spec, "rationale" if a.rationale else "text")
+    except ValueError as error:
+        print(f"aec anchor: {error}", file=sys.stderr)
+        return 1
+    print(json.dumps(anchor, ensure_ascii=False))
+    return 0
+
+
+def _cmd_append(a, ap) -> int:
+    from .append import append_line, build
+    records = Path(a.records)
+    if not records.is_file():
+        ap.error(f"no records file {records}")
+    raw = sys.stdin.read() if a.record == "-" else a.record
+    try:
+        record = json.loads(raw)
+    except json.JSONDecodeError as error:
+        ap.error(f"the record is not JSON: {error}")
+    repo = Path(a.repo) if a.repo else (records.parent.parent if records.parent.name == ".aec" else Path.cwd())
+    try:
+        line, problems = build(records, record, a.anchor, a.rationale_anchor, repo)
+    except ValueError as error:
+        problems, line = [str(error)], ""
+    if problems:
+        for p in problems:
+            print(f"aec append: refused: {p}", file=sys.stderr)
+        return 1
+    if a.dry_run:
+        print(line)
+        return 0
+    append_line(records, line)
+    print(f"appended {record.get('id')}@{record.get('version')} to {records}")
     return 0
 
 
@@ -321,7 +389,7 @@ def _cmd_code_impact(a, ap) -> int:
 
 HANDLERS = {
     "edges": _cmd_edges, "check": _cmd_check, "impact": _cmd_impact, "code-impact": _cmd_code_impact,
-    "init": _cmd_init, "import-purpose": _cmd_import_purpose, "source": _cmd_source,
+    "init": _cmd_init, "anchor": _cmd_anchor, "append": _cmd_append, "import-purpose": _cmd_import_purpose, "source": _cmd_source,
     "snapshot": _cmd_snapshot, "diff": _cmd_diff, "reach": _cmd_query, "fan": _cmd_query, "unresolved": _cmd_query,
 }
 

@@ -126,3 +126,19 @@ the current directory. Relative root configuration stays relative in displayed
 paths. Invalid configuration, regexes, references or limits are usage errors.
 
 (From a source checkout without installing, `PYTHONPATH=src python3 -m aec …` works the same.)
+
+### Writing anchors without hashing by hand (DEC-095)
+
+`aec anchor [ALIAS=]PATH#LOCATOR [--rationale]` prints a checked anchor as JSON: the file's sha256, the locator
+(refused if it does not resolve), and `prefix_bytes` when the file is declared append-only. `aec append RECORDS
+'<record JSON>' --anchor ... --rationale-anchor ...` adds a record with its anchors computed the same way, and
+refuses a duplicate `id@version` or a record `check` would reject. Neither edits an existing line: to anchor a
+record that exists, append its next version.
+
+**Citing files outside the repository.** An anchor names a path under the repository or under a root alias in
+`.aec/sources.json`. A repository other people clone should not depend on a root they cannot have, such as an
+owner's private ledger: there the anchor reads `unavailable` for everyone else, and the configured path leaks a
+local layout. In such a repository, cite the outside decision **as text only** (its id and a short quote in the
+record's `text` or a `rationale` field), and keep hashed anchors for files the repository ships. Telosmith's own
+records anchor into its owner's ledger through the `relay-kit-private` alias because that ledger is where its
+decisions are made; that is a choice for a repository whose owner holds both, not a pattern for adopters.

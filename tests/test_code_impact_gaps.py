@@ -303,7 +303,7 @@ class TestFixRoundDelivery(unittest.TestCase):
     def test_init_writes_the_resolved_snippet(self):
         from aec.init import init
         d = Path(tempfile.mkdtemp())
-        init(d, "t")
+        init(d, "t", hooks=True)  # an empty dir has no code: ask for the snippets
         ci = (d / ".aec" / "snippets" / "aec-ci.yml").read_text()
         self.assertNotEqual(_pinned_ref(ci), "v0.4.1")
 

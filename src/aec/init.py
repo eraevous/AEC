@@ -157,7 +157,7 @@ def __getattr__(name):  # CI is resolved on first use, not at import (resolving 
     raise AttributeError(name)
 
 
-def ci_snippet(ref: str) -> str:
+def ci_snippet(ref: str, name: str = "aec") -> str:
     first = "v" + ".".join(map(str, FIRST_DELIVERY_RELEASE))
     if ref == "main":
         head = (f"# WARNING: UNPINNED. This aec ({__version__}) was not installed from a known commit, and no release\n"
@@ -170,12 +170,12 @@ def ci_snippet(ref: str) -> str:
     else:
         head = (f"# Pinned to the Telosmith commit that generated it ({ref[:12]}); change the ref only to a release\n"
                 f"# >= {first} or a commit you have reviewed.")
-    return f"""# Copy into .github/workflows/aec.yml.
+    return f"""# Copy into .github/workflows/{name}.yml.
 {head}
-name: aec
+name: {name}
 on: [push, pull_request]
 jobs:
-  aec:
+  {name}:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -203,21 +203,47 @@ hook-before.jsonl
 """
 
 
-def _records(owner: str) -> str:
+STUB_PURPOSE = "TODO: the owner states what this project is for (stub from aec init)"
+
+
+def _records(owner: str, purpose: str | None = None, anchor: dict | None = None) -> str:
+    p0 = {"id": "P0", "version": 1, "type": "purpose", "subject": "purpose", "owner": "AU-owner",
+          "epistemic": "provisional", "text": purpose or STUB_PURPOSE}
+    if anchor:
+        p0["anchors"] = [anchor]
     rows = [
         "// Telosmith records. Append-only: add a new version instead of editing a line.",
         {"id": "AU-owner", "version": 1, "type": "authority", "text": f"{owner}: design intent and acceptance",
          "governs": ["purpose", "design", "acceptance", "code"]},
-        {"id": "P0", "version": 1, "type": "purpose", "subject": "purpose", "owner": "AU-owner",
-         "epistemic": "provisional", "text": "TODO: the owner states what this project is for (stub from aec init)"},
+        p0,
     ]
     return "\n".join(r if isinstance(r, str) else json.dumps(r) for r in rows) + "\n"
 
 
-def init(root: str | Path, owner: str) -> dict:
+def init(root: str | Path, owner: str, *, purpose: str | None = None, purpose_anchor: str | None = None,
+         hooks: bool | None = None, ci_name: str = "aec") -> dict:
+    """Scaffold .aec/ without overwriting anything.
+
+    purpose: the text of P0@1 instead of the stub (still provisional: the owner commits it by appending P0@2).
+    purpose_anchor: `PATH#LOCATOR` in ROOT that the purpose cites; hashed and checked now (DEC-095).
+    hooks: write the Claude Code hook and CI snippets. None (default) writes them only when ROOT has Python
+    code, since code-impact has nothing to report in a repository without it.
+    ci_name: the CI workflow's name, job id and file name (default `aec`)."""
     root = Path(root)
     aec = root / ".aec"
     created, kept = [], []
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", ci_name or ""):
+        raise ValueError(f"--ci-name {ci_name!r}: use letters, digits, - and _ (it names a workflow file and a job)")
+    if purpose_anchor and not purpose:
+        raise ValueError("--purpose-anchor needs --purpose: an anchor cites the text of a stated purpose")
+    anchor = None
+    if purpose_anchor:
+        from .append import make_anchor
+        from .sources import SourceContext
+        anchor = make_anchor(SourceContext(root), purpose_anchor, "text")  # raises before anything is written
+    snapshot = E.snapshot(root)
+    if hooks is None:
+        hooks = snapshot["header"]["files"] > 0
 
     def put(rel: str, make):
         p = aec / rel
@@ -229,27 +255,41 @@ def init(root: str | Path, owner: str) -> dict:
         p.write_text(make(), encoding="utf-8")
         created.append(key)
 
-    put("records.jsonl", lambda: _records(owner))
-    put("edges.jsonl", lambda: E.dumps(E.snapshot(root)))
+    put("records.jsonl", lambda: _records(owner, purpose, anchor))
+    put("edges.jsonl", lambda: E.dumps(snapshot))
     put("README.md", lambda: README)
     # v0.4.1: the snapshot is generated; committing it makes every pair of code-touching PRs conflict.
     put(".gitignore", lambda: GITIGNORE)
-    put("snippets/claude-settings.json", lambda: json.dumps(HOOK, indent=2) + "\n")
-    ref, note = resolve_install_ref(__version__, _installed_commit())
-    put("snippets/aec-ci.yml", lambda: ci_snippet(ref))
+    ref, note = None, None
+    if hooks:
+        put("snippets/claude-settings.json", lambda: json.dumps(HOOK, indent=2) + "\n")
+        ref, note = resolve_install_ref(__version__, _installed_commit())
+        put(f"snippets/{ci_name}-ci.yml", lambda: ci_snippet(ref, ci_name))
 
     spec_kit = (root / ".specify").is_dir()
-    steps = ["Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).",
-             "Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).",
-             "Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml"
-             + (" (it pins @main: replace it with a reviewed commit SHA or a release >= v0.5.0)." if ref == "main"
-                else "."),
-             "The hook runs the aec installed in your environment: it needs `code-impact --exit-code` "
-             f"(a release >= v0.5.0, or pip install \"{AEC_SOURCE}@{ref}\").",
-             "If the repo has Codex++ purpose files: python3 -m aec import-purpose ."]
+    steps = []
+    if purpose:
+        steps.append("P0@1 states your purpose (provisional). When it is settled, append P0@2 with "
+                     '"epistemic": "committed".')
+    else:
+        steps.append("Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).")
+    if hooks:
+        steps += ["Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).",
+                  f"Copy .aec/snippets/{ci_name}-ci.yml into .github/workflows/{ci_name}.yml"
+                  + (" (it pins @main: replace it with a reviewed commit SHA or a release >= v0.5.0)."
+                     if ref == "main" else "."),
+                  "The hook runs the aec installed in your environment: it needs `code-impact --exit-code` "
+                  f"(a release >= v0.5.0, or pip install \"{AEC_SOURCE}@{ref}\")."]
+    else:
+        steps.append("No hook or CI snippet written: " + ("this repository has no Python code, so code-impact has "
+                     "nothing to report. Re-run `aec init --hooks` after adding code." if snapshot["header"]["files"] == 0
+                     else "--no-hooks was given."))
+    steps.append("Add records with computed anchors: aec append .aec/records.jsonl '<record JSON>' "
+                 "--anchor PATH#LOCATOR")
+    steps.append("If the repo has Codex++ purpose files: python3 -m aec import-purpose .")
     if spec_kit:
         steps.insert(1, "Spec Kit detected. Register the Telosmith hooks (report-only, removable): "
                         "specify extension add --dev <path-to-Telosmith-checkout>/extension")
-    if note and ".aec/snippets/aec-ci.yml" in created:
+    if note and f".aec/snippets/{ci_name}-ci.yml" in created:
         steps.insert(0, "Note: " + note)
     return {"created": created, "kept": kept, "spec_kit": spec_kit, "next_steps": "\n".join(steps)}

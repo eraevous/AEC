@@ -52,6 +52,7 @@ def cases(work: Path, extras: list[Path]) -> list[tuple[str, list[str]]]:
         ("import-purpose-fixture", ["import-purpose", f"{fx}/purpose_repo", "--dry-run"]),
         ("import-purpose-write", ["import-purpose", str(work / "purpose_copy")]),
         ("init", ["init", str(work / "init_repo"), "--owner", "Golden"]),
+        ("init-hooks", ["init", str(work / "init_hooks_repo"), "--owner", "Golden", "--hooks"]),
         ("snapshot-fixture", ["snapshot", f"{fx}/edges_pkg_v1"]),
         ("diff-stored", ["diff", "--base-snapshot", str(v1), "--head-snapshot", str(v2)]),
         ("diff-stored-json", ["diff", "--base-snapshot", str(v1), "--head-snapshot", str(v2), "--json"]),
@@ -107,6 +108,7 @@ def run(dest: Path, extras: list[Path]) -> None:
     work = Path(tempfile.mkdtemp(prefix="golden-"))
     shutil.copytree(ROOT / "tests" / "fixtures" / "purpose_repo", work / "purpose_copy")
     (work / "init_repo").mkdir()
+    (work / "init_hooks_repo").mkdir()  # no code, so the snippets need --hooks (DEC-095)
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"))
     paths = [(str(work), "WORK"), (str(ROOT), "ROOT")] + [(str(e), f"EXTRA{i}") for i, e in enumerate(extras)]
     paths.sort(key=lambda pair: len(pair[0]), reverse=True)  # longest first, so nested paths map cleanly
@@ -126,6 +128,8 @@ def run(dest: Path, extras: list[Path]) -> None:
             text = f"{r.stdout}\n--- stderr ---\n{r.stderr}\n--- exit {r.returncode} ---\n"
             if name == "init":
                 text += "\n--- written ---\n" + _written(work / "init_repo")
+            elif name == "init-hooks":
+                text += "\n--- written ---\n" + _written(work / "init_hooks_repo")
             elif name == "import-purpose-write":
                 text += "\n--- written ---\n" + _written(work / "purpose_copy" / ".aec")
             (dest / f"{name}.txt").write_text(normalise(text, not name.startswith("extra")), encoding="utf-8")
