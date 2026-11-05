@@ -5,6 +5,10 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Documentation
+- Rule 7 in `docs/reasoning-vocabulary.md`: authority does not compose; an authority record that cites another gains
+  none of its scope. Already true of `check` and `impact`; `tests/test_no_transitive_authority.py` pins it.
+
 ### Added (adoption friction from the DEC-095 pilots, 2026-11-05)
 - `aec init --purpose TEXT` writes the purpose `P0@1` with your text instead of the TODO stub (still
   provisional), and `--purpose-anchor PATH#LOCATOR` cites a file in the repository for it: hashed and checked
