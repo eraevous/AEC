@@ -240,3 +240,62 @@ class TestAppend(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCiName(unittest.TestCase):  # HO-AEC-20261105-PPPP item 3
+    def test_default_name_unchanged(self):
+        d = code_repo()
+        init(d, owner="Zach")
+        text = (d / ".aec" / "snippets" / "aec-ci.yml").read_text()
+        self.assertIn("name: aec\n", text)
+        self.assertIn("\n  aec:\n", text)
+
+    def test_custom_name(self):
+        d = code_repo()
+        rep = init(d, owner="Zach", ci_name="telosmith")
+        text = (d / ".aec" / "snippets" / "telosmith-ci.yml").read_text()
+        self.assertIn("# Copy into .github/workflows/telosmith.yml.", text)
+        self.assertIn("name: telosmith\n", text)
+        self.assertIn("\n  telosmith:\n", text)
+        self.assertIn(".github/workflows/telosmith.yml", rep["next_steps"])
+        self.assertFalse((d / ".aec" / "snippets" / "aec-ci.yml").exists())
+
+    def test_invalid_name_writes_nothing(self):
+        d = code_repo()
+        with self.assertRaises(ValueError):
+            init(d, owner="Zach", ci_name="bad name/")
+        self.assertFalse((d / ".aec").exists())
+
+    def test_cli(self):
+        d = code_repo()
+        rc, out, _ = run(["init", str(d), "--owner", "Zach", "--ci-name", "records"])
+        self.assertEqual(rc, 0)
+        self.assertIn("created .aec/snippets/records-ci.yml", out)
+
+
+class TestAnchorCommand(unittest.TestCase):  # HO-AEC-20261105-PPPP item 4
+    def setUp(self):
+        self.d = docs_repo()
+
+    def test_prints_a_checked_anchor(self):
+        rc, out, err = run(["anchor", "README.md#q:umbrella purpose", "--repo", str(self.d)])
+        self.assertEqual(rc, 0, err)
+        anchor = json.loads(out)
+        self.assertEqual(anchor["sha256"], hashlib.sha256((self.d / "README.md").read_bytes()).hexdigest())
+        self.assertEqual((anchor["path"], anchor["for"]), ("README.md", "text"))
+
+    def test_rationale(self):
+        rc, out, _ = run(["anchor", "README.md#L1", "--rationale", "--repo", str(self.d)])
+        self.assertEqual(rc, 0)
+        self.assertEqual(json.loads(out)["for"], "rationale")
+
+    def test_unresolved_is_an_error(self):
+        rc, out, err = run(["anchor", "README.md#q:absent", "--repo", str(self.d)])
+        self.assertEqual(rc, 1)
+        self.assertEqual(out, "")
+        self.assertIn("does not resolve", err)
+
+    def test_file_outside_the_repo_is_refused(self):
+        rc, _, err = run(["anchor", "../elsewhere.md#L1", "--repo", str(self.d)])
+        self.assertEqual(rc, 1)
+        self.assertIn("parent traversal", err)
