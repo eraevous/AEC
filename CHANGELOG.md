@@ -5,6 +5,10 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Added (development)
+- `tools/preflight.py` runs locally what CI gates on (unit tests, record touch, the records check, example and
+  adoption checks, ruff when installed) and summarises; AGENTS.md asks agents to pass it before opening or marking a
+  pull request ready.
 ### Documentation
 - `docs/review-vocabulary.md`: five names reviewers tag findings with (ghost-tool, reflexive-fabrication,
   metaphor-literal-swap, simulated-precision, clean-lie), with no scores, used only on PRs that touch a contract, a
