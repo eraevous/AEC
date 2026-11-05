@@ -81,7 +81,8 @@ a missing rule, or a rule to write down.
 - **F1. A committed record can be changed by a plain append.** `docs/reasoning-vocabulary.md` says a committed record
   "changes only through an authorized `revision`". Nothing checks that. Appending `P-1@2` with new text under a
   committed `P-1@1` gives no error and no warning from `check` or `aec append`. The authority test exists only in
-  `impact`, and only when someone files a `revise` change with `authorized_by`. Reproduction: a committed purpose at
+  `impact` (the rules list in that doc does assign this rule, rule 4, to `impact`), and only when someone files a
+  `revise` change with `authorized_by`. Nothing files one for a plain append. Reproduction: a committed purpose at
   versions 1 and 2 with different text and no revision record; `check` reports 0 errors and 0 warnings for it.
   Options: (a) a `check` warning when a committed record's latest version has no authorised `revision` pointing at it;
   (b) reword the vocabulary doc to say the rule is procedural; (c) leave it.
