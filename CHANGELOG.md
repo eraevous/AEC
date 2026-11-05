@@ -5,6 +5,17 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Added (adoption friction from the DEC-095 pilots, 2026-11-05)
+- `aec init --purpose TEXT` writes the purpose `P0@1` with your text instead of the TODO stub (still
+  provisional), and `--purpose-anchor PATH#LOCATOR` cites a file in the repository for it: hashed and checked
+  when init runs, and nothing is written if it does not resolve.
+- `aec init` writes the Claude Code hook and CI snippets only when the repository has Python code (code-impact
+  has nothing to report otherwise) and says so; `--hooks` writes them anyway, `--no-hooks` skips them.
+- `aec append RECORDS JSON|-` appends one record and computes its anchors: `--anchor` / `--rationale-anchor`
+  `[ALIAS=]PATH#LOCATOR` hash the file, check the locator resolves, and add `prefix_bytes` for files declared
+  append-only. It refuses (exit 1, nothing written) an `id@version` that exists or a record that adds a `check`
+  error; it never edits a line and repairs a missing final newline instead of joining lines.
+
 ### Changed (lifecycle gaps from a docs builder's no-Spec-Kit run, 2026-11-04)
 - `check` warns `superseded-reference` when the latest version of a record references an older version of
   another record (`C-1@1` depends on `R-1@1` while `R-1@2` exists). A warning, never an error: the old

@@ -283,7 +283,7 @@ class TestInitPinFromSourceCheckout(unittest.TestCase):
         except (subprocess.CalledProcessError, FileNotFoundError):
             self.skipTest("not running from a git checkout")
         d = Path(tempfile.mkdtemp())
-        r = subprocess.run([sys.executable, "-m", "aec", "init", str(d), "--owner", "t"], capture_output=True,
+        r = subprocess.run([sys.executable, "-m", "aec", "init", str(d), "--owner", "t", "--hooks"], capture_output=True,
                            text=True, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
         self.assertEqual(r.returncode, 0, r.stderr)
         ci = (d / ".aec" / "snippets" / "aec-ci.yml").read_text()
