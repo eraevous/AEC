@@ -10,7 +10,8 @@ plan and tasks before implementing. No runtime dependencies beyond Python 3.10+.
 
 ## Which source governs which question
 
-- `.aec/records.jsonl` governs purpose and authority: `AEC-P0@1` is the purpose;
+- `.aec/records.jsonl` governs purpose and authority: `AEC-P0@3` is the purpose
+  (the latest version; earlier versions stay in the history);
   `AU-zach@1` governs Telosmith design intent and acceptance, by recorded subject.
 - `.specify/memory/constitution.md` governs engineering principles; `CHARTER.md`
   states their practical application. A conflict goes to the constitution.
