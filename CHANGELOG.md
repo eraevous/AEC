@@ -5,6 +5,11 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Added (development)
+- `tools/preflight.py` runs locally what CI gates on (unit tests, record touch, the records check, example and
+  adoption checks, ruff when installed) and summarises; AGENTS.md asks agents to pass it before opening or marking a
+  pull request ready.
+
 ### Added (adoption friction from the DEC-095 pilots, 2026-11-05)
 - `aec init --purpose TEXT` writes the purpose `P0@1` with your text instead of the TODO stub (still
   provisional), and `--purpose-anchor PATH#LOCATOR` cites a file in the repository for it: hashed and checked
