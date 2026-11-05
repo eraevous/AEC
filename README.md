@@ -7,8 +7,12 @@ folder keep working. Since v0.5 the same command is also installed as `telosmith
 which every release has and which stays the primary name.*
 
 It reports structure, not truth: "this conclusion's recorded support changed", never "this
-conclusion is false". It is a standard-library Python command-line tool, works with or without
-[Spec Kit](https://github.com/github/spec-kit), and never edits your code or your specs.
+conclusion is false". It is a standard-library Python command-line tool that never edits your code
+or your specs, and it works in three settings: as a [Spec Kit](https://github.com/github/spec-kit)
+extension; as an extension of other agentic coding setups (Claude Code hooks, git hooks, CI, rules
+files); and standalone, with just the records and the `check` and `impact` commands. See
+[docs/use-cases.md](docs/use-cases.md) and
+[docs/integrations/without-spec-kit.md](docs/integrations/without-spec-kit.md).
 
 ## Why it exists
 
