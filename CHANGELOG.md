@@ -5,6 +5,11 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Documentation
+- `docs/review-vocabulary.md`: five names reviewers tag findings with (ghost-tool, reflexive-fabrication,
+  metaphor-literal-swap, simulated-precision, clean-lie), with no scores, used only on PRs that touch a contract, a
+  check or authority.
+
 ### Added (adoption friction from the DEC-095 pilots, 2026-11-05)
 - `aec init --purpose TEXT` writes the purpose `P0@1` with your text instead of the TODO stub (still
   provisional), and `--purpose-anchor PATH#LOCATOR` cites a file in the repository for it: hashed and checked
