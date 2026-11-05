@@ -5,6 +5,11 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Changed
+- `check` output: a finding whose verdict turns on a threshold ends with `[threshold: ...; measured: ...]`
+  (observed and prospective tiers, outcome sufficiency, superseded references). The rest of the line is unchanged;
+  findings with no threshold look as before.
+
 ### Added (development)
 - `tools/preflight.py` runs locally what CI gates on (unit tests, record touch, the records check, example and
   adoption checks, ruff when installed) and summarises; AGENTS.md asks agents to pass it before opening or marking a

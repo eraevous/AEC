@@ -355,7 +355,7 @@ def _cmd_check(a, ap) -> int:
             elif item.state == "appended":  # spec 006: not a finding, but never shown as verified
                 print(render_status(item) + ": " + item.detail)
     for f in fs:
-        print(f"[{f.level.upper()}] {f.rule}: {f.ref}: {f.msg}")
+        print(f.line())
     errors = [f for f in fs if f.level == "error"]
     print(f"aec check: {len(errors)} error(s), {len(fs) - len(errors)} warning(s) (structural)")
     return 1 if errors else 0
