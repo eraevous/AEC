@@ -20,3 +20,4 @@ Generated edges are static structural facts, not a competing authority. If a
 purpose file disagrees with a committed record, report the conflict for review;
 the file cannot silently revise the record. Only Zach or an explicitly authorized
 decision-maker for that subject may accept a commitment.
+What each state transition takes, who decides it and what it protects is in [`gates.md`](gates.md).
