@@ -210,7 +210,7 @@ class SourceContext:
         return frozenset(declared)
 
     def is_append_only(self, alias, path) -> bool:
-        self.roots
+        _ = self.roots  # loads the configuration, including _append_only
         return (alias or '.', Path(path).as_posix()) in self._append_only
 
     def root(self, name=None):

@@ -351,9 +351,10 @@ class TestFixRoundWording(unittest.TestCase):
         self.assertNotIn("review whether", ptr[0])
 
     def test_summary_does_not_call_a_pointed_record_unaffected(self):
-        from aec.__main__ import _print_impact
         import contextlib
         import io
+
+        from aec.__main__ import _print_impact
         s = store("code:pricing.price")
         rep, _ = code_impact(s, E.snapshot(tree(BASE)), E.snapshot(tree(EDITS["helper_unbounded"](BASE))))
         buf = io.StringIO()
@@ -365,9 +366,10 @@ class TestFixRoundWording(unittest.TestCase):
         self.assertIn("1 pointer", last)
 
     def test_negative_reach_depth_is_rejected(self):
-        from aec.__main__ import main
         import contextlib
         import io
+
+        from aec.__main__ import main
         d = Path(tempfile.mkdtemp())
         snap = d / "s.jsonl"
         snap.write_text(E.dumps(E.snapshot(tree(BASE))))
