@@ -120,6 +120,16 @@ class Finding:
     rule: str
     ref: str
     msg: str
+    # threshold disclosure: for a verdict that turns on a threshold, what it takes and what was measured
+    threshold: str | None = None
+    measured: str | None = None
+
+    def line(self) -> str:
+        """`[LEVEL] rule: ref: msg`, plus `[threshold: ...; measured: ...]` when the verdict turns on one."""
+        out = f"[{self.level.upper()}] {self.rule}: {self.ref}: {self.msg}"
+        if self.threshold is not None:
+            out += f" [threshold: {self.threshold}; measured: {self.measured}]"
+        return out
 
 
 def _near(name: str, symbols: set[str], modules: set[str] = frozenset()) -> tuple[list[str], int]:
@@ -220,15 +230,20 @@ def _tier_findings(store: Store, r: Record) -> list[Finding]:
     if tier is not None and tier not in TIERS:
         out.append(Finding("error", "tier", r.ref, f"unknown tier {tier!r}"))
     if r.type == "claim" and tier == "observed":
-        backed = any(store.in_edges(ev.ref, "produced")
-                     for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence")
-        if not backed:
+        sup = [ev for ev in store.in_edges(r.ref, "supports") if ev.type == "evidence"]
+        produced = sum(1 for ev in sup if store.in_edges(ev.ref, "produced"))
+        if not produced:
             out.append(Finding("error", "tier", r.ref,
-                               "tier 'observed' but no supporting evidence was produced by an evaluation"))
+                               "tier 'observed' but no supporting evidence was produced by an evaluation",
+                               threshold=">= 1 supporting evidence record produced by an evaluation",
+                               measured=f"{produced} of {len(sup)}"))
     digest = r.get("frozen_sha256")
     if tier == "prospective" and not (isinstance(digest, str) and SHA256_RE.fullmatch(digest)):
+        measured = ("missing" if digest is None else f"{len(digest)} characters, not all lowercase hex"
+                    if isinstance(digest, str) else f"a JSON {type(digest).__name__}")
         out.append(Finding("error", "tier", r.ref, "tier 'prospective' needs frozen_sha256, a 64-character "
-                           "lowercase hex SHA-256 of the frozen source (freeze before the outcome)"))
+                           "lowercase hex SHA-256 of the frozen source (freeze before the outcome)",
+                           threshold="frozen_sha256 is 64 lowercase hex characters", measured=measured))
     return out
 
 
@@ -246,7 +261,9 @@ def _evidence_kind_findings(store: Store, r: Record) -> list[Finding]:
             out.append(Finding("warning", "outcome-sufficiency", r.ref,
                                "purpose-outcome claim is supported only by contract-conformance evidence ("
                                + ", ".join(ev.ref for ev in sup) + "): an unsupported inference, not a "
-                               "finding that the outcome failed. Add an outcome observation or narrow the claim."))
+                               "finding that the outcome failed. Add an outcome observation or narrow the claim.",
+                               threshold=">= 1 supporting evidence record that is not contract_conformance",
+                               measured=f"0 of {len(sup)}"))
     return out
 
 
@@ -285,7 +302,8 @@ def _superseded_reference_findings(store: Store, r: Record) -> list[Finding]:
             out.append(Finding("warning", "superseded-reference", r.ref,
                                f"{e.get('rel')} -> {to}, but {newest.ref} is newer: changes that reach "
                                f"{newest.ref} only point at this record; append a version that references "
-                               f"{newest.ref} if that is meant (the old version may be intentional)"))
+                               f"{newest.ref} if that is meant (the old version may be intentional)",
+                               threshold="referenced version is the latest", measured=f"@{v}; latest @{newest.version}"))
     return out
 
 
