@@ -5,6 +5,10 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Records
+- Telosmith's own purpose is now `AEC-P0@3` (Kate's wording, anchored to DEC-116); the requirements that served
+  `AEC-P0@1` were re-pinned to it, and AGENTS.md names it. Earlier versions stay in the history.
+
 ### Added
 - Optional record fields `authored_by` (an actor such as `claude:aec`) and `author_role` (`owner`, `independent`,
   `implementer`), shape-checked by `check`, for testing whether independently written records catch more drift.
@@ -19,6 +23,8 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
   adoption checks, ruff when installed) and summarises; AGENTS.md asks agents to pass it before opening or marking a
   pull request ready.
 ### Documentation
+- `docs/enforcement-audit.md`: for each rule in AGENTS.md, the mechanism that enforces it (test, CI step, hook,
+  `check`) or a label (partial, procedural, advisory), with five gaps listed for a decision. No rule changes.
 - `docs/review-vocabulary.md`: five names reviewers tag findings with (ghost-tool, reflexive-fabrication,
   metaphor-literal-swap, simulated-precision, clean-lie), with no scores, used only on PRs that touch a contract, a
   check or authority.
