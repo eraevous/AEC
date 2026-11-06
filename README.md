@@ -30,6 +30,16 @@ that are checked, with near-miss suggestions when a name is wrong; and an append
 decided what and on what basis, which agents and people can both read. What it costs: you (or your
 agent) write the records. Telosmith doesn't infer them.
 
+What the Claude Code hook catches, exactly, at its default depth of one call:
+
+- **an edit to a function a record links to**: the hook stops the agent and prints the requirement's text and
+  every claim resting on it (`[stale]`, `[needs_review]`);
+- **an edit to a function that linked function calls** (one hop): a pointer by record ID
+  (`candidate for attention: R-1@1`), with no text and no status change;
+- **an edit two or more calls away**: nothing in the hook. A manual or CI run prints a `[note]` that it stopped
+  short; add `--reach-depth 2` to the hook's `code-impact` call to get a pointer there too
+  ([getting started](docs/guide/getting-started.md#getting-the-report-to-someone)).
+
 Telosmith records those reasons as plain, append-only JSON lines (purposes, requirements, claims, evidence,
 decisions, and who has authority over them). It links them to the code through a deterministic
 static-analysis snapshot of what defines, calls and imports what.
@@ -124,8 +134,8 @@ what to look for wrote the requirement down, so it demonstrates the mechanism, n
 
 ## Stability
 
-Telosmith is alpha (v0.5). v0.5 adds the snapshot, diff, reach, fan and unresolved commands
-to the seven commands of v0.4; see [the structural reference](docs/reference/edges.md). A minor
+Telosmith is alpha (v0.5). v0.5 adds the snapshot, diff, reach, fan, unresolved, anchor and
+append commands to the seven commands of v0.4, fourteen in all; see [the structural reference](docs/reference/edges.md). A minor
 version before 1.0 may change output formats or record fields; every change is
 listed in [CHANGELOG.md](CHANGELOG.md). The extractor's tool_version (0.4.1) is separate
 from the package version. Snapshot comparison refuses mismatched methods, including

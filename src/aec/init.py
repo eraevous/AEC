@@ -44,8 +44,8 @@ remaining evidence is good enough. That stays a review question.
 HOOK_COMMAND = (
     "cd \"$CLAUDE_PROJECT_DIR\" || exit 0; "
     "python3 -m aec code-impact --help 2>/dev/null | grep -q -- --exit-code || "
-    "{ echo 'Telosmith hook: the installed aec has no code-impact --exit-code; install a release >= v0.5.0 "
-    "or the commit your CI job pins' >&2; exit 1; }; "
+    "{ echo 'Telosmith hook: the installed aec has no code-impact --exit-code; install Telosmith v0.5.0 or later "
+    "(the commit your CI job pins)' >&2; exit 1; }; "
     "python3 -m aec edges . -o .aec/edges.jsonl 2>/dev/null; "
     "python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl >/dev/null || "
     "{ python3 -m aec check .aec/records.jsonl --edges .aec/edges.jsonl 1>&2; exit 2; }; "
@@ -276,10 +276,10 @@ def init(root: str | Path, owner: str, *, purpose: str | None = None, purpose_an
     if hooks:
         steps += ["Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).",
                   f"Copy .aec/snippets/{ci_name}-ci.yml into .github/workflows/{ci_name}.yml"
-                  + (" (it pins @main: replace it with a reviewed commit SHA or a release >= v0.5.0)."
+                  + (" (it pins @main: replace it with a commit SHA you have reviewed)."
                      if ref == "main" else "."),
                   "The hook runs the aec installed in your environment: it needs `code-impact --exit-code` "
-                  f"(a release >= v0.5.0, or pip install \"{AEC_SOURCE}@{ref}\")."]
+                  f"(Telosmith 0.5.0 or later: pip install \"{AEC_SOURCE}@{ref}\")."]
     else:
         steps.append("No hook or CI snippet written: " + ("this repository has no Python code, so code-impact has "
                      "nothing to report. Re-run `aec init --hooks` after adding code." if snapshot["header"]["files"] == 0

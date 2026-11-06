@@ -43,7 +43,7 @@ git diff --stat
 echo; echo "## 4. the library's tests after the edit"
 PYTHONPATH=src "$PY" -m pytest -q 2>&1 | tail -1
 
-echo; echo "## 5. what AEC reports"
+echo; echo "## 5. what Telosmith reports"
 "$AEC" edges . -o .aec/edges.jsonl
 "$AEC" edges --diff "$WORK/old.jsonl" .aec/edges.jsonl
 "$AEC" code-impact .aec/records.jsonl "$WORK/old.jsonl" .aec/edges.jsonl

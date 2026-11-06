@@ -80,11 +80,13 @@ git worktree add /tmp/aec-base main && aec edges /tmp/aec-base -o .aec/before.js
   record errors, then compares the working tree with `HEAD` (snapshotted to `.aec/hook-before.jsonl`, so your own
   `.aec/before.jsonl` is left alone). When linked code changed, or reaches a change, the report goes to the agent
   (stderr, exit 2). Nothing is printed otherwise. It runs the `aec` installed in your environment, which needs
-  `code-impact --exit-code`: a release >= v0.5.0 or a commit pin (v0.4.1 lacks it; the hook says so).
+  `code-impact --exit-code`: Telosmith 0.5.0 or later, installed from a commit pin until the v0.5.0 tag exists
+  (v0.4.1 lacks it; the hook says so). It reaches one call by default; to have it point two calls away, add
+  ` --reach-depth 2` after `--exit-code` in the hook's `command` string.
 - **CI job** (`.aec/snippets/aec-ci.yml`): compares the merge-base with the checkout and writes the report to the
   job summary on the run page. It never fails the job and posts no pull-request comment. It installs the commit
   `aec init` was installed from when known (a git install, or the `HEAD` of a source checkout run with
-  `PYTHONPATH=src` or installed editable, with a note: push that commit), a release >= v0.5.0, or else `@main`
+  `PYTHONPATH=src` or installed editable, with a note: push that commit), the v0.5.0 tag once it exists, or else `@main`
   under a `WARNING: UNPINNED` comment: replace that with a commit you have reviewed.
 
 A link to a module covers every definition in it; a link to a function covers its body, and changes one step

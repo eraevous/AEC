@@ -66,6 +66,8 @@ Run from the repository root with PYTHONPATH=src:
 | `python -m aec reach` | Query known structural reach in one projection with visibility |
 | `python -m aec fan` | Count per-projection neighbors with visibility |
 | `python -m aec unresolved` | Retrieve unresolved calls by why and file/symbol region |
+| `python -m aec anchor` | Print a checked anchor (sha256 + locator) for a passage, as JSON |
+| `python -m aec append` | Append one record, computing its anchors |
 
 Source check/show/search are offline and read-only. Anchors/rationale live in
 Record.data. Filesystem anchor states are warnings; malformed anchor shapes are
@@ -95,7 +97,7 @@ dependencies available to pip. See `docs/speckit-log.md` for setup and actual co
 
 ## Built, partial and planned
 
-Built: the twelve commands above (the five WP1A commands first released in 0.5.0), offline source integrity/retrieval, structured purpose import, provenance-linked
+Built: the fourteen commands above (the five WP1A commands, `anchor` and `append` first released in 0.5.0), offline source integrity/retrieval, structured purpose import, provenance-linked
 candidate history and doc-truth checks. Partial: semantic reconciliation (declared
 fields and caller comparisons only), evidence adequacy/applicability (narrow
 rules only). Planned: WP1B topology/history analytics, context
