@@ -25,6 +25,9 @@ DEPRECATED_RELATIONS = {
 HISTORICAL = {"evidence", "decision"}  # their references name what existed when they were made (superseded-reference)
 CODE = "code:"  # unversioned reference to a code symbol; the edge snapshot supplies its current state
 TIERS = {"candidate", "reviewed", "observed", "prospective"}
+# who wrote a semantic record, and how that author stands to the code it describes (Dual-Channel Coding)
+AUTHOR_ROLES = {"owner", "independent", "implementer"}
+ACTOR_RE = re.compile(r"[a-z][a-z0-9-]*(:[a-z0-9][a-z0-9-]*)?(#[A-Za-z0-9_-]+)?")
 
 
 def ref(rid: str, version: int) -> str:
@@ -213,6 +216,27 @@ def _shape_findings(r: Record) -> list[Finding]:
     return out
 
 
+def _authorship_findings(r: Record) -> list[Finding]:
+    """`authored_by` names an actor (`zach`, `claude:aec`, `chatgpt:kate`, optionally `#session`); `author_role` says
+    whether that author is the owner, independent of the code, or the implementer. A field, not a workflow: only the
+    shape is checked. An unrecognised actor spelling is a warning, so a new actor never blocks a record."""
+    if "authored_by" not in r.data and "author_role" not in r.data:
+        return []
+    author, role = r.data.get("authored_by"), r.data.get("author_role")
+    if not isinstance(author, str) or not author.strip():
+        return [Finding("error", "authorship", r.ref,
+                        "authored_by must be a non-empty string naming the actor"
+                        + (" (author_role needs it)" if "author_role" in r.data else ""))]
+    out = []
+    if role is not None and role not in AUTHOR_ROLES:
+        out.append(Finding("error", "authorship", r.ref,
+                           f"unknown author_role {role!r}; use one of {', '.join(sorted(AUTHOR_ROLES))}"))
+    if not ACTOR_RE.fullmatch(author):
+        out.append(Finding("warning", "authorship", r.ref,
+                           f"authored_by {author!r} is not an actor id like zach, claude:aec or chatgpt:kate#<session>"))
+    return out
+
+
 def _decision_findings(store: Store, r: Record) -> list[Finding]:
     """Rule 1: an accepted decision needs an authority that governs its subject."""
     if r.type == "decision" and r.get("status") == "accepted" and not store.governs(r.get("decided_by"), r.subject):
@@ -330,6 +354,7 @@ def check(store: Store, edges: dict | None = None, *, sources=None) -> list[Find
             if sources is None:
                 sources = SourceContext(Path.cwd())
             out.extend(record_findings(r, sources))
+        out.extend(_authorship_findings(r))
         out.extend(_decision_findings(store, r))
         out.extend(_tier_findings(store, r))
         out.extend(_evidence_kind_findings(store, r))
