@@ -221,10 +221,10 @@ The summary file read:
 Telosmith's own CI runs the same step on every PR, so it has run on GitHub. See code-impact-qual-001's delivery
 table.
 
-**Pin gotcha (found here).** Run from a source checkout or a local-path install, `aec init` wrote
-`pip install "git+https://github.com/eraevous/Telosmith.git@v0.5.0"`, but on 2026-11-04 the remote has only
-`v0.4.0` and `v0.4.1` tags. Until `v0.5.0` is tagged, replace the ref with a commit you have reviewed. A
-`pip install git+…@<sha>` makes `init` pin that SHA itself.
+**Pin (found here, since fixed).** On 2026-11-04 `aec init` run from a source checkout wrote a `@v0.5.0` ref
+that did not exist (the remote has only `v0.4.0` and `v0.4.1` tags). It now writes the commit it was installed
+from: the `HEAD` SHA of a source checkout, or the SHA of a `pip install git+…@<sha>`. Check that the pinned
+commit is one you have reviewed and that it is pushed.
 
 For other CI systems (GitLab, Jenkins, an in-house gate), the same script works with `GITHUB_STEP_SUMMARY`
 pointed at whatever file the system shows to reviewers, and `AEC_BASE` set to the target branch's SHA. Add the

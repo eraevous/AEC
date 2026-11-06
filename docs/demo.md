@@ -2,9 +2,19 @@
 
 One toy project, end to end: `init`, a purpose, a requirement linked to a function, a claim and its
 evidence, a `check` that catches a typo, an edit to a helper two calls away, the `code-impact` pointer,
-and the Claude Code hook reporting with exit 2. Every command below was run against a git install of the fix/lifecycle-gaps branch (1fca329) on
-2026-11-04; the output is pasted as printed, trimmed only where marked. The scripted run takes about 2 s;
-a cold user's setup (install plus reading this page) takes about 2 minutes.
+the Claude Code hook reporting with exit 2, and what to do once you have re-checked. Every command below was
+run against a git install of `main` (265c2aa, plus the wording fixes in #68) on 2026-11-06; the output is
+pasted as printed, trimmed only where marked. The scripted run takes about 2 s; a cold user's setup (install
+plus reading this page) takes about 2 minutes.
+
+What the hook catches, at its default depth of one call:
+
+- **you edit the linked function**: the agent is stopped and shown the requirement's text and the claim
+  resting on it (step 4, third run, under a second);
+- **you edit a function it calls** (one hop): a pointer by record ID, `candidate for attention: R-1@1`, with no
+  text and no status change;
+- **you edit a function two calls away**: the hook stays silent. By hand or in CI you get a `[note]` saying the
+  walk stopped short; `--reach-depth 2` turns it into an ID pointer (step 3, and the end of step 4).
 
 You need Python 3.10+, git and bash (the `sed -i.bak` form works with GNU and BSD sed). On a fresh machine,
 set a git identity first (`git config --global user.name "You"` and `user.email`): step 2 commits.
@@ -56,12 +66,14 @@ Next steps:
   - Replace the purpose stub P0 in .aec/records.jsonl with your own statement (append version 2).
   - Copy .aec/snippets/claude-settings.json into .claude/settings.json (merge if one exists).
   - Copy .aec/snippets/aec-ci.yml into .github/workflows/aec.yml.
-  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (a release >= v0.5.0, or pip install "git+https://github.com/eraevous/Telosmith.git@1fca32989ef79ba44cc08ee873bddf64175b50b1").
+  - The hook runs the aec installed in your environment: it needs `code-impact --exit-code` (Telosmith 0.5.0 or later: pip install "git+https://github.com/eraevous/Telosmith.git@<commit>").
+  - Add records with computed anchors: aec append .aec/records.jsonl '<record JSON>' --anchor PATH#LOCATOR
   - If the repo has Codex++ purpose files: python3 -m aec import-purpose .
 // Telosmith records. Append-only: add a new version instead of editing a line.
 ```
 
-A git install pins the commit it was installed from (yours will differ); the CI snippet uses the same pin.
+A git install pins the commit it was installed from (shown here as `<commit>`; yours will be a full SHA); the CI
+snippet uses the same pin.
 
 ## 2. Purpose, requirement, claim, evidence (with two deliberate mistakes)
 
@@ -178,6 +190,43 @@ exit 2
 Exit 2 is how a Claude Code hook hands its stderr back to the agent. The report says which
 conclusions to look at again; it does not say whether they are now false. Blank lines in the output
 are trimmed to one.
+
+To have the hook point two calls away as well, add ` --reach-depth 2` after `--exit-code` in its `command`
+string. Run that way after the two-hop edit of step 3, it exits 2 with the same depth-2 pointer `code-impact`
+printed there (an ID, `R-1@1`, not the text).
+
+## 5. You re-checked it: now what
+
+Say you looked at `apply_discount` and the requirement still holds. Record that by appending the next version
+of `R-1` (the text can stay the same), then commit.
+
+```bash
+cat >> .aec/records.jsonl <<'EOF'
+{"id": "R-1", "version": 2, "type": "requirement", "subject": "code", "epistemic": "committed", "text": "Discounts never make a price negative.", "relations": [{"rel": "implemented_by", "to": "code:shop.pricing.apply_discount"}, {"rel": "serves", "to": "P0@2"}]}
+EOF
+aec check .aec/records.jsonl --edges .aec/edges.jsonl; echo "exit $?"
+git add -A && git commit -qm "re-checked R-1 after the apply_discount edit"
+CLAUDE_PROJECT_DIR=$PWD bash -c "$HOOK"; echo "exit $?"
+```
+
+```text
+[WARNING] superseded-reference: C-1@1: depends_on -> R-1@1, but R-1@2 is newer: changes that reach R-1@2 only point at this record; append a version that references R-1@2 if that is meant (the old version may be intentional) [threshold: referenced version is the latest; measured: @1; latest @2]
+aec check: 0 error(s), 1 warning(s) (structural)
+exit 0
+exit 0
+```
+
+What to expect, all by design:
+
+- **The hook goes quiet when you commit**, not when you append. It compares the working tree with `HEAD`, so
+  until the commit it still reports the edit, now as `[stale] R-1@2`.
+- **CI keeps reporting for the life of the pull request.** It compares the merge-base with the branch, and the
+  code under `R-1` did change there, so the job summary shows `[stale] R-1@2` on every run. The job does not
+  fail; the appended `R-1@2` in the same diff is the visible record that someone looked.
+- **`C-1` still cites `R-1@1`**, hence the warning. Append `C-1` version 2 depending on `R-1@2` if the claim
+  should follow the re-checked requirement; leave it if it deliberately rests on the old version.
+- Code changes carry no `authorized_by`, so nothing in the report says who approved the edit. That lives in the
+  commit and the review.
 
 What next: [the getting-started guide](guide/getting-started.md) covers comparing against a branch, the
 CI job, and repositories with Codex++ purpose files.
