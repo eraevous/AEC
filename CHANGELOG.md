@@ -5,6 +5,10 @@ All notable changes to Telosmith (formerly AEC). Versions follow [semantic versi
 
 ## [Unreleased]
 
+### Added
+- Optional record fields `authored_by` (an actor such as `claude:aec`) and `author_role` (`owner`, `independent`,
+  `implementer`), shape-checked by `check`, for testing whether independently written records catch more drift.
+
 ### Changed
 - `check` output: a finding whose verdict turns on a threshold ends with `[threshold: ...; measured: ...]`
   (observed and prospective tiers, outcome sufficiency, superseded references). The rest of the line is unchanged;
