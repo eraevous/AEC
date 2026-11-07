@@ -174,14 +174,14 @@ tagged by what kind of value it offers and gated by a result it must show before
    proposals; each is settled when its item comes up.
 2. A gate names three things: the cheapest alternative the item must beat, the result that would justify
    building it, and the result that would mean dropping or simplifying it.
-3. Gates for research bets are pre-registered, like probe-001 and value-001. A research bet runs as an
+3. Gates for research bets are pre-registered, like probe-001 and the DEC-021 replay. A research bet runs as an
    `experiment` record (DEC-033): trying a few variants commits to no feature and no long-term support.
    Only a result that passes its gate is promoted into a spec.
 4. A null result lowers an item's priority. "A later feature will make it pay off" isn't a reason to proceed.
 
 | Item | Kind | Cheapest alternative to beat | Gate: result required before building | Evidence so far |
 |---|---|---|---|---|
-| Records, `check`, `impact`, `code-impact` | core | notes or ADRs, tests and PR review with the same facts | **value-001** (in progress, PR #35): catches a consequential issue the well-configured baseline misses, at acceptable cost | probe-001: no outcome effect from graph briefings; self-hosting catches lapses, which a cheaper rule might also catch |
+| Records, `check`, `impact`, `code-impact` | core | notes or ADRs, tests and PR review with the same facts | **DEC-021 replay** (pre-registered, not run; `evaluations/dec-021-protocol.md`, which superseded the value-001 draft): catches a consequential issue the well-configured baseline misses, at acceptable cost | probe-001: no outcome effect from graph briefings; self-hosting catches lapses, which a cheaper rule might also catch |
 | Record authoring aid (agents draft records from specs, purpose files and PRs; people confirm) | cost reducer, adoption unlock | hand-written records; `import-purpose` | drafted records reach the same accuracy at much lower authoring time per record kept, measured on a real repository | `import-purpose` seeds provisional claims; authoring cost only partly logged (`docs/speckit-log.md`) |
 | `code-impact` as a pull-request comment (WP1A posts no comments yet) | adoption unlock | running the command by hand; the CI artifact | over a run of real PRs, reviewers act on a meaningful share of comments, and the false-alarm rate on harmless changes is acceptable | AEC's own CI step is report-only; one known false alarm (AEC-R8, #20) |
 | WP2A `aec context` (context delivery) | research bet | an agent searching the repository itself | a pre-registered harder probe (C-12) where search falls short shows briefings change outcomes, without the token cost eating the gain | probe-001: no signal, higher cost on 2 of 3 tasks |
@@ -192,7 +192,7 @@ tagged by what kind of value it offers and gated by a result it must show before
 | WP6 adaptive reporting | research bet | a plain status report from existing facts | its own validation (two project types, a lifecycle change, an immaterial-change decoy) shows decisions changed compared with the plain report | none; backlog (#15) |
 | C-17 decision-context distillation | research bet | the decision ledger plus `git log` and the threads | a retrieval test recovers why a decision was made better or faster than those sources | none |
 | Tiered agents with asymmetric information (C-20; AMB-tiered-agents; DEC-034: the stated purpose of edge snapshots) | research bet | every agent sees everything | an experiment where an architect agent works only from the edge snapshot, and implementers hold module and function detail, beats or matches the all-see arm on a task where architecture-level decisions matter, at lower cost or with fewer integration conflicts | none; probe-001 tested briefings, not this division of labour |
-| WP5 evaluation | — | — | not a feature: the gates above are its instalments | value-001 is the first |
+| WP5 evaluation | — | — | not a feature: the gates above are its instalments | the DEC-021 replay is the first |
 
 **Ambitions.** Directions AEC might take are recorded as `ambition` records (DEC-033), not as roadmap
 commitments. Before an item here is committed, the question is which recorded ambitions it would
